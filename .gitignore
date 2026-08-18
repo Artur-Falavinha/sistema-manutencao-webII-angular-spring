@@ -1,0 +1,31 @@
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+application-local.properties
+application-secrets.properties
+
+# Front-end
+front-end/node_modules/
+front-end/dist/
+front-end/tmp/
+front-end/out-tsc/
+front-end/.angular/
+front-end/coverage/
+front-end/*.log
+
+# Back-end
+back-end/target/
+back-end/.classpath
+back-end/.factorypath
+back-end/.project
+back-end/.settings/
+back-end/.idea/
+back-end/*.iml
+
+# IDE and operating system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

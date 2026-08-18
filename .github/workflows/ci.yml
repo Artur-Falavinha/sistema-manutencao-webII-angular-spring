@@ -1,0 +1,163 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  detect:
+    name: detect-modules
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      frontend: ${{ steps.modules.outputs.frontend }}
+      backend: ${{ steps.modules.outputs.backend }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - id: modules
+        name: Detect modules
+        shell: bash
+        run: |
+          frontend=false
+          backend=false
+
+          if [[ -d front-end ]]; then
+            for file in package.json package-lock.json angular.json; do
+              if [[ ! -f "front-end/$file" ]]; then
+                echo "::error file=front-end/$file::Incomplete front-end structure"
+                exit 1
+              fi
+            done
+            frontend=true
+          fi
+
+          if [[ -d back-end ]]; then
+            for file in pom.xml mvnw mvnw.cmd .mvn/wrapper/maven-wrapper.properties; do
+              if [[ ! -f "back-end/$file" ]]; then
+                echo "::error file=back-end/$file::Incomplete back-end structure"
+                exit 1
+              fi
+            done
+            backend=true
+          fi
+
+          echo "frontend=$frontend" >> "$GITHUB_OUTPUT"
+          echo "backend=$backend" >> "$GITHUB_OUTPUT"
+
+  frontend:
+    name: frontend
+    needs: detect
+    if: ${{ needs.detect.outputs.frontend == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: front-end
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: front-end/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Build
+        run: npm run build
+
+  backend:
+    name: backend
+    needs: detect
+    if: ${{ needs.detect.outputs.backend == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: maintenance
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    env:
+      SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/maintenance?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+      SPRING_SQL_INIT_MODE: always
+      SPRING_MAIL_HOST: localhost
+      SPRING_MAIL_PORT: 2525
+      SPRING_MAIL_USERNAME: ci
+      SPRING_MAIL_PASSWORD: ci
+      APP_JWT_SECRET: ci-only-token-signing-key-not-for-production
+    defaults:
+      run:
+        working-directory: back-end
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5.7.0
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+          cache-dependency-path: back-end/pom.xml
+
+      - name: Make Maven Wrapper executable
+        run: chmod +x mvnw
+
+      - name: Test
+        run: ./mvnw -B -ntp test
+
+  project-ci:
+    name: project-ci
+    needs:
+      - detect
+      - frontend
+      - backend
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      DETECT_RESULT: ${{ needs.detect.result }}
+      FRONTEND_RESULT: ${{ needs.frontend.result }}
+      BACKEND_RESULT: ${{ needs.backend.result }}
+    steps:
+      - name: Validate jobs
+        shell: bash
+        run: |
+          if [[ "$DETECT_RESULT" != "success" ]]; then
+            echo "Module detection failed"
+            exit 1
+          fi
+
+          for result in "$FRONTEND_RESULT" "$BACKEND_RESULT"; do
+            if [[ "$result" != "success" && "$result" != "skipped" ]]; then
+              echo "Module validation failed"
+              exit 1
+            fi
+          done
