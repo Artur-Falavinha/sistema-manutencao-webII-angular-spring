@@ -9,8 +9,23 @@
 
 html, body {
     height: 100%;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-family-secondary);
     background: var(--color-background-page);
+    color: var(--color-text-default);
+}
+
+body {
+    min-width: 20rem;
+}
+
+:focus-visible {
+    outline: 0.1875rem solid var(--color-workshop-safety);
+    outline-offset: 0.1875rem;
+}
+
+::selection {
+    background: var(--color-workshop-safety);
+    color: var(--color-workshop-graphite);
 }
 
 
