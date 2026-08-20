@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_URL } from './config/api.token';
 import { Status } from '../../shared/models/status';
-import { API_URL } from '../configs/api.token';
 import { map } from 'rxjs/operators';
 
 @Injectable({

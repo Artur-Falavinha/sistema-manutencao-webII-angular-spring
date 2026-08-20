@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_URL } from '../configs/api.token'; 
-import {MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO, ClientRequestDetailDTO, EmployeeRequestDetailDTO, RejectionDTO} from '../../shared/models/maintenance-request.models';
+import { API_URL } from './config/api.token';
+import { MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO, ClientRequestDetailDTO, EmployeeRequestDetailDTO, RejectionDTO} from '../../shared/models/maintenance-request.models';
 import { MaintenanceRecordDTO } from '../../shared/models/maintenance-record.model'
 import { BudgetCreateDTO } from '../../shared/models/budget.model';
 
