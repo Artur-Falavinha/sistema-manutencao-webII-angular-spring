@@ -5,5 +5,5 @@ export interface User {
   cpf: string;
   phoneNumber: string;
   password: string;
-  userAccess: 'employee' | 'client';
+  userAccess: 'employee' | 'client'; 
 }
