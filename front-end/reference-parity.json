@@ -277,8 +277,8 @@
       "path": "src/app/features/employee/employee.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "14684e9eb460aba7c22b26a42b2b82a1a616e8aabe576680d38a8e755f82b4f5",
-      "reason": "Rotas administrativas iniciais sem páginas funcionais, reservadas para substituição pela migração literal do módulo.",
+      "expectedSha256": "ab47abc27d6523e2aafa103dc110a09c0d91e778373e6d6c3860ee49387e791f",
+      "reason": "Rotas iniciais administrativas e de dashboard sem regras de negócio, reservadas para substituição pela migração literal do módulo.",
       "removalBy": "2026-08-27"
     },
     {
@@ -304,6 +304,42 @@
       "expectedSha256": "de25dff0e764faf2836970d1761772d4796ff422f55a56236da84b85777e2709",
       "reason": "Estilos isolados da página administrativa temporária.",
       "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "d41950a140387a5e93e3f3ecec0d8a58c4b87ebc62fff2f7eebd278af3c774e7",
+      "reason": "Dashboard estático com dados simulados para validar a rota do funcionário sem antecipar services HTTP ou regras de negócio.",
+      "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.html",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "d1c10cdacf82ae59397f4b364beb57e52300cb5917dc619008d38af42351020c",
+      "reason": "Conteúdo estático de indicadores e ordens simuladas para a etapa inicial do dashboard.",
+      "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.css",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "e998986231885f53b6cc2f0e57014fe13ee294d5e9892cdd0227e7849a38276c",
+      "reason": "Estilos isolados do dashboard temporário alinhados aos tokens visuais globais.",
+      "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/shared/models/maintenance-record.model.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "fb5648ffdf99787fdd8be1c05b1f16a115447845b42685ba95dae0d14fe3953d",
+      "expectedSha256": "fb5648ffdf99787fdd8be1c05b1f16a115447845b42685ba95dae0d14fe3953d"
+    },
+    {
+      "path": "src/app/shared/models/maintenance-request.models.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d",
+      "expectedSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d"
     }
   ]
 }
