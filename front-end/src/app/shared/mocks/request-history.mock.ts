@@ -1,0 +1,23 @@
+import { RequestHistory } from '../models/request-history';
+
+export const MOCK_REQUEST_HISTORY: Record<number, RequestHistory[]> = {
+  2: [
+    { id: 1, title: 'Solicitação aberta', occurrenceDate: '2026-08-12T14:30:00', userName: 'Ana Beatriz Souza', statusName: 'ABERTA', statusColor: '#6c757d' },
+    { id: 2, title: 'Orçamento gerado pelo técnico', occurrenceDate: '2026-08-13T09:00:00', userName: 'João Pedro Alves', statusName: 'ORÇADA', statusColor: '#856404' },
+  ],
+  3: [
+    { id: 3, title: 'Solicitação aberta', occurrenceDate: '2026-08-05T11:00:00', userName: 'Carlos Eduardo Lima', statusName: 'ABERTA', statusColor: '#6c757d' },
+    { id: 4, title: 'Orçamento gerado pelo técnico', occurrenceDate: '2026-08-06T13:20:00', userName: 'Marina Costa', statusName: 'ORÇADA', statusColor: '#856404' },
+    { id: 5, title: 'Orçamento aprovado pelo cliente', occurrenceDate: '2026-08-06T18:00:00', userName: 'Carlos Eduardo Lima', statusName: 'APROVADA', statusColor: '#25A46B' },
+  ],
+  4: [
+    { id: 6, title: 'Solicitação aberta', occurrenceDate: '2026-08-01T16:45:00', userName: 'Carlos Eduardo Lima', statusName: 'ABERTA', statusColor: '#6c757d' },
+    { id: 7, title: 'Orçamento gerado pelo técnico', occurrenceDate: '2026-08-02T10:10:00', userName: 'Marina Costa', statusName: 'ORÇADA', statusColor: '#856404' },
+    { id: 8, title: 'Orçamento rejeitado pelo cliente', occurrenceDate: '2026-08-03T08:00:00', userName: 'Carlos Eduardo Lima', statusName: 'REJEITADA', statusColor: '#FF5E5B' },
+  ],
+  5: [
+    { id: 9, title: 'Solicitação aberta', occurrenceDate: '2026-07-20T10:00:00', userName: 'Ana Beatriz Souza', statusName: 'ABERTA', statusColor: '#6c757d' },
+    { id: 10, title: 'Orçamento aprovado pelo cliente', occurrenceDate: '2026-07-21T09:30:00', userName: 'Ana Beatriz Souza', statusName: 'APROVADA', statusColor: '#25A46B' },
+    { id: 11, title: 'Serviço finalizado pelo técnico', occurrenceDate: '2026-07-24T17:00:00', userName: 'João Pedro Alves', statusName: 'FINALIZADA', statusColor: '#198754' },
+  ],
+};
