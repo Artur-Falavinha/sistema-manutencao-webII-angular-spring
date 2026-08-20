@@ -272,6 +272,89 @@
       "referenceSha256": null,
       "expectedSha256": "fbd0a8f649d1e51c645d83ae0b09eb27ee49f28442f0688245ccac780161df53",
       "reason": "Fixture de histórico simulado exigida pelo critério de aceite da semana; sem arquivo equivalente na referência."
+    },
+    {
+      {
+      "path": "src/app/shared/mocks/request-history.mock.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "fbd0a8f649d1e51c645d83ae0b09eb27ee49f28442f0688245ccac780161df53",
+      "reason": "Fixture de histórico simulado exigida pelo critério de aceite da semana; sem arquivo equivalente na referência."
+    },
+    {
+      "path": "src/app/core/services/maintenance-request.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "d62a139b8e29d2ffd34beee2c498785a8994dce9ed47b891dbd38f3f63b26788",
+      "expectedSha256": "d62a139b8e29d2ffd34beee2c498785a8994dce9ed47b891dbd38f3f63b26788"
+    },
+    {
+      "path": "src/app/core/services/status.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "f575f7bf5f91627dff67a28fe60a98e5c93d0285b7b48d30d02752681693a25f",
+      "expectedSha256": "f575f7bf5f91627dff67a28fe60a98e5c93d0285b7b48d30d02752681693a25f"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a43cbb6884eb0c68b51f5a11c6fd4b3040b64329444092a06b4bd97210e89aad",
+      "expectedSha256": "a43cbb6884eb0c68b51f5a11c6fd4b3040b64329444092a06b4bd97210e89aad"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "00a89283840b19f2c2040929a93f10c0a52fce6fc15da3430b52bfb5c2b56afa",
+      "expectedSha256": "00a89283840b19f2c2040929a93f10c0a52fce6fc15da3430b52bfb5c2b56afa"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "35c51478f0ae3f78efa1fc3602bc672215e3d7f0381b015379ce04cc3876f97d",
+      "expectedSha256": "35c51478f0ae3f78efa1fc3602bc672215e3d7f0381b015379ce04cc3876f97d"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "e8ffe9512b1477b39e42e36a4ec343ae273fb7871f81b22ed8711cae9e729cb6",
+      "expectedSha256": "e8ffe9512b1477b39e42e36a4ec343ae273fb7871f81b22ed8711cae9e729cb6"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "c0eacb6e3a594779685f99658799bd476d364a518b6bb5dd96439b38f0bb9e1c",
+      "expectedSha256": "c0eacb6e3a594779685f99658799bd476d364a518b6bb5dd96439b38f0bb9e1c"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "1e95de138f4a126636b6fcdb5c497863fba9f9f5f077a88e7305a6b62635f0da",
+      "expectedSha256": "1e95de138f4a126636b6fcdb5c497863fba9f9f5f077a88e7305a6b62635f0da"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "4ccf2a5513dd7408a2c82003cb4b21e744e361f8d34dd517af87697cfca124a0",
+      "expectedSha256": "4ccf2a5513dd7408a2c82003cb4b21e744e361f8d34dd517af87697cfca124a0"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482",
+      "expectedSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482"
+    },
+    {
+      "path": "src/app/shared/models/maintenance-record.model.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "fb5648ffdf99787fdd8be1c05b1f16a115447845b42685ba95dae0d14fe3953d",
+      "expectedSha256": "fb5648ffdf99787fdd8be1c05b1f16a115447845b42685ba95dae0d14fe3953d"
+    },
+    {
+      "path": "src/app/shared/models/maintenance-request.models.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d",
+      "expectedSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d"
     }
   ]
 }
+
+
+
