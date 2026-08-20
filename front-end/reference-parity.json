@@ -277,8 +277,8 @@
       "path": "src/app/features/employee/employee.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "79d9e320e89db3e533cd1161f6f3d2700881f64d249904e2298ef07f61524d11",
-      "reason": "Rota provisória só com o dashboard; demais páginas do funcionário chegam nas próximas semanas.",
+      "expectedSha256": "ab47abc27d6523e2aafa103dc110a09c0d91e778373e6d6c3860ee49387e791f",
+      "reason": "Rotas iniciais administrativas e de dashboard sem regras de negócio, reservadas para substituição pela migração literal do módulo.",
       "removalBy": "2026-08-27"
     },
     {
@@ -306,88 +306,40 @@
       "removalBy": "2026-08-27"
     },
     {
+      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "d41950a140387a5e93e3f3ecec0d8a58c4b87ebc62fff2f7eebd278af3c774e7",
+      "reason": "Dashboard estático com dados simulados para validar a rota do funcionário sem antecipar services HTTP ou regras de negócio.",
+      "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.html",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "d1c10cdacf82ae59397f4b364beb57e52300cb5917dc619008d38af42351020c",
+      "reason": "Conteúdo estático de indicadores e ordens simuladas para a etapa inicial do dashboard.",
+      "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.css",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "e998986231885f53b6cc2f0e57014fe13ee294d5e9892cdd0227e7849a38276c",
+      "reason": "Estilos isolados do dashboard temporário alinhados aos tokens visuais globais.",
+      "removalBy": "2026-08-27"
+    },
+    {
       "path": "src/app/shared/models/maintenance-record.model.ts",
       "classification": "IDENTICAL",
-      "referenceSha256": "a3ec0f1d9824de8389a7b4980303a31487337868319316655ba1fbe207d445ff",
-      "expectedSha256": "a3ec0f1d9824de8389a7b4980303a31487337868319316655ba1fbe207d445ff"
+      "referenceSha256": "fb5648ffdf99787fdd8be1c05b1f16a115447845b42685ba95dae0d14fe3953d",
+      "expectedSha256": "fb5648ffdf99787fdd8be1c05b1f16a115447845b42685ba95dae0d14fe3953d"
     },
     {
       "path": "src/app/shared/models/maintenance-request.models.ts",
       "classification": "IDENTICAL",
-      "referenceSha256": "b18291a80e2138be13d95481f38ae56ae253a61279978988f8c2718c76e49296",
-      "expectedSha256": "b18291a80e2138be13d95481f38ae56ae253a61279978988f8c2718c76e49296"
-    },
-    {
-      "path": "src/app/core/services/maintenance-request.service.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "6b3a90108aec3fabfc9adf5f95e7f3d9dfb0111418c8dbb917069a63556011fa",
-      "expectedSha256": "6b3a90108aec3fabfc9adf5f95e7f3d9dfb0111418c8dbb917069a63556011fa"
-    },
-    {
-      "path": "src/app/core/services/status.service.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "6243a949d9627e5e70dca587aaed8170016b282062ba1f8b1e2357f7aa2960a3",
-      "expectedSha256": "6243a949d9627e5e70dca587aaed8170016b282062ba1f8b1e2357f7aa2960a3"
-    },
-    {
-      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "a9723d8af9fd2d26e48f28ea7170365cfeba95dc2aec8f7d97eae184cd56a4c7",
-      "expectedSha256": "a9723d8af9fd2d26e48f28ea7170365cfeba95dc2aec8f7d97eae184cd56a4c7"
-    },
-    {
-      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.html",
-      "classification": "IDENTICAL",
-      "referenceSha256": "31cfc8b8d1b9ac0e3c753beabe5a80bcdd17ec1458dc0e374cb2ecb54404e34f",
-      "expectedSha256": "31cfc8b8d1b9ac0e3c753beabe5a80bcdd17ec1458dc0e374cb2ecb54404e34f"
-    },
-    {
-      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.css",
-      "classification": "IDENTICAL",
-      "referenceSha256": "231dc886941247882a089fdd290d42e55e9059a11d39f182365da271cd80e4c0",
-      "expectedSha256": "231dc886941247882a089fdd290d42e55e9059a11d39f182365da271cd80e4c0"
-    },
-    {
-      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.spec.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "5a7930bf29f52967200c2793aa49d6a1ba2fe5a43eb938aec219cfc3127fc7a6",
-      "expectedSha256": "5a7930bf29f52967200c2793aa49d6a1ba2fe5a43eb938aec219cfc3127fc7a6"
-    },
-    {
-      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "c0eacb6e3a594779685f99658799bd476d364a518b6bb5dd96439b38f0bb9e1c",
-      "expectedSha256": "c0eacb6e3a594779685f99658799bd476d364a518b6bb5dd96439b38f0bb9e1c"
-    },
-    {
-      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.html",
-      "classification": "IDENTICAL",
-      "referenceSha256": "1e95de138f4a126636b6fcdb5c497863fba9f9f5f077a88e7305a6b62635f0da",
-      "expectedSha256": "1e95de138f4a126636b6fcdb5c497863fba9f9f5f077a88e7305a6b62635f0da"
-    },
-    {
-      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.css",
-      "classification": "IDENTICAL",
-      "referenceSha256": "4ccf2a5513dd7408a2c82003cb4b21e744e361f8d34dd517af87697cfca124a0",
-      "expectedSha256": "4ccf2a5513dd7408a2c82003cb4b21e744e361f8d34dd517af87697cfca124a0"
-    },
-    {
-      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.spec.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482",
-      "expectedSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482"
-    },
-    {
-      "path": "src/app/core/configs/api.token.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "300bf7341a3e10fa44f85070d278bf33049be03cbae78020dce65263c53cc700",
-      "expectedSha256": "300bf7341a3e10fa44f85070d278bf33049be03cbae78020dce65263c53cc700"
-    },
-    {
-      "path": "src/app/features/employee/services/category.service.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "53e7efccc053e45faad27bb0eb2dd7f6da7770765e761d9eebcdb99ab929bdef",
-      "expectedSha256": "53e7efccc053e45faad27bb0eb2dd7f6da7770765e761d9eebcdb99ab929bdef"
+      "referenceSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d",
+      "expectedSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d"
     }
   ]
 }
