@@ -10,8 +10,8 @@
     {
       "path": "tsconfig.json",
       "classification": "IDENTICAL",
-      "referenceSha256": "f88ab782788a0ee32d04c10e89e276c00deb9228b5d21a9e4086932c56e9b5c1",
-      "expectedSha256": "f88ab782788a0ee32d04c10e89e276c00deb9228b5d21a9e4086932c56e9b5c1"
+      "referenceSha256": "0d28a79664f52fbe1769f03bad7628474dfed548a24dc1e3054e42b4eafad3d0",
+      "expectedSha256": "0d28a79664f52fbe1769f03bad7628474dfed548a24dc1e3054e42b4eafad3d0"
     },
     {
       "path": "tsconfig.app.json",
@@ -61,14 +61,14 @@
       "path": "package.json",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "2eda80a9499cd8760bd278330582e7994df6b54afbdeb1820449712cccb5bb48",
-      "expectedSha256": "22839663676549e9030c466fb1581b41d8f21485823e1f6c15b9235fbd891e09",
+      "expectedSha256": "f56bb2ae76e82febd4476329f82343bb57ce6e58aff2c9a534a60ce6c2e3c243",
       "reason": "Adição do Angular CLI 19.2.15 e do comando público de verificação de paridade."
     },
     {
       "path": "package-lock.json",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "13201cb02871f1c52c6ae19c5f98b22a5a9a3a57d4930be958400211369473e2",
-      "expectedSha256": "5567d1585db3a259dbd6cc25348f1fc92accc50eaa6e2d80b30375ceb5d26090",
+      "expectedSha256": "d97e223fc9ad1730e1fbc1da411d0a60f87c056d937c50a710de26ad5e5e381f",
       "reason": "Lockfile regenerado exclusivamente para registrar o Angular CLI 19.2.15."
     },
     {
@@ -276,14 +276,14 @@
     {
       "path": "src/app/core/services/maintenance-request.service.ts",
       "classification": "IDENTICAL",
-      "referenceSha256": "d62a139b8e29d2ffd34beee2c498785a8994dce9ed47b891dbd38f3f63b26788",
-      "expectedSha256": "d62a139b8e29d2ffd34beee2c498785a8994dce9ed47b891dbd38f3f63b26788"
+      "referenceSha256": "24e89231cfdbe6056f9063bde7f3eb6dd27d8a3f6df202f4e8ada6f4ecc509a2",
+      "expectedSha256": "24e89231cfdbe6056f9063bde7f3eb6dd27d8a3f6df202f4e8ada6f4ecc509a2"
     },
     {
       "path": "src/app/core/services/status.service.ts",
       "classification": "IDENTICAL",
-      "referenceSha256": "f575f7bf5f91627dff67a28fe60a98e5c93d0285b7b48d30d02752681693a25f",
-      "expectedSha256": "f575f7bf5f91627dff67a28fe60a98e5c93d0285b7b48d30d02752681693a25f"
+      "referenceSha256": "d55a91135526dc46092e9310a26b648528e89f94a192f965ac661b7812b74081",
+      "expectedSha256": "d55a91135526dc46092e9310a26b648528e89f94a192f965ac661b7812b74081"
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.ts",
@@ -344,9 +344,12 @@
       "classification": "IDENTICAL",
       "referenceSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d",
       "expectedSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d"
+    },
+    {
+      "path": "src/app/core/services/config/api.token.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "e30a43ceb8b9e36175bfd2b0cd30af7751f43ed737be13733492971cf66ef719",
+      "expectedSha256": "e30a43ceb8b9e36175bfd2b0cd30af7751f43ed737be13733492971cf66ef719"
     }
   ]
 }
-
-
-
