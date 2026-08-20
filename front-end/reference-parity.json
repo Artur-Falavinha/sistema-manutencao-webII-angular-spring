@@ -128,8 +128,8 @@
       "path": "src/app/app.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "f84672d19487bf6f159b1518415acc46b6958ca597ad4ec3e99d5ebedbe8fb42",
-      "reason": "Rota provisória sem módulos funcionais.",
+      "expectedSha256": "b22e72e7ecbaf20f1bc6d28458cd0d660a4ed7cd1f7bbb3c93b0e5bf82928ab2",
+      "reason": "Rota provisória sem módulos funcionais, com acesso temporário às estruturas administrativas.",
       "removalBy": "2026-08-27"
     },
     {
@@ -272,6 +272,38 @@
       "referenceSha256": null,
       "expectedSha256": "fbd0a8f649d1e51c645d83ae0b09eb27ee49f28442f0688245ccac780161df53",
       "reason": "Fixture de histórico simulado exigida pelo critério de aceite da semana; sem arquivo equivalente na referência."
+    },
+    {
+      "path": "src/app/features/employee/employee.routes.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "14684e9eb460aba7c22b26a42b2b82a1a616e8aabe576680d38a8e755f82b4f5",
+      "reason": "Rotas administrativas iniciais sem páginas funcionais, reservadas para substituição pela migração literal do módulo.",
+      "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "0e28917fc8b997bbc5ffe25e6d7854059e16ebfba5aa2118d9d3cce728b5ff34",
+      "reason": "Página estática temporária para validar as rotas administrativas sem antecipar regras de negócio.",
+      "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.html",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "4bef7615675a96733d998c38fedf9c550dfa55c9299197a096310eb3c51eb4fe",
+      "reason": "Template estático temporário da estrutura administrativa inicial.",
+      "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.css",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "de25dff0e764faf2836970d1761772d4796ff422f55a56236da84b85777e2709",
+      "reason": "Estilos isolados da página administrativa temporária.",
+      "removalBy": "2026-08-27"
     }
   ]
 }

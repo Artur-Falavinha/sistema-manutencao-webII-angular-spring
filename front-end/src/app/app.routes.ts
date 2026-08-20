@@ -8,6 +8,10 @@ export const routes: Routes = [
     component: FoundationPageComponent
   },
   {
+    path: 'employee',
+    loadChildren: () => import('./features/employee/employee.routes').then((module) => module.employeeRoutes)
+  },
+  {
     path: '**',
     redirectTo: ''
   }
