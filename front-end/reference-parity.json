@@ -272,6 +272,146 @@
       "referenceSha256": null,
       "expectedSha256": "fbd0a8f649d1e51c645d83ae0b09eb27ee49f28442f0688245ccac780161df53",
       "reason": "Fixture de histórico simulado exigida pelo critério de aceite da semana; sem arquivo equivalente na referência."
+    },
+    {
+      "path": "src/app/features/employee/components/employee-form/employee-form.component.css",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "0e2e2eacd4a6fc3764126e07010b24813d435117abc55ac6bcb3835f13a7bc86",
+      "reason": "Estilos do componente formulário de funcionários."
+    },
+    {
+      "path": "src/app/features/employee/components/employee-form/employee-form.component.html",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "9e29eb877a21abedd2d3a4c60ebb9f09f026b1ecb54e102a4f6dc6919780a9a8",
+      "reason": "Template do componente formulário de funcionários."
+    },
+    {
+      "path": "src/app/features/employee/components/employee-form/employee-form.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "7a7c7fea549d19c8688f20497a1b71e9b844f94d66627833a0bef98c911197c3",
+      "reason": "Teste unitário do formulário de funcionários."
+    },
+    {
+      "path": "src/app/features/employee/components/employee-form/employee-form.component.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "ccec16909fb8de56e817921a90a926e517a974d7b946db0ff19d10ebab95f983",
+      "reason": "Lógica do componente formulário de funcionários."
+    },
+    {
+      "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.css",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "f6a0ea6ddd82b0f6d6c6627906a55eada1b33fe4620793863c69cd659ca289b0",
+      "reason": "Estilos do modal de nova categoria."
+    },
+    {
+      "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.html",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "70b291a18d26e300ef806912fbc7304b22af85a618740e7d11664a4424460d2b",
+      "reason": "Template do modal de nova categoria."
+    },
+    {
+      "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "c2ad7abb6345bd106f3295f7d3d14574b14994e67e5e3b551c5492f8d4f9d967",
+      "reason": "Teste unitário do modal de nova categoria."
+    },
+    {
+      "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "97e4907ee471b3a2ced677f9ddc076f1e8346efcf387328f65fa35f67d8e61d1",
+      "reason": "Lógica do modal de nova categoria."
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-list/employee-list.component.css",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "c17c6d38bc91439dea6972db55f4d4631ab871a7189eac5f18d679ac5bee8814",
+      "reason": "Estilos da listagem de funcionários."
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-list/employee-list.component.html",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "7836d22117e4e82586515fbf1d0b5edc7a0c753a7fb004490931c5c77f4401a2",
+      "reason": "Template da listagem de funcionários."
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-list/employee-list.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "694237af834350e7561ab2670be5c3ae598b10bd03ed1c92fcf92e89e8e3ed0b",
+      "reason": "Teste unitário da listagem de funcionários."
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-list/employee-list.component.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "1897039668f9c41787f17a2dcfb4ea890b456caf3b9a5b5318a0ef8475b94406",
+      "reason": "Lógica da listagem de funcionários."
+    },
+    {
+      "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.css",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "efecc2bf4ccc559b6f3c86f5d1af50dbe09ef7d3f7bcc6cd10da8aee4e01af96",
+      "reason": "Estilos da página de gerenciamento de categorias."
+    },
+    {
+      "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.html",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "63a59fb7124988d5e6b4867b559952c7ce48596a4be31eedf9edae8569fe8218",
+      "reason": "Template da página de gerenciamento de categorias."
+    },
+    {
+      "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "aa0770167d61d9c18d121f9560045ddd2567dc2c0355faa1fbb5e32bd5b8c027",
+      "reason": "Teste unitário da página de gerenciamento de categorias."
+    },
+    {
+      "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "2c09aa0526e580497d9ac8b878117bafce8d58ebf924a67a2324a5e8f571f789",
+      "reason": "Lógica da página de gerenciamento de categorias."
+    },
+    {
+      "path": "src/app/features/employee/services/category.service.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "0c3526e7e9b0b256a682d9a10b5e415dd058380e96143c2104692f5bf6f80b5f",
+      "reason": "Teste unitário do serviço de categoria."
+    },
+    {
+      "path": "src/app/features/employee/services/category.service.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "4585f86888331b487f5cea05a67ba642adc90a05e6ecaa06d691a7b2f7a34e8f",
+      "reason": "Serviço de gerenciamento de categorias."
+    },
+    {
+      "path": "src/app/features/employee/services/employe.service.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "a7d9b26096708e025bf605a12ebeb1dd14b1cbae88b245e2490813339829498c",
+      "reason": "Teste unitário do serviço de funcionários."
+    },
+    {
+      "path": "src/app/features/employee/services/employe.service.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "aaade0f95dc558b3817aac2402e2f81bb6c013ddf395b42eba5ca3547188b63b",
+      "reason": "Serviço de gerenciamento de funcionários."
     }
   ]
 }
