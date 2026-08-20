@@ -163,6 +163,115 @@
       "expectedSha256": "5313652c97116c3984e2fdffb385da1ecc0f43c9a422794e4a19169e4320cec8",
       "reason": "Teste limitado ao scaffold da entrega de fundação.",
       "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/shared/models/status.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "b120543e934e6e87984d06f18344944ca1d943bc5375db9b4b0b860785cc192d",
+      "expectedSha256": "b120543e934e6e87984d06f18344944ca1d943bc5375db9b4b0b860785cc192d"
+    },
+    {
+      "path": "src/app/shared/models/request.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "f42275379ad98ff4e9c7393fa02b62ecf51cceb1f15c3ea582d6fcf407745d53",
+      "expectedSha256": "f42275379ad98ff4e9c7393fa02b62ecf51cceb1f15c3ea582d6fcf407745d53"
+    },
+    {
+      "path": "src/app/shared/models/budget.model.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "911dafaf82bd35e5685f2b02649c8320f600f14715655ecd0c4ef20507298fb0",
+      "expectedSha256": "911dafaf82bd35e5685f2b02649c8320f600f14715655ecd0c4ef20507298fb0"
+    },
+    {
+      "path": "src/app/shared/models/request-history.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "69ee9db2d8d6cf5b34a82fd00cc87238d450f9453f072dc8e440b133e4069230",
+      "expectedSha256": "69ee9db2d8d6cf5b34a82fd00cc87238d450f9453f072dc8e440b133e4069230"
+    },
+    {
+      "path": "src/app/shared/models/service-item.model.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "6542f68f9cfe174ea89863157b8075905211110c37d7ff5dde1d5741efc0712b",
+      "expectedSha256": "6542f68f9cfe174ea89863157b8075905211110c37d7ff5dde1d5741efc0712b"
+    },
+    {
+      "path": "src/app/shared/models/category.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "1de80fe315be569231531782ba1fccf4031a279314fd3c3aaea1491738f686b2",
+      "expectedSha256": "1de80fe315be569231531782ba1fccf4031a279314fd3c3aaea1491738f686b2"
+    },
+    {
+      "path": "src/app/shared/models/client.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "7d630f74c5c1c4d8472cb84d157bf617867558dc97435c9edb14d4d71333fe60",
+      "expectedSha256": "7d630f74c5c1c4d8472cb84d157bf617867558dc97435c9edb14d4d71333fe60"
+    },
+    {
+      "path": "src/app/shared/models/employee.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a846d7954b9ded71074dcace6b863ebf0eb9764b57a4469718ec9545647f1cae",
+      "expectedSha256": "a846d7954b9ded71074dcace6b863ebf0eb9764b57a4469718ec9545647f1cae"
+    },
+    {
+      "path": "src/app/shared/models/user.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "c7bd9e2da4a4fb73dee1ad67932ecfbe710b0e202d8c9d0e16e97f52bd4c8dfd",
+      "expectedSha256": "c7bd9e2da4a4fb73dee1ad67932ecfbe710b0e202d8c9d0e16e97f52bd4c8dfd"
+    },
+    {
+      "path": "src/app/shared/models/address.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "b63484c49f5a109c742e8f6544174854481d3fb6161c404d73760600e8b4df51",
+      "expectedSha256": "b63484c49f5a109c742e8f6544174854481d3fb6161c404d73760600e8b4df51"
+    },
+    {
+      "path": "src/app/shared/mocks/status.mock.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "e8a1e4fd44ec3b07d4b61e4b93d0866b9c1d61e5e4e9702350575bf5d17cc0f8",
+      "reason": "Fixture de dados simulados de estados exigida pelo critério de aceite da semana; a referência gera esses dados em runtime, sem arquivo dedicado."
+    },
+    {
+      "path": "src/app/shared/mocks/category.mock.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "ee99d830d213cd0d13200f2e2e10bb9319dc39fc8244de1e314f503cfc9af5ba",
+      "reason": "Fixture de dados simulados de categorias necessária para compor solicitações coerentes; sem arquivo equivalente na referência."
+    },
+    {
+      "path": "src/app/shared/mocks/client.mock.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "e62949caf98e0b1f8a8ce3098439eb6169824192616b63f1272e15a1626bd0fc",
+      "reason": "Fixture de dados simulados de clientes necessária para compor solicitações coerentes; sem arquivo equivalente na referência."
+    },
+    {
+      "path": "src/app/shared/mocks/employee.mock.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "a20ad2ffde596066a46175e12e5a88527c1c8a1ef0420b234d9feb1e69c32d82",
+      "reason": "Fixture de dados simulados de funcionários necessária para compor solicitações e orçamentos coerentes; sem arquivo equivalente na referência."
+    },
+    {
+      "path": "src/app/shared/mocks/request.mock.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "243eaec201da92d905eea025d4058c7b6683ba0cd3bc953acf2177a292a84f6b",
+      "reason": "Fixture de solicitações simuladas exigida pelo critério de aceite da semana; a referência gera esses dados em runtime via localStorage, sem arquivo dedicado."
+    },
+    {
+      "path": "src/app/shared/mocks/budget.mock.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "7d15cfacdc8ea1647aa3aa952d40a2e4eefd11f06b0c8c1cb001d610be170d1a",
+      "reason": "Fixture de orçamentos simulados exigida pelo critério de aceite da semana; a referência gera esses dados em runtime via localStorage, sem arquivo dedicado."
+    },
+    {
+      "path": "src/app/shared/mocks/request-history.mock.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "fbd0a8f649d1e51c645d83ae0b09eb27ee49f28442f0688245ccac780161df53",
+      "reason": "Fixture de histórico simulado exigida pelo critério de aceite da semana; sem arquivo equivalente na referência."
     }
   ]
 }
