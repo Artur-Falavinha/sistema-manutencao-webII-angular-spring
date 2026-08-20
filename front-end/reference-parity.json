@@ -128,8 +128,8 @@
       "path": "src/app/app.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "b22e72e7ecbaf20f1bc6d28458cd0d660a4ed7cd1f7bbb3c93b0e5bf82928ab2",
-      "reason": "Rota provisória sem módulos funcionais, com acesso temporário às estruturas administrativas.",
+      "expectedSha256": "f84672d19487bf6f159b1518415acc46b6958ca597ad4ec3e99d5ebedbe8fb42",
+      "reason": "Rota provisória sem módulos funcionais.",
       "removalBy": "2026-08-27"
     },
     {
@@ -274,36 +274,104 @@
       "reason": "Fixture de histórico simulado exigida pelo critério de aceite da semana; sem arquivo equivalente na referência."
     },
     {
+      "path": "src/app/core/services/maintenance-request.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "6b3a90108aec3fabfc9adf5f95e7f3d9dfb0111418c8dbb917069a63556011fa",
+      "expectedSha256": "6b3a90108aec3fabfc9adf5f95e7f3d9dfb0111418c8dbb917069a63556011fa"
+    },
+    {
+      "path": "src/app/core/services/status.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "6243a949d9627e5e70dca587aaed8170016b282062ba1f8b1e2357f7aa2960a3",
+      "expectedSha256": "6243a949d9627e5e70dca587aaed8170016b282062ba1f8b1e2357f7aa2960a3"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a9723d8af9fd2d26e48f28ea7170365cfeba95dc2aec8f7d97eae184cd56a4c7",
+      "expectedSha256": "a9723d8af9fd2d26e48f28ea7170365cfeba95dc2aec8f7d97eae184cd56a4c7"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "31cfc8b8d1b9ac0e3c753beabe5a80bcdd17ec1458dc0e374cb2ecb54404e34f",
+      "expectedSha256": "31cfc8b8d1b9ac0e3c753beabe5a80bcdd17ec1458dc0e374cb2ecb54404e34f"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "231dc886941247882a089fdd290d42e55e9059a11d39f182365da271cd80e4c0",
+      "expectedSha256": "231dc886941247882a089fdd290d42e55e9059a11d39f182365da271cd80e4c0"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "5a7930bf29f52967200c2793aa49d6a1ba2fe5a43eb938aec219cfc3127fc7a6",
+      "expectedSha256": "5a7930bf29f52967200c2793aa49d6a1ba2fe5a43eb938aec219cfc3127fc7a6"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "3c02e936b5f7284bfbbc1609dc0f865b8bff8c6b7ef3c7093acc740863b61faa",
+      "expectedSha256": "3c02e936b5f7284bfbbc1609dc0f865b8bff8c6b7ef3c7093acc740863b61faa"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "87e5ab9dfe53f94913db829bbe245c618dc0af26e3db8e437c5dbf660272fc77",
+      "expectedSha256": "87e5ab9dfe53f94913db829bbe245c618dc0af26e3db8e437c5dbf660272fc77"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "078a0659785d891f2339443da737a80818d0fa06479687e8ea341d5f6b0c9361",
+      "expectedSha256": "078a0659785d891f2339443da737a80818d0fa06479687e8ea341d5f6b0c9361"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "fdb378ea377f2249f6a168a201272e0d318a15e72726ee371be2667c26302249",
+      "expectedSha256": "fdb378ea377f2249f6a168a201272e0d318a15e72726ee371be2667c26302249"
+    },
+    {
+      "path": "src/app/shared/models/maintenance-record.model.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a3ec0f1d9824de8389a7b4980303a31487337868319316655ba1fbe207d445ff",
+      "expectedSha256": "a3ec0f1d9824de8389a7b4980303a31487337868319316655ba1fbe207d445ff"
+    },
+    {
+      "path": "src/app/shared/models/maintenance-request.models.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "b18291a80e2138be13d95481f38ae56ae253a61279978988f8c2718c76e49296",
+      "expectedSha256": "b18291a80e2138be13d95481f38ae56ae253a61279978988f8c2718c76e49296"
+    },
+    {
       "path": "src/app/features/employee/employee.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "14684e9eb460aba7c22b26a42b2b82a1a616e8aabe576680d38a8e755f82b4f5",
-      "reason": "Rotas administrativas iniciais sem páginas funcionais, reservadas para substituição pela migração literal do módulo.",
+      "expectedSha256": "79d9e320e89db3e533cd1161f6f3d2700881f64d249904e2298ef07f61524d11",
+      "reason": "Rota provisória só com o dashboard; demais páginas do funcionário chegam nas próximas semanas.",
+      "removalBy": "2026-08-27"
+    },
+        {
+      "path": "src/app/features/employee/employee.routes.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "79d9e320e89db3e533cd1161f6f3d2700881f64d249904e2298ef07f61524d11",
+      "reason": "Rota provisória só com o dashboard; demais páginas do funcionário chegam nas próximas semanas.",
       "removalBy": "2026-08-27"
     },
     {
-      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "0e28917fc8b997bbc5ffe25e6d7854059e16ebfba5aa2118d9d3cce728b5ff34",
-      "reason": "Página estática temporária para validar as rotas administrativas sem antecipar regras de negócio.",
-      "removalBy": "2026-08-27"
+      "path": "src/app/core/configs/api.token.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "300bf7341a3e10fa44f85070d278bf33049be03cbae78020dce65263c53cc700",
+      "expectedSha256": "300bf7341a3e10fa44f85070d278bf33049be03cbae78020dce65263c53cc700"
     },
     {
-      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.html",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "4bef7615675a96733d998c38fedf9c550dfa55c9299197a096310eb3c51eb4fe",
-      "reason": "Template estático temporário da estrutura administrativa inicial.",
-      "removalBy": "2026-08-27"
-    },
-    {
-      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.css",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "de25dff0e764faf2836970d1761772d4796ff422f55a56236da84b85777e2709",
-      "reason": "Estilos isolados da página administrativa temporária.",
-      "removalBy": "2026-08-27"
+      "path": "src/app/features/employee/services/category.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "53e7efccc053e45faad27bb0eb2dd7f6da7770765e761d9eebcdb99ab929bdef",
+      "expectedSha256": "53e7efccc053e45faad27bb0eb2dd7f6da7770765e761d9eebcdb99ab929bdef"
     }
   ]
 }

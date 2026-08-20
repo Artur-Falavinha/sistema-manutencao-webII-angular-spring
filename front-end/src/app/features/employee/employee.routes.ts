@@ -1,14 +1,9 @@
 import { Routes } from '@angular/router';
-
-import { AdministrativePlaceholderPageComponent } from './pages/administrative-placeholder-page/administrative-placeholder-page.component';
+import { EmployeeDashboardPageComponent } from './pages/employee-dashboard-page/employee-dashboard-page.component';
 
 export const employeeRoutes: Routes = [
   {
-    path: 'employees-list',
-    component: AdministrativePlaceholderPageComponent
+    path: 'dashboard',
+    component: EmployeeDashboardPageComponent,
   },
-  {
-    path: 'categories',
-    component: AdministrativePlaceholderPageComponent
-  }
 ];
