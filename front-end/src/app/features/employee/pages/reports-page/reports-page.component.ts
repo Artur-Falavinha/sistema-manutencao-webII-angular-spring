@@ -1,22 +1,23 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from "@angular/core";
-import { MatIcon } from "@angular/material/icon";
-import { ReportService } from "../../../../core/services/report.service";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
+import { ReportService } from '../../../../core/services/report.service';
+import { RevenueByCategory, RevenueByDate } from '../../../../shared/models/reports.model';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import {
   ReactiveFormsModule,
   FormControl,
   FormGroup,
   FormBuilder,
-} from "@angular/forms";
-import { provideNativeDateAdapter } from "@angular/material/core";
-import { MatTableDataSource, MatTableModule } from "@angular/material/table";
-import { CommonModule } from "@angular/common";
-import { MatPaginator } from "@angular/material/paginator";
+} from '@angular/forms';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { CommonModule } from '@angular/common';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: "app-reports-page",
+  selector: 'app-reports-page',
   imports: [
     MatIcon,
     MatFormFieldModule,
@@ -28,19 +29,25 @@ import { MatPaginator } from "@angular/material/paginator";
     MatPaginator,
   ],
   providers: [provideNativeDateAdapter()],
-  templateUrl: "./reports-page.component.html",
-  styleUrl: "./reports-page.component.css",
+  templateUrl: './reports-page.component.html',
+  styleUrl: './reports-page.component.css',
 })
-export class ReportsPageComponent implements OnInit, AfterViewInit {
+export class ReportsPageComponent implements OnInit {
   isReportsTotalView: boolean = true;
-  revenueByDate: any[] = [];
-  revenueByCategory: any[] = [];
-  datasource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+  revenueByDate: RevenueByDate[] = [];
+  revenueByCategory: RevenueByCategory[] = [];
+  datasource: MatTableDataSource<RevenueByDate> =
+    new MatTableDataSource<RevenueByDate>(this.revenueByDate);
   range: FormGroup;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatPaginator)
+  set paginator(paginator: MatPaginator | undefined) {
+    if (paginator) {
+      this.datasource.paginator = paginator;
+    }
+  }
   receitaTotal: number = 0;
 
-  displayedColumns: string[] = ["date", "totalRevenue"];
+  displayedColumns: string[] = ['date', 'totalRevenue'];
 
   constructor(
     private reportService: ReportService,
@@ -54,40 +61,36 @@ export class ReportsPageComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadRevenueByCategoryData();
-    this.loadRevenueByDateData("", "");
-  }
-
-  ngAfterViewInit(): void {
-    this.datasource.paginator = this.paginator;
+    this.loadRevenueByDateData('', '');
   }
 
   get start() {
-    return this.range.get("start")!;
+    return this.range.get('start')!;
   }
 
   get end() {
-    return this.range.get("end")!;
+    return this.range.get('end')!;
   }
 
   loadRevenueByDateData(startDate: string, endDate: string) {
     this.reportService.getRevenueByDateData(startDate, endDate).subscribe({
-      next: (data: any) => {
+      next: (data) => {
         this.datasource.data = data;
       },
-      error: (error: any) => {
-        console.error("Erro ao carregar dados de receita por data:", error);
+      error: (error: unknown) => {
+        console.error('Erro ao carregar dados de receita por data:', error);
       },
     });
   }
 
   loadRevenueByCategoryData() {
     this.reportService.getRevenueByCategoryData().subscribe({
-      next: (data: any) => {
+      next: (data) => {
         this.revenueByCategory = data;
       },
-      error: (error: any) => {
+      error: (error: unknown) => {
         console.error(
-          "Erro ao carregar dados de receita por categoria:",
+          'Erro ao carregar dados de receita por categoria:',
           error,
         );
       },
@@ -95,19 +98,19 @@ export class ReportsPageComponent implements OnInit, AfterViewInit {
   }
 
   generateRevenueByDateReport() {
-    const start: Date | null = this.range.controls["start"].value;
-    const end: Date | null = this.range.controls["end"].value;
+    const start: Date | null = this.range.controls['start'].value;
+    const end: Date | null = this.range.controls['end'].value;
 
     if ((start && !end) || (!start && end)) {
-      alert("Atenção: Selecione as duas datas do intervalo.");
+      alert('Atenção: Selecione as duas datas do intervalo.');
       return;
     }
 
-    alert("Sucesso: Download do relatório de receitas por data simulado.");
+    alert('Sucesso: Download do relatório de receitas por data simulado.');
   }
 
   generateCategoriesReport() {
-    alert("Sucesso: Download do relatório de receitas por categoria simulado.");
+    alert('Sucesso: Download do relatório de receitas por categoria simulado.');
   }
 
   toggleView() {

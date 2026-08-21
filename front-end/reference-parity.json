@@ -277,8 +277,8 @@
       "path": "src/app/features/employee/employee.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "ab47abc27d6523e2aafa103dc110a09c0d91e778373e6d6c3860ee49387e791f",
-      "reason": "Rotas iniciais administrativas e de dashboard sem regras de negócio, reservadas para substituição pela migração literal do módulo.",
+      "expectedSha256": "16e64467418662d7e7a3a0e6820eb066f9a4ab706b386663d08cceafa6086863",
+      "reason": "Rotas iniciais administrativas, de dashboard e de relatórios sem regras de negócio, reservadas para substituição pela migração literal do módulo.",
       "removalBy": "2026-08-27"
     },
     {
@@ -343,41 +343,42 @@
     },
     {
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "842c7e306ebaeed03709a68afc3f7bb342ac78349c424f7aa2e1a22d23301506",
-      "reason": "Adaptado temporariamente para consumir dados em memória (mocks) e ignorar os serviços não migrados.",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "8f49290b24e210a02e019b863aa57f577bfa414487f615b611bd36d28cd6a3ca",
+      "expectedSha256": "fc92b7d3cce8430fc5a037b6808cf88823a03756de9ef1b91a34c0cc406c6831",
+      "reason": "Adaptação temporária tipada para consumir mocks locais, reassociar o paginador ao alternar visões e substituir Toast e download real por alertas simulados, sem comunicação com o backend.",
       "removalBy": "2026-10-29"
     },
     {
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.html",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "9371f6666a11341a6d0aff59a30977c5ff8286c880e72cb9aa954c9a57232f55",
-      "reason": "Template ajustado temporariamente para renderizar os dados do mockup em memória.",
-      "removalBy": "2026-10-29"
+      "classification": "IDENTICAL",
+      "referenceSha256": "61e1b0c0c25bd4e39cbf9aaad051e71a092033a572c0919711f2d64883829bc4",
+      "expectedSha256": "61e1b0c0c25bd4e39cbf9aaad051e71a092033a572c0919711f2d64883829bc4"
     },
     {
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.css",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "bb71609a748f78dc3889867c6e7b752d962ca14c7b5cd603d6478a1e878f2eeb",
-      "reason": "Estilos ajustados para a página base isolada do protótipo.",
-      "removalBy": "2026-10-29"
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "26aa66397ba730af010f6d8128ad4892a11485957ad27999c99d7cdb2cc77012",
+      "expectedSha256": "9565f0403884286f3c0ff3cd34380f1efb7cb7545168ccf26af237d8ea9f6528",
+      "reason": "Aplica a identidade Oficina técnica com tokens globais, layout responsivo e foco visível sem alterar contratos funcionais."
     },
     {
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
-      "reason": "Teste unitário ajustado para não depender de pacotes não migrados.",
-      "removalBy": "2026-10-29"
+      "classification": "IDENTICAL",
+      "referenceSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
+      "expectedSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a"
+    },
+    {
+      "path": "src/app/shared/models/reports.model.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "9cd7688f8f65e416ee4b46bb2d490964ee51ab5602ab2f4296dd4df900ea7469",
+      "expectedSha256": "9cd7688f8f65e416ee4b46bb2d490964ee51ab5602ab2f4296dd4df900ea7469"
     },
     {
       "path": "src/app/core/services/report.service.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "4f5b8f3fa791396319d712e81810c2f62a3a1da2bc8572da7d4d9b56a8af98bb",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "9d1a7bc2c06925d7afea96bdfb0822c1399c978682b4edadd82c9350b87b5ee3",
+      "expectedSha256": "638c4b70f2b7718fa4903419f4841aa38beec2893fea09eef9f551ef071aa430",
       "reason": "Implementação temporária usando os dados simulados (mocks) locais em memória para permitir a demonstração da janela sem comunicação com o backend.",
       "removalBy": "2026-10-29"
     }
