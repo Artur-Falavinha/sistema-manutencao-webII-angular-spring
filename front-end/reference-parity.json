@@ -340,6 +340,46 @@
       "classification": "IDENTICAL",
       "referenceSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d",
       "expectedSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d"
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "842c7e306ebaeed03709a68afc3f7bb342ac78349c424f7aa2e1a22d23301506",
+      "reason": "Adaptado temporariamente para consumir dados em memória (mocks) e ignorar os serviços não migrados.",
+      "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.html",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "9371f6666a11341a6d0aff59a30977c5ff8286c880e72cb9aa954c9a57232f55",
+      "reason": "Template ajustado temporariamente para renderizar os dados do mockup em memória.",
+      "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.css",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "bb71609a748f78dc3889867c6e7b752d962ca14c7b5cd603d6478a1e878f2eeb",
+      "reason": "Estilos ajustados para a página base isolada do protótipo.",
+      "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
+      "reason": "Teste unitário ajustado para não depender de pacotes não migrados.",
+      "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/core/services/report.service.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "4f5b8f3fa791396319d712e81810c2f62a3a1da2bc8572da7d4d9b56a8af98bb",
+      "reason": "Implementação temporária usando os dados simulados (mocks) locais em memória para permitir a demonstração da janela sem comunicação com o backend.",
+      "removalBy": "2026-10-29"
     }
   ]
 }
