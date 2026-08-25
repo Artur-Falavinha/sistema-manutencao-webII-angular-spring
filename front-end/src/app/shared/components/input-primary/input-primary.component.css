@@ -1,63 +1,79 @@
-
 .input-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.375rem;
 }
 
 .input-content {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    width: inherit;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  width: inherit;
 }
 
 label {
-    color: var(--color-text-label, #475756);
-    text-align: start;
+  color: var(--color-text-label);
+  text-align: start;
 }
 
 input {
-    
-    display: flex;
-    height: 48px;
-    width: inherit;
-    padding: var(--spacing-3xs) var(--spacing-xs);
-    align-items: center;
-    gap: var(--spacing-3xs);
-    align-self: stretch;
-    border-radius: var(--border-sm);
-    border: 1px solid var(--color-border-dark);
-    color: var(--color-text-default);
+  width: inherit;
+  min-height: 3rem;
+  padding: 0.75rem 3rem 0.75rem 1rem;
+  border: 0.0625rem solid var(--color-border-dark);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-default);
+  background: var(--color-background-inputs);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
-input:focus-visible{
-    outline: none;
-    box-shadow: 0 0 0 0;
-    border: 1px solid var(--color-border-active);
+input::placeholder {
+  color: var(--color-text-placeholder);
+}
+
+input:hover {
+  border-color: var(--color-workshop-enamel);
+}
+
+input:focus-visible {
+  border-color: var(--color-workshop-enamel);
+  outline: 0.1875rem solid rgb(230 154 45 / 35%);
+  outline-offset: 0.125rem;
 }
 
 .icon {
-    position: absolute;
-    right: 0;
-    top: 4px;
-    padding: var(--spacing-3xs) var(--spacing-xs);
-    color: var(--color-text-secondary);
-    cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transform: translateY(-50%);
 }
 
-input.error-state .input-content {
-  border-color: #e74c3c; 
+.error-state input {
+  border-color: var(--color-error-default);
 }
 
-input.error-state .label_medium {
-  color: #e74c3c;
+.error-state label,
+.error-message {
+  color: var(--color-error-default);
 }
 
 .error-message {
-  color: #e74c3c;
-  font-size: 0.75rem; 
-  margin-top: 4px;
   display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  input {
+    transition: none;
+  }
 }

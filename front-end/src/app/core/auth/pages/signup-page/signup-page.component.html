@@ -70,7 +70,7 @@
             <span
               class="button-search-cep label_large"
               [class.disabled]="!isCepValid"
-              (click)="(isCepValid)"
+              (click)="isCepValid && searchCep()"
               ><mat-icon
                 aria-hidden="false"
                 aria-label="Pesquisar"
