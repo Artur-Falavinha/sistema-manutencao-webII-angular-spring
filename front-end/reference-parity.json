@@ -94,7 +94,7 @@
     },
     {
       "path": "src/app/app.component.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
       "expectedSha256": "2d0fe6afbbc78f418b8c3410ad726d359d512764657385a2b762d469b0fabfa6",
       "reason": "Shell mínimo sem regra de negócio para inicializar a fundação isolada.",
@@ -118,11 +118,10 @@
     },
     {
       "path": "src/app/app.config.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "74700bb6c06da4d92d20cab051f3540b8ce1c3abed2648a77934d2bf3c6436a7",
-      "reason": "Configuração mínima de rotas até a migração do layout real.",
-      "removalBy": "2026-08-27"
+      "expectedSha256": "fc547bddc31cb59b1004c73b404d47a0eab7eab47eb17d68460cadfbaa2c7ff5",
+      "reason": "Providers globais de HTTP e notificações necessários pela fatia funcional migrada."
     },
     {
       "path": "src/app/app.routes.ts",
@@ -291,7 +290,7 @@
       "path": "src/app/features/employee/components/employee-form/employee-form.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "7a7c7fea549d19c8688f20497a1b71e9b844f94d66627833a0bef98c911197c3",
+      "expectedSha256": "9e27fe39a92f19eea9d28ad6ce97d01db4a484d21428b248798ee6d188dbc762",
       "reason": "Teste unitário do formulário de funcionários."
     },
     {
@@ -347,7 +346,7 @@
       "path": "src/app/features/employee/pages/employee-list/employee-list.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "694237af834350e7561ab2670be5c3ae598b10bd03ed1c92fcf92e89e8e3ed0b",
+      "expectedSha256": "548bc40e90086d990ba57bec8e4d60cc7e11fcbe2c33849a898968aa65db11f4",
       "reason": "Teste unitário da listagem de funcionários."
     },
     {
@@ -375,7 +374,7 @@
       "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "aa0770167d61d9c18d121f9560045ddd2567dc2c0355faa1fbb5e32bd5b8c027",
+      "expectedSha256": "fcab7c7f2a02c9e0ce7ada45abe299472ae4597bc3d1071e1a841a8ba1b9ab8a",
       "reason": "Teste unitário da página de gerenciamento de categorias."
     },
     {
@@ -389,7 +388,7 @@
       "path": "src/app/features/employee/services/category.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "0c3526e7e9b0b256a682d9a10b5e415dd058380e96143c2104692f5bf6f80b5f",
+      "expectedSha256": "619f4a007e59155823f5a75cbd3cf17c6cc6417f45cc9697cd0cf44f11df95f0",
       "reason": "Teste unitário do serviço de categoria."
     },
     {
@@ -403,7 +402,7 @@
       "path": "src/app/features/employee/services/employe.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "a7d9b26096708e025bf605a12ebeb1dd14b1cbae88b245e2490813339829498c",
+      "expectedSha256": "be34dd2ccc398df076c1a2ac6d16612ce3b0d12cd0434ce25632d365c865365b",
       "reason": "Teste unitário do serviço de funcionários."
     },
     {
@@ -412,6 +411,55 @@
       "referenceSha256": null,
       "expectedSha256": "aaade0f95dc558b3817aac2402e2f81bb6c013ddf395b42eba5ca3547188b63b",
       "reason": "Serviço de gerenciamento de funcionários."
+    },
+    {
+      "path": "src/app/core/configs/api.token.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "e30a43ceb8b9e36175bfd2b0cd30af7751f43ed737be13733492971cf66ef719",
+      "reason": "Token de injeção compartilhado pelos serviços de funcionários e categorias."
+    },
+    {
+      "path": "src/app/core/services/toast.service.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "d923a6306982bc038d6ab4c448cc73983a24f2ff48b866f7c6d3d9ec91fcc5b2",
+      "reason": "Adaptador compartilhado para notificações da fatia migrada."
+    },
+    {
+      "path": "src/app/shared/utils/cpf-validator.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "5cfc8cf8dbe467b16c4a3587826001685f103f98421c18742a0df311c265953f",
+      "reason": "Validador compartilhado usado pelo formulário de funcionários."
+    },
+    {
+      "path": "src/app/shared/components/warning-dialog/warning-dialog.component.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "0e7ac1c02b04b016d668205ddd1865d53cb1d35aeb6c0bce15ad81dc8e0b0c72",
+      "reason": "Componente compartilhado de confirmação usado na exclusão."
+    },
+    {
+      "path": "src/app/shared/components/warning-dialog/warning-dialog.component.html",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "d5a983fadcc985f99ea7e7d8f14dcc1b4e2a465202b2a8b3cbadd9e80cd8fe78",
+      "reason": "Template do diálogo compartilhado de confirmação."
+    },
+    {
+      "path": "src/app/shared/components/warning-dialog/warning-dialog.component.css",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "b71c8418758d6662b17c179c00d917f8c1ed808901549e0d766974aecf66ad76",
+      "reason": "Estilos do diálogo compartilhado de confirmação."
+    },
+    {
+      "path": "src/app/shared/components/warning-dialog/warning-dialog.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "c6fc4d0617a98436cee048d648f862a86c0cab7941ea4d0eb15b9424bebac680",
+      "reason": "Teste unitário do diálogo compartilhado."
     }
   ]
 }
