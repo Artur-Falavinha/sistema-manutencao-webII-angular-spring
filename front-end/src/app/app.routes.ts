@@ -19,6 +19,10 @@ export const routes: Routes = [
     component: ManageCategoriesPageComponent
   },
   {
+    path: 'employee',
+    loadChildren: () => import('./features/employee/employee.routes').then((module) => module.employeeRoutes)
+  },
+  {
     path: '**',
     redirectTo: 'employees'
   }

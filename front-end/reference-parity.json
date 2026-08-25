@@ -127,8 +127,8 @@
       "path": "src/app/app.routes.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "b73571d236993767139439096d6552981318fcbcd669f871befcc2ff0dfd69b8",
-      "reason": "Rotas do protótipo local de funcionários e categorias."
+      "expectedSha256": "d407a2c9ba04f56464bd8cc9bb401f942271593785eec1fade5b71099f7260f4",
+      "reason": "Rotas do protótipo local e das páginas trazidas pela main."
     },
     {
       "path": "src/app/foundation-page/foundation-page.component.ts",
@@ -459,6 +459,107 @@
       "referenceSha256": null,
       "expectedSha256": "c6fc4d0617a98436cee048d648f862a86c0cab7941ea4d0eb15b9424bebac680",
       "reason": "Teste unitário do diálogo compartilhado."
+    },
+    {
+      "path": "src/app/features/employee/employee.routes.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "16e64467418662d7e7a3a0e6820eb066f9a4ab706b386663d08cceafa6086863",
+      "reason": "Rotas lazy da estrutura administrativa adicionada pela main."
+    },
+    {
+      "path": "src/app/core/services/report.service.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "638c4b70f2b7718fa4903419f4841aa38beec2893fea09eef9f551ef071aa430",
+      "reason": "Serviço de relatórios com dados simulados para o protótipo."
+    },
+    {
+      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.css",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "de25dff0e764faf2836970d1761772d4796ff422f55a56236da84b85777e2709",
+      "reason": "Estilos da página administrativa provisória."
+    },
+    {
+      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.html",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "4bef7615675a96733d998c38fedf9c550dfa55c9299197a096310eb3c51eb4fe",
+      "reason": "Template da página administrativa provisória."
+    },
+    {
+      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "0e28917fc8b997bbc5ffe25e6d7854059e16ebfba5aa2118d9d3cce728b5ff34",
+      "reason": "Componente da página administrativa provisória."
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.css",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "e998986231885f53b6cc2f0e57014fe13ee294d5e9892cdd0227e7849a38276c",
+      "reason": "Estilos do dashboard provisório."
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.html",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "d1c10cdacf82ae59397f4b364beb57e52300cb5917dc619008d38af42351020c",
+      "reason": "Template do dashboard provisório."
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "d41950a140387a5e93e3f3ecec0d8a58c4b87ebc62fff2f7eebd278af3c774e7",
+      "reason": "Componente do dashboard provisório."
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.css",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "9565f0403884286f3c0ff3cd34380f1efb7cb7545168ccf26af237d8ea9f6528",
+      "reason": "Estilos da página de relatórios."
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "61e1b0c0c25bd4e39cbf9aaad051e71a092033a572c0919711f2d64883829bc4",
+      "expectedSha256": "61e1b0c0c25bd4e39cbf9aaad051e71a092033a572c0919711f2d64883829bc4"
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
+      "reason": "Teste unitário da página de relatórios."
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "fc92b7d3cce8430fc5a037b6808cf88823a03756de9ef1b91a34c0cc406c6831",
+      "reason": "Página de relatórios com dados simulados."
+    },
+    {
+      "path": "src/app/shared/models/maintenance-record.model.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "fb5648ffdf99787fdd8be1c05b1f16a115447845b42685ba95dae0d14fe3953d",
+      "expectedSha256": "fb5648ffdf99787fdd8be1c05b1f16a115447845b42685ba95dae0d14fe3953d"
+    },
+    {
+      "path": "src/app/shared/models/maintenance-request.models.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d",
+      "expectedSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d"
+    },
+    {
+      "path": "src/app/shared/models/reports.model.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "9cd7688f8f65e416ee4b46bb2d490964ee51ab5602ab2f4296dd4df900ea7469",
+      "expectedSha256": "9cd7688f8f65e416ee4b46bb2d490964ee51ab5602ab2f4296dd4df900ea7469"
     }
   ]
 }
