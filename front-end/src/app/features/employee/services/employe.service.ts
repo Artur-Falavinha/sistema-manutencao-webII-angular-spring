@@ -1,20 +1,14 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Employee, Role } from '../../../shared/models/employee';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { API_URL } from '../../../core/configs/api.token';
+import { Observable, of } from 'rxjs';
+import { MOCK_EMPLOYEES } from '../../../shared/mocks/employee.mock';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeService {
-
-  private http = inject(HttpClient);
-  private apiBaseUrl = inject(API_URL);
-
-  private readonly apiUrl = `${this.apiBaseUrl}/employees`;
-
+  private employees: Employee[] = MOCK_EMPLOYEES.map(employee => ({ ...employee }));
 
   /**
    * Retorna a lista de cargos disponíveis baseada no Enum Role.
@@ -32,28 +26,31 @@ export class EmployeService {
    * Retorna a lista completa de funcionários cadastrados no banco.
    */
   getEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.apiUrl);
+    return of(this.employees.map(employee => ({ ...employee })));
   }
 
   /**
    * Busca os detalhes de um funcionário específico pelo ID.
    */
   getEmployeeById(id: number): Observable<Employee> {
-    return this.http.get<Employee>(`${this.apiUrl}/${id}`);
+    return of(this.employees.find(employee => employee.id === id) ?? this.employees[0]);
   }
 
   /**
    * Envia um novo funcionário (POST) para o backend.
    */
   addEmployee(employee: Employee): Observable<Employee> {
-    return this.http.post<Employee>(this.apiUrl, employee);
+    const created = { ...employee, id: this.nextId() };
+    this.employees = [...this.employees, created];
+    return of({ ...created });
   }
 
   /**
    * Atualiza os dados de um funcionário existente (PUT).
    */
   updateEmployee(employee: Employee): Observable<Employee> {
-    return this.http.put<Employee>(`${this.apiUrl}/${employee.id}`, employee);
+    this.employees = this.employees.map(current => current.id === employee.id ? { ...employee } : current);
+    return of({ ...employee });
   }
 
   /**
@@ -61,6 +58,11 @@ export class EmployeService {
    * Realiza uma exclusão lógica (inativação).
    */
   deleteEmployee(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    this.employees = this.employees.filter(employee => employee.id !== id);
+    return of(void 0);
+  }
+
+  private nextId(): number {
+    return Math.max(0, ...this.employees.map(employee => employee.id)) + 1;
   }
 }

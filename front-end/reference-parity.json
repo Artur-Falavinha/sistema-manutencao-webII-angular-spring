@@ -120,16 +120,15 @@
       "path": "src/app/app.config.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "fc547bddc31cb59b1004c73b404d47a0eab7eab47eb17d68460cadfbaa2c7ff5",
+      "expectedSha256": "4f193ed38454dc9ed70fd5bc01a22a737b9c0c6a77a947d704e5ba710b1ba268",
       "reason": "Providers globais de HTTP e notificações necessários pela fatia funcional migrada."
     },
     {
       "path": "src/app/app.routes.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "f84672d19487bf6f159b1518415acc46b6958ca597ad4ec3e99d5ebedbe8fb42",
-      "reason": "Rota provisória sem módulos funcionais.",
-      "removalBy": "2026-08-27"
+      "expectedSha256": "b73571d236993767139439096d6552981318fcbcd669f871befcc2ff0dfd69b8",
+      "reason": "Rotas do protótipo local de funcionários e categorias."
     },
     {
       "path": "src/app/foundation-page/foundation-page.component.ts",
@@ -290,7 +289,7 @@
       "path": "src/app/features/employee/components/employee-form/employee-form.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "9e27fe39a92f19eea9d28ad6ce97d01db4a484d21428b248798ee6d188dbc762",
+      "expectedSha256": "3abd1b3a39424296741fab5fe5fc1e8d8bbc02053368bc235fe3eff4281a9b57",
       "reason": "Teste unitário do formulário de funcionários."
     },
     {
@@ -346,7 +345,7 @@
       "path": "src/app/features/employee/pages/employee-list/employee-list.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "548bc40e90086d990ba57bec8e4d60cc7e11fcbe2c33849a898968aa65db11f4",
+      "expectedSha256": "c743763e483ea376dacc9cb5fc489c7201e14b26fa52ea55c304557424205fab",
       "reason": "Teste unitário da listagem de funcionários."
     },
     {
@@ -374,7 +373,7 @@
       "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "fcab7c7f2a02c9e0ce7ada45abe299472ae4597bc3d1071e1a841a8ba1b9ab8a",
+      "expectedSha256": "931b1b10d03e9f6f42103230a90498ab37a816262910bc4fb9579ec4dae8bac4",
       "reason": "Teste unitário da página de gerenciamento de categorias."
     },
     {
@@ -388,28 +387,28 @@
       "path": "src/app/features/employee/services/category.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "619f4a007e59155823f5a75cbd3cf17c6cc6417f45cc9697cd0cf44f11df95f0",
+      "expectedSha256": "0c3526e7e9b0b256a682d9a10b5e415dd058380e96143c2104692f5bf6f80b5f",
       "reason": "Teste unitário do serviço de categoria."
     },
     {
       "path": "src/app/features/employee/services/category.service.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "4585f86888331b487f5cea05a67ba642adc90a05e6ecaa06d691a7b2f7a34e8f",
+      "expectedSha256": "49dead9c38a51a6fd102d6aacad8252a049459f53e1b0417771cef66e9232897",
       "reason": "Serviço de gerenciamento de categorias."
     },
     {
       "path": "src/app/features/employee/services/employe.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "be34dd2ccc398df076c1a2ac6d16612ce3b0d12cd0434ce25632d365c865365b",
+      "expectedSha256": "a7d9b26096708e025bf605a12ebeb1dd14b1cbae88b245e2490813339829498c",
       "reason": "Teste unitário do serviço de funcionários."
     },
     {
       "path": "src/app/features/employee/services/employe.service.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "aaade0f95dc558b3817aac2402e2f81bb6c013ddf395b42eba5ca3547188b63b",
+      "expectedSha256": "6676805d609783c26407f69062518ffd9402b49ffdd0f751abf3b0a82d764e05",
       "reason": "Serviço de gerenciamento de funcionários."
     },
     {

@@ -1,36 +1,39 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Category } from '../../../shared/models/category';
-import { API_URL } from '../../../core/configs/api.token';
+import { MOCK_CATEGORIES } from '../../../shared/mocks/category.mock';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
-
-  private http = inject(HttpClient);
-  private apiBaseUrl = inject(API_URL);
-  private apiUrl = `${this.apiBaseUrl}/categories`;
-  constructor() {}
+  private categories: Category[] = MOCK_CATEGORIES.map(category => ({ ...category }));
 
   getAllCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.apiUrl);
+    return of(this.categories.map(category => ({ ...category })));
   }
 
   addCategory(category: Category): Observable<Category> {
-    return this.http.post<Category>(this.apiUrl, category);
+    const created = { ...category, id: this.nextId() };
+    this.categories = [...this.categories, created];
+    return of({ ...created });
   }
 
   getById(id: number): Observable<Category> {
-    return this.http.get<Category>(`${this.apiUrl}/${id}`);
+    return of(this.categories.find(category => category.id === id) ?? { id, name: '', icon: '', active: false });
   }
 
   updateCategory(category: Category): Observable<Category> {
-    return this.http.put<Category>(`${this.apiUrl}/${category.id}`, category);
+    this.categories = this.categories.map(current => current.id === category.id ? { ...category } : current);
+    return of({ ...category });
   }
 
   deleteCategory(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    this.categories = this.categories.filter(category => category.id !== id);
+    return of(void 0);
+  }
+
+  private nextId(): number {
+    return Math.max(0, ...this.categories.map(category => category.id)) + 1;
   }
 }
