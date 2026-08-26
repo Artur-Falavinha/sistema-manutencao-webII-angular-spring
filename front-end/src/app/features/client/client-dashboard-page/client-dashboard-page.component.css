@@ -1,0 +1,21 @@
+.container {
+    margin: var(--spacing-md) 0;
+}
+
+/* Sessão de solicitações */
+.requests h1 {
+    color: var(--color-heading-default);
+    margin: 0 0 var(--spacing-xs) 0;
+}
+
+.icon {
+    font-size: 1.4rem;
+}
+
+/* Busca e botão nova solicitação */
+.search-add {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}

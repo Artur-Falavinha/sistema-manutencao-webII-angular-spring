@@ -5,6 +5,7 @@
 application-local.properties
 application-secrets.properties
 
+
 # Front-end
 front-end/node_modules/
 front-end/dist/
@@ -29,3 +30,5 @@ back-end/*.iml
 .DS_Store
 Thumbs.db
 *.log
+
+CONTEXTO-PROJETO.md
