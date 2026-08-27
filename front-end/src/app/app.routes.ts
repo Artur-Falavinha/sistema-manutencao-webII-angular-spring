@@ -25,14 +25,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: "client",
+    loadChildren: () =>
+      import("./features/client/client.routes").then(
+        (module) => module.clientRoutes,
+      ),
+  },
+  {
     path: "**",
     redirectTo: "",
   },
-    path: 'client',
-    loadChildren: () => import('./features/client/client.routes').then((module) => module.clientRoutes)
-  },
-  {
-    path: '**',
-    redirectTo: ''
-  }
 ];
