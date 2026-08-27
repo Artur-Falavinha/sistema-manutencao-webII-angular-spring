@@ -237,7 +237,7 @@
       "path": "src/app/shared/mocks/category.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "ee99d830d213cd0d13200f2e2e10bb9319dc39fc8244de1e314f503cfc9af5ba",
+      "expectedSha256": "f52ad82d6ff15464cc4e37fed30320da1b2ebe73c7a64497cc835be087d2b379",
       "reason": "Fixture temporária de categorias para compor o protótipo sem backend; sem arquivo equivalente na referência.",
       "removalBy": "2026-10-08"
     },
@@ -245,7 +245,7 @@
       "path": "src/app/shared/mocks/client.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "e62949caf98e0b1f8a8ce3098439eb6169824192616b63f1272e15a1626bd0fc",
+      "expectedSha256": "5a0ba5ef2eeff6db679c63ab8b1340d3e44b92704aa0a957716c1ee3e726a67c",
       "reason": "Fixture temporária de clientes para compor o protótipo sem backend; sem arquivo equivalente na referência.",
       "removalBy": "2026-10-08"
     },
@@ -261,7 +261,7 @@
       "path": "src/app/shared/mocks/request.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "243eaec201da92d905eea025d4058c7b6683ba0cd3bc953acf2177a292a84f6b",
+      "expectedSha256": "e24963915982c09dc27f5d4cebd8260bbfea098b1b38885f46b0a8a013fc73c8",
       "reason": "Fixture temporária de solicitações para o protótipo sem backend; a referência gera esses dados em runtime via localStorage.",
       "removalBy": "2026-10-08"
     },
@@ -269,7 +269,7 @@
       "path": "src/app/shared/mocks/budget.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "7d15cfacdc8ea1647aa3aa952d40a2e4eefd11f06b0c8c1cb001d610be170d1a",
+      "expectedSha256": "43c1332e09f9b198e634a1582fa117ffffcb0d2ef2c23f25632bf9873ebbcfd2",
       "reason": "Fixture temporária de orçamentos para o protótipo sem backend; a referência gera esses dados em runtime via localStorage.",
       "removalBy": "2026-10-08"
     },
@@ -277,7 +277,7 @@
       "path": "src/app/shared/mocks/request-history.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "fbd0a8f649d1e51c645d83ae0b09eb27ee49f28442f0688245ccac780161df53",
+      "expectedSha256": "77de98cc9708d1d1124e8a32d887d0cc7fc56430505edb62a8aedd103d65ca61",
       "reason": "Fixture temporária de histórico para o protótipo sem backend; sem arquivo equivalente na referência.",
       "removalBy": "2026-10-08"
     },
