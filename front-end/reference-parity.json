@@ -513,19 +513,6 @@
       "expectedSha256": "b9fcf6d629a0b1572d0311228e07c576438252569cee64978943ae2dd9535077"
     },
     {
-      "path": "src/test.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "a75ff3fcf29c4b1f441ac9b64c237a9df79bc7184b9e1c7b31cf77f4bd50aa9e",
-      "reason": "Registra provideNgxMask no ambiente de testes sem alterar os testes literais nem o comportamento de produção.",
-      "path": "src/app/features/client/client.routes.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "92eb21145951f879d20d662a09460e1d00416f643eecd7162990b4704b0f2cfb",
-      "reason": "Migra apenas a rota dashboard do client.routes.ts da referência; as rotas request-detail/:id, approve-reject-panel e request-detail/:id/payment pertencem a janelas futuras (RF005-RF010) e dependem de core/auth, que ainda não existe.",
-      "removalBy": "2026-10-29"
-    },
-    {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "57ee945c9524bc1f3b7955fc6281c20e046155f842c4f8253b329da3a54d4f88",
@@ -602,6 +589,13 @@
       "expectedSha256": "a2cb1347cfb733ea3b997987a15a42fdbe9a5a57ad429f41655084613dd34f55",
       "reason": "Implementa só getAllCategories() sobre MOCK_CATEGORIES, em vez das chamadas HTTP da referência. addCategory/updateCategory/deleteCategory/getById pertencem ao CRUD de categorias (RF017), janela futura.",
       "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/test.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "a75ff3fcf29c4b1f441ac9b64c237a9df79bc7184b9e1c7b31cf77f4bd50aa9e",
+      "reason": "Registra provideNgxMask no ambiente de testes sem alterar os testes literais nem o comportamento de produção."
     }
   ]
 }
