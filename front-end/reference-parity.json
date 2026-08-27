@@ -118,14 +118,6 @@
       "removalBy": "2026-08-27"
     },
     {
-      "path": "src/app/app.config.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "be17a431eb9263b183b586bf6673ca700d83254bf019d64c815adffc05618f95",
-      "reason": "Configuração mínima de rotas, máscaras e providers de animação e ngx-toastr até a migração do layout real.",
-      "removalBy": "2026-08-27"
-    },
-    {
       "path": "src/app/app.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
@@ -282,14 +274,6 @@
       "removalBy": "2026-10-08"
     },
     {
-      "path": "src/app/features/employee/employee.routes.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "16e64467418662d7e7a3a0e6820eb066f9a4ab706b386663d08cceafa6086863",
-      "reason": "Rotas iniciais administrativas, de dashboard e de relatórios sem regras de negócio, reservadas para substituição pela migração literal do módulo.",
-      "removalBy": "2026-08-27"
-    },
-    {
       "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
@@ -312,6 +296,90 @@
       "expectedSha256": "de25dff0e764faf2836970d1761772d4796ff422f55a56236da84b85777e2709",
       "reason": "Estilos isolados da página administrativa temporária.",
       "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "e3a9cbe9cd7b162d981e548a8a031422ba08cf5408f58441ceaf3914989802f8",
+      "reason": "Idêntico à referência, exceto remoção de app-input-primary (componente compartilhado ainda não migrado).",
+      "removalBy": "2026-09-03"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.html",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "5f1f250ffe4fd2bf0da2906dc396962acc541df553d42cbb9d8fdd06c9a92e3f",
+      "reason": "Input nativo temporário no lugar de app-input-primary, ainda não migrado.",
+      "removalBy": "2026-09-03"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "e32b7b96101c696b1ebb37a5ade94241f08aa505f1e85c67b61667b6a828a838",
+      "expectedSha256": "e32b7b96101c696b1ebb37a5ade94241f08aa505f1e85c67b61667b6a828a838"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "7ce5b5e119c61143da8cffe1b9d1f76cbf5f42e667c45a8abab2adcea7687239",
+      "expectedSha256": "7ce5b5e119c61143da8cffe1b9d1f76cbf5f42e667c45a8abab2adcea7687239"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "cb1110753d17d27e308cc69deb8a68ba981b865f6577befc7f4bb312ef9463f7",
+      "expectedSha256": "cb1110753d17d27e308cc69deb8a68ba981b865f6577befc7f4bb312ef9463f7"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "54df946597e40054b5c4624cf742cb3e89a9ae7ddb207419fde15a22c048f96b",
+      "expectedSha256": "54df946597e40054b5c4624cf742cb3e89a9ae7ddb207419fde15a22c048f96b"
+    },
+    {
+      "path": "src/app/features/employee/services/category.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "4585f86888331b487f5cea05a67ba642adc90a05e6ecaa06d691a7b2f7a34e8f",
+      "expectedSha256": "4585f86888331b487f5cea05a67ba642adc90a05e6ecaa06d691a7b2f7a34e8f"
+    },
+    {
+      "path": "src/app/core/configs/api.token.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "b6a0adba4e4669db48389c8e1957d70d8149dbdc8d18fc629abdebad7f9aa924",
+      "reason": "Token de injeção exigido pelos services migrados literalmente; sem arquivo equivalente na referência (que injeta a URL de outra forma)."
+    },
+    {
+      "path": "src/app/core/interceptors/mock-api.interceptor.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "86b92d2a7ee0a522d555fc75037f9b53b0eac29d967b7142d64be6086a93129b",
+      "reason": "Intercepta chamadas HTTP dos services literais e devolve dados simulados, sem alterar os services; agora cobre também GET /requests/client e POST /requests para reunificar o mock do fluxo do cliente sob o mesmo mecanismo. Remover quando o backend real for integrado.",
+      "removalBy": "2026-10-08"
+    },
+    {
+      "path": "src/app/shared/mocks/maintenance-request.mock.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "978e93fc9fff23f0d56aa2de78359bb2d8a36a96ce3a30dc888d6d8aede25ce2",
+      "reason": "Fixture de solicitações simuladas no shape de MaintenanceRequestResponseDTO, consumida pelo mock-api.interceptor."
+    },
+    {
+      "path": "src/app/app.config.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "6dd2bad99d504bbe54f4d85c431d9578e37b78c776e101c5a2e303888bdd8a72",
+      "reason": "Combina provideHttpClient + mockApiInterceptor com provideNgxMask, provideAnimationsAsync e provideToastr adicionados por outra janela em paralelo.",
+      "removalBy": "2026-10-08"
+    },
+    {
+      "path": "src/app/features/employee/employee.routes.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "f37606b4e0909e7d31e19842fd1053c3acea54a8b15ffc22a1c2b89ce8b49bd8",
+      "reason": "Adiciona a rota view-requests migrada; dashboard, employees-list e categories ainda apontam pro placeholder até o resto do módulo ser migrado.",
+      "removalBy": "2026-09-03"
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.ts",
@@ -389,6 +457,36 @@
       "expectedSha256": "cb96ce286170bb790f90a14db119eca1e6529bc5df69b3e8a4a7ce78944bfb9e",
       "reason": "Implementação temporária usando os dados simulados (mocks) locais em memória para permitir a demonstração da janela sem comunicação com o backend.",
       "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/core/services/status.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "f575f7bf5f91627dff67a28fe60a98e5c93d0285b7b48d30d02752681693a25f",
+      "expectedSha256": "f575f7bf5f91627dff67a28fe60a98e5c93d0285b7b48d30d02752681693a25f"
+    },
+    {
+      "path": "src/app/core/services/maintenance-request.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "d62a139b8e29d2ffd34beee2c498785a8994dce9ed47b891dbd38f3f63b26788",
+      "expectedSha256": "d62a139b8e29d2ffd34beee2c498785a8994dce9ed47b891dbd38f3f63b26788"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "c0eacb6e3a594779685f99658799bd476d364a518b6bb5dd96439b38f0bb9e1c",
+      "expectedSha256": "c0eacb6e3a594779685f99658799bd476d364a518b6bb5dd96439b38f0bb9e1c"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "1e95de138f4a126636b6fcdb5c497863fba9f9f5f077a88e7305a6b62635f0da",
+      "expectedSha256": "1e95de138f4a126636b6fcdb5c497863fba9f9f5f077a88e7305a6b62635f0da"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "4ccf2a5513dd7408a2c82003cb4b21e744e361f8d34dd517af87697cfca124a0",
+      "expectedSha256": "4ccf2a5513dd7408a2c82003cb4b21e744e361f8d34dd517af87697cfca124a0"
     },
     {
       "path": "src/app/core/auth/pages/login-page/login-page.component.css",
@@ -539,8 +637,8 @@
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "5626353142922fc06d5a3e64617d893d2b315db64e653fe800a2677d322cb211",
-      "expectedSha256": "fa7cd5154dea17e84faaa5128844f305973ad9131e345934dd4db57aea609a47",
-      "reason": "Adiciona provideRouter([]) ao TestBed: o componente injeta Router para verServico(), e a suíte da referência não declarava esse provider explicitamente."
+      "expectedSha256": "953607b6761eb098361c94d7bc319d44459d141e618903dda8c3e02a51867697",
+      "reason": "Adiciona provideRouter([]) ao TestBed: o componente injeta Router para verServico(), e a suíte da referência não declarava esse provider explicitamente. Adiciona também provideHttpClient() porque MaintenanceRequestService voltou a ser a versão HTTP literal (reunificada com a janela RF011)."
     },
     {
       "path": "src/app/features/client/new-request-page/new-request-page.component.ts",
@@ -565,30 +663,14 @@
       "path": "src/app/features/client/new-request-page/new-request-page.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "cea39cdbab70a1512b577e6b06bbe9189041f36a80be4217380ae8992ea37002",
-      "expectedSha256": "146c6a37972add40b5dc5975ad363d1dd482a7893550237c9bc5120bab0f660f",
-      "reason": "Adiciona um stub de MatDialogRef e provideToastr() ao TestBed: o componente é conteúdo de um MatDialog (injeta MatDialogRef no construtor) e usa ToastService/ToastrService; fora de um MatDialog.open() real e sem o provider global do ngx-toastr, o TestBed não os resolve sozinho (NullInjectorError). A suíte da referência não declarava esses providers."
+      "expectedSha256": "c736907ddc4388ecccedc9a7e7c08622bc668cf790f279e87b24bdb297b656e0",
+      "reason": "Adiciona um stub de MatDialogRef e provideToastr() ao TestBed: o componente é conteúdo de um MatDialog (injeta MatDialogRef no construtor) e usa ToastService/ToastrService; fora de um MatDialog.open() real e sem o provider global do ngx-toastr, o TestBed não os resolve sozinho (NullInjectorError). A suíte da referência não declarava esses providers. Adiciona também provideHttpClient() porque MaintenanceRequestService voltou a ser a versão HTTP literal (reunificada com a janela RF011)."
     },
     {
       "path": "src/app/core/services/toast.service.ts",
       "classification": "IDENTICAL",
       "referenceSha256": "42f8a68b8526c917c5f8974434550792cb888ddc0262d55b4d033f04a03ca40c",
       "expectedSha256": "42f8a68b8526c917c5f8974434550792cb888ddc0262d55b4d033f04a03ca40c"
-    },
-    {
-      "path": "src/app/core/services/maintenance-request.service.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "cd9cad5c75be3e333359b88ce8f3563a30a2c473e38c9a296ba7809cdb38b3ba",
-      "reason": "Implementa só getAllClientRequests() e create() (os 2 métodos usados nesta janela) sobre MOCK_REQUESTS/MOCK_CATEGORIES/MOCK_STATUSES/MOCK_CLIENTS em memória, em vez das 10 chamadas HTTP da referência (que dependem de back-end e core/auth). redirectMaintenance, createBudget, approveBudget, rejectBudget, rescueRequest, executeMaintenance, payRequest e finalizeRequest pertencem a RF005-RF016, janelas futuras.",
-      "removalBy": "2026-10-29"
-    },
-    {
-      "path": "src/app/features/employee/services/category.service.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "a2cb1347cfb733ea3b997987a15a42fdbe9a5a57ad429f41655084613dd34f55",
-      "reason": "Implementa só getAllCategories() sobre MOCK_CATEGORIES, em vez das chamadas HTTP da referência. addCategory/updateCategory/deleteCategory/getById pertencem ao CRUD de categorias (RF017), janela futura.",
-      "removalBy": "2026-10-29"
     },
     {
       "path": "src/test.ts",
