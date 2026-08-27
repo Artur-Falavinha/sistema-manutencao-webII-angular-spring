@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { MOCK_BUDGETS } from '../../shared/mocks/budget.mock';
-import { MOCK_CATEGORIES } from '../../shared/mocks/category.mock';
-import { MOCK_REQUESTS } from '../../shared/mocks/request.mock';
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
+import { MOCK_BUDGETS } from "../../shared/mocks/budget.mock";
+import { MOCK_CATEGORIES } from "../../shared/mocks/category.mock";
+import { MOCK_REQUESTS } from "../../shared/mocks/request.mock";
 import {
   RevenueByCategory,
   RevenueByDate,
-} from '../../shared/models/reports.model';
+} from "../../shared/models/reports.model";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class ReportService {
   getRevenueByDateData(
@@ -19,7 +19,7 @@ export class ReportService {
     const dateMap = new Map<string, number>();
 
     MOCK_BUDGETS.forEach((budget) => {
-      const dateStr = budget.createdAt.split('T')[0];
+      const dateStr = budget.createdAt.split("T")[0];
       const current = dateMap.get(dateStr) || 0;
       dateMap.set(dateStr, current + budget.total);
     });
@@ -65,15 +65,15 @@ export class ReportService {
     startDate: string,
     endDate: string,
   ): Observable<Blob> {
-    const mockBlob = new Blob(['Relatório Simulado - Receita por Data'], {
-      type: 'application/pdf',
+    const mockBlob = new Blob(["Relatório Simulado - Receita por Data"], {
+      type: "application/pdf",
     });
     return of(mockBlob);
   }
 
   generateCategoriesReport(): Observable<Blob> {
-    const mockBlob = new Blob(['Relatório Simulado - Receita por Categoria'], {
-      type: 'application/pdf',
+    const mockBlob = new Blob(["Relatório Simulado - Receita por Categoria"], {
+      type: "application/pdf",
     });
     return of(mockBlob);
   }
