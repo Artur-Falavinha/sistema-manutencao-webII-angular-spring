@@ -117,14 +117,6 @@
       "removalBy": "2026-08-27"
     },
     {
-      "path": "src/app/app.config.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "74700bb6c06da4d92d20cab051f3540b8ce1c3abed2648a77934d2bf3c6436a7",
-      "reason": "Configuração mínima de rotas até a migração do layout real.",
-      "removalBy": "2026-08-27"
-    },
-    {
       "path": "src/app/app.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
@@ -274,14 +266,6 @@
       "reason": "Fixture de histórico simulado exigida pelo critério de aceite da semana; sem arquivo equivalente na referência."
     },
     {
-      "path": "src/app/features/employee/employee.routes.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "14684e9eb460aba7c22b26a42b2b82a1a616e8aabe576680d38a8e755f82b4f5",
-      "reason": "Rotas administrativas iniciais sem páginas funcionais, reservadas para substituição pela migração literal do módulo.",
-      "removalBy": "2026-08-27"
-    },
-    {
       "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
@@ -307,35 +291,88 @@
     },
 
     {
-      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "a9723d8af9fd2d26e48f28ea7170365cfeba95dc2aec8f7d97eae184cd56a4c7",
-      "expectedSha256": "a9723d8af9fd2d26e48f28ea7170365cfeba95dc2aec8f7d97eae184cd56a4c7"
+      "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "e3a9cbe9cd7b162d981e548a8a031422ba08cf5408f58441ceaf3914989802f8",
+      "reason": "Idêntico à referência, exceto remoção de app-input-primary (componente compartilhado ainda não migrado).",
+      "removalBy": "2026-09-03"
     },
     {
-      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.html",
-      "classification": "IDENTICAL",
-      "referenceSha256": "31cfc8b8d1b9ac0e3c753beabe5a80bcdd17ec1458dc0e374cb2ecb54404e34f",
-      "expectedSha256": "31cfc8b8d1b9ac0e3c753beabe5a80bcdd17ec1458dc0e374cb2ecb54404e34f"
+      "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.html",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "5f1f250ffe4fd2bf0da2906dc396962acc541df553d42cbb9d8fdd06c9a92e3f",
+      "reason": "Input nativo temporário no lugar de app-input-primary, ainda não migrado.",
+      "removalBy": "2026-09-03"
     },
     {
-      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.css",
+      "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.css",
       "classification": "IDENTICAL",
-      "referenceSha256": "231dc886941247882a089fdd290d42e55e9059a11d39f182365da271cd80e4c0",
-      "expectedSha256": "231dc886941247882a089fdd290d42e55e9059a11d39f182365da271cd80e4c0"
-    },
-
-     {
-      "path": "src/app/core/services/status.service.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "6243a949d9627e5e70dca587aaed8170016b282062ba1f8b1e2357f7aa2960a3",
-      "expectedSha256": "6243a949d9627e5e70dca587aaed8170016b282062ba1f8b1e2357f7aa2960a3"
+      "referenceSha256": "e32b7b96101c696b1ebb37a5ade94241f08aa505f1e85c67b61667b6a828a838",
+      "expectedSha256": "e32b7b96101c696b1ebb37a5ade94241f08aa505f1e85c67b61667b6a828a838"
     },
     {
-      "path": "src/app/core/services/maintenance-request.service.ts",
+      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.ts",
       "classification": "IDENTICAL",
-      "referenceSha256": "6b3a90108aec3fabfc9adf5f95e7f3d9dfb0111418c8dbb917069a63556011fa",
-      "expectedSha256": "6b3a90108aec3fabfc9adf5f95e7f3d9dfb0111418c8dbb917069a63556011fa"
+      "referenceSha256": "7ce5b5e119c61143da8cffe1b9d1f76cbf5f42e667c45a8abab2adcea7687239",
+      "expectedSha256": "7ce5b5e119c61143da8cffe1b9d1f76cbf5f42e667c45a8abab2adcea7687239"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "cb1110753d17d27e308cc69deb8a68ba981b865f6577befc7f4bb312ef9463f7",
+      "expectedSha256": "cb1110753d17d27e308cc69deb8a68ba981b865f6577befc7f4bb312ef9463f7"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "54df946597e40054b5c4624cf742cb3e89a9ae7ddb207419fde15a22c048f96b",
+      "expectedSha256": "54df946597e40054b5c4624cf742cb3e89a9ae7ddb207419fde15a22c048f96b"
+    },
+    {
+      "path": "src/app/features/employee/services/category.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "4585f86888331b487f5cea05a67ba642adc90a05e6ecaa06d691a7b2f7a34e8f",
+      "expectedSha256": "4585f86888331b487f5cea05a67ba642adc90a05e6ecaa06d691a7b2f7a34e8f"
+    },
+    {
+      "path": "src/app/core/configs/api.token.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "b6a0adba4e4669db48389c8e1957d70d8149dbdc8d18fc629abdebad7f9aa924",
+      "reason": "Token de injeção exigido pelos services migrados literalmente; sem arquivo equivalente na referência (que injeta a URL de outra forma)."
+    },
+    {
+      "path": "src/app/core/interceptors/mock-api.interceptor.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "bce3d4422a73044ce22d81685a6d79b9bf03853d63fc7e7579e4c0922cc9490e",
+      "reason": "Intercepta chamadas HTTP dos services literais e devolve dados simulados, sem alterar os services. Remover quando o backend real for integrado.",
+      "removalBy": "2026-10-08"
+    },
+    {
+      "path": "src/app/shared/mocks/maintenance-request.mock.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "978e93fc9fff23f0d56aa2de78359bb2d8a36a96ce3a30dc888d6d8aede25ce2",
+      "reason": "Fixture de solicitações simuladas no shape de MaintenanceRequestResponseDTO, consumida pelo mock-api.interceptor."
+    },
+    {
+      "path": "src/app/app.config.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "20a516a6f7f1be36edd32eedc74cf3ff755164c71d76ce29ce75b77583889ba1",
+      "reason": "Adiciona provideHttpClient + mockApiInterceptor à configuração mínima existente.",
+      "removalBy": "2026-10-08"
+    },
+    {
+      "path": "src/app/features/employee/employee.routes.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "e16e9c7ff753427ad161a081953476cd948bad7e416ef2ef5f06a211f52d3c2d",
+      "reason": "Adiciona a rota view-requests migrada; dashboard, employees-list e categories ainda apontam pro placeholder até o resto do módulo ser migrado.",
+      "removalBy": "2026-09-03"
     }
       ]
     }
