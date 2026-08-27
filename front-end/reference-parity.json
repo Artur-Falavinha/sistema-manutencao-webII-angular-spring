@@ -517,7 +517,7 @@
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
       "expectedSha256": "a75ff3fcf29c4b1f441ac9b64c237a9df79bc7184b9e1c7b31cf77f4bd50aa9e",
-      "reason": "Registra provideNgxMask no ambiente de testes sem alterar os testes literais nem o comportamento de produção."
+      "reason": "Registra provideNgxMask no ambiente de testes sem alterar os testes literais nem o comportamento de produção.",
       "path": "src/app/features/client/client.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
