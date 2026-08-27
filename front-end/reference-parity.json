@@ -4,7 +4,7 @@
     "repository": "https://github.com/Artur-Falavinha/sistema-manutencao-angular-spring",
     "commit": "c6bf109951c06265cb6708c16676c297d0070161"
   },
-  "window": "2026-08-20",
+  "window": "2026-08-27",
   "finalFrontend": false,
   "files": [
     {
@@ -392,26 +392,26 @@
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "57ee945c9524bc1f3b7955fc6281c20e046155f842c4f8253b329da3a54d4f88",
-      "expectedSha256": "de4f55213235bd6c8cd5222bf396fd978b4eedd2df298f6fa3b00fc9f68668cc",
-      "reason": "Remove HeaderComponent e a injeção de StatusService/CategoryService/BudgetService (dependem de core/auth e core/layout, que não existem ainda). Também poda getCategoryName, getStatusName, getStatusColor, getBudgetStatus, getBudgetStatusColor, remover() e o campo categoryMap: nenhum é referenciado pelo client-dashboard-page.component.html da própria referência (a tabela usa element.categoryName/statusName/statusColor do DTO direto, e não há botão de remover), então mantê-los exigiria criar um modelo equivalente ao RequestData da referência só para sustentar código inatingível.",
-      "removalBy": "2026-10-29"
+      "expectedSha256": "2bdcf97547681a0d91e929150490087d2a783f310341d736e5a3706335417e4d",
+      "reason": "Adapta temporariamente o dashboard aos serviços em memória, remove dependências de autenticação e layout ainda ausentes e exibe a descrição simulada no lugar das ações reservadas para 03/09 e 10/09.",
+      "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.html",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "e39ba6059abb94770bb3de39103e83eea00534c574ecc5c22e1b498a59496a0e",
-      "expectedSha256": "98835b0f053d5dfe178723f233cdf1dfc120242a861b6d0b45f770987a7d146b",
-      "reason": "Remove <app-header> (depende de core/auth/core/layout, ainda não migrados); demais bindings, colunas e ações da tabela preservados literalmente.",
-      "removalBy": "2026-10-29"
+      "expectedSha256": "84cab0c0450a8951cd50209a78f65c13bfc1f23d4ff3a4a7481383786069ebc4",
+      "reason": "Remove temporariamente <app-header>, ainda não migrado, e liga a coluna de descrição ao contrato simulado defectDescription. Os demais bindings e controles permanecem iguais à referência.",
+      "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "86adcbe415fe0b1139d18362ac4dd3a48f367c731eb386aa3e1faa6781cda8ec",
-      "expectedSha256": "722dbe60dd72a339c189ae30d3ff6baab0ed70979fb47338be35c12fcad13b5e",
-      "reason": "Remapeia cores fixas (#4b4b4b) para os tokens de identidade do projeto (--color-heading-default, --spacing-*) e remove seletores mortos (.btn-custom, .btn-custom2, .new-request-button, .table-toolbar) que não correspondem a nenhuma classe do template já na referência."
+      "expectedSha256": "94eb7852ca71c3e56eb0df5670317d202b2f971b05b6dfe1ae257dbf8ca636ef",
+      "reason": "Aplica tokens da identidade Oficina técnica, organiza busca e botão e adiciona rolagem controlada e layout responsivo para 360, 768 e 1440 px."
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.spec.ts",
@@ -434,9 +434,10 @@
     },
     {
       "path": "src/app/features/client/new-request-page/new-request-page.component.css",
-      "classification": "IDENTICAL",
+      "classification": "VISUAL_ONLY",
       "referenceSha256": "e977c775fb5330df23ebc13d278b21b2c3a21b394ad3013415e265b9461374b0",
-      "expectedSha256": "e977c775fb5330df23ebc13d278b21b2c3a21b394ad3013415e265b9461374b0"
+      "expectedSha256": "44207b5b7016082a9ccee8b7e80684e72e6bfcab963c5493c6fa00cbad63384b",
+      "reason": "Redesenha somente o visual do modal com tokens da Oficina técnica, responsividade, foco visível e correção do seletor visual da descrição."
     },
     {
       "path": "src/app/features/client/new-request-page/new-request-page.component.spec.ts",
