@@ -304,6 +304,38 @@
       "expectedSha256": "de25dff0e764faf2836970d1761772d4796ff422f55a56236da84b85777e2709",
       "reason": "Estilos isolados da página administrativa temporária.",
       "removalBy": "2026-08-27"
+    },
+
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a9723d8af9fd2d26e48f28ea7170365cfeba95dc2aec8f7d97eae184cd56a4c7",
+      "expectedSha256": "a9723d8af9fd2d26e48f28ea7170365cfeba95dc2aec8f7d97eae184cd56a4c7"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "31cfc8b8d1b9ac0e3c753beabe5a80bcdd17ec1458dc0e374cb2ecb54404e34f",
+      "expectedSha256": "31cfc8b8d1b9ac0e3c753beabe5a80bcdd17ec1458dc0e374cb2ecb54404e34f"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "231dc886941247882a089fdd290d42e55e9059a11d39f182365da271cd80e4c0",
+      "expectedSha256": "231dc886941247882a089fdd290d42e55e9059a11d39f182365da271cd80e4c0"
+    },
+
+     {
+      "path": "src/app/core/services/status.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "6243a949d9627e5e70dca587aaed8170016b282062ba1f8b1e2357f7aa2960a3",
+      "expectedSha256": "6243a949d9627e5e70dca587aaed8170016b282062ba1f8b1e2357f7aa2960a3"
+    },
+    {
+      "path": "src/app/core/services/maintenance-request.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "6b3a90108aec3fabfc9adf5f95e7f3d9dfb0111418c8dbb917069a63556011fa",
+      "expectedSha256": "6b3a90108aec3fabfc9adf5f95e7f3d9dfb0111418c8dbb917069a63556011fa"
     }
-  ]
-}
+      ]
+    }
