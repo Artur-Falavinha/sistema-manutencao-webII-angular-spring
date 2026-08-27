@@ -29,3 +29,5 @@ back-end/*.iml
 .DS_Store
 Thumbs.db
 *.log
+
+gerar-hashes.sh

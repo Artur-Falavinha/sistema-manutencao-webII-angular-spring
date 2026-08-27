@@ -4,7 +4,7 @@
     "repository": "https://github.com/Artur-Falavinha/sistema-manutencao-angular-spring",
     "commit": "c6bf109951c06265cb6708c16676c297d0070161"
   },
-  "window": "2026-08-20",
+  "window": "2026-08-27",
   "finalFrontend": false,
   "files": [
     {
@@ -21,9 +21,10 @@
     },
     {
       "path": "tsconfig.spec.json",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "c6ba2c144471c65b935adf89961dbc9b4e7ad235983556c3baf95b19de135a1c",
-      "expectedSha256": "c6ba2c144471c65b935adf89961dbc9b4e7ad235983556c3baf95b19de135a1c"
+      "expectedSha256": "26edaf1711d2bdb2379840defdc8c59790ed75ff82e789af117c3e5c7d91ec20",
+      "reason": "Inclui exclusivamente o setup global de testes necessário para configurar ngx-mask nos testes literais da referência."
     },
     {
       "path": "src/main.ts",
@@ -75,8 +76,8 @@
       "path": "angular.json",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "9364d6e11ff00d652294412e0dddfa546061f6f57a75ab9a51175a11b2ddf210",
-      "expectedSha256": "83146d0215cf479776568f9cba03f011a535417ada3f9623af4c4d733b7f5c2e",
-      "reason": "Correção mínima da origem pública dos assets para uma pasta existente."
+      "expectedSha256": "52dbd3227230748c028327acbbd8cb1e210832c38450045fd741edd352c14c08",
+      "reason": "Mantém a pasta pública, inclui src/assets e registra a configuração global de testes necessária aos componentes standalone."
     },
     {
       "path": "tools/verify-parity.mjs",
@@ -94,7 +95,7 @@
     },
     {
       "path": "src/app/app.component.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
       "expectedSha256": "2d0fe6afbbc78f418b8c3410ad726d359d512764657385a2b762d469b0fabfa6",
       "reason": "Shell mínimo sem regra de negócio para inicializar a fundação isolada.",
@@ -118,17 +119,19 @@
     },
     {
       "path": "src/app/app.config.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "4f193ed38454dc9ed70fd5bc01a22a737b9c0c6a77a947d704e5ba710b1ba268",
-      "reason": "Providers globais de HTTP e notificações necessários pela fatia funcional migrada."
+      "expectedSha256": "be17a431eb9263b183b586bf6673ca700d83254bf019d64c815adffc05618f95",
+      "reason": "Configuração mínima de rotas, máscaras e providers de animação e ngx-toastr até a migração do layout real.",
+      "removalBy": "2026-08-27"
     },
     {
       "path": "src/app/app.routes.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "d407a2c9ba04f56464bd8cc9bb401f942271593785eec1fade5b71099f7260f4",
-      "reason": "Rotas do protótipo local e das páginas trazidas pela main."
+      "expectedSha256": "4683e36a0c2b4d1f8e6216af0aa3793e55066f2be3bf3f12b5b721b96de52d61",
+      "reason": "Rotas provisórias da fundação, páginas públicas e estruturas administrativas até a migração do layout real; inclui agora o carregamento preguiçoso do módulo client.",
+      "removalBy": "2026-08-27"
     },
     {
       "path": "src/app/foundation-page/foundation-page.component.ts",
@@ -224,324 +227,115 @@
     },
     {
       "path": "src/app/shared/mocks/status.mock.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
       "expectedSha256": "e8a1e4fd44ec3b07d4b61e4b93d0866b9c1d61e5e4e9702350575bf5d17cc0f8",
-      "reason": "Fixture de dados simulados de estados exigida pelo critério de aceite da semana; a referência gera esses dados em runtime, sem arquivo dedicado."
+      "reason": "Fixture temporária de estados para o protótipo sem backend; a referência gera esses dados em runtime, sem arquivo dedicado.",
+      "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/shared/mocks/category.mock.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "ee99d830d213cd0d13200f2e2e10bb9319dc39fc8244de1e314f503cfc9af5ba",
-      "reason": "Fixture de dados simulados de categorias necessária para compor solicitações coerentes; sem arquivo equivalente na referência."
+      "expectedSha256": "f52ad82d6ff15464cc4e37fed30320da1b2ebe73c7a64497cc835be087d2b379",
+      "reason": "Fixture temporária de categorias para compor o protótipo sem backend; sem arquivo equivalente na referência.",
+      "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/shared/mocks/client.mock.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "e62949caf98e0b1f8a8ce3098439eb6169824192616b63f1272e15a1626bd0fc",
-      "reason": "Fixture de dados simulados de clientes necessária para compor solicitações coerentes; sem arquivo equivalente na referência."
+      "expectedSha256": "5a0ba5ef2eeff6db679c63ab8b1340d3e44b92704aa0a957716c1ee3e726a67c",
+      "reason": "Fixture temporária de clientes para compor o protótipo sem backend; sem arquivo equivalente na referência.",
+      "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/shared/mocks/employee.mock.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
       "expectedSha256": "a20ad2ffde596066a46175e12e5a88527c1c8a1ef0420b234d9feb1e69c32d82",
-      "reason": "Fixture de dados simulados de funcionários necessária para compor solicitações e orçamentos coerentes; sem arquivo equivalente na referência."
+      "reason": "Fixture temporária de funcionários para compor o protótipo sem backend; sem arquivo equivalente na referência.",
+      "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/shared/mocks/request.mock.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "243eaec201da92d905eea025d4058c7b6683ba0cd3bc953acf2177a292a84f6b",
-      "reason": "Fixture de solicitações simuladas exigida pelo critério de aceite da semana; a referência gera esses dados em runtime via localStorage, sem arquivo dedicado."
+      "expectedSha256": "e24963915982c09dc27f5d4cebd8260bbfea098b1b38885f46b0a8a013fc73c8",
+      "reason": "Fixture temporária de solicitações para o protótipo sem backend; a referência gera esses dados em runtime via localStorage.",
+      "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/shared/mocks/budget.mock.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "7d15cfacdc8ea1647aa3aa952d40a2e4eefd11f06b0c8c1cb001d610be170d1a",
-      "reason": "Fixture de orçamentos simulados exigida pelo critério de aceite da semana; a referência gera esses dados em runtime via localStorage, sem arquivo dedicado."
+      "expectedSha256": "43c1332e09f9b198e634a1582fa117ffffcb0d2ef2c23f25632bf9873ebbcfd2",
+      "reason": "Fixture temporária de orçamentos para o protótipo sem backend; a referência gera esses dados em runtime via localStorage.",
+      "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/shared/mocks/request-history.mock.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "fbd0a8f649d1e51c645d83ae0b09eb27ee49f28442f0688245ccac780161df53",
-      "reason": "Fixture de histórico simulado exigida pelo critério de aceite da semana; sem arquivo equivalente na referência."
-    },
-    {
-      "path": "src/app/features/employee/components/employee-form/employee-form.component.css",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "0e2e2eacd4a6fc3764126e07010b24813d435117abc55ac6bcb3835f13a7bc86",
-      "reason": "Estilos do componente formulário de funcionários."
-    },
-    {
-      "path": "src/app/features/employee/components/employee-form/employee-form.component.html",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "9e29eb877a21abedd2d3a4c60ebb9f09f026b1ecb54e102a4f6dc6919780a9a8",
-      "reason": "Template do componente formulário de funcionários."
-    },
-    {
-      "path": "src/app/features/employee/components/employee-form/employee-form.component.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "3abd1b3a39424296741fab5fe5fc1e8d8bbc02053368bc235fe3eff4281a9b57",
-      "reason": "Teste unitário do formulário de funcionários."
-    },
-    {
-      "path": "src/app/features/employee/components/employee-form/employee-form.component.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "ccec16909fb8de56e817921a90a926e517a974d7b946db0ff19d10ebab95f983",
-      "reason": "Lógica do componente formulário de funcionários."
-    },
-    {
-      "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.css",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "f6a0ea6ddd82b0f6d6c6627906a55eada1b33fe4620793863c69cd659ca289b0",
-      "reason": "Estilos do modal de nova categoria."
-    },
-    {
-      "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.html",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "70b291a18d26e300ef806912fbc7304b22af85a618740e7d11664a4424460d2b",
-      "reason": "Template do modal de nova categoria."
-    },
-    {
-      "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "c2ad7abb6345bd106f3295f7d3d14574b14994e67e5e3b551c5492f8d4f9d967",
-      "reason": "Teste unitário do modal de nova categoria."
-    },
-    {
-      "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "97e4907ee471b3a2ced677f9ddc076f1e8346efcf387328f65fa35f67d8e61d1",
-      "reason": "Lógica do modal de nova categoria."
-    },
-    {
-      "path": "src/app/features/employee/pages/employee-list/employee-list.component.css",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "c17c6d38bc91439dea6972db55f4d4631ab871a7189eac5f18d679ac5bee8814",
-      "reason": "Estilos da listagem de funcionários."
-    },
-    {
-      "path": "src/app/features/employee/pages/employee-list/employee-list.component.html",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "7836d22117e4e82586515fbf1d0b5edc7a0c753a7fb004490931c5c77f4401a2",
-      "reason": "Template da listagem de funcionários."
-    },
-    {
-      "path": "src/app/features/employee/pages/employee-list/employee-list.component.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "c743763e483ea376dacc9cb5fc489c7201e14b26fa52ea55c304557424205fab",
-      "reason": "Teste unitário da listagem de funcionários."
-    },
-    {
-      "path": "src/app/features/employee/pages/employee-list/employee-list.component.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "1897039668f9c41787f17a2dcfb4ea890b456caf3b9a5b5318a0ef8475b94406",
-      "reason": "Lógica da listagem de funcionários."
-    },
-    {
-      "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.css",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "efecc2bf4ccc559b6f3c86f5d1af50dbe09ef7d3f7bcc6cd10da8aee4e01af96",
-      "reason": "Estilos da página de gerenciamento de categorias."
-    },
-    {
-      "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.html",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "63a59fb7124988d5e6b4867b559952c7ce48596a4be31eedf9edae8569fe8218",
-      "reason": "Template da página de gerenciamento de categorias."
-    },
-    {
-      "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "931b1b10d03e9f6f42103230a90498ab37a816262910bc4fb9579ec4dae8bac4",
-      "reason": "Teste unitário da página de gerenciamento de categorias."
-    },
-    {
-      "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "2c09aa0526e580497d9ac8b878117bafce8d58ebf924a67a2324a5e8f571f789",
-      "reason": "Lógica da página de gerenciamento de categorias."
-    },
-    {
-      "path": "src/app/features/employee/services/category.service.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "0c3526e7e9b0b256a682d9a10b5e415dd058380e96143c2104692f5bf6f80b5f",
-      "reason": "Teste unitário do serviço de categoria."
-    },
-    {
-      "path": "src/app/features/employee/services/category.service.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "49dead9c38a51a6fd102d6aacad8252a049459f53e1b0417771cef66e9232897",
-      "reason": "Serviço de gerenciamento de categorias."
-    },
-    {
-      "path": "src/app/features/employee/services/employe.service.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "a7d9b26096708e025bf605a12ebeb1dd14b1cbae88b245e2490813339829498c",
-      "reason": "Teste unitário do serviço de funcionários."
-    },
-    {
-      "path": "src/app/features/employee/services/employe.service.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "6676805d609783c26407f69062518ffd9402b49ffdd0f751abf3b0a82d764e05",
-      "reason": "Serviço de gerenciamento de funcionários."
-    },
-    {
-      "path": "src/app/core/configs/api.token.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "e30a43ceb8b9e36175bfd2b0cd30af7751f43ed737be13733492971cf66ef719",
-      "reason": "Token de injeção compartilhado pelos serviços de funcionários e categorias."
-    },
-    {
-      "path": "src/app/core/services/toast.service.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "d923a6306982bc038d6ab4c448cc73983a24f2ff48b866f7c6d3d9ec91fcc5b2",
-      "reason": "Adaptador compartilhado para notificações da fatia migrada."
-    },
-    {
-      "path": "src/app/shared/utils/cpf-validator.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "5cfc8cf8dbe467b16c4a3587826001685f103f98421c18742a0df311c265953f",
-      "reason": "Validador compartilhado usado pelo formulário de funcionários."
-    },
-    {
-      "path": "src/app/shared/components/warning-dialog/warning-dialog.component.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "0e7ac1c02b04b016d668205ddd1865d53cb1d35aeb6c0bce15ad81dc8e0b0c72",
-      "reason": "Componente compartilhado de confirmação usado na exclusão."
-    },
-    {
-      "path": "src/app/shared/components/warning-dialog/warning-dialog.component.html",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "d5a983fadcc985f99ea7e7d8f14dcc1b4e2a465202b2a8b3cbadd9e80cd8fe78",
-      "reason": "Template do diálogo compartilhado de confirmação."
-    },
-    {
-      "path": "src/app/shared/components/warning-dialog/warning-dialog.component.css",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "b71c8418758d6662b17c179c00d917f8c1ed808901549e0d766974aecf66ad76",
-      "reason": "Estilos do diálogo compartilhado de confirmação."
-    },
-    {
-      "path": "src/app/shared/components/warning-dialog/warning-dialog.component.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "c6fc4d0617a98436cee048d648f862a86c0cab7941ea4d0eb15b9424bebac680",
-      "reason": "Teste unitário do diálogo compartilhado."
+      "expectedSha256": "77de98cc9708d1d1124e8a32d887d0cc7fc56430505edb62a8aedd103d65ca61",
+      "reason": "Fixture temporária de histórico para o protótipo sem backend; sem arquivo equivalente na referência.",
+      "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/features/employee/employee.routes.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
       "expectedSha256": "16e64467418662d7e7a3a0e6820eb066f9a4ab706b386663d08cceafa6086863",
-      "reason": "Rotas lazy da estrutura administrativa adicionada pela main."
-    },
-    {
-      "path": "src/app/core/services/report.service.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "638c4b70f2b7718fa4903419f4841aa38beec2893fea09eef9f551ef071aa430",
-      "reason": "Serviço de relatórios com dados simulados para o protótipo."
-    },
-    {
-      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.css",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "de25dff0e764faf2836970d1761772d4796ff422f55a56236da84b85777e2709",
-      "reason": "Estilos da página administrativa provisória."
-    },
-    {
-      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.html",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "4bef7615675a96733d998c38fedf9c550dfa55c9299197a096310eb3c51eb4fe",
-      "reason": "Template da página administrativa provisória."
+      "reason": "Rotas iniciais administrativas, de dashboard e de relatórios sem regras de negócio, reservadas para substituição pela migração literal do módulo.",
+      "removalBy": "2026-08-27"
     },
     {
       "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
       "expectedSha256": "0e28917fc8b997bbc5ffe25e6d7854059e16ebfba5aa2118d9d3cce728b5ff34",
-      "reason": "Componente da página administrativa provisória."
+      "reason": "Página estática temporária para validar as rotas administrativas sem antecipar regras de negócio.",
+      "removalBy": "2026-08-27"
     },
     {
-      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.css",
-      "classification": "TECHNICAL_EXCEPTION",
+      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.html",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "e998986231885f53b6cc2f0e57014fe13ee294d5e9892cdd0227e7849a38276c",
-      "reason": "Estilos do dashboard provisório."
+      "expectedSha256": "4bef7615675a96733d998c38fedf9c550dfa55c9299197a096310eb3c51eb4fe",
+      "reason": "Template estático temporário da estrutura administrativa inicial.",
+      "removalBy": "2026-08-27"
     },
     {
-      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.html",
-      "classification": "TECHNICAL_EXCEPTION",
+      "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.css",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "d1c10cdacf82ae59397f4b364beb57e52300cb5917dc619008d38af42351020c",
-      "reason": "Template do dashboard provisório."
+      "expectedSha256": "de25dff0e764faf2836970d1761772d4796ff422f55a56236da84b85777e2709",
+      "reason": "Estilos isolados da página administrativa temporária.",
+      "removalBy": "2026-08-27"
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
       "expectedSha256": "d41950a140387a5e93e3f3ecec0d8a58c4b87ebc62fff2f7eebd278af3c774e7",
-      "reason": "Componente do dashboard provisório."
+      "reason": "Dashboard estático com dados simulados para validar a rota do funcionário sem antecipar services HTTP ou regras de negócio.",
+      "removalBy": "2026-08-27"
     },
     {
-      "path": "src/app/features/employee/pages/reports-page/reports-page.component.css",
-      "classification": "TECHNICAL_EXCEPTION",
+      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.html",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "9565f0403884286f3c0ff3cd34380f1efb7cb7545168ccf26af237d8ea9f6528",
-      "reason": "Estilos da página de relatórios."
+      "expectedSha256": "d1c10cdacf82ae59397f4b364beb57e52300cb5917dc619008d38af42351020c",
+      "reason": "Conteúdo estático de indicadores e ordens simuladas para a etapa inicial do dashboard.",
+      "removalBy": "2026-08-27"
     },
     {
-      "path": "src/app/features/employee/pages/reports-page/reports-page.component.html",
-      "classification": "IDENTICAL",
-      "referenceSha256": "61e1b0c0c25bd4e39cbf9aaad051e71a092033a572c0919711f2d64883829bc4",
-      "expectedSha256": "61e1b0c0c25bd4e39cbf9aaad051e71a092033a572c0919711f2d64883829bc4"
-    },
-    {
-      "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "path": "src/app/features/employee/pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component.css",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
-      "reason": "Teste unitário da página de relatórios."
-    },
-    {
-      "path": "src/app/features/employee/pages/reports-page/reports-page.component.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "fc92b7d3cce8430fc5a037b6808cf88823a03756de9ef1b91a34c0cc406c6831",
-      "reason": "Página de relatórios com dados simulados."
+      "expectedSha256": "e998986231885f53b6cc2f0e57014fe13ee294d5e9892cdd0227e7849a38276c",
+      "reason": "Estilos isolados do dashboard temporário alinhados aos tokens visuais globais.",
+      "removalBy": "2026-08-27"
     },
     {
       "path": "src/app/shared/models/maintenance-record.model.ts",
@@ -556,10 +350,260 @@
       "expectedSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d"
     },
     {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": "8f49290b24e210a02e019b863aa57f577bfa414487f615b611bd36d28cd6a3ca",
+      "expectedSha256": "fc92b7d3cce8430fc5a037b6808cf88823a03756de9ef1b91a34c0cc406c6831",
+      "reason": "Adaptação temporária tipada para consumir mocks locais, reassociar o paginador ao alternar visões e substituir Toast e download real por alertas simulados, sem comunicação com o backend.",
+      "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "61e1b0c0c25bd4e39cbf9aaad051e71a092033a572c0919711f2d64883829bc4",
+      "expectedSha256": "61e1b0c0c25bd4e39cbf9aaad051e71a092033a572c0919711f2d64883829bc4"
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "26aa66397ba730af010f6d8128ad4892a11485957ad27999c99d7cdb2cc77012",
+      "expectedSha256": "9565f0403884286f3c0ff3cd34380f1efb7cb7545168ccf26af237d8ea9f6528",
+      "reason": "Aplica a identidade Oficina técnica com tokens globais, layout responsivo e foco visível sem alterar contratos funcionais."
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
+      "expectedSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a"
+    },
+    {
       "path": "src/app/shared/models/reports.model.ts",
       "classification": "IDENTICAL",
       "referenceSha256": "9cd7688f8f65e416ee4b46bb2d490964ee51ab5602ab2f4296dd4df900ea7469",
       "expectedSha256": "9cd7688f8f65e416ee4b46bb2d490964ee51ab5602ab2f4296dd4df900ea7469"
+    },
+    {
+      "path": "src/app/core/services/report.service.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": "9d1a7bc2c06925d7afea96bdfb0822c1399c978682b4edadd82c9350b87b5ee3",
+      "expectedSha256": "cb96ce286170bb790f90a14db119eca1e6529bc5df69b3e8a4a7ce78944bfb9e",
+      "reason": "Implementação temporária usando os dados simulados (mocks) locais em memória para permitir a demonstração da janela sem comunicação com o backend.",
+      "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/core/auth/pages/login-page/login-page.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "deb80f6aab935428f8f362723be7976b02bcefb9e8e36c238a937a111db86620",
+      "expectedSha256": "e619ed76db4d8f970d866c45241a959e0197fbb451f45584cdf6d196191c473e",
+      "reason": "Aplica a identidade Oficina técnica à página de login, com layout responsivo, foco visível e movimento reduzido."
+    },
+    {
+      "path": "src/app/core/auth/pages/login-page/login-page.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "e09b38a1620df72486cf9b5a678968bd74ab194c7ad27871117b7bfbf342b046",
+      "expectedSha256": "e09b38a1620df72486cf9b5a678968bd74ab194c7ad27871117b7bfbf342b046"
+    },
+    {
+      "path": "src/app/core/auth/pages/login-page/login-page.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "e8f9d1320d1754c80a8b19c799533f54a0f1aeb171a9ffc5d10a701bcaf7a66c",
+      "expectedSha256": "e8f9d1320d1754c80a8b19c799533f54a0f1aeb171a9ffc5d10a701bcaf7a66c"
+    },
+    {
+      "path": "src/app/core/auth/pages/login-page/login-page.component.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": "40e41f7bee78a0e49a94e8ae4d2021e5b7fd366638a6869536506e10003b272c",
+      "expectedSha256": "8a5ec45d70c0a90cd13a0f134e39bbb57ed9ed95538deea15b82b86d755f5e7b",
+      "reason": "Estrutura temporária do login sem AuthService ou backend; o fluxo simulado será implementado na etapa seguinte.",
+      "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/core/auth/pages/signup-page/signup-page.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "6efc2dff6361ef3c785d5229ebf2587a4a9364080fc48307a86b42320bf96e7d",
+      "expectedSha256": "50f417bde5b9e4bbf6a6b4efef02654a20209a7d576c5226947031fece6b8e49",
+      "reason": "Aplica a identidade Oficina técnica à página de autocadastro, com formulário responsivo e foco visível."
+    },
+    {
+      "path": "src/app/core/auth/pages/signup-page/signup-page.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "5037632d727e5b6a0db95ad7940f64a0894ed7143f741a7cf7576dcf3e159a58",
+      "expectedSha256": "5037632d727e5b6a0db95ad7940f64a0894ed7143f741a7cf7576dcf3e159a58"
+    },
+    {
+      "path": "src/app/core/auth/pages/signup-page/signup-page.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a3238eb745118493c2ba23689ba07a30a7eb4f969847d4ff9de9a49fc2395250",
+      "expectedSha256": "a3238eb745118493c2ba23689ba07a30a7eb4f969847d4ff9de9a49fc2395250"
+    },
+    {
+      "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
+      "expectedSha256": "2e6a36dd9c970ba26704f7f9da24a3732564c930f3b49e9e23314cbb73c9fc76",
+      "reason": "Estrutura temporária do autocadastro sem AuthService, ViaCEP ou backend; o fluxo simulado será implementado na etapa seguinte.",
+      "removalBy": "2026-08-27"
+    },
+    {
+      "path": "src/app/shared/components/input-primary/input-primary.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "20f8d5513517bdf102457e683419daa17675f5e6996127076252e6271d9e6d3a",
+      "expectedSha256": "4796a74f86ea2d42f0b5b358f0ef693ea85c72968dd68b97f6e809489a093db4",
+      "reason": "Alinha o campo compartilhado aos tokens da identidade Oficina técnica sem alterar seu contrato."
+    },
+    {
+      "path": "src/app/shared/components/input-primary/input-primary.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "caaee476a681d7a4f4e04362e5ca892eb221cceee5c58412eceec1c70c906880",
+      "expectedSha256": "caaee476a681d7a4f4e04362e5ca892eb221cceee5c58412eceec1c70c906880"
+    },
+    {
+      "path": "src/app/shared/components/input-primary/input-primary.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "232446b7e006a307ba5aa820517e56032e69d2820ddd6a421e606b083eb800f4",
+      "expectedSha256": "232446b7e006a307ba5aa820517e56032e69d2820ddd6a421e606b083eb800f4"
+    },
+    {
+      "path": "src/app/shared/components/input-primary/input-primary.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "6e87f15fa8b322f90272b14bf3a70a8e02e0c8092939999c89966872e6c6df9e",
+      "expectedSha256": "6e87f15fa8b322f90272b14bf3a70a8e02e0c8092939999c89966872e6c6df9e"
+    },
+    {
+      "path": "src/app/shared/components/modal-mensagem/app-success-modal.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "8128dc03e2903e62a63c94c607856df412b13f4df3ed95e3b67e45e8b1462b0c",
+      "expectedSha256": "bd8987b0c963358e3483fccc0d1c2320c9d6e315a638966f55f11e85ebf6458f",
+      "reason": "Alinha o modal de sucesso à identidade Oficina técnica sem alterar seu contrato."
+    },
+    {
+      "path": "src/app/shared/components/modal-mensagem/app-success-modal.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "2f4a79ca4fd7c58babf7bf77dbe06eb316d69844e35b54fdd94739c9333342f4",
+      "expectedSha256": "2f4a79ca4fd7c58babf7bf77dbe06eb316d69844e35b54fdd94739c9333342f4"
+    },
+    {
+      "path": "src/app/shared/components/modal-mensagem/app-success-modal.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "029e01a57d4197e06f668e46d69ecb1ea961165a76457faedf4afaadaeac69ce",
+      "expectedSha256": "029e01a57d4197e06f668e46d69ecb1ea961165a76457faedf4afaadaeac69ce"
+    },
+    {
+      "path": "src/app/shared/components/modal-mensagem/modal-mensagem.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "832ed24432da4aaf43b3a64840f380b6d44254d7e69dfaa711c0d7a67abec9a9",
+      "expectedSha256": "832ed24432da4aaf43b3a64840f380b6d44254d7e69dfaa711c0d7a67abec9a9"
+    },
+    {
+      "path": "src/app/shared/utils/cpf-validator.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a419d574a76247cc3da73110f0f781fbd52b27fbc8eb39733cf1cf854c45b9a3",
+      "expectedSha256": "a419d574a76247cc3da73110f0f781fbd52b27fbc8eb39733cf1cf854c45b9a3"
+    },
+    {
+      "path": "src/assets/illustrations/login-illustration.svg",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a0dec54286f3957a7da85c3270ed579296ca9a469e36e9b9bc62fadb3857e7e5",
+      "expectedSha256": "a0dec54286f3957a7da85c3270ed579296ca9a469e36e9b9bc62fadb3857e7e5"
+    },
+    {
+      "path": "src/assets/images/logo.png",
+      "classification": "IDENTICAL",
+      "referenceSha256": "b9fcf6d629a0b1572d0311228e07c576438252569cee64978943ae2dd9535077",
+      "expectedSha256": "b9fcf6d629a0b1572d0311228e07c576438252569cee64978943ae2dd9535077"
+    },
+    {
+      "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": "57ee945c9524bc1f3b7955fc6281c20e046155f842c4f8253b329da3a54d4f88",
+      "expectedSha256": "2bdcf97547681a0d91e929150490087d2a783f310341d736e5a3706335417e4d",
+      "reason": "Adapta temporariamente o dashboard aos serviços em memória, remove dependências de autenticação e layout ainda ausentes e exibe a descrição simulada no lugar das ações reservadas para 03/09 e 10/09.",
+      "removalBy": "2026-10-08"
+    },
+    {
+      "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.html",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": "e39ba6059abb94770bb3de39103e83eea00534c574ecc5c22e1b498a59496a0e",
+      "expectedSha256": "84cab0c0450a8951cd50209a78f65c13bfc1f23d4ff3a4a7481383786069ebc4",
+      "reason": "Remove temporariamente <app-header>, ainda não migrado, e liga a coluna de descrição ao contrato simulado defectDescription. Os demais bindings e controles permanecem iguais à referência.",
+      "removalBy": "2026-10-08"
+    },
+    {
+      "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "86adcbe415fe0b1139d18362ac4dd3a48f367c731eb386aa3e1faa6781cda8ec",
+      "expectedSha256": "94eb7852ca71c3e56eb0df5670317d202b2f971b05b6dfe1ae257dbf8ca636ef",
+      "reason": "Aplica tokens da identidade Oficina técnica, organiza busca e botão e adiciona rolagem controlada e layout responsivo para 360, 768 e 1440 px."
+    },
+    {
+      "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "5626353142922fc06d5a3e64617d893d2b315db64e653fe800a2677d322cb211",
+      "expectedSha256": "fa7cd5154dea17e84faaa5128844f305973ad9131e345934dd4db57aea609a47",
+      "reason": "Adiciona provideRouter([]) ao TestBed: o componente injeta Router para verServico(), e a suíte da referência não declarava esse provider explicitamente."
+    },
+    {
+      "path": "src/app/features/client/new-request-page/new-request-page.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "3603f9ac164da29a793b30cb4e576a9cbc99a261a79129c9d4db166eea293e8c",
+      "expectedSha256": "3603f9ac164da29a793b30cb4e576a9cbc99a261a79129c9d4db166eea293e8c"
+    },
+    {
+      "path": "src/app/features/client/new-request-page/new-request-page.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5",
+      "expectedSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5"
+    },
+    {
+      "path": "src/app/features/client/new-request-page/new-request-page.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "e977c775fb5330df23ebc13d278b21b2c3a21b394ad3013415e265b9461374b0",
+      "expectedSha256": "44207b5b7016082a9ccee8b7e80684e72e6bfcab963c5493c6fa00cbad63384b",
+      "reason": "Redesenha somente o visual do modal com tokens da Oficina técnica, responsividade, foco visível e correção do seletor visual da descrição."
+    },
+    {
+      "path": "src/app/features/client/new-request-page/new-request-page.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "cea39cdbab70a1512b577e6b06bbe9189041f36a80be4217380ae8992ea37002",
+      "expectedSha256": "146c6a37972add40b5dc5975ad363d1dd482a7893550237c9bc5120bab0f660f",
+      "reason": "Adiciona um stub de MatDialogRef e provideToastr() ao TestBed: o componente é conteúdo de um MatDialog (injeta MatDialogRef no construtor) e usa ToastService/ToastrService; fora de um MatDialog.open() real e sem o provider global do ngx-toastr, o TestBed não os resolve sozinho (NullInjectorError). A suíte da referência não declarava esses providers."
+    },
+    {
+      "path": "src/app/core/services/toast.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "42f8a68b8526c917c5f8974434550792cb888ddc0262d55b4d033f04a03ca40c",
+      "expectedSha256": "42f8a68b8526c917c5f8974434550792cb888ddc0262d55b4d033f04a03ca40c"
+    },
+    {
+      "path": "src/app/core/services/maintenance-request.service.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "cd9cad5c75be3e333359b88ce8f3563a30a2c473e38c9a296ba7809cdb38b3ba",
+      "reason": "Implementa só getAllClientRequests() e create() (os 2 métodos usados nesta janela) sobre MOCK_REQUESTS/MOCK_CATEGORIES/MOCK_STATUSES/MOCK_CLIENTS em memória, em vez das 10 chamadas HTTP da referência (que dependem de back-end e core/auth). redirectMaintenance, createBudget, approveBudget, rejectBudget, rescueRequest, executeMaintenance, payRequest e finalizeRequest pertencem a RF005-RF016, janelas futuras.",
+      "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/features/employee/services/category.service.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "a2cb1347cfb733ea3b997987a15a42fdbe9a5a57ad429f41655084613dd34f55",
+      "reason": "Implementa só getAllCategories() sobre MOCK_CATEGORIES, em vez das chamadas HTTP da referência. addCategory/updateCategory/deleteCategory/getById pertencem ao CRUD de categorias (RF017), janela futura.",
+      "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/test.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "a75ff3fcf29c4b1f441ac9b64c237a9df79bc7184b9e1c7b31cf77f4bd50aa9e",
+      "reason": "Registra provideNgxMask no ambiente de testes sem alterar os testes literais nem o comportamento de produção."
+    },
+    {
+      "path": "src/app/features/client/client.routes.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "92eb21145951f879d20d662a09460e1d00416f643eecd7162990b4704b0f2cfb",
+      "reason": "Migra apenas a rota dashboard do client.routes.ts da referência; as rotas request-detail/:id, approve-reject-panel e request-detail/:id/payment pertencem a janelas futuras (RF005-RF010) e dependem de core/auth, que ainda não existe.",
+      "removalBy": "2026-10-29"
     }
   ]
 }

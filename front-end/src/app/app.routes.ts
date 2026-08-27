@@ -1,29 +1,38 @@
-import { Routes } from '@angular/router';
+import { Routes } from "@angular/router";
 
-import { FoundationPageComponent } from './foundation-page/foundation-page.component';
-import { EmployeeListComponent } from './features/employee/pages/employee-list/employee-list.component';
-import { ManageCategoriesPageComponent } from './features/employee/pages/manage-categories-page/manage-categories-page.component';
+import { FoundationPageComponent } from "./foundation-page/foundation-page.component";
+import { LoginPageComponent } from "./core/auth/pages/login-page/login-page.component";
+import { SignupPageComponent } from "./core/auth/pages/signup-page/signup-page.component";
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'employees',
-    pathMatch: 'full'
+    path: "",
+    component: FoundationPageComponent,
   },
   {
-    path: 'employees',
-    component: EmployeeListComponent
+    path: "login",
+    component: LoginPageComponent,
   },
   {
-    path: 'categories',
-    component: ManageCategoriesPageComponent
+    path: "signup",
+    component: SignupPageComponent,
   },
   {
-    path: 'employee',
-    loadChildren: () => import('./features/employee/employee.routes').then((module) => module.employeeRoutes)
+    path: "employee",
+    loadChildren: () =>
+      import("./features/employee/employee.routes").then(
+        (module) => module.employeeRoutes,
+      ),
   },
   {
-    path: '**',
-    redirectTo: 'employees'
-  }
+    path: "client",
+    loadChildren: () =>
+      import("./features/client/client.routes").then(
+        (module) => module.clientRoutes,
+      ),
+  },
+  {
+    path: "**",
+    redirectTo: "",
+  },
 ];
