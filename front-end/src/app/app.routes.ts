@@ -28,4 +28,11 @@ export const routes: Routes = [
     path: "**",
     redirectTo: "",
   },
+    path: 'client',
+    loadChildren: () => import('./features/client/client.routes').then((module) => module.clientRoutes)
+  },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];
