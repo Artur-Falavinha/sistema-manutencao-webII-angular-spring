@@ -121,7 +121,7 @@
       "path": "src/app/app.config.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "c12d54d81a9053cf69d1a4b941b8c5c7ff0ead5c43a092e5a2e4b793b65dea0d",
+      "expectedSha256": "d67df1973d9756e7a168afdec8022ac0c1803016fcdcc9e09fa89abd31427bc4",
       "reason": "Configuração mínima de rotas, máscaras e providers de animação e ngx-toastr até a migração do layout real.",
       "removalBy": "2026-08-27"
     },
@@ -129,7 +129,7 @@
       "path": "src/app/app.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "5e901e60ec5c9c9399a5943d80c8792d85ed1ba753dca372d14457bd495beaff",
+      "expectedSha256": "55c085ee87c6dbb811d98650652fb6f5f2be5f268839c52c9cdb1cfdb176caf5",
       "reason": "Rotas provisórias da fundação, páginas públicas e estruturas administrativas até a migração do layout real; inclui agora o carregamento preguiçoso do módulo client.",
       "removalBy": "2026-08-27"
     },
@@ -596,6 +596,14 @@
       "referenceSha256": null,
       "expectedSha256": "a75ff3fcf29c4b1f441ac9b64c237a9df79bc7184b9e1c7b31cf77f4bd50aa9e",
       "reason": "Registra provideNgxMask no ambiente de testes sem alterar os testes literais nem o comportamento de produção."
+    },
+    {
+      "path": "src/app/features/client/client.routes.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "92eb21145951f879d20d662a09460e1d00416f643eecd7162990b4704b0f2cfb",
+      "reason": "Migra apenas a rota dashboard do client.routes.ts da referência; as rotas request-detail/:id, approve-reject-panel e request-detail/:id/payment pertencem a janelas futuras (RF005-RF010) e dependem de core/auth, que ainda não existe.",
+      "removalBy": "2026-10-29"
     }
   ]
 }
