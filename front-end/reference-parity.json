@@ -4,7 +4,7 @@
     "repository": "https://github.com/Artur-Falavinha/sistema-manutencao-angular-spring",
     "commit": "c6bf109951c06265cb6708c16676c297d0070161"
   },
-  "window": "2026-08-20",
+  "window": "2026-08-27",
   "finalFrontend": false,
   "files": [
     {
@@ -120,16 +120,16 @@
       "path": "src/app/app.config.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "74700bb6c06da4d92d20cab051f3540b8ce1c3abed2648a77934d2bf3c6436a7",
-      "reason": "Configuração mínima de rotas até a migração do layout real.",
+      "expectedSha256": "c12d54d81a9053cf69d1a4b941b8c5c7ff0ead5c43a092e5a2e4b793b65dea0d",
+      "reason": "Configuração mínima de rotas até a migração do layout real; inclui também os providers de animação e do ngx-toastr exigidos por MatDialog/MatTable/MatSort e pelo ToastService migrados nesta janela.",
       "removalBy": "2026-08-27"
     },
     {
       "path": "src/app/app.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "b22e72e7ecbaf20f1bc6d28458cd0d660a4ed7cd1f7bbb3c93b0e5bf82928ab2",
-      "reason": "Rota provisória sem módulos funcionais, com acesso temporário às estruturas administrativas.",
+      "expectedSha256": "5e901e60ec5c9c9399a5943d80c8792d85ed1ba753dca372d14457bd495beaff",
+      "reason": "Rota provisória sem módulos funcionais, com acesso temporário às estruturas administrativas; inclui agora o carregamento preguiçoso do módulo client.",
       "removalBy": "2026-08-27"
     },
     {
@@ -380,6 +380,92 @@
       "referenceSha256": "9d1a7bc2c06925d7afea96bdfb0822c1399c978682b4edadd82c9350b87b5ee3",
       "expectedSha256": "cb96ce286170bb790f90a14db119eca1e6529bc5df69b3e8a4a7ce78944bfb9e",
       "reason": "Implementação temporária usando os dados simulados (mocks) locais em memória para permitir a demonstração da janela sem comunicação com o backend.",
+      "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/features/client/client.routes.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "92eb21145951f879d20d662a09460e1d00416f643eecd7162990b4704b0f2cfb",
+      "reason": "Migra apenas a rota dashboard do client.routes.ts da referência; as rotas request-detail/:id, approve-reject-panel e request-detail/:id/payment pertencem a janelas futuras (RF005-RF010) e dependem de core/auth, que ainda não existe.",
+      "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": "57ee945c9524bc1f3b7955fc6281c20e046155f842c4f8253b329da3a54d4f88",
+      "expectedSha256": "2bdcf97547681a0d91e929150490087d2a783f310341d736e5a3706335417e4d",
+      "reason": "Adapta temporariamente o dashboard aos serviços em memória, remove dependências de autenticação e layout ainda ausentes e exibe a descrição simulada no lugar das ações reservadas para 03/09 e 10/09.",
+      "removalBy": "2026-10-08"
+    },
+    {
+      "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.html",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": "e39ba6059abb94770bb3de39103e83eea00534c574ecc5c22e1b498a59496a0e",
+      "expectedSha256": "84cab0c0450a8951cd50209a78f65c13bfc1f23d4ff3a4a7481383786069ebc4",
+      "reason": "Remove temporariamente <app-header>, ainda não migrado, e liga a coluna de descrição ao contrato simulado defectDescription. Os demais bindings e controles permanecem iguais à referência.",
+      "removalBy": "2026-10-08"
+    },
+    {
+      "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "86adcbe415fe0b1139d18362ac4dd3a48f367c731eb386aa3e1faa6781cda8ec",
+      "expectedSha256": "94eb7852ca71c3e56eb0df5670317d202b2f971b05b6dfe1ae257dbf8ca636ef",
+      "reason": "Aplica tokens da identidade Oficina técnica, organiza busca e botão e adiciona rolagem controlada e layout responsivo para 360, 768 e 1440 px."
+    },
+    {
+      "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "5626353142922fc06d5a3e64617d893d2b315db64e653fe800a2677d322cb211",
+      "expectedSha256": "fa7cd5154dea17e84faaa5128844f305973ad9131e345934dd4db57aea609a47",
+      "reason": "Adiciona provideRouter([]) ao TestBed: o componente injeta Router para verServico(), e a suíte da referência não declarava esse provider explicitamente."
+    },
+    {
+      "path": "src/app/features/client/new-request-page/new-request-page.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "3603f9ac164da29a793b30cb4e576a9cbc99a261a79129c9d4db166eea293e8c",
+      "expectedSha256": "3603f9ac164da29a793b30cb4e576a9cbc99a261a79129c9d4db166eea293e8c"
+    },
+    {
+      "path": "src/app/features/client/new-request-page/new-request-page.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5",
+      "expectedSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5"
+    },
+    {
+      "path": "src/app/features/client/new-request-page/new-request-page.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "e977c775fb5330df23ebc13d278b21b2c3a21b394ad3013415e265b9461374b0",
+      "expectedSha256": "44207b5b7016082a9ccee8b7e80684e72e6bfcab963c5493c6fa00cbad63384b",
+      "reason": "Redesenha somente o visual do modal com tokens da Oficina técnica, responsividade, foco visível e correção do seletor visual da descrição."
+    },
+    {
+      "path": "src/app/features/client/new-request-page/new-request-page.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "cea39cdbab70a1512b577e6b06bbe9189041f36a80be4217380ae8992ea37002",
+      "expectedSha256": "146c6a37972add40b5dc5975ad363d1dd482a7893550237c9bc5120bab0f660f",
+      "reason": "Adiciona um stub de MatDialogRef e provideToastr() ao TestBed: o componente é conteúdo de um MatDialog (injeta MatDialogRef no construtor) e usa ToastService/ToastrService; fora de um MatDialog.open() real e sem o provider global do ngx-toastr, o TestBed não os resolve sozinho (NullInjectorError). A suíte da referência não declarava esses providers."
+    },
+    {
+      "path": "src/app/core/services/toast.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "42f8a68b8526c917c5f8974434550792cb888ddc0262d55b4d033f04a03ca40c",
+      "expectedSha256": "42f8a68b8526c917c5f8974434550792cb888ddc0262d55b4d033f04a03ca40c"
+    },
+    {
+      "path": "src/app/core/services/maintenance-request.service.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "cd9cad5c75be3e333359b88ce8f3563a30a2c473e38c9a296ba7809cdb38b3ba",
+      "reason": "Implementa só getAllClientRequests() e create() (os 2 métodos usados nesta janela) sobre MOCK_REQUESTS/MOCK_CATEGORIES/MOCK_STATUSES/MOCK_CLIENTS em memória, em vez das 10 chamadas HTTP da referência (que dependem de back-end e core/auth). redirectMaintenance, createBudget, approveBudget, rejectBudget, rescueRequest, executeMaintenance, payRequest e finalizeRequest pertencem a RF005-RF016, janelas futuras.",
+      "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/features/employee/services/category.service.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "a2cb1347cfb733ea3b997987a15a42fdbe9a5a57ad429f41655084613dd34f55",
+      "reason": "Implementa só getAllCategories() sobre MOCK_CATEGORIES, em vez das chamadas HTTP da referência. addCategory/updateCategory/deleteCategory/getById pertencem ao CRUD de categorias (RF017), janela futura.",
       "removalBy": "2026-10-29"
     }
   ]
