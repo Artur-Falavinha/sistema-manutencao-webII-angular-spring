@@ -1,0 +1,151 @@
+:host {
+  display: block;
+  min-width: 0;
+  color: var(--color-text-default);
+  font-family: var(--font-family-secondary);
+}
+
+.container {
+  width: min(100%, 90rem);
+  margin-inline: auto;
+  padding: clamp(var(--spacing-xs), 4vw, var(--spacing-xl));
+}
+
+.main-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: var(--size-25) solid var(--color-workshop-steel);
+}
+
+h1 {
+  margin: 0;
+  color: var(--color-workshop-graphite);
+  font-family: var(--font-family-primary);
+  font-size: clamp(var(--font-size-2xl), 5vw, var(--font-size-4xl));
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--font-letter-spacing-tight);
+}
+
+.header-actions {
+  display: flex;
+  flex: 1 1 30rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-xs);
+}
+
+.search-field {
+  flex: 1 1 16rem;
+  max-width: 22rem;
+}
+
+.add-button {
+  min-height: var(--size-1100);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.add-button mat-icon {
+  margin-right: var(--spacing-3xs);
+}
+
+.add-button:focus-visible,
+button[mat-icon-button]:focus-visible,
+.search-field input:focus-visible {
+  outline: var(--size-50) solid var(--color-workshop-safety);
+  outline-offset: var(--size-50);
+}
+
+.table-card {
+  width: 100%;
+  overflow-x: auto;
+  border: var(--size-25) solid var(--color-workshop-steel);
+  border-top: var(--size-100) solid var(--color-workshop-safety);
+  border-radius: var(--radius-md);
+  background: var(--color-workshop-surface);
+  box-shadow: 0 var(--spacing-4xs) var(--spacing-xs) rgb(24 35 45 / 10%);
+  scrollbar-color: var(--color-workshop-enamel) var(--color-workshop-floor);
+}
+
+table {
+  width: 100%;
+  min-width: 44rem;
+  border-collapse: collapse;
+}
+
+th.mat-mdc-header-cell {
+  padding-block: var(--spacing-xs);
+  background: var(--color-workshop-graphite);
+  color: var(--color-workshop-surface);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-default);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--font-letter-spacing-default);
+}
+
+td.mat-mdc-cell {
+  padding-block: var(--spacing-xs);
+  color: var(--color-text-default);
+  border-bottom-color: var(--color-workshop-steel);
+  font-family: var(--font-family-secondary);
+}
+
+tr.mat-mdc-row:hover td {
+  background: var(--color-workshop-floor);
+}
+
+td.mat-mdc-cell:last-child,
+th.mat-mdc-header-cell:last-child {
+  white-space: nowrap;
+}
+
+:host ::ng-deep .search-field .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+:host ::ng-deep .search-field .mat-mdc-text-field-wrapper {
+  background: var(--color-workshop-surface);
+}
+
+@media (max-width: 48rem) {
+  .main-header,
+  .header-actions {
+    align-items: stretch;
+  }
+
+  .header-actions,
+  .search-field,
+  .add-button {
+    width: 100%;
+    max-width: none;
+  }
+
+  .add-button {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 30rem) {
+  .container {
+    padding: var(--spacing-xs) var(--spacing-3xs);
+  }
+
+  .table-card {
+    border-radius: var(--radius-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host,
+  :host * {
+    scroll-behavior: auto;
+    transition: none;
+  }
+}

@@ -1,0 +1,164 @@
+:host {
+  display: block;
+  color: var(--color-text-default);
+  font-family: var(--font-family-secondary);
+}
+
+mat-dialog-content {
+  width: min(46rem, calc(100vw - 2rem));
+  max-height: min(80vh, 50rem);
+  padding: clamp(var(--spacing-md), 4vw, var(--spacing-xl));
+  background: var(--color-workshop-surface);
+}
+
+.form-header {
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  text-align: center;
+  border-bottom: var(--size-25) solid var(--color-workshop-steel);
+}
+
+.form-header h2 {
+  margin: 0 0 var(--spacing-3xs);
+  color: var(--color-workshop-graphite);
+  font-family: var(--font-family-primary);
+  font-size: clamp(var(--font-size-xl), 5vw, var(--font-size-3xl));
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--font-letter-spacing-tight);
+}
+
+.form-header p {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+  padding-top: var(--spacing-md);
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.form-row > mat-form-field {
+  min-width: 0;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xs);
+  width: 100%;
+  margin-top: var(--spacing-sm);
+}
+
+.form-actions.first-step {
+  justify-content: flex-end;
+}
+
+.form-actions button,
+mat-dialog-actions button {
+  min-height: var(--size-1100);
+  padding-inline: var(--spacing-lg);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-secondary);
+  font-weight: var(--font-weight-semibold);
+}
+
+button:focus-visible {
+  outline: var(--size-50) solid var(--color-workshop-safety);
+  outline-offset: var(--size-50);
+}
+
+mat-dialog-actions {
+  padding: var(--spacing-xs) var(--spacing-md) var(--spacing-md);
+  border-top: var(--size-25) solid var(--color-workshop-steel);
+  background: var(--color-workshop-surface);
+}
+
+:host ::ng-deep .mat-horizontal-stepper-header-container {
+  max-width: 32rem;
+  margin-inline: auto;
+  padding: 0;
+}
+
+:host ::ng-deep .mat-step-header {
+  flex: 1 1 0;
+}
+
+:host ::ng-deep .mat-step-header .mat-step-label {
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+:host ::ng-deep .mat-step-header .mat-step-icon-selected,
+:host ::ng-deep .mat-step-header .mat-step-icon-state-edit {
+  background: var(--color-workshop-enamel);
+}
+
+:host ::ng-deep .mat-horizontal-stepper-header::after,
+:host ::ng-deep .mat-horizontal-stepper-header::before {
+  margin: 0;
+  border-top: var(--size-50) solid var(--color-workshop-steel);
+}
+
+:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+:host ::ng-deep .mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: var(--color-workshop-enamel);
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: var(--color-error-default);
+  --mdc-snackbar-supporting-text-color: var(--color-workshop-surface);
+  --mat-snack-bar-button-color: var(--color-workshop-surface);
+}
+
+@media (max-width: 40rem) {
+  mat-dialog-content {
+    width: calc(100vw - 1rem);
+    padding: var(--spacing-md) var(--spacing-xs);
+  }
+
+  .form-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-2xs);
+  }
+
+  .form-actions {
+    flex-wrap: wrap;
+  }
+
+  .form-actions button,
+  mat-dialog-actions button {
+    flex: 1 1 8rem;
+    padding-inline: var(--spacing-xs);
+  }
+
+  :host ::ng-deep .mat-step-header .mat-step-label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host,
+  :host * {
+    scroll-behavior: auto;
+    transition-duration: 0.01ms;
+    animation-duration: 0.01ms;
+    animation-iteration-count: 1;
+  }
+}
