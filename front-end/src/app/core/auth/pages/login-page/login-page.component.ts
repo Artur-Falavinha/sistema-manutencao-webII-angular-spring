@@ -15,6 +15,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { InputPrimaryComponent } from '../../../../shared/components/input-primary/input-primary.component';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { Toast } from 'ngx-toastr';
+import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-login-page',
@@ -30,13 +33,15 @@ import { Router } from '@angular/router';
 })
 export class LoginPageComponent implements OnInit {
   loginForm!: FormGroup;
-  isLoading = false;
+  isLoading = false; 
   loginError: string | null = null;
   hide = signal(true);
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private authService: AuthService,
+    private router: Router,
+    private toast: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -60,7 +65,32 @@ export class LoginPageComponent implements OnInit {
       return;
     }
 
-    this.isLoading = false;
+    const email = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
+
+    this.authService.login(email, password).subscribe({
+      next: (user) => {
+        this.isLoading = false; 
+
+        if (user) {
+          if (user.userAccess === 'employee') {
+            this.router.navigate(['/employee/dashboard']); 
+          } else if (user.userAccess === 'client') {
+            this.router.navigate(['/client/dashboard']); 
+          }
+        } else {
+          this.toast.error('Erro', 'Login falhou. E-mail ou senha incorretos.');
+          this.loginError = 'O e-mail ou a senha informados estão incorretos.';
+        }
+      },
+      error: (err) => {
+        this.isLoading = false; 
+        this.toast.error('Erro', 'Login falhou');
+        this.loginError =
+          'Ocorreu um erro inesperado. Tente novamente mais tarde.';
+      },
+    });
+    
   }
 
   navigate() {

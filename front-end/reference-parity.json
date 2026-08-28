@@ -503,17 +503,16 @@
     },
     {
       "path": "src/app/core/auth/pages/login-page/login-page.component.spec.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "e8f9d1320d1754c80a8b19c799533f54a0f1aeb171a9ffc5d10a701bcaf7a66c",
-      "expectedSha256": "e8f9d1320d1754c80a8b19c799533f54a0f1aeb171a9ffc5d10a701bcaf7a66c"
+      "expectedSha256": "2efa86377258d2bb9b54126282686e4d5f59205550c60ab7765dc8d42f112f05",
+      "reason": "Adiciona somente provideRouter e provideToastr exigidos para instanciar o LoginPageComponent restaurado com AuthService e ToastService no TestBed."
     },
     {
       "path": "src/app/core/auth/pages/login-page/login-page.component.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
+      "classification": "IDENTICAL",
       "referenceSha256": "40e41f7bee78a0e49a94e8ae4d2021e5b7fd366638a6869536506e10003b272c",
-      "expectedSha256": "8a5ec45d70c0a90cd13a0f134e39bbb57ed9ed95538deea15b82b86d755f5e7b",
-      "reason": "Estrutura temporária do login sem AuthService ou backend; o fluxo simulado será implementado na etapa seguinte.",
-      "removalBy": "2026-08-27"
+      "expectedSha256": "40e41f7bee78a0e49a94e8ae4d2021e5b7fd366638a6869536506e10003b272c"
     },
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.css",
@@ -530,17 +529,38 @@
     },
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.spec.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a3238eb745118493c2ba23689ba07a30a7eb4f969847d4ff9de9a49fc2395250",
-      "expectedSha256": "a3238eb745118493c2ba23689ba07a30a7eb4f969847d4ff9de9a49fc2395250"
+      "expectedSha256": "8802871f849eadd2c0a41f3b0f34ed49cc2e0d54f1804368da406d6c4c29dc26",
+      "reason": "Adiciona somente provideRouter exigido para instanciar o SignupPageComponent com o serviço de autenticação simulado no TestBed."
     },
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
-      "expectedSha256": "2e6a36dd9c970ba26704f7f9da24a3732564c930f3b49e9e23314cbb73c9fc76",
-      "reason": "Estrutura temporária do autocadastro sem AuthService, ViaCEP ou backend; o fluxo simulado será implementado na etapa seguinte.",
-      "removalBy": "2026-08-27"
+      "expectedSha256": "32a31b8fe42a848d232c2deb8acad046044f7108da430e1ce4b4bf2c0cc207cf",
+      "reason": "Scaffold temporário do autocadastro: envia o payload para o AuthService simulado e mantém o retorno visual, sem backend ou ViaCEP nesta janela.",
+      "removalBy": "2026-10-08"
+    },
+    {
+      "path": "src/app/core/auth/services/auth.service.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": "28f95d7a55443599aebc93d0572a0723e893a8dac0c503d55122ccca201a2b6c",
+      "expectedSha256": "9382fa068bebc6a24e424949140dda976296b61274e7d95d132bd254085f1015",
+      "reason": "AuthService temporário para login e cadastro simulados usando os mocks existentes, sem HTTP ou persistência local; substituir na integração REST.",
+      "removalBy": "2026-10-08"
+    },
+    {
+      "path": "src/app/core/auth/services/auth.service.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "95350b6772fab782e4479556ac3ac430dc38692a61e94f34f128791565554145",
+      "expectedSha256": "95350b6772fab782e4479556ac3ac430dc38692a61e94f34f128791565554145"
+    },
+    {
+      "path": "src/app/shared/models/register-request.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "f10c3ecd84b9ec82b6947ce5fcc3a8b53cadcc02b90daaa28daef4970c1f8265",
+      "expectedSha256": "f10c3ecd84b9ec82b6947ce5fcc3a8b53cadcc02b90daaa28daef4970c1f8265"
     },
     {
       "path": "src/app/shared/components/input-primary/input-primary.component.css",

@@ -10,7 +10,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AuthService } from '../../services/auth.service';
 import { AppSuccessModalComponent } from '../../../../shared/components/modal-mensagem/app-success-modal';
+import { RegisterRequest } from '../../../../shared/models/register-request';
 import { CustomValidators } from '../../../../shared/utils/cpf-validator';
 
 @Component({
@@ -33,6 +35,7 @@ export class SignupPageComponent {
 
   constructor(
     private fb: FormBuilder,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -56,7 +59,30 @@ export class SignupPageComponent {
 
   onSubmit(): void {
     if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
-      this.showModal = true;
+      const personalData = this.firstFormGroup.value;
+      const addressData = this.secondFormGroup.value;
+
+      const removeNonDigits = (value: string) => value.replace(/\D/g, '');
+
+      const requestData: RegisterRequest = {
+        name: personalData.nameUser,
+        cpf: removeNonDigits(personalData.cpfUser),
+        email: personalData.email,
+        phoneNumber: removeNonDigits(personalData.phoneUser),
+        zipCode: removeNonDigits(addressData.cep),
+        street: addressData.address,
+        number: addressData.number,
+        complement: addressData.complement,
+        neighborhood: addressData.neighborhood,
+        city: addressData.city,
+        state: addressData.state,
+      };
+
+      this.authService.signup(requestData).subscribe({
+        next: () => {
+          this.showModal = true;
+        },
+      });
     } else {
       this.firstFormGroup.markAllAsTouched();
       this.secondFormGroup.markAllAsTouched();
