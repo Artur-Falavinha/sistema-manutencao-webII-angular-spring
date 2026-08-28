@@ -1,0 +1,27 @@
+<mat-toolbar class="app-header">
+  <div class="header-left">
+    @if (!isSidebarExpanded() || !(isEmployee$ | async)) {
+    <img src="assets/images/logo.png" alt="Logo" class="logo" />
+    }
+  </div>
+
+  <div class="header-right">
+    <span class="body_medium">Olá {{ nomeDeUsuario }}</span>
+
+    <div class="user-avatar">
+      <mat-icon>account_circle</mat-icon>
+    </div>
+    <div class="notification-container">
+  
+ 
+
+  
+</div>
+    <div style="display: flex; align-items: center; gap: 8px;" (click)="logout()">
+      <span class="body_medium">Sair</span>
+      <button class="icon-button">
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </div>
+  </div>
+</mat-toolbar>

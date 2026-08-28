@@ -1,13 +1,15 @@
 import { Routes } from "@angular/router";
 
-import { FoundationPageComponent } from "./foundation-page/foundation-page.component";
+import { PageNotFoundComponent } from "./core/layout/page-not-found/page-not-found.component";
+import { UnauthorizedPageComponent } from "./core/layout/unauthorized-page/unauthorized-page.component";
 import { LoginPageComponent } from "./core/auth/pages/login-page/login-page.component";
 import { SignupPageComponent } from "./core/auth/pages/signup-page/signup-page.component";
 
 export const routes: Routes = [
   {
     path: "",
-    component: FoundationPageComponent,
+    redirectTo: "login",
+    pathMatch: "full",
   },
   {
     path: "login",
@@ -16,6 +18,10 @@ export const routes: Routes = [
   {
     path: "signup",
     component: SignupPageComponent,
+  },
+  {
+    path: "error-unauthorized",
+    component: UnauthorizedPageComponent,
   },
   {
     path: "employee",
@@ -33,6 +39,6 @@ export const routes: Routes = [
   },
   {
     path: "**",
-    redirectTo: "",
+    component: PageNotFoundComponent,
   },
 ];

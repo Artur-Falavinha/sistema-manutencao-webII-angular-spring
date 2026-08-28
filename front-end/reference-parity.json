@@ -95,67 +95,157 @@
     },
     {
       "path": "src/app/app.component.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "2d0fe6afbbc78f418b8c3410ad726d359d512764657385a2b762d469b0fabfa6",
-      "reason": "Shell mínimo sem regra de negócio para inicializar a fundação isolada.",
-      "removalBy": "2026-08-27"
+      "classification": "IDENTICAL",
+      "referenceSha256": "910db89aee26caa6844def0adb2a4ba3b4e9accb1669d79845ccc146648bef31",
+      "expectedSha256": "910db89aee26caa6844def0adb2a4ba3b4e9accb1669d79845ccc146648bef31"
     },
     {
       "path": "src/app/app.component.html",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "e49ed22c5950dea51898393ce00c3caa9e0de07e9d179ff62b963e0977909a1c",
-      "reason": "Outlet mínimo do shell técnico temporário.",
-      "removalBy": "2026-08-27"
+      "classification": "IDENTICAL",
+      "referenceSha256": "948baa6bfa05ca75ac3952591987ba468e5730f35893b84bebd7152a946bf114",
+      "expectedSha256": "948baa6bfa05ca75ac3952591987ba468e5730f35893b84bebd7152a946bf114",
+      "reason": "Migração literal do shell da referência, sem alteração funcional."
     },
     {
       "path": "src/app/app.component.css",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
-      "reason": "Folha vazia reservada ao shell técnico temporário.",
-      "removalBy": "2026-08-27"
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "expectedSha256": "f693514e24c7a257dfe49110aab2b7113ccca370969d5670d51a5eac1f3d081d",
+      "reason": "Redesenho visual do shell com tokens Oficina técnica, responsividade em 360/768/1440, foco e reduced-motion."
+    },
+    {
+      "path": "src/app/app.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "89b4865ced8af71f2f9976af9ccb4fe9acf173bf54cf114d139a76f2bbc48e15",
+      "expectedSha256": "a7bc177e16a244e1f0f000daa64fe592cad301fe7cbffaca46d33a5fd483e792",
+      "reason": "Remove somente a expectativa obsoleta de texto que não existe no shell da própria referência e valida o router-outlet real."
     },
     {
       "path": "src/app/app.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "4683e36a0c2b4d1f8e6216af0aa3793e55066f2be3bf3f12b5b721b96de52d61",
-      "reason": "Rotas provisórias da fundação, páginas públicas e estruturas administrativas até a migração do layout real; inclui agora o carregamento preguiçoso do módulo client.",
-      "removalBy": "2026-08-27"
+      "expectedSha256": "ff7a3b1fd8034477f38c887908c81a1bf292abf40fda6677c596d624910b8f65",
+      "reason": "Scaffold temporário do shell: raiz para login, login/signup/client/employee sem guards e páginas de erro até a integração da autenticação.",
+      "removalBy": "2026-09-03"
     },
     {
-      "path": "src/app/foundation-page/foundation-page.component.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "b84d262fe82f568c756d4f2e50de6d8d483b4d6dc9141d53125bb921ea75acae",
-      "reason": "Componente técnico sem lógica de negócio.",
-      "removalBy": "2026-08-27"
+      "path": "src/app/core/layout/header/header.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "b26dc12aa5747b912d5eddfcda31c3a482569ef20f5095f7864ab18ea9d68e37",
+      "expectedSha256": "b26dc12aa5747b912d5eddfcda31c3a482569ef20f5095f7864ab18ea9d68e37"
     },
     {
-      "path": "src/app/foundation-page/foundation-page.component.html",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "d0b025d48219d4986c6a1b4e9c869a39c40ead3ed894b17adabb9e64288cccb1",
-      "reason": "Conteúdo estático de acompanhamento da fundação.",
-      "removalBy": "2026-08-27"
+      "path": "src/app/core/layout/header/header.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "902ac006c3e57c57ba67e65ea2e7e626fd7e2439f27ce3d1ad013174870ded9c",
+      "expectedSha256": "902ac006c3e57c57ba67e65ea2e7e626fd7e2439f27ce3d1ad013174870ded9c"
     },
     {
-      "path": "src/app/foundation-page/foundation-page.component.css",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "5d2ef2c1a99384f46d31dbdc492674c5b438a0bddd00fd893aeabfe07c0bd0df",
-      "reason": "Apresentação visual exclusiva da página técnica provisória.",
-      "removalBy": "2026-08-27"
+      "path": "src/app/core/layout/header/header.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "4da05d4436f4bd0f8a800fadf657b626cb20990ce854d8867b42d97ac46baef2",
+      "expectedSha256": "0f494ec6e18aa6658925fd352cb61a4fbd7c4da736fc5f800c19247919a8b5ae",
+      "reason": "Redesenho visual Oficina técnica, responsivo e acessível, sem alterar o contrato do componente."
     },
     {
-      "path": "src/app/foundation-page/foundation-page.component.spec.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "5313652c97116c3984e2fdffb385da1ecc0f43c9a422794e4a19169e4320cec8",
-      "reason": "Teste limitado ao scaffold da entrega de fundação.",
-      "removalBy": "2026-08-27"
+      "path": "src/app/core/layout/header/header.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "1234fbf0d6ee7da4c3c9361fc4b74aa59c611d0d4d2c68ee61df832921bf1834",
+      "expectedSha256": "1234fbf0d6ee7da4c3c9361fc4b74aa59c611d0d4d2c68ee61df832921bf1834"
+    },
+    {
+      "path": "src/app/core/layout/side-bar/side-bar.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "cd1321366eda91fbbea56ecd4f0520b29c6ce9d8f33264bdec253f23bd928627",
+      "expectedSha256": "cd1321366eda91fbbea56ecd4f0520b29c6ce9d8f33264bdec253f23bd928627"
+    },
+    {
+      "path": "src/app/core/layout/side-bar/side-bar.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "c6a39be048baad32d0db666af6bb21c1059cc21bbd5f76f85957f33cfe1a392f",
+      "expectedSha256": "c6a39be048baad32d0db666af6bb21c1059cc21bbd5f76f85957f33cfe1a392f"
+    },
+    {
+      "path": "src/app/core/layout/side-bar/side-bar.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "eeaab568c97daa606a2a8ef1448d370831386932e9c69bbfdab14dbe86e2c258",
+      "expectedSha256": "54f64ff7b22bcb829a35ad95d2490825b1e86746ca0c2b00bc87f411998e1615",
+      "reason": "Redesenho visual Oficina técnica, com estados ativos, foco e breakpoints 360/768/1440."
+    },
+    {
+      "path": "src/app/core/layout/side-bar/side-bar.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "12f695c4367104b3b81f88c87e770f1715a12f9c9fab097f849efa788287902e",
+      "expectedSha256": "7595f1f0fd79537ca82a031408479f2d15e90321d53a486a9106bbfa1ff893ad",
+      "reason": "Adiciona somente provideRouter ao TestBed, exigido pelos diretivos RouterLink do componente literal."
+    },
+    {
+      "path": "src/app/core/layout/page-not-found/page-not-found.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "32b669c3cd80a5ffd3354dff7421c5d280b715420a928d4ff6aa430621bb2274",
+      "expectedSha256": "32b669c3cd80a5ffd3354dff7421c5d280b715420a928d4ff6aa430621bb2274"
+    },
+    {
+      "path": "src/app/core/layout/page-not-found/page-not-found.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "2adea55100e59a23478f531260ed900907fffdbe12c6d219751db02d69e3a474",
+      "expectedSha256": "2adea55100e59a23478f531260ed900907fffdbe12c6d219751db02d69e3a474"
+    },
+    {
+      "path": "src/app/core/layout/page-not-found/page-not-found.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "c345fa29f7d08ad52cf1529bc97f0e91117614f09e172cec2bc1061477fa61d6",
+      "expectedSha256": "7205c483f6f17787b4110e90dd245cd72636beb96afdc9647cdfa8cfed3d184f",
+      "reason": "Redesenho visual da página 404 com tokens Oficina técnica, escala responsiva e reduced-motion."
+    },
+    {
+      "path": "src/app/core/layout/page-not-found/page-not-found.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "c463c74f907d5851ea70d56fb69e6f1f4d015e881e6e60a46b7576289eb6cb90",
+      "expectedSha256": "c463c74f907d5851ea70d56fb69e6f1f4d015e881e6e60a46b7576289eb6cb90"
+    },
+    {
+      "path": "src/app/core/layout/unauthorized-page/unauthorized-page.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "8bb5fab2e668086b7966581af769063fa73f60a07f4a8593dfbb8544f3eb507b",
+      "expectedSha256": "8bb5fab2e668086b7966581af769063fa73f60a07f4a8593dfbb8544f3eb507b"
+    },
+    {
+      "path": "src/app/core/layout/unauthorized-page/unauthorized-page.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a1ccca4d963f0fdb3ced2263a6efe94221b06674b38e8065bf88a99406a813b1",
+      "expectedSha256": "a1ccca4d963f0fdb3ced2263a6efe94221b06674b38e8065bf88a99406a813b1"
+    },
+    {
+      "path": "src/app/core/layout/unauthorized-page/unauthorized-page.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "2e746c9f525dcf5c5fc2992b7d0492d43a8423efc08279b4b1cdd08a24306942",
+      "expectedSha256": "7205c483f6f17787b4110e90dd245cd72636beb96afdc9647cdfa8cfed3d184f",
+      "reason": "Redesenho visual da página 401 com tokens Oficina técnica, escala responsiva e reduced-motion."
+    },
+    {
+      "path": "src/app/core/layout/unauthorized-page/unauthorized-page.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "c3b2734d64e7def693cf2a2cf3b063b37c0824621bd1285e2452c13d8a149778",
+      "expectedSha256": "c3b2734d64e7def693cf2a2cf3b063b37c0824621bd1285e2452c13d8a149778"
+    },
+    {
+      "path": "src/app/core/services/sidebar-state.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "c877483828f728f4d9aec0d3b4e2cc628f30d0538fb203156b76e9a64d84a0b1",
+      "expectedSha256": "c877483828f728f4d9aec0d3b4e2cc628f30d0538fb203156b76e9a64d84a0b1"
+    },
+    {
+      "path": "src/assets/illustrations/401-error-unauthorized.svg",
+      "classification": "IDENTICAL",
+      "referenceSha256": "bce31650c3038ce7df5d8e6ad719ae9b601b4830208e4c95cecc039c855f0373",
+      "expectedSha256": "bce31650c3038ce7df5d8e6ad719ae9b601b4830208e4c95cecc039c855f0373"
+    },
+    {
+      "path": "src/assets/illustrations/404-error-not-found.svg",
+      "classification": "IDENTICAL",
+      "referenceSha256": "e1a0401668f7aa42d86ea85d55fadf014b036b4e3854f6002163de89d001b6c7",
+      "expectedSha256": "e1a0401668f7aa42d86ea85d55fadf014b036b4e3854f6002163de89d001b6c7"
     },
     {
       "path": "src/app/shared/models/status.ts",
