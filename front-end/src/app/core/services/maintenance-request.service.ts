@@ -1,61 +1,129 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO } from '../../shared/models/maintenance-request.models';
-import { Request } from '../../shared/models/request';
-import { MOCK_REQUESTS } from '../../shared/mocks/request.mock';
-import { MOCK_CATEGORIES } from '../../shared/mocks/category.mock';
-import { MOCK_STATUSES } from '../../shared/mocks/status.mock';
-import { MOCK_CLIENTS } from '../../shared/mocks/client.mock';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { API_URL } from '../configs/api.token'; 
+import {MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO, ClientRequestDetailDTO, EmployeeRequestDetailDTO, RejectionDTO} from '../../shared/models/maintenance-request.models';
+import { MaintenanceRecordDTO } from '../../shared/models/maintenance-record.model'
+import { BudgetCreateDTO } from '../../shared/models/budget.model';
 
-const LOGGED_IN_CLIENT_ID = 1;
 
 @Injectable({
   providedIn: 'root'
 })
 export class MaintenanceRequestService {
-  private requests: Request[] = [...MOCK_REQUESTS];
+  private http = inject(HttpClient);
+  private apiBaseUrl = inject(API_URL);
+  
+  private readonly apiUrl = `${this.apiBaseUrl}/requests`;
 
-  getAllClientRequests(): Observable<MaintenanceRequestResponseDTO[]> {
-    const responses = this.requests
-      .filter((request) => request.clientId === LOGGED_IN_CLIENT_ID)
-      .map((request) => this.toResponseDTO(request));
-
-    return of(responses);
-  }
-
+  /**
+   * Cria uma nova solicitação.
+   * Payload: { equipmentName, defectDescription, categoryId }
+   */
   create(data: MaintenanceRequestCreateDTO): Observable<MaintenanceRequestResponseDTO> {
-    const created: Request = {
-      id: Math.max(0, ...this.requests.map((request) => request.id)) + 1,
-      equipmentName: data.equipmentName,
-      equipmentDescription: data.defectDescription,
-      requestDate: new Date(),
-      category: MOCK_CATEGORIES.find((category) => category.id === data.categoryId)?.name ?? '',
-      categoryId: data.categoryId,
-      statusId: 1,
-      status: 'ABERTA',
-      clientId: LOGGED_IN_CLIENT_ID,
-      employeeId: 0,
-    };
-
-    this.requests = [created, ...this.requests];
-
-    return of(this.toResponseDTO(created));
+    return this.http.post<MaintenanceRequestResponseDTO>(this.apiUrl, data);
   }
 
-  private toResponseDTO(request: Request): MaintenanceRequestResponseDTO {
-    const status = MOCK_STATUSES.find((s) => s.id === request.statusId);
-    const category = MOCK_CATEGORIES.find((c) => c.id === request.categoryId);
-    const client = MOCK_CLIENTS.find((c) => c.id === request.clientId);
-
-    return {
-      id: request.id,
-      equipmentName: request.equipmentName,
-      defectDescription: request.equipmentDescription,
-      requestDate: request.requestDate.toISOString(),
-      statusName: status?.nome ?? '',
-      statusColor: status?.cor ?? '',
-      categoryName: category?.name ?? '',
-      clientName: client?.name ?? '',
-    };
+  /**
+   * Busca solicitações do cliente logado.
+   * Retorna lista com status coloridos e nomes formatados.
+   */
+  getAllClientRequests(): Observable<MaintenanceRequestResponseDTO[]> {
+    return this.http.get<MaintenanceRequestResponseDTO[]>(`${this.apiUrl}/client`);
   }
+
+  /**
+   * Busca solicitações para o funcionário (visão geral).
+   */
+  getAllEmployeeRequests(): Observable<MaintenanceRequestResponseDTO[]> {
+    return this.http.get<MaintenanceRequestResponseDTO[]>(`${this.apiUrl}/employee`);
+  }
+
+  /**
+   * Busca os detalhes completos de uma solicitação específica (Visão Cliente).
+   * Endpoint: GET /requests/client/{id}
+   */
+  getRequestByIdForClient(id: number): Observable<ClientRequestDetailDTO> {
+    return this.http.get<ClientRequestDetailDTO>(`${this.apiUrl}/client/${id}`);
+  }
+
+  /**
+   * Busca os detalhes completos de uma solicitação específica (Visão Funcionário).
+   * Endpoint: GET /requests/employee/{id}
+   */
+  getRequestByIdForEmployee(id: number): Observable<EmployeeRequestDetailDTO> {
+    return this.http.get<EmployeeRequestDetailDTO>(`${this.apiUrl}/employee/${id}`);
+  }
+  
+   /**
+   * Atribuir ou Redirecionar responsável.
+   * Rota: POST /requests/employee/{id}/redirect?targetEmployeeId=X
+   */
+  redirectMaintenance(requestId: number, targetEmployeeId: number): Observable<MaintenanceRequestResponseDTO> {
+    const url = `${this.apiUrl}/employee/${requestId}/redirect`;
+    
+    const params = new HttpParams().set('targetEmployeeId', targetEmployeeId.toString());
+
+    return this.http.post<MaintenanceRequestResponseDTO>(url, null, { params });
+  }
+
+  /**
+   * Efetuar Orçamento.
+   * Rota: POST /requests/employee/{id}/budget
+   */
+  createBudget(requestId: number, budgetData: BudgetCreateDTO): Observable<MaintenanceRequestResponseDTO> {
+    const url = `${this.apiUrl}/employee/${requestId}/budget`;
+    return this.http.post<MaintenanceRequestResponseDTO>(url, budgetData);
+  }
+
+  /**
+   * Aprova o orçamento da solicitação.
+   * POST requests/client/{id}/approve
+   */
+  approveBudget(requestId: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/client/${requestId}/approve`, {});
+  }
+
+  /**
+   * Recusa o orçamento da solicitação.
+   * POST requests/client/{id}/reject
+   */
+  rejectBudget(requestId: number, rejectionReason: string): Observable<void> {
+    const payload: RejectionDTO = { rejectionReason };
+    return this.http.post<void>(`${this.apiUrl}/client/${requestId}/reject`, payload);
+  }
+
+  /**  
+   * Resgatar Solicitação.
+   * Rota: POST /requests/client/{id}/rescue
+   */
+  rescueRequest(requestId: number): Observable<MaintenanceRequestResponseDTO> {
+    return this.http.post<MaintenanceRequestResponseDTO>(`${this.apiUrl}/client/${requestId}/rescue`, {});
+  }
+
+  /**
+   * Efetuar Manutenção.
+   * Rota: POST /requests/employee/{id}/maintenance
+   */
+  executeMaintenance(requestId: number, maintenanceData: MaintenanceRecordDTO): Observable<MaintenanceRequestResponseDTO> {
+    const url = `${this.apiUrl}/employee/${requestId}/maintenance`;
+    return this.http.post<MaintenanceRequestResponseDTO>(url, maintenanceData);
+  }
+
+  /**
+   * Efetuar Pagamento.
+   * Rota: POST /requests/client/{id}/pay
+   */
+  payRequest(requestId: number): Observable<MaintenanceRequestResponseDTO> { 
+    return this.http.post<MaintenanceRequestResponseDTO>(`${this.apiUrl}/client/${requestId}/pay`, {});
+  }
+
+  /**  
+   * Finaliza a solicitação.
+   * Rota: POST /requests/employee/{id}/finalize
+   */
+  finalizeRequest(requestId: number): Observable<MaintenanceRequestResponseDTO> {
+    return this.http.post<MaintenanceRequestResponseDTO>(`${this.apiUrl}/employee/${requestId}/finalize`, {});
+  }
+
 }

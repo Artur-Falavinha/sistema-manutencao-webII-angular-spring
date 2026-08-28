@@ -1,39 +1,36 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Category } from '../../../shared/models/category';
-import { MOCK_CATEGORIES } from '../../../shared/mocks/category.mock';
+import { API_URL } from '../../../core/configs/api.token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
-  private readonly formIcons = ['notebook', 'desktop', 'impressora', 'mouse', 'teclado'];
+
+  private http = inject(HttpClient);
+  private apiBaseUrl = inject(API_URL);
+  private apiUrl = `${this.apiBaseUrl}/categories`;
+  constructor() {}
 
   getAllCategories(): Observable<Category[]> {
-    return of(this.getCategoriesForForm());
+    return this.http.get<Category[]>(this.apiUrl);
   }
 
   addCategory(category: Category): Observable<Category> {
-    return of({ ...category });
+    return this.http.post<Category>(this.apiUrl, category);
   }
 
   getById(id: number): Observable<Category> {
-    const category = this.getCategoriesForForm().find(item => item.id === id);
-    return of(category ? { ...category } : { id, name: '', icon: '', active: false });
+    return this.http.get<Category>(`${this.apiUrl}/${id}`);
   }
 
   updateCategory(category: Category): Observable<Category> {
-    return of({ ...category });
+    return this.http.put<Category>(`${this.apiUrl}/${category.id}`, category);
   }
 
-  deleteCategory(_id: number): Observable<void> {
-    return of(void 0);
-  }
-
-  private getCategoriesForForm(): Category[] {
-    return MOCK_CATEGORIES.map((category, index) => ({
-      ...category,
-      icon: this.formIcons[index] ?? 'desktop'
-    }));
+  deleteCategory(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

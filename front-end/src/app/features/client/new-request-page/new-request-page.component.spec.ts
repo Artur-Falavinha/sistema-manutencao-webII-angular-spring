@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { provideToastr } from 'ngx-toastr';
+import { provideHttpClient } from '@angular/common/http';
 
 import { NewRequestPageComponent } from './new-request-page.component';
 
@@ -14,6 +15,7 @@ describe('NewRequestPageComponent', () => {
       providers: [
         { provide: MatDialogRef, useValue: { close: () => {} } },
         provideToastr(),
+        provideHttpClient(),
       ],
     })
     .compileComponents();
