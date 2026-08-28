@@ -8,8 +8,7 @@ import { MOCK_EMPLOYEES } from '../../../shared/mocks/employee.mock';
   providedIn: 'root'
 })
 export class EmployeService {
-  private employees: Employee[] = MOCK_EMPLOYEES.map(employee => ({ ...employee }));
-
+  private readonly formCpfs = ['529.982.247-25', '111.444.777-35'];
   /**
    * Retorna a lista de cargos disponíveis baseada no Enum Role.
    * Usado para preencher o <select> de cargos disponíveis no formulário.
@@ -26,30 +25,29 @@ export class EmployeService {
    * Retorna a lista completa de funcionários cadastrados no banco.
    */
   getEmployees(): Observable<Employee[]> {
-    return of(this.employees.map(employee => ({ ...employee })));
+    return of(this.getEmployeesForForm());
   }
 
   /**
    * Busca os detalhes de um funcionário específico pelo ID.
    */
   getEmployeeById(id: number): Observable<Employee> {
-    return of(this.employees.find(employee => employee.id === id) ?? this.employees[0]);
+    const employees = this.getEmployeesForForm();
+    const employee = employees.find(item => item.id === id) ?? employees[0];
+    return of({ ...employee });
   }
 
   /**
    * Envia um novo funcionário (POST) para o backend.
    */
   addEmployee(employee: Employee): Observable<Employee> {
-    const created = { ...employee, id: this.nextId() };
-    this.employees = [...this.employees, created];
-    return of({ ...created });
+    return of({ ...employee });
   }
 
   /**
    * Atualiza os dados de um funcionário existente (PUT).
    */
   updateEmployee(employee: Employee): Observable<Employee> {
-    this.employees = this.employees.map(current => current.id === employee.id ? { ...employee } : current);
     return of({ ...employee });
   }
 
@@ -57,12 +55,14 @@ export class EmployeService {
    * Remove um funcionário pelo ID (DELETE).
    * Realiza uma exclusão lógica (inativação).
    */
-  deleteEmployee(id: number): Observable<void> {
-    this.employees = this.employees.filter(employee => employee.id !== id);
+  deleteEmployee(_id: number): Observable<void> {
     return of(void 0);
   }
 
-  private nextId(): number {
-    return Math.max(0, ...this.employees.map(employee => employee.id)) + 1;
+  private getEmployeesForForm(): Employee[] {
+    return MOCK_EMPLOYEES.map((employee, index) => ({
+      ...employee,
+      cpf: this.formCpfs[index] ?? employee.cpf
+    }));
   }
 }

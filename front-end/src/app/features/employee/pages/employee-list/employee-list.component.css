@@ -1,96 +1,151 @@
+:host {
+  display: block;
+  min-width: 0;
+  color: var(--color-text-default);
+  font-family: var(--font-family-secondary);
+}
+
 .container {
-  padding: 0;
+  width: min(100%, 90rem);
+  margin-inline: auto;
+  padding: clamp(var(--spacing-xs), 4vw, var(--spacing-xl));
 }
 
 .main-header {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
-  margin-bottom: 24px;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: var(--size-25) solid var(--color-workshop-steel);
 }
 
 h1 {
-  margin: 24px 0;
-  color: var(--color-heading-default);
+  margin: 0;
+  color: var(--color-workshop-graphite);
+  font-family: var(--font-family-primary);
+  font-size: clamp(var(--font-size-2xl), 5vw, var(--font-size-4xl));
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--font-letter-spacing-tight);
 }
 
 .header-actions {
   display: flex;
+  flex: 1 1 30rem;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 16px;
+  justify-content: flex-end;
+  gap: var(--spacing-xs);
 }
 
 .search-field {
-  margin-top: 30px;
-  width: 300px;
-}
-
-.search-field .mat-form-field-wrapper {
-  padding-bottom: 0;
-}
-
-.search-field .mat-form-field-flex {
-  background-color: white;
-  border-radius: 8px;
+  flex: 1 1 16rem;
+  max-width: 22rem;
 }
 
 .add-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  min-height: var(--size-1100);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-family-secondary);
+  font-weight: var(--font-weight-semibold);
 }
 
 .add-button mat-icon {
-  margin-right: 8px;
+  margin-right: var(--spacing-3xs);
+}
+
+.add-button:focus-visible,
+button[mat-icon-button]:focus-visible,
+.search-field input:focus-visible {
+  outline: var(--size-50) solid var(--color-workshop-safety);
+  outline-offset: var(--size-50);
 }
 
 .table-card {
-  background-color: white;
-  border-radius: 8px;
-  overflow: hidden;
-  padding: 16px;
+  width: 100%;
+  overflow-x: auto;
+  border: var(--size-25) solid var(--color-workshop-steel);
+  border-top: var(--size-100) solid var(--color-workshop-safety);
+  border-radius: var(--radius-md);
+  background: var(--color-workshop-surface);
+  box-shadow: 0 var(--spacing-4xs) var(--spacing-xs) rgb(24 35 45 / 10%);
+  scrollbar-color: var(--color-workshop-enamel) var(--color-workshop-floor);
 }
 
 table {
   width: 100%;
+  min-width: 44rem;
+  border-collapse: collapse;
 }
 
-.mat-header-cell {
-  background-color: #343a40;
-  color: white;
-  font-size: 14px;
-  font-weight: 500;
+th.mat-mdc-header-cell {
+  padding-block: var(--spacing-xs);
+  background: var(--color-workshop-graphite);
+  color: var(--color-workshop-surface);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-default);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--font-letter-spacing-default);
 }
 
-.mat-cell {
-  color: #555;
-  padding-top: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #f2f2f2;
+td.mat-mdc-cell {
+  padding-block: var(--spacing-xs);
+  color: var(--color-text-default);
+  border-bottom-color: var(--color-workshop-steel);
+  font-family: var(--font-family-secondary);
 }
 
-.mat-row:last-child .mat-cell {
-  border-bottom: none;
+tr.mat-mdc-row:hover td {
+  background: var(--color-workshop-floor);
 }
 
-.action-link {
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
-  text-decoration: none;
-  font-weight: 500;
-  margin-right: 20px;
+td.mat-mdc-cell:last-child,
+th.mat-mdc-header-cell:last-child {
+  white-space: nowrap;
 }
 
-.action-link mat-icon {
-  margin-right: 6px;
-  font-size: 20px;
+:host ::ng-deep .search-field .mat-mdc-form-field-subscript-wrapper {
+  display: none;
 }
 
-.action-edit {
-  color: #007bff;
+:host ::ng-deep .search-field .mat-mdc-text-field-wrapper {
+  background: var(--color-workshop-surface);
 }
 
-.action-delete {
-  color: #dc3545;
+@media (max-width: 48rem) {
+  .main-header,
+  .header-actions {
+    align-items: stretch;
+  }
+
+  .header-actions,
+  .search-field,
+  .add-button {
+    width: 100%;
+    max-width: none;
+  }
+
+  .add-button {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 30rem) {
+  .container {
+    padding: var(--spacing-xs) var(--spacing-3xs);
+  }
+
+  .table-card {
+    border-radius: var(--radius-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host,
+  :host * {
+    scroll-behavior: auto;
+    transition: none;
+  }
 }

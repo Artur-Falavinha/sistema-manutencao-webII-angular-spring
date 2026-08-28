@@ -284,10 +284,10 @@
     {
       "path": "src/app/features/employee/employee.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "16e64467418662d7e7a3a0e6820eb066f9a4ab706b386663d08cceafa6086863",
-      "reason": "Rotas iniciais administrativas, de dashboard e de relatórios sem regras de negócio, reservadas para substituição pela migração literal do módulo.",
-      "removalBy": "2026-08-27"
+      "referenceSha256": "0bef3379ada9e33d45c7c653e4b124b642fa333170d915167efd151f196c7127",
+      "expectedSha256": "84a579ab1f60a84330a9fb458732320ef6135ad4d808795efc2a05b1e4585d69",
+      "reason": "Preserva as rotas administrativas já integradas e substitui somente os placeholders de funcionários e categorias pelas páginas desta etapa; as demais rotas da referência entram nas janelas futuras.",
+      "removalBy": "2026-10-29"
     },
     {
       "path": "src/app/features/employee/pages/administrative-placeholder-page/administrative-placeholder-page.component.ts",
@@ -585,10 +585,158 @@
     {
       "path": "src/app/features/employee/services/category.service.ts",
       "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "a2cb1347cfb733ea3b997987a15a42fdbe9a5a57ad429f41655084613dd34f55",
-      "reason": "Implementa só getAllCategories() sobre MOCK_CATEGORIES, em vez das chamadas HTTP da referência. addCategory/updateCategory/deleteCategory/getById pertencem ao CRUD de categorias (RF017), janela futura.",
-      "removalBy": "2026-10-29"
+      "referenceSha256": "4585f86888331b487f5cea05a67ba642adc90a05e6ecaa06d691a7b2f7a34e8f",
+      "expectedSha256": "daa8753070eb627bd51236f5e32d67461c37be0fa366a37a1c772d408451bc81",
+      "reason": "Expõe os contratos esperados pelas páginas literais, adapta os ícones dos mocks às opções literais do formulário e não persiste inclusão, edição ou exclusão antes da etapa de CRUD.",
+      "removalBy": "2026-09-03"
+    },
+    {
+      "path": "src/app/features/employee/components/employee-form/employee-form.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "0e2e2eacd4a6fc3764126e07010b24813d435117abc55ac6bcb3835f13a7bc86",
+      "expectedSha256": "9631038fd0791c3bbd01901a53170ff943c822b7974169b42fd5a4ef3f91cf28",
+      "reason": "Aplica a identidade Oficina técnica ao formulário, com responsividade e foco visível, sem alterar seu contrato."
+    },
+    {
+      "path": "src/app/features/employee/components/employee-form/employee-form.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "9e29eb877a21abedd2d3a4c60ebb9f09f026b1ecb54e102a4f6dc6919780a9a8",
+      "expectedSha256": "9e29eb877a21abedd2d3a4c60ebb9f09f026b1ecb54e102a4f6dc6919780a9a8"
+    },
+    {
+      "path": "src/app/features/employee/components/employee-form/employee-form.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "7a7c7fea549d19c8688f20497a1b71e9b844f94d66627833a0bef98c911197c3",
+      "expectedSha256": "3abd1b3a39424296741fab5fe5fc1e8d8bbc02053368bc235fe3eff4281a9b57",
+      "reason": "Adiciona somente os stubs de MAT_DIALOG_DATA e MatDialogRef exigidos pelo TestBed para instanciar o componente literal."
+    },
+    {
+      "path": "src/app/features/employee/components/employee-form/employee-form.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "ccec16909fb8de56e817921a90a926e517a974d7b946db0ff19d10ebab95f983",
+      "expectedSha256": "ccec16909fb8de56e817921a90a926e517a974d7b946db0ff19d10ebab95f983"
+    },
+    {
+      "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "f6a0ea6ddd82b0f6d6c6627906a55eada1b33fe4620793863c69cd659ca289b0",
+      "expectedSha256": "84191fce39da0be049f632fc07b0c4cdd9f5872284f3db253cf161aa0c3a969f",
+      "reason": "Aplica a identidade Oficina técnica ao modal de categoria, com layout móvel e foco visível."
+    },
+    {
+      "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "70b291a18d26e300ef806912fbc7304b22af85a618740e7d11664a4424460d2b",
+      "expectedSha256": "70b291a18d26e300ef806912fbc7304b22af85a618740e7d11664a4424460d2b"
+    },
+    {
+      "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "c2ad7abb6345bd106f3295f7d3d14574b14994e67e5e3b551c5492f8d4f9d967",
+      "expectedSha256": "c2ad7abb6345bd106f3295f7d3d14574b14994e67e5e3b551c5492f8d4f9d967"
+    },
+    {
+      "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "97e4907ee471b3a2ced677f9ddc076f1e8346efcf387328f65fa35f67d8e61d1",
+      "expectedSha256": "97e4907ee471b3a2ced677f9ddc076f1e8346efcf387328f65fa35f67d8e61d1"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-list/employee-list.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "c17c6d38bc91439dea6972db55f4d4631ab871a7189eac5f18d679ac5bee8814",
+      "expectedSha256": "023b24b10e788d59d37d7c90491002e226fc435b11947347ed1ee36d707fd589",
+      "reason": "Aplica a identidade Oficina técnica e contém a tabela em rolagem horizontal controlada nas larguras móveis."
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-list/employee-list.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "7836d22117e4e82586515fbf1d0b5edc7a0c753a7fb004490931c5c77f4401a2",
+      "expectedSha256": "7836d22117e4e82586515fbf1d0b5edc7a0c753a7fb004490931c5c77f4401a2"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-list/employee-list.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "694237af834350e7561ab2670be5c3ae598b10bd03ed1c92fcf92e89e8e3ed0b",
+      "expectedSha256": "694237af834350e7561ab2670be5c3ae598b10bd03ed1c92fcf92e89e8e3ed0b"
+    },
+    {
+      "path": "src/app/features/employee/pages/employee-list/employee-list.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "1897039668f9c41787f17a2dcfb4ea890b456caf3b9a5b5318a0ef8475b94406",
+      "expectedSha256": "1897039668f9c41787f17a2dcfb4ea890b456caf3b9a5b5318a0ef8475b94406"
+    },
+    {
+      "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "efecc2bf4ccc559b6f3c86f5d1af50dbe09ef7d3f7bcc6cd10da8aee4e01af96",
+      "expectedSha256": "7e65a6e387cafbd89311580d54b7b48daafe4562cccaedcba454893deeb5c806",
+      "reason": "Aplica a identidade Oficina técnica aos cartões e ações de categorias, com grade responsiva e foco visível."
+    },
+    {
+      "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "63a59fb7124988d5e6b4867b559952c7ce48596a4be31eedf9edae8569fe8218",
+      "expectedSha256": "63a59fb7124988d5e6b4867b559952c7ce48596a4be31eedf9edae8569fe8218"
+    },
+    {
+      "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "aa0770167d61d9c18d121f9560045ddd2567dc2c0355faa1fbb5e32bd5b8c027",
+      "expectedSha256": "931b1b10d03e9f6f42103230a90498ab37a816262910bc4fb9579ec4dae8bac4",
+      "reason": "Adiciona somente os providers de diálogo e toastr necessários para o TestBed instanciar o componente literal."
+    },
+    {
+      "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "2c09aa0526e580497d9ac8b878117bafce8d58ebf924a67a2324a5e8f571f789",
+      "expectedSha256": "2c09aa0526e580497d9ac8b878117bafce8d58ebf924a67a2324a5e8f571f789"
+    },
+    {
+      "path": "src/app/features/employee/services/category.service.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "0c3526e7e9b0b256a682d9a10b5e415dd058380e96143c2104692f5bf6f80b5f",
+      "expectedSha256": "0c3526e7e9b0b256a682d9a10b5e415dd058380e96143c2104692f5bf6f80b5f"
+    },
+    {
+      "path": "src/app/features/employee/services/employe.service.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a7d9b26096708e025bf605a12ebeb1dd14b1cbae88b245e2490813339829498c",
+      "expectedSha256": "a7d9b26096708e025bf605a12ebeb1dd14b1cbae88b245e2490813339829498c"
+    },
+    {
+      "path": "src/app/features/employee/services/employe.service.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": "aaade0f95dc558b3817aac2402e2f81bb6c013ddf395b42eba5ca3547188b63b",
+      "expectedSha256": "03888eee13f65f56a4a83d8a0708eecbfd2514e52edd52c0c0e633fdae033bb9",
+      "reason": "Expõe os contratos esperados pelas páginas literais, adapta os CPFs dos mocks ao validador literal do formulário e não persiste inclusão, edição ou exclusão antes da etapa de CRUD.",
+      "removalBy": "2026-09-03"
+    },
+    {
+      "path": "src/app/shared/components/warning-dialog/warning-dialog.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "b71c8418758d6662b17c179c00d917f8c1ed808901549e0d766974aecf66ad76",
+      "expectedSha256": "0a3b4e08546c4507a2d83613f976b6834480c12da5c0ca0b1d5c95ce33fc1ffa",
+      "reason": "Aplica a identidade Oficina técnica ao diálogo compartilhado, com ações responsivas e foco visível."
+    },
+    {
+      "path": "src/app/shared/components/warning-dialog/warning-dialog.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "d5a983fadcc985f99ea7e7d8f14dcc1b4e2a465202b2a8b3cbadd9e80cd8fe78",
+      "expectedSha256": "d5a983fadcc985f99ea7e7d8f14dcc1b4e2a465202b2a8b3cbadd9e80cd8fe78"
+    },
+    {
+      "path": "src/app/shared/components/warning-dialog/warning-dialog.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "32a18fba8365c4cb97e77ffc4577127ab6a2a88fe9b15dce2a5677b60c802e7c",
+      "expectedSha256": "c6fc4d0617a98436cee048d648f862a86c0cab7941ea4d0eb15b9424bebac680",
+      "reason": "Adiciona somente os stubs de MAT_DIALOG_DATA e MatDialogRef exigidos pelo TestBed para instanciar o componente literal."
+    },
+    {
+      "path": "src/app/shared/components/warning-dialog/warning-dialog.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "0e7ac1c02b04b016d668205ddd1865d53cb1d35aeb6c0bce15ad81dc8e0b0c72",
+      "expectedSha256": "0e7ac1c02b04b016d668205ddd1865d53cb1d35aeb6c0bce15ad81dc8e0b0c72"
     },
     {
       "path": "src/test.ts",

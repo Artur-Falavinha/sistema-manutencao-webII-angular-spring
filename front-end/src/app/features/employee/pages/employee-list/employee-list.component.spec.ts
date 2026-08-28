@@ -8,7 +8,7 @@ describe('EmployeeListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EmployeeListComponent],
+      imports: [EmployeeListComponent]
     })
     .compileComponents();
 
