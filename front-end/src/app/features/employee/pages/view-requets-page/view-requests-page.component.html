@@ -20,15 +20,14 @@
         </button>
       </div>
       <div class="filter-container">
-        <!-- TODO(scaffold): trocar por <app-input-primary> quando o componente
-             compartilhado do Artur estiver na main (marco 03/09). Input nativo
-             aqui só pra não travar o build enquanto isso. -->
-        <input
+        <app-input-primary
+          formControlName="search"
           type="text"
-          name="search"
+          inputName="search"
           placeholder="Pesquise por equipamento, categoria, etc."
           class="input-search"
-        />
+        >
+          </app-input-primary>
         <button class="button-primary label_large">
           <mat-icon aria-hidden="false" fontIcon="filter_list"></mat-icon
           >Filtros
