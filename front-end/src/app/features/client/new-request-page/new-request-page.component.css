@@ -1,168 +1,85 @@
 .modal-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--spacing-xs);
-    background-color: rgb(24 35 45 / 70%);
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: var(--color-overlay);
 }
 
 .request-modal-container {
-    position: relative;
-    display: flex;
-    width: min(100%, 35.3125rem);
-    max-height: min(90vh, 46rem);
-    overflow-y: auto;
-    padding: var(--spacing-md);
-    flex-direction: column;
-    align-items: stretch;
-    gap: var(--spacing-lg);
-    border: 0.0625rem solid var(--color-workshop-steel);
-    border-radius: var(--radius-md);
-    background: var(--color-workshop-surface);
-    box-shadow: 0 1rem 2.5rem rgb(24 35 45 / 24%);
+  position: relative;
+  width: min(100%, 36rem);
+  max-height: calc(100svh - 2rem);
+  padding: 1.5rem;
+  overflow: auto;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
 }
 
 .request-modal-container h2 {
-    align-self: flex-start;
-    margin: 0;
-    padding-right: var(--spacing-lg);
-    color: var(--color-heading-default);
-    font-family: var(--heading-h5-font-family);
-    font-size: var(--heading-h5-font-size);
-    font-weight: var(--heading-h5-font-weight);
-    line-height: var(--heading-h5-line-height);
-    letter-spacing: var(--heading-h5-letter-spacing);
+  margin: 0 2.5rem 1.5rem 0;
+  color: var(--color-heading-default);
 }
 
-.request-form-body {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    gap: var(--spacing-md);
-}
-
+.request-form-body,
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-3xs);
+  display: grid;
+  gap: 0.5rem;
 }
 
-.form-group label {
-    color: var(--color-text-label);
-    font-family: var(--label-default-font-family);
-    font-size: var(--label-default-font-size);
-    font-weight: var(--label-default-font-weight);
-    line-height: var(--label-default-line-height);
-    letter-spacing: var(--label-default-letter-spacing);
-}
+.request-form-body { gap: 1rem; }
+.form-group label { color: var(--color-text-label); font-weight: 600; }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-    width: 100%;
-    min-height: 3rem;
-    padding: var(--spacing-3xs) var(--spacing-xs);
-    border: 0.0625rem solid var(--color-border-dark);
-    border-radius: var(--radius-sm);
-    outline: none;
-    background: var(--color-background-inputs);
-    color: var(--color-text-default);
-    font-family: var(--body-default-font-family);
-    font-size: var(--body-default-font-size);
-    font-weight: var(--body-default-font-weight);
-    line-height: var(--body-default-line-height);
-    letter-spacing: var(--body-default-letter-spacing);
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.75rem;
+  border: 0.0625rem solid var(--color-border-dark);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text-default);
 }
 
-.form-group input:focus-visible,
-.form-group select:focus-visible,
-.form-group textarea:focus-visible {
-    border-color: var(--color-border-active);
-    outline: 0.1875rem solid var(--color-workshop-safety);
-    outline-offset: 0.125rem;
+.form-group textarea {
+  min-height: 7rem;
+  resize: vertical;
 }
 
-#defectDescription {
-    min-height: 10.5rem;
-    resize: vertical;
-}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--color-primary-default); }
 
-.required-field {
-    color: var(--color-text-secondary);
-    font-family: var(--body-default-font-family);
-    font-size: var(--body-default-font-size);
-    font-weight: var(--body-default-font-weight);
-    line-height: var(--body-default-line-height);
-    letter-spacing: var(--body-default-letter-spacing);
-}
+.required-field { color: var(--color-text-secondary); font-size: var(--font-size-sm); }
 
 .submit-button {
-    display: inline-flex;
-    width: min(100%, 15.3125rem);
-    min-height: 3rem;
-    margin: 0 auto;
-    padding: var(--spacing-2xs);
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-2xs);
-    border: none;
-    border-radius: var(--radius-sm);
-    background: var(--color-primary-default);
-    color: var(--color-primary-lightest);
-    font-family: var(--label-large-font-family);
-    font-size: var(--label-large-font-size);
-    font-weight: var(--label-large-font-weight);
-    cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-default);
+  color: var(--color-surface);
+  font-weight: 600;
+  cursor: pointer;
 }
 
-.submit-button:hover:not(:disabled) {
-    background: var(--color-primary-dark);
-}
-
-.submit-button:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-}
+.submit-button:hover:not(:disabled) { background: var(--color-primary-dark); }
 
 .close-button {
-    position: absolute;
-    top: var(--spacing-xs);
-    right: var(--spacing-xs);
-    display: inline-flex;
-    width: 2rem;
-    height: 2rem;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    border: none;
-    border-radius: var(--radius-xs);
-    background: transparent;
-    color: var(--color-heading-default);
-    cursor: pointer;
-}
-
-@media (max-width: 30rem) {
-    .modal-overlay {
-        align-items: flex-start;
-        overflow-y: auto;
-    }
-
-    .request-modal-container {
-        margin-block: var(--spacing-xs);
-        padding: var(--spacing-sm);
-        gap: var(--spacing-md);
-    }
-
-    .submit-button {
-        width: 100%;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .submit-button {
-        transition: none;
-    }
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
 }

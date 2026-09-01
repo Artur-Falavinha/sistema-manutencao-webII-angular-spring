@@ -1,155 +1,78 @@
 :host {
-  display: block;
-  flex: 0 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  height: 100svh;
 }
 
 .sidebar-container {
-  display: flex;
-  flex-direction: column;
-  width: clamp(4.5rem, 7vw, 5rem);
-  min-height: 100vh;
-  padding: var(--spacing-md) var(--spacing-3xs);
-  overflow: hidden;
-  background: var(--color-workshop-graphite);
-  color: var(--color-workshop-surface);
-  transition: width 180ms ease-in-out;
+  width: 4.5rem;
+  height: 100%;
+  border-right: 0.0625rem solid var(--color-line);
+  background: var(--color-surface);
+  transition: width 160ms ease;
 }
 
-.sidebar-container.expanded {
-  width: clamp(14rem, 18vw, 16.25rem);
-}
+.sidebar-container.expanded { width: 15rem; }
 
 .sidebar-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-xs);
-  min-height: var(--size-1200);
-  margin-bottom: var(--spacing-lg);
+  min-height: 4.5rem;
+  padding: 0.75rem;
+  border-bottom: 0.0625rem solid var(--color-line);
 }
 
-.sidebar-container.expanded .sidebar-header {
-  justify-content: space-between;
-}
+.sidebar-container.expanded .sidebar-header { justify-content: space-between; }
 
-.sidebar-header .logo {
-  display: block;
-  width: min(100%, var(--size-2400));
-  max-height: var(--size-1000);
-  object-fit: contain;
+.logo {
+  width: 8.5rem;
+  height: auto;
 }
 
 .toggle-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  min-width: var(--size-1100);
-  min-height: var(--size-1100);
-  padding: var(--spacing-3xs);
-  border: var(--size-25) solid transparent;
-  border-radius: var(--radius-pill);
+  display: grid;
+  place-items: center;
+  border: 0;
   background: transparent;
-  color: var(--color-workshop-surface);
+  color: var(--color-text-secondary);
   cursor: pointer;
-  transition: background-color 180ms ease, color 180ms ease;
-}
-
-.toggle-button:hover {
-  background: var(--color-workshop-enamel);
-}
-
-.toggle-button:focus-visible {
-  border-color: var(--color-workshop-safety);
 }
 
 .menu-list {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  gap: var(--spacing-3xs);
-  margin: 0;
-  padding: 0;
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.75rem;
   list-style: none;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
-  min-height: var(--size-1200);
-  padding: var(--spacing-3xs) var(--spacing-xs);
-  overflow: hidden;
-  border: var(--size-25) solid transparent;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
   border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
   cursor: pointer;
-  white-space: nowrap;
-  transition: background-color 180ms ease, color 180ms ease;
 }
 
-.menu-item:hover {
-  background: var(--color-workshop-enamel);
-}
-
-.menu-item:focus-visible {
-  border-color: var(--color-workshop-safety);
-  outline: none;
-}
-
-.menu-item .icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: var(--size-1100);
-  margin-inline-end: 0;
-}
-
-.sidebar-container.expanded .menu-item .icon {
-  margin-inline-end: var(--spacing-xs);
-}
-
-.menu-item .label {
-  overflow: hidden;
-  opacity: 0;
-  text-overflow: ellipsis;
-  transition: opacity 180ms ease-in-out;
-}
-
-.sidebar-container.expanded .menu-item .label {
-  opacity: 1;
-}
+.menu-item:hover { background: var(--color-background-page); }
 
 .menu-item.active {
-  background: var(--color-workshop-steel);
-  color: var(--color-workshop-graphite);
-  font-weight: var(--font-weight-semibold);
+  background: var(--color-brand-blue-light);
+  color: var(--color-primary-default);
 }
+
+.menu-item .icon { flex: 0 0 1.5rem; }
+.menu-item .label { margin-left: 0.75rem; white-space: nowrap; }
 
 @media (max-width: 48rem) {
-  .sidebar-container.expanded {
-    width: clamp(12rem, 30vw, 15rem);
-  }
-}
-
-@media (max-width: 30rem) {
-  .sidebar-container {
-    width: var(--size-1600);
-    padding-inline: var(--spacing-3xs);
-  }
-
-  .sidebar-container.expanded {
-    width: min(78vw, 15rem);
-  }
-
-  .sidebar-container.expanded .menu-item {
-    padding-inline: var(--spacing-3xs);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
   .sidebar-container,
-  .toggle-button,
-  .menu-item,
-  .menu-item .label {
-    transition: none;
-  }
+  .sidebar-container.expanded { width: 4rem; }
+
+  .sidebar-container.expanded .sidebar-header { justify-content: center; }
+
+  .sidebar-container.expanded .logo,
+  .sidebar-container.expanded .menu-item .label { display: none; }
 }

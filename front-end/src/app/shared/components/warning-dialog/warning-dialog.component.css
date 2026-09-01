@@ -1,75 +1,27 @@
 :host {
   display: block;
-  max-width: 28rem;
-  color: var(--color-text-default);
-  font-family: var(--font-family-secondary);
+  min-width: min(24rem, 80vw);
 }
 
 .header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: var(--spacing-md) var(--spacing-md) var(--spacing-xs);
-  text-align: center;
-  border-top: var(--size-100) solid var(--color-workshop-safety);
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem 0;
 }
 
-.header mat-icon {
-  width: var(--size-1400);
-  height: var(--size-1400);
-  margin-bottom: var(--spacing-xs);
-  color: var(--color-workshop-safety);
-  font-size: var(--size-1400);
-}
-
-.header h1 {
-  margin: 0;
-  color: var(--color-workshop-graphite);
-  font-family: var(--font-family-primary);
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
-}
-
-mat-dialog-content {
-  padding-inline: var(--spacing-md);
-  color: var(--color-text-secondary);
-  text-align: center;
-}
-
-mat-dialog-content p {
-  margin: 0;
-  line-height: var(--font-line-height-xl);
-}
+.header mat-icon { color: var(--color-warning); }
+.header h1 { color: var(--color-heading-default); }
+mat-dialog-content { padding: 1rem 1.5rem; }
+mat-dialog-content p { color: var(--color-text-secondary); }
 
 mat-dialog-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-3xs);
-  padding: var(--spacing-md);
-  border-top: var(--size-25) solid var(--color-workshop-steel);
-}
-
-mat-dialog-actions button {
-  min-height: var(--size-1100);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-family-secondary);
-  font-weight: var(--font-weight-semibold);
-}
-
-mat-dialog-actions button:focus-visible {
-  outline: var(--size-50) solid var(--color-workshop-safety);
-  outline-offset: var(--size-50);
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem 1.5rem;
+  border-top: 0.0625rem solid var(--color-line);
 }
 
 @media (max-width: 30rem) {
-  mat-dialog-actions button {
-    flex: 1 1 8rem;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  :host,
-  :host * {
-    transition: none;
-  }
+  mat-dialog-actions button { flex: 1; }
 }

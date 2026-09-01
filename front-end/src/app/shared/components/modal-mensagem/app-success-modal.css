@@ -1,94 +1,56 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 1100;
   display: grid;
-  padding: 1rem;
   place-items: center;
-  background: rgb(24 35 45 / 72%);
+  padding: 1rem;
+  background: var(--color-overlay);
 }
 
 .modal-container {
-  width: min(100%, 28rem);
-  overflow: hidden;
-  border: 0.0625rem solid var(--color-workshop-steel);
-  border-radius: var(--radius-md);
-  background: var(--color-workshop-surface);
-  box-shadow: 0 1.5rem 4rem rgb(10 25 37 / 35%);
+  width: min(100%, 30rem);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
 }
 
 .modal-content {
-  padding: clamp(1.5rem, 5vw, 2.5rem);
+  display: grid;
+  gap: 1rem;
+  padding: 2rem;
   text-align: center;
 }
 
 .success-icon {
   display: grid;
-  width: 4.5rem;
-  height: 4.5rem;
-  margin: 0 auto 1.25rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 auto;
   place-items: center;
   border-radius: 50%;
-  color: var(--color-workshop-surface);
-  background: var(--color-green-50);
-  font-size: 2rem;
-  font-weight: var(--font-weight-bold);
-}
-
-.modal-title {
-  margin: 0 0 0.625rem;
-  color: var(--color-workshop-graphite);
-  font-family: var(--font-family-brand);
+  background: var(--color-success-light);
+  color: var(--color-success);
   font-size: 1.75rem;
-  line-height: 1.1;
-  text-transform: uppercase;
 }
 
-.modal-subtitle {
-  margin: 0 0 1.5rem;
-  color: var(--color-text-default);
-  font-size: 1rem;
-  line-height: 1.5;
-}
+.modal-title { color: var(--color-heading-default); }
+.modal-subtitle { color: var(--color-text-secondary); }
 
 .modal-additional {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  border-left: 0.25rem solid var(--color-workshop-safety);
-  border-radius: var(--radius-xs);
-  background: var(--color-workshop-floor);
-}
-
-.modal-additional p {
-  margin: 0;
-  color: var(--color-text-label);
-  font-weight: var(--font-weight-medium);
+  padding: 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-background-page);
 }
 
 .modal-button {
-  width: min(100%, 17.5rem);
-  min-height: 3rem;
-  padding: 0.75rem 1.5rem;
+  min-height: 2.75rem;
   border: 0;
   border-radius: var(--radius-sm);
-  color: var(--color-workshop-surface);
-  background: var(--color-workshop-enamel);
-  font-weight: var(--font-weight-semibold);
+  background: var(--color-primary-default);
+  color: var(--color-surface);
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 160ms ease;
 }
 
-.modal-button:hover {
-  background: var(--color-primary-dark);
-}
-
-.modal-button:focus-visible {
-  outline: 0.1875rem solid var(--color-workshop-safety);
-  outline-offset: 0.1875rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .modal-button {
-    transition: none;
-  }
-}
+.modal-button:hover { background: var(--color-primary-dark); }

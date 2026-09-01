@@ -1,41 +1,21 @@
 :host {
   display: block;
-  min-height: 100%;
-  background: var(--color-workshop-floor);
+  min-height: 100svh;
 }
 
 .main-layout {
-  display: flex;
-  align-items: stretch;
-  min-height: 100vh;
-  background: var(--color-workshop-floor);
+  min-height: 100svh;
+  background: var(--color-background-page);
 }
 
-.main-section {
-  flex: 1 1 auto;
-  min-width: 0;
-}
+.main-section { min-width: 0; }
 
 .content {
-  min-height: 0;
-  overflow: auto;
-  padding-block: clamp(var(--spacing-md), 3vw, var(--spacing-xl));
+  flex: 1;
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 2rem);
 }
 
 @media (max-width: 48rem) {
-  .content {
-    padding-inline: var(--spacing-md);
-  }
-}
-
-@media (max-width: 30rem) {
-  .content {
-    padding-inline: var(--spacing-xs);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .content {
-    scroll-behavior: auto;
-  }
+  .content { padding: 1rem; }
 }
