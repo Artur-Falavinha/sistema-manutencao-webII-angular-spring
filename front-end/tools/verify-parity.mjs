@@ -34,6 +34,19 @@ const BINARY_EXTENSIONS = new Set([
   '.woff2'
 ]);
 
+const VISUAL_EXTENSIONS = new Set([
+  '.css',
+  '.gif',
+  '.ico',
+  '.jpeg',
+  '.jpg',
+  '.png',
+  '.svg',
+  '.webp'
+]);
+
+const BRAND_RENAME_TRANSFORM = 'BRAND_RENAME';
+
 const normalizePath = (filePath) => filePath.split(path.sep).join('/');
 
 function sha256(content, filePath) {
@@ -43,6 +56,23 @@ function sha256(content, filePath) {
     : Buffer.from(content.toString('utf8').replace(/\r\n/g, '\n'), 'utf8');
 
   return createHash('sha256').update(canonicalContent).digest('hex');
+}
+
+function brandNormalizedSha256(content) {
+  const normalizedContent = content
+    .toString('utf8')
+    .replace(/\r\n/g, '\n')
+    .replace(/Remont|Mant/g, '{{BRAND_NAME}}');
+
+  return createHash('sha256').update(normalizedContent).digest('hex');
+}
+
+function currentLocalDate() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 async function listFiles(rootDir, relativeDirectory = '') {
@@ -68,7 +98,7 @@ async function listFiles(rootDir, relativeDirectory = '') {
   return files.sort();
 }
 
-function validateManifestEntry(entry, finalFrontend, errors) {
+function validateManifestEntry(entry, finalFrontend, today, errors) {
   if (!CLASSIFICATIONS.includes(entry.classification)) {
     errors.push(`Classificação inválida em ${entry.path}.`);
     return;
@@ -87,8 +117,13 @@ function validateManifestEntry(entry, finalFrontend, errors) {
   }
 
   if (entry.classification === 'VISUAL_ONLY') {
-    if (path.extname(entry.path).toLowerCase() !== '.css') {
-      errors.push(`VISUAL_ONLY é permitido somente para CSS: ${entry.path}.`);
+    const extension = path.extname(entry.path).toLowerCase();
+    const isDeclaredBrandRename = extension === '.html'
+      && entry.visualTransform === BRAND_RENAME_TRANSFORM
+      && entry.referenceNormalizedSha256;
+
+    if (!VISUAL_EXTENSIONS.has(extension) && !isDeclaredBrandRename) {
+      errors.push(`VISUAL_ONLY é permitido somente para CSS, assets ou HTML com troca de marca declarada: ${entry.path}.`);
     }
     if (!entry.reason) {
       errors.push(`Justificativa ausente em ${entry.path}.`);
@@ -105,6 +140,8 @@ function validateManifestEntry(entry, finalFrontend, errors) {
     }
     if (!entry.removalBy) {
       errors.push(`Data de remoção ausente em ${entry.path}.`);
+    } else if (entry.removalBy < today) {
+      errors.push(`Scaffold com prazo de remoção vencido em ${entry.path}: ${entry.removalBy}.`);
     }
     if (finalFrontend) {
       errors.push(`Frontend final não pode conter scaffold: ${entry.path}.`);
@@ -129,7 +166,8 @@ function validateHtml(content, filePath, errors) {
 
 export async function verifyParity({
   rootDir = process.cwd(),
-  manifestPath = path.join(rootDir, 'reference-parity.json')
+  manifestPath = path.join(rootDir, 'reference-parity.json'),
+  today = currentLocalDate()
 } = {}) {
   const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
   const errors = [];
@@ -146,7 +184,7 @@ export async function verifyParity({
     }
 
     declaredPaths.add(normalizedEntryPath);
-    validateManifestEntry(entry, manifest.finalFrontend, errors);
+    validateManifestEntry(entry, manifest.finalFrontend, today, errors);
 
     if (CLASSIFICATIONS.includes(entry.classification)) {
       counts[entry.classification] += 1;
@@ -169,6 +207,13 @@ export async function verifyParity({
 
       if (entry.classification === 'IDENTICAL' && actualHash !== entry.referenceSha256) {
         errors.push(`Hash da referência divergente em ${normalizedEntryPath}.`);
+      }
+
+      if (entry.classification === 'VISUAL_ONLY'
+        && path.extname(normalizedEntryPath).toLowerCase() === '.html'
+        && entry.visualTransform === BRAND_RENAME_TRANSFORM
+        && brandNormalizedSha256(content) !== entry.referenceNormalizedSha256) {
+        errors.push(`HTML visual possui diferença além da troca de marca em ${normalizedEntryPath}.`);
       }
 
       if (path.extname(normalizedEntryPath).toLowerCase() === '.html') {

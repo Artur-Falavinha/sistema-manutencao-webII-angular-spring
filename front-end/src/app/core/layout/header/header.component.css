@@ -1,0 +1,49 @@
+:host { display: block; }
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  min-height: 4.5rem;
+  padding: 0 1.5rem;
+  border-bottom: 0.0625rem solid var(--color-line);
+  background: var(--color-surface);
+}
+
+.header-left,
+.header-right,
+.header-right > div {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: block;
+  width: 8.5rem;
+  height: auto;
+}
+
+.header-right { gap: 1rem; }
+.header-right > div { cursor: pointer; }
+
+.user-avatar {
+  color: var(--color-primary-default);
+  line-height: 1;
+}
+
+.user-avatar mat-icon { font-size: 2rem; }
+
+.icon-button {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+@media (max-width: 40rem) {
+  .app-header { padding: 0 1rem; }
+  .header-right > .body_medium,
+  .user-avatar { display: none; }
+  .logo { width: 7rem; }
+}

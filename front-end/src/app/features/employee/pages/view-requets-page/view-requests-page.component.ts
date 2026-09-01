@@ -1,5 +1,6 @@
 import { Component, inject, computed, ViewChild, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { InputPrimaryComponent } from '../../../../shared/components/input-primary/input-primary.component';
 import { MatIcon } from '@angular/material/icon';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { StatusService } from '../../../../core/services/status.service';
@@ -19,6 +20,7 @@ interface GroupedRequests {
 @Component({
   selector: 'app-view-requests-page',
   imports: [
+    InputPrimaryComponent,
     MatIcon,
     CommonModule,
     StatusColumnComponent,

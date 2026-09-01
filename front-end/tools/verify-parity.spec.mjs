@@ -17,6 +17,8 @@ async function createFixture({
   classification = 'IDENTICAL',
   reason,
   removalBy,
+  visualTransform,
+  referenceNormalizedSha256,
   finalFrontend = false,
   declared = true
 } = {}) {
@@ -36,6 +38,8 @@ async function createFixture({
 
   if (reason) entry.reason = reason;
   if (removalBy) entry.removalBy = removalBy;
+  if (visualTransform) entry.visualTransform = visualTransform;
+  if (referenceNormalizedSha256) entry.referenceNormalizedSha256 = referenceNormalizedSha256;
 
   const manifest = {
     version: 1,
@@ -101,6 +105,53 @@ test('accepts declared visual changes in CSS', async () => {
   assert.equal(report.counts.VISUAL_ONLY, 1);
 });
 
+test('accepts declared visual changes in image assets', async () => {
+  const fixture = await createFixture({
+    content: 'original-image',
+    destinationContent: 'new-brand-image',
+    filePath: 'src/assets/logo.png',
+    classification: 'VISUAL_ONLY',
+    reason: 'Substituicao exclusiva da identidade visual.'
+  });
+
+  const report = await verifyParity(fixture);
+  assert.equal(report.counts.VISUAL_ONLY, 1);
+});
+
+test('accepts a declared brand rename in HTML', async () => {
+  const referenceContent = '<img alt="Remont Logo"><p>Remont</p>\n';
+  const destinationContent = '<img alt="Mant Logo"><p>Mant</p>\n';
+  const normalizedContent = referenceContent.replace(/Remont|Mant/g, '{{BRAND_NAME}}');
+  const fixture = await createFixture({
+    content: referenceContent,
+    destinationContent,
+    filePath: 'src/example.html',
+    classification: 'VISUAL_ONLY',
+    reason: 'Troca exclusivamente apresentacional do nome da marca.',
+    visualTransform: 'BRAND_RENAME',
+    referenceNormalizedSha256: canonicalHash(normalizedContent)
+  });
+
+  const report = await verifyParity(fixture);
+  assert.equal(report.counts.VISUAL_ONLY, 1);
+});
+
+test('rejects unrelated HTML changes declared as a brand rename', async () => {
+  const referenceContent = '<p>Remont</p>\n';
+  const normalizedContent = referenceContent.replace(/Remont|Mant/g, '{{BRAND_NAME}}');
+  const fixture = await createFixture({
+    content: referenceContent,
+    destinationContent: '<button (click)="save()">Mant</button>\n',
+    filePath: 'src/example.html',
+    classification: 'VISUAL_ONLY',
+    reason: 'Troca exclusivamente apresentacional do nome da marca.',
+    visualTransform: 'BRAND_RENAME',
+    referenceNormalizedSha256: canonicalHash(normalizedContent)
+  });
+
+  await assert.rejects(() => verifyParity(fixture), /diferença além da troca de marca/i);
+});
+
 test('rejects files not declared in the manifest', async () => {
   const fixture = await createFixture({ declared: false });
 
@@ -130,7 +181,23 @@ test('rejects temporary scaffolds in the final frontend', async () => {
     finalFrontend: true
   });
 
-  await assert.rejects(() => verifyParity(fixture), /frontend final.*src\/example\.ts/i);
+  await assert.rejects(
+    () => verifyParity({ ...fixture, today: '2026-08-27' }),
+    /frontend final.*src\/example\.ts/i
+  );
+});
+
+test('rejects a temporary scaffold after its removal deadline', async () => {
+  const fixture = await createFixture({
+    classification: 'TEMPORARY_SCAFFOLD',
+    reason: 'Estrutura temporária da etapa atual.',
+    removalBy: '2026-08-27'
+  });
+
+  await assert.rejects(
+    () => verifyParity({ ...fixture, today: '2026-08-28' }),
+    /prazo de remoção vencido.*src\/example\.ts/i
+  );
 });
 
 test('rejects invalid Angular HTML', async () => {

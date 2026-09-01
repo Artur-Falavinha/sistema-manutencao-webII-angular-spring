@@ -1,179 +1,76 @@
 :host {
   display: block;
-  width: min(100%, 90rem);
-  margin-inline: auto;
-  padding: clamp(var(--spacing-xs), 4vw, var(--spacing-xl));
-  color: var(--color-text-default);
-  font-family: var(--font-family-secondary);
+  width: min(100%, 78rem);
+  margin: 0 auto;
 }
 
 .header-category {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-md);
-  padding-bottom: var(--spacing-sm);
-  border-bottom: var(--size-25) solid var(--color-workshop-steel);
-}
-
-h1 {
-  margin: 0;
-  color: var(--color-workshop-graphite);
-  font-family: var(--font-family-primary);
-  font-size: clamp(var(--font-size-2xl), 5vw, var(--font-size-4xl));
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--font-letter-spacing-tight);
-}
-
-.btn-new-category {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-3xs);
-  min-height: var(--size-1100);
-  padding-inline: var(--spacing-md);
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: var(--color-workshop-enamel);
-  color: var(--color-workshop-surface);
-  font-family: var(--font-family-secondary);
-  font-weight: var(--font-weight-semibold);
-  cursor: pointer;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .categories-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-  gap: var(--spacing-md);
-  margin-block: var(--spacing-xl);
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
 }
 
 .category-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-width: 0;
-  padding: var(--spacing-md);
-  border: var(--size-25) solid var(--color-workshop-steel);
-  border-top: var(--size-100) solid var(--color-workshop-safety);
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 0.0625rem solid var(--color-line);
   border-radius: var(--radius-md);
-  background: var(--color-workshop-surface);
-  box-shadow: 0 var(--spacing-4xs) var(--spacing-xs) rgb(24 35 45 / 10%);
-  transition: transform 160ms ease, box-shadow 160ms ease;
-}
-
-.category-card:hover {
-  transform: translateY(calc(var(--size-50) * -1));
-  box-shadow: 0 var(--spacing-3xs) var(--spacing-md) rgb(24 35 45 / 16%);
+  background: var(--color-surface);
 }
 
 .category-card-icon {
   display: grid;
+  width: 3rem;
+  height: 3rem;
   place-items: center;
-  width: var(--size-1400);
-  height: var(--size-1400);
-  margin-bottom: var(--spacing-xs);
   border-radius: var(--radius-sm);
-  background: var(--color-primary-lightest);
+  background: var(--color-brand-blue-light);
 }
 
-.category-card-icon svg {
-  width: var(--size-1000);
-  height: var(--size-1000);
-}
+.category-card-icon svg { width: 1.5rem; height: 1.5rem; }
+.category-card-icon path { stroke: var(--color-ink); }
 
 .category-card h3 {
-  margin: 0;
-  color: var(--color-workshop-graphite);
   overflow-wrap: anywhere;
+  font-size: clamp(1.25rem, 7vw, 2rem);
 }
 
 .card-actions {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--spacing-xs);
-  margin-top: auto;
-  padding-top: var(--spacing-md);
+  gap: 0.75rem;
+  padding-top: 1rem;
+  border-top: 0.0625rem solid var(--color-line);
 }
 
 .editButton,
 .deleteButton {
   display: inline-flex;
   align-items: center;
-  gap: var(--spacing-3xs);
-  min-height: var(--size-1000);
-  padding: var(--spacing-3xs) var(--spacing-2xs);
-  border: var(--size-25) solid transparent;
-  border-radius: var(--radius-sm);
+  gap: 0.375rem;
+  border: 0;
   background: transparent;
-  font-family: var(--font-family-secondary);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-semibold);
+  font-weight: 600;
   cursor: pointer;
 }
 
-.editButton {
-  color: var(--color-workshop-enamel);
-  border-color: var(--color-primary-lighter);
-}
-
-.deleteButton {
-  color: var(--color-error-default);
-  border-color: var(--color-error-lighter);
-}
-
+.editButton { color: var(--color-primary-default); }
+.deleteButton { color: var(--color-danger); }
+.editButton path { fill: var(--color-primary-default); }
+.deleteButton path { fill: var(--color-danger); }
 .editButton svg,
-.deleteButton svg {
-  width: var(--size-600);
-  height: var(--size-600);
-}
+.deleteButton svg { width: 1.125rem; height: 1.125rem; }
+.no-categories { color: var(--color-text-secondary); }
 
-.btn-new-category:focus-visible,
-.editButton:focus-visible,
-.deleteButton:focus-visible {
-  outline: var(--size-50) solid var(--color-workshop-safety);
-  outline-offset: var(--size-50);
-}
-
-.no-categories {
-  margin-top: var(--spacing-xl);
-  color: var(--color-text-secondary);
-  text-align: center;
-}
-
-@media (max-width: 36rem) {
-  :host {
-    padding: var(--spacing-xs) var(--spacing-3xs);
-  }
-
-  .header-category,
-  .btn-new-category {
-    width: 100%;
-  }
-
-  .categories-container {
-    margin-block: var(--spacing-md);
-  }
-
-  .card-actions,
-  .editButton,
-  .deleteButton {
-    width: 100%;
-  }
-
-  .editButton,
-  .deleteButton {
-    justify-content: center;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .category-card {
-    transition: none;
-  }
-
-  .category-card:hover {
-    transform: none;
-  }
+@media (max-width: 40rem) {
+  .header-category { align-items: stretch; flex-direction: column; }
+  .btn-new-category { width: 100%; }
 }

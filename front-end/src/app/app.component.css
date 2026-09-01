@@ -1,1 +1,21 @@
+:host {
+  display: block;
+  min-height: 100svh;
+}
 
+.main-layout {
+  min-height: 100svh;
+  background: var(--color-background-page);
+}
+
+.main-section { min-width: 0; }
+
+.content {
+  flex: 1;
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+@media (max-width: 48rem) {
+  .content { padding: 1rem; }
+}
