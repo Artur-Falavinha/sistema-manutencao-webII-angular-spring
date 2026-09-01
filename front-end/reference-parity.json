@@ -42,7 +42,7 @@
       "path": "public/favicon.ico",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "a9d3fc0c6ab3a35a9541d0fa3e17ec4412d1a94fe59610e5f41687f6fbbc6ac3",
-      "expectedSha256": "f0c4aa79d7e97c420eb5d48259bb2c402b781ba09c6aa164868511c85c4b00d4",
+      "expectedSha256": "450a1119fd75fd6a28917b924a4b58ddd2ff9388005c228fbd438b7ed159bf76",
       "reason": "Substituição exclusiva do asset pela identidade visual Mant."
     },
     {
@@ -56,7 +56,7 @@
       "path": "src/styles/styles.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "2b4823436acc3502e0f551d8988e5085412df210cf64c8d0cba3838da4c0a039",
-      "expectedSha256": "e240a9d9fb67f8c26aab69e3b69fe143646e323063ff0d26f46520eec9b325d5",
+      "expectedSha256": "094da9ecaf951512f81540b81289443929caac5d36b831368c68a6c437331c33",
       "reason": "Aplicação global das fontes, cores e foco visível da nova identidade."
     },
     {
@@ -512,7 +512,7 @@
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "26aa66397ba730af010f6d8128ad4892a11485957ad27999c99d7cdb2cc77012",
-      "expectedSha256": "1c4021c0aca5620677194543d29ee8b7975e459f222486f6ad522fb8394e8bc1",
+      "expectedSha256": "d5626d0e2322f089cc6bc825f66cd3a7d655d58f342c81a9ef107fc60f692def",
       "reason": "Aplica a identidade Oficina técnica com tokens globais, layout responsivo e foco visível sem alterar contratos funcionais."
     },
     {
@@ -703,7 +703,7 @@
       "path": "src/assets/illustrations/login-illustration.svg",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "a0dec54286f3957a7da85c3270ed579296ca9a469e36e9b9bc62fadb3857e7e5",
-      "expectedSha256": "a9de4459b118e6bda774f0d2fd866d5d7ab281f4c49f97f7d9ce6343685cc842",
+      "expectedSha256": "9175b5a9795c4be2da27b43a5e1c2af90689cae9a366dfa6f064504adad19b77",
       "reason": "Remapeia somente as cores estruturais da ilustração para a paleta Mant, preservando formas, dimensões e conteúdo do SVG."
     },
     {
@@ -877,7 +877,7 @@
       "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "efecc2bf4ccc559b6f3c86f5d1af50dbe09ef7d3f7bcc6cd10da8aee4e01af96",
-      "expectedSha256": "bcd147a726149a494d5f3283b5363ec1566face94d37d51dae787e071e60cc22",
+      "expectedSha256": "56dd1e24658d420b29e6fc08d1eb143847e4050ab4a290ac5ccb9ba372636ef8",
       "reason": "Aplica a identidade Oficina técnica aos cartões e ações de categorias, com grade responsiva e foco visível."
     },
     {

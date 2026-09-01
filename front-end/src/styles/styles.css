@@ -149,9 +149,11 @@ button:disabled,
 .caption { font-size: var(--font-size-xs); }
 
 .label_large,
+.label-large,
 .label_medium,
 .label_small { font-weight: var(--font-weight-semibold); }
-.label_large { font-size: var(--font-size-default); }
+.label_large,
+.label-large { font-size: var(--font-size-default); }
 .label_medium { font-size: var(--font-size-sm); }
 .label_small { font-size: var(--font-size-xs); }
 
@@ -163,12 +165,12 @@ button:disabled,
   font-size: var(--font-size-sm);
 }
 
-table.mat-mdc-table {
+.mat-mdc-table {
   width: 100%;
   background: var(--color-surface);
 }
 
-th.mat-mdc-header-cell {
+.mat-mdc-header-cell {
   padding: 0.75rem 1rem;
   border-bottom: 0.0625rem solid var(--color-line);
   background: var(--color-brand-blue-light);
@@ -179,13 +181,13 @@ th.mat-mdc-header-cell {
   text-transform: uppercase;
 }
 
-td.mat-mdc-cell {
+.mat-mdc-cell {
   padding: 0.875rem 1rem;
   border-bottom: 0.0625rem solid var(--color-line);
   color: var(--color-text-default);
 }
 
-tr.mat-mdc-row:hover { background: var(--color-row-hover); }
+.mat-mdc-row:hover { background: var(--color-row-hover); }
 .mat-sort-header-container { justify-content: flex-start; }
 
 .mat-step-icon-selected,

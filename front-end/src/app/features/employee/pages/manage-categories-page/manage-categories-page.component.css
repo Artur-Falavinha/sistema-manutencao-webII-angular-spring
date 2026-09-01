@@ -37,6 +37,7 @@
 }
 
 .category-card-icon svg { width: 1.5rem; height: 1.5rem; }
+.category-card-icon path { stroke: var(--color-ink); }
 
 .category-card h3 {
   overflow-wrap: anywhere;
@@ -63,6 +64,8 @@
 
 .editButton { color: var(--color-primary-default); }
 .deleteButton { color: var(--color-danger); }
+.editButton path { fill: var(--color-primary-default); }
+.deleteButton path { fill: var(--color-danger); }
 .editButton svg,
 .deleteButton svg { width: 1.125rem; height: 1.125rem; }
 .no-categories { color: var(--color-text-secondary); }
