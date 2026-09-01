@@ -5,10 +5,10 @@ export const MOCK_CLIENTS: Client[] = [
   {
     id: 1,
     name: "Ana Beatriz Souza",
-    email: "ana.souza@example.com",
+    email: "cli1@mant.com",
     cpf: "123.456.789-00",
     phoneNumber: "(11) 91234-5678",
-    password: "********",
+    password: "tads",
     userAccess: "client",
     address: {
       id: 1,

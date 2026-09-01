@@ -4,12 +4,12 @@ export const MOCK_EMPLOYEES: Employee[] = [
   {
     id: 1,
     name: 'João Pedro Alves',
-    email: 'joao.alves@oficina.com',
+    email: 'func1@mant.com',
     cpf: '111.222.333-44',
     phone: '(11) 98888-1111',
     birthDate: '1990-04-12',
     wage: 3200,
-    password: '********',
+    password: 'tads',
     active: true,
   },
   {
