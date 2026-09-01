@@ -4,6 +4,8 @@ import {
   platformBrowserDynamicTesting,
 } from '@angular/platform-browser-dynamic/testing';
 import { provideNgxMask } from 'ngx-mask';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { mockApiInterceptor } from './app/core/interceptors/mock-api.interceptor';
 
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
@@ -16,6 +18,9 @@ getTestBed().initTestEnvironment(
 
 beforeEach(() => {
   TestBed.configureTestingModule({
-    providers: [provideNgxMask()],
+    providers: [
+      provideNgxMask(),
+      provideHttpClient(withInterceptors([mockApiInterceptor])),
+    ],
   });
 });
