@@ -430,7 +430,7 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "cd243ac567211615e3f8a28033b1d2ae540caa0bbaa6f9f2ae5424f156f5f333",
+      "expectedSha256": "a3742a3e6279ae0c249333a556e7598db979a909a107c43ef5fd1296daa01b9d",
       "reason": "Intercepta os services literais e devolve dados simulados, incluindo CRUD de funcionários e categorias, sem comunicação com o backend. Remover quando o backend real for integrado.",
       "removalBy": "2026-10-08"
     },
@@ -438,7 +438,7 @@
         "path": "src/app/core/interceptors/mock-api.interceptor.spec.ts",
         "classification": "TECHNICAL_EXCEPTION",
         "referenceSha256": null,
-        "expectedSha256": "9991f1175ef5612e0458a28bccaa67a0de32ce4aa88da54f4d6938ec18215f1e",
+        "expectedSha256": "a6c04f917c3e04be48c80d0a291bfdb1f8a33cc5eda436553b38ea131719f415",
         "reason": "Testes do CRUD simulado usado pelo protótipo sem backend."
       },
       {
