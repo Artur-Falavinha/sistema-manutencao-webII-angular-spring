@@ -35,9 +35,17 @@ import { MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO } from '../.
  */
 const LOGGED_IN_CLIENT_ID = 1;
 
-let mockRequests: Request[] = [...MOCK_REQUESTS];
-let mockCategories: Category[] = MOCK_CATEGORIES.map((category) => ({ ...category }));
-let mockEmployees: Employee[] = MOCK_EMPLOYEES.map((employee) => ({ ...employee }));
+let mockRequests: Request[];
+let mockCategories: Category[];
+let mockEmployees: Employee[];
+
+export function resetMockApiState(): void {
+  mockRequests = MOCK_REQUESTS.map((request) => ({ ...request }));
+  mockCategories = MOCK_CATEGORIES.map((category) => ({ ...category }));
+  mockEmployees = MOCK_EMPLOYEES.map((employee) => ({ ...employee }));
+}
+
+resetMockApiState();
 
 function toResponseDTO(request: Request): MaintenanceRequestResponseDTO {
   const status = MOCK_STATUSES.find((s) => s.id === request.statusId);

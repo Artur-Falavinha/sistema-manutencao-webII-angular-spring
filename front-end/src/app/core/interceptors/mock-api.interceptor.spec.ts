@@ -5,9 +5,13 @@ import { MOCK_CATEGORIES } from '../../shared/mocks/category.mock';
 import { MOCK_EMPLOYEES } from '../../shared/mocks/employee.mock';
 import { Category } from '../../shared/models/category';
 import { Employee } from '../../shared/models/employee';
-import { mockApiInterceptor } from './mock-api.interceptor';
+import { mockApiInterceptor, resetMockApiState } from './mock-api.interceptor';
 
 describe('mockApiInterceptor', () => {
+  beforeEach(() => {
+    resetMockApiState();
+  });
+
   const next = () => {
     throw new Error('A rota deveria ser atendida pelo mock.');
   };
