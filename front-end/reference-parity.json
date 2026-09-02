@@ -430,11 +430,18 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "86b92d2a7ee0a522d555fc75037f9b53b0eac29d967b7142d64be6086a93129b",
-      "reason": "Intercepta chamadas HTTP dos services literais e devolve dados simulados, sem alterar os services; agora cobre também GET /requests/client e POST /requests para reunificar o mock do fluxo do cliente sob o mesmo mecanismo. Remover quando o backend real for integrado.",
+      "expectedSha256": "a3742a3e6279ae0c249333a556e7598db979a909a107c43ef5fd1296daa01b9d",
+      "reason": "Intercepta os services literais e devolve dados simulados, incluindo CRUD de funcionários e categorias, sem comunicação com o backend. Remover quando o backend real for integrado.",
       "removalBy": "2026-10-08"
     },
-    {
+      {
+        "path": "src/app/core/interceptors/mock-api.interceptor.spec.ts",
+        "classification": "TECHNICAL_EXCEPTION",
+        "referenceSha256": null,
+        "expectedSha256": "a6c04f917c3e04be48c80d0a291bfdb1f8a33cc5eda436553b38ea131719f415",
+        "reason": "Testes do CRUD simulado usado pelo protótipo sem backend."
+      },
+      {
       "path": "src/app/shared/mocks/maintenance-request.mock.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
@@ -633,9 +640,10 @@
     },
     {
       "path": "src/app/core/auth/services/auth.service.spec.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "95350b6772fab782e4479556ac3ac430dc38692a61e94f34f128791565554145",
-      "expectedSha256": "95350b6772fab782e4479556ac3ac430dc38692a61e94f34f128791565554145"
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "de32fbfdbc54b0a7c8ccfc4d17408ea17c0d948c474516cca49500f0a4d83c4a",
+      "reason": "Testes de comportamento da autenticação simulada com os usuários mock do protótipo."
     },
     {
       "path": "src/app/shared/models/register-request.ts",
