@@ -430,11 +430,18 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "86b92d2a7ee0a522d555fc75037f9b53b0eac29d967b7142d64be6086a93129b",
-      "reason": "Intercepta chamadas HTTP dos services literais e devolve dados simulados, sem alterar os services; agora cobre também GET /requests/client e POST /requests para reunificar o mock do fluxo do cliente sob o mesmo mecanismo. Remover quando o backend real for integrado.",
+      "expectedSha256": "cd243ac567211615e3f8a28033b1d2ae540caa0bbaa6f9f2ae5424f156f5f333",
+      "reason": "Intercepta os services literais e devolve dados simulados, incluindo CRUD de funcionários e categorias, sem comunicação com o backend. Remover quando o backend real for integrado.",
       "removalBy": "2026-10-08"
     },
-    {
+      {
+        "path": "src/app/core/interceptors/mock-api.interceptor.spec.ts",
+        "classification": "TECHNICAL_EXCEPTION",
+        "referenceSha256": null,
+        "expectedSha256": "9991f1175ef5612e0458a28bccaa67a0de32ce4aa88da54f4d6938ec18215f1e",
+        "reason": "Testes do CRUD simulado usado pelo protótipo sem backend."
+      },
+      {
       "path": "src/app/shared/mocks/maintenance-request.mock.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,

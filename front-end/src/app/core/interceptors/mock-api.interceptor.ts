@@ -6,6 +6,9 @@ import { MOCK_CATEGORIES } from '../../shared/mocks/category.mock';
 import { MOCK_EMPLOYEE_REQUESTS } from '../../shared/mocks/maintenance-request.mock';
 import { MOCK_REQUESTS } from '../../shared/mocks/request.mock';
 import { MOCK_CLIENTS } from '../../shared/mocks/client.mock';
+import { MOCK_EMPLOYEES } from '../../shared/mocks/employee.mock';
+import { Category } from '../../shared/models/category';
+import { Employee } from '../../shared/models/employee';
 import { Request } from '../../shared/models/request';
 import { MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO } from '../../shared/models/maintenance-request.models';
 
@@ -22,7 +25,9 @@ import { MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO } from '../.
  *   GET  /requests/employee  -> MOCK_EMPLOYEE_REQUESTS
  *   GET  /requests/client    -> MOCK_REQUESTS do cliente logado
  *   POST /requests           -> cria em memória e devolve o DTO criado
- *   GET  /categories         -> MOCK_CATEGORIES
+ *   GET  /categories         -> lista simulada de categorias
+ *   POST/PUT/DELETE /categories -> CRUD simulado de categorias
+ *   GET/POST/PUT/DELETE /employees -> CRUD simulado de funcionários
  *
  * Remover este arquivo e a linha correspondente em app.config.ts quando os
  * services HTTP reais forem integrados (marco 08/10 para requests,
@@ -31,6 +36,8 @@ import { MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO } from '../.
 const LOGGED_IN_CLIENT_ID = 1;
 
 let mockRequests: Request[] = [...MOCK_REQUESTS];
+let mockCategories: Category[] = MOCK_CATEGORIES.map((category) => ({ ...category }));
+let mockEmployees: Employee[] = MOCK_EMPLOYEES.map((employee) => ({ ...employee }));
 
 function toResponseDTO(request: Request): MaintenanceRequestResponseDTO {
   const status = MOCK_STATUSES.find((s) => s.id === request.statusId);
@@ -68,7 +75,16 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     }
 
     if (req.url.endsWith('/categories')) {
-      return of(new HttpResponse({ status: 200, body: MOCK_CATEGORIES })).pipe(delay(150));
+      return of(new HttpResponse({ status: 200, body: mockCategories })).pipe(delay(150));
+    }
+
+    if (req.url.endsWith('/employees')) {
+      return of(new HttpResponse({ status: 200, body: mockEmployees })).pipe(delay(150));
+    }
+
+    const employeeId = getResourceId(req.url, '/employees/');
+    if (employeeId !== null) {
+      return of(new HttpResponse({ status: 200, body: mockEmployees.find((employee) => employee.id === employeeId) })).pipe(delay(150));
     }
   }
 
@@ -94,5 +110,59 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     return of(new HttpResponse({ status: 201, body: toResponseDTO(created) })).pipe(delay(150));
   }
 
+  if (req.url.includes('/categories')) {
+    if (req.method === 'POST') {
+      const category = { ...(req.body as Category), id: nextId(mockCategories) };
+      mockCategories = [...mockCategories, category];
+      return of(new HttpResponse({ status: 201, body: category })).pipe(delay(150));
+    }
+
+    if (req.method === 'PUT') {
+      const category = req.body as Category;
+      mockCategories = mockCategories.map((current) => current.id === category.id ? category : current);
+      return of(new HttpResponse({ status: 200, body: category })).pipe(delay(150));
+    }
+
+    if (req.method === 'DELETE') {
+      const categoryId = getResourceId(req.url, '/categories/');
+      mockCategories = mockCategories.filter((category) => category.id !== categoryId);
+      return of(new HttpResponse({ status: 204, body: null })).pipe(delay(150));
+    }
+  }
+
+  if (req.url.includes('/employees')) {
+    if (req.method === 'POST') {
+      const employee = { ...(req.body as Employee), id: nextId(mockEmployees) };
+      mockEmployees = [...mockEmployees, employee];
+      return of(new HttpResponse({ status: 201, body: employee })).pipe(delay(150));
+    }
+
+    if (req.method === 'PUT') {
+      const employee = req.body as Employee;
+      mockEmployees = mockEmployees.map((current) => current.id === employee.id ? employee : current);
+      return of(new HttpResponse({ status: 200, body: employee })).pipe(delay(150));
+    }
+
+    if (req.method === 'DELETE') {
+      const employeeId = getResourceId(req.url, '/employees/');
+      mockEmployees = mockEmployees.filter((employee) => employee.id !== employeeId);
+      return of(new HttpResponse({ status: 204, body: null })).pipe(delay(150));
+    }
+  }
+
   return next(req);
 };
+
+function getResourceId(url: string, resourcePath: string): number | null {
+  const value = url.split(resourcePath)[1];
+  if (!value || value.includes('/')) {
+    return null;
+  }
+
+  const id = Number(value);
+  return Number.isInteger(id) ? id : null;
+}
+
+function nextId<T extends { id: number }>(items: T[]): number {
+  return Math.max(0, ...items.map((item) => item.id)) + 1;
+}
