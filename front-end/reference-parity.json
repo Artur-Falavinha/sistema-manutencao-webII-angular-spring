@@ -633,9 +633,10 @@
     },
     {
       "path": "src/app/core/auth/services/auth.service.spec.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "95350b6772fab782e4479556ac3ac430dc38692a61e94f34f128791565554145",
-      "expectedSha256": "95350b6772fab782e4479556ac3ac430dc38692a61e94f34f128791565554145"
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "de32fbfdbc54b0a7c8ccfc4d17408ea17c0d948c474516cca49500f0a4d83c4a",
+      "reason": "Testes de comportamento da autenticação simulada com os usuários mock do protótipo."
     },
     {
       "path": "src/app/shared/models/register-request.ts",
