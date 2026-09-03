@@ -121,14 +121,14 @@
       "expectedSha256": "a7bc177e16a244e1f0f000daa64fe592cad301fe7cbffaca46d33a5fd483e792",
       "reason": "Remove somente a expectativa obsoleta de texto que não existe no shell da própria referência e valida o router-outlet real."
     },
-    {
-      "path": "src/app/app.routes.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "ff7a3b1fd8034477f38c887908c81a1bf292abf40fda6677c596d624910b8f65",
-      "reason": "Scaffold temporário do shell: raiz para login, login/signup/client/employee sem guards e páginas de erro até a integração da autenticação.",
-      "removalBy": "2026-09-03"
-    },
+   {
+  "path": "src/app/app.routes.ts",
+  "classification": "TEMPORARY_SCAFFOLD",
+  "referenceSha256": null,
+  "expectedSha256": "2a84668e9120ed0d8b6b7cfe2ae052ae65afd9101f64a9caba533c8f313e2127",
+  "reason": "Scaffold temporário do shell: aplica authGuard funcional às rotas de client/employee com base na sessão simulada, redirecionando para login ou página de erro 401 conforme o perfil.",
+  "removalBy": "2026-10-08"
+}
     {
       "path": "src/app/core/layout/header/header.component.ts",
       "classification": "IDENTICAL",
@@ -632,14 +632,14 @@
       "reason": "Scaffold temporário do autocadastro: envia o payload para o AuthService simulado e mantém o retorno visual, sem backend ou ViaCEP nesta janela.",
       "removalBy": "2026-10-08"
     },
-    {
-      "path": "src/app/core/auth/services/auth.service.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": "28f95d7a55443599aebc93d0572a0723e893a8dac0c503d55122ccca201a2b6c",
-      "expectedSha256": "9382fa068bebc6a24e424949140dda976296b61274e7d95d132bd254085f1015",
-      "reason": "AuthService temporário para login e cadastro simulados usando os mocks existentes, sem HTTP ou persistência local; substituir na integração REST.",
-      "removalBy": "2026-10-08"
-    },
+   {
+  "path": "src/app/core/auth/services/auth.service.ts",
+  "classification": "TEMPORARY_SCAFFOLD",
+  "referenceSha256": "28f95d7a55443599aebc93d0572a0723e893a8dac0c503d55122ccca201a2b6c",
+  "expectedSha256": "3253c8eefbb31ae990cc239927bfea237d59b2e15bd2e867bd1263736ba53f27",
+  "reason": "AuthService temporário para login e cadastro simulados usando os mocks existentes. Adiciona persistência de sessão via sessionStorage (sobrevive a reload) e validação de CPF/e-mail duplicados contra MOCK_CLIENTS e MOCK_EMPLOYEES, sem HTTP real; substituir na integração REST.",
+  "removalBy": "2026-10-08"
+}
     {
       "path": "src/app/core/auth/services/auth.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
@@ -955,6 +955,14 @@
       "classification": "IDENTICAL",
       "referenceSha256": "0e7ac1c02b04b016d668205ddd1865d53cb1d35aeb6c0bce15ad81dc8e0b0c72",
       "expectedSha256": "0e7ac1c02b04b016d668205ddd1865d53cb1d35aeb6c0bce15ad81dc8e0b0c72"
-    }
+    },
+    {
+  "path": "src/app/core/auth/guards/auth.guard.ts",
+  "classification": "TEMPORARY_SCAFFOLD",
+  "referenceSha256": null,
+  "expectedSha256": "COLE_AQUI_O_HASH_DO_PASSO_1",
+  "reason": "Guard funcional temporário que bloqueia acesso às rotas de client/employee sem sessão simulada ativa ou com perfil incompatível, redirecionando para /login ou /error-unauthorized; substituir por proteção baseada em JWT real na integração com backend.",
+  "removalBy": "2026-10-08"
+}
   ]
 }
