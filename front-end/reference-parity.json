@@ -434,14 +434,14 @@
       "reason": "Intercepta os services literais e devolve dados simulados, incluindo CRUD de funcionários e categorias, sem comunicação com o backend. Remover quando o backend real for integrado.",
       "removalBy": "2026-10-08"
     },
-      {
-        "path": "src/app/core/interceptors/mock-api.interceptor.spec.ts",
-        "classification": "TECHNICAL_EXCEPTION",
-        "referenceSha256": null,
-        "expectedSha256": "a6c04f917c3e04be48c80d0a291bfdb1f8a33cc5eda436553b38ea131719f415",
-        "reason": "Testes do CRUD simulado usado pelo protótipo sem backend."
-      },
-      {
+    {
+      "path": "src/app/core/interceptors/mock-api.interceptor.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "a6c04f917c3e04be48c80d0a291bfdb1f8a33cc5eda436553b38ea131719f415",
+      "reason": "Testes do CRUD simulado usado pelo protótipo sem backend."
+    },
+    {
       "path": "src/app/shared/mocks/maintenance-request.mock.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
@@ -505,7 +505,7 @@
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "8f49290b24e210a02e019b863aa57f577bfa414487f615b611bd36d28cd6a3ca",
-      "expectedSha256": "fc92b7d3cce8430fc5a037b6808cf88823a03756de9ef1b91a34c0cc406c6831",
+      "expectedSha256": "8dacc36d1ec7b7217b2904ee62288cc749014a519629101ac054a81aa69ccf3f",
       "reason": "Adaptação temporária tipada para consumir mocks locais, reassociar o paginador ao alternar visões e substituir Toast e download real por alertas simulados, sem comunicação com o backend.",
       "removalBy": "2026-10-29"
     },
@@ -538,7 +538,7 @@
       "path": "src/app/core/services/report.service.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "9d1a7bc2c06925d7afea96bdfb0822c1399c978682b4edadd82c9350b87b5ee3",
-      "expectedSha256": "cb96ce286170bb790f90a14db119eca1e6529bc5df69b3e8a4a7ce78944bfb9e",
+      "expectedSha256": "712d888f852686b76b43fce09bd70a558bc51baf900cf53cd6b8600ab273433e",
       "reason": "Implementação temporária usando os dados simulados (mocks) locais em memória para permitir a demonstração da janela sem comunicação com o backend.",
       "removalBy": "2026-10-29"
     },
