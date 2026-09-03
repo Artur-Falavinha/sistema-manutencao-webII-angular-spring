@@ -371,15 +371,17 @@
     },
     {
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "f274ebd55bb6b3b3ea03e0600c6dde8e2c6acb16dae35de3e924757da9d29994",
-      "expectedSha256": "f274ebd55bb6b3b3ea03e0600c6dde8e2c6acb16dae35de3e924757da9d29994"
+      "expectedSha256": "28f9f48744efd402355d2c18ace51623f55b2a69336825b55abb8d915ba56b84",
+      "reason": "Mantém input nativo temporário no lugar de app-input-primary (componente já existe no projeto mas ainda não reconectado aqui) e adiciona filtro de busca por texto + filtro por categoria, que não existem implementados na referência."
     },
     {
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.html",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "64c1f22bdc89318d17f551ee10e76d90b744d1cdbfdc0da4a03333cb8338e761",
-      "expectedSha256": "64c1f22bdc89318d17f551ee10e76d90b744d1cdbfdc0da4a03333cb8338e761"
+      "expectedSha256": "7130ee6df0b3866bbd0542c6360b8beab43bbc08a2221bd2e7ab440ca99a1d49",
+      "reason": "Input nativo temporário no lugar de app-input-primary + painel de filtro por categoria + wiring da busca por texto (onSearchChange)."
     },
     {
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.css",
