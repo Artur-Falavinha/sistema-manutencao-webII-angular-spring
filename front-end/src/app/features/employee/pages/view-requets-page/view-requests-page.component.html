@@ -1,4 +1,4 @@
-  <section class="title-section">
+<section class="title-section">
     <h1 class="heading_1">Visão Geral de Solicitação</h1>
     <div class="action-row">
       <div class="switch-container">
@@ -19,19 +19,58 @@
           Lista
         </button>
       </div>
-      <div class="filter-container">
-        <app-input-primary
-          formControlName="search"
+      <div class="filter-container" style="position: relative;">
+        <!-- TODO(scaffold): trocar por <app-input-primary> quando o componente
+             compartilhado do Artur estiver na main (marco 03/09). Input nativo
+             aqui só pra não travar o build enquanto isso. -->
+        <input
+          #searchInput
           type="text"
-          inputName="search"
+          name="search"
           placeholder="Pesquise por equipamento, categoria, etc."
           class="input-search"
+          (input)="onSearchChange(searchInput.value)"
+        />
+        <button
+          class="button-primary label_large"
+          (click)="toggleFilters()"
         >
-          </app-input-primary>
-        <button class="button-primary label_large">
           <mat-icon aria-hidden="false" fontIcon="filter_list"></mat-icon
           >Filtros
         </button>
+
+        @if (isFiltersOpen()) {
+        <div
+          style="position: absolute; top: 100%; right: 0; margin-top: 0.5rem; z-index: 10; background: var(--color-surface); border: 0.0625rem solid var(--color-line); border-radius: var(--radius-sm); padding: 1rem; min-width: 14rem; box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.15);"
+        >
+          <label for="category-filter" class="label_large" style="display: block; margin-bottom: 0.5rem;">
+            Categoria
+          </label>
+          <select
+            id="category-filter"
+            #categorySelect
+            style="width: 100%; padding: 0.5rem; border-radius: var(--radius-sm); border: 0.0625rem solid var(--color-line);"
+            (change)="onCategoryChange(categorySelect.value)"
+          >
+            <option value="" [selected]="!selectedCategory()">Todas</option>
+            @for (category of categories(); track category) {
+            <option [value]="category" [selected]="category === selectedCategory()">
+              {{ category }}
+            </option>
+            }
+          </select>
+          @if (selectedCategory()) {
+          <button
+            type="button"
+            class="label_large"
+            style="margin-top: 0.75rem; background: none; border: none; color: var(--color-primary); cursor: pointer; padding: 0;"
+            (click)="clearCategoryFilter()"
+          >
+            Limpar filtro
+          </button>
+          }
+        </div>
+        }
       </div>
     </div>
   </section>
