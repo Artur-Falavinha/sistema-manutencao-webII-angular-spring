@@ -1,0 +1,99 @@
+.card {
+  background: var(--color-background-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-xs);
+  margin: 0;
+  width: 100%;
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-xs);
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  gap: 0.4375rem;
+}
+
+.card-title {
+  color: var(--color-heading-subtle);
+  font-family: var(--font-family-primary);
+  font-size: var(--heading-h5-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+}
+
+.status {
+  display: flex;
+  padding: var(--spacing-4xs) var(--spacing-sm);
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: var(--radius-pill);
+  color: var(--color-surface);
+}
+
+.card-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--spacing-xs);
+  align-items: start;
+  word-wrap: break-word;
+}
+
+.equipament::before {
+  content: "Item";
+  display: block;
+  letter-spacing: 0.03125rem;
+  margin-bottom: var(--spacing-3xs);
+}
+
+.category::before {
+  content: "Categoria";
+  display: block;
+  letter-spacing: 0.03125rem;
+  margin-bottom: var(--spacing-3xs);
+}
+
+.request-date::before {
+  content: "Data da solicitação";
+  display: block;
+  letter-spacing: 0.03125rem;
+  margin-bottom: var(--spacing-3xs);
+}
+
+.card-details > div {
+  grid-column: 1 / -1;
+  padding-top: 0.0625rem;
+  word-wrap: break-word;
+}
+
+.card-description::before {
+  content: "Descrição do defeito";
+  display: block;
+  margin-bottom: var(--spacing-3xs);
+  white-space: pre-wrap;
+}
+
+.value {
+  color: var(--color-text-default);
+  font-family: var(--font-family-secondary);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-regular);
+}
+
+@media (max-width: 48rem) {
+  .card-details {
+    grid-template-columns: 1fr;
+  }
+}
