@@ -1,0 +1,21 @@
+<article class ="card" *ngIf="request">
+    <div class="card-header">
+        <div class="card-icon">
+            <mat-icon style="color: #3B598E;">build</mat-icon>
+            <span class="card-title">Detalhes da solicitação</span>
+        </div>
+
+        <div class="status-badge" 
+            [style.backgroundColor]="request.status.cor">
+            {{ request.status.nome }}
+        </div>
+    </div> 
+    <div class="card-details">
+        <p class="equipament"><span class="value">{{ request.equipmentName }}</span></p>
+        <p class="category"><span class="value">{{ categoryName }}</span></p>
+        <p class="request-date"><span class="value">{{ formatDate(request.requestDate) }}</span></p>
+        <div>
+            <p class="card-description"><span class="value">{{ request.defectDescription }}</span></p>
+        </div>
+    </div>
+</article>

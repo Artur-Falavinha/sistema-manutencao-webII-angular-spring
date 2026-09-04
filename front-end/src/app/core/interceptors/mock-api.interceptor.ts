@@ -7,10 +7,12 @@ import { MOCK_EMPLOYEE_REQUESTS } from '../../shared/mocks/maintenance-request.m
 import { MOCK_REQUESTS } from '../../shared/mocks/request.mock';
 import { MOCK_CLIENTS } from '../../shared/mocks/client.mock';
 import { MOCK_EMPLOYEES } from '../../shared/mocks/employee.mock';
+import { MOCK_BUDGETS } from '../../shared/mocks/budget.mock';
+import { MOCK_REQUEST_HISTORY } from '../../shared/mocks/request-history.mock';
 import { Category } from '../../shared/models/category';
 import { Employee } from '../../shared/models/employee';
 import { Request } from '../../shared/models/request';
-import { MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO } from '../../shared/models/maintenance-request.models';
+import { ClientRequestDetailDTO, MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO, RejectionDTO } from '../../shared/models/maintenance-request.models';
 
 /**
  * SCAFFOLD TEMPORÁRIO — declarado no plano do semestre.
@@ -20,14 +22,19 @@ import { MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO } from '../.
  * e devolve dados simulados no shape real dos DTOs. Nenhum desses services
  * foi alterado — a "troca de motor" acontece só aqui.
  *
- * Rotas cobertas hoje (RF011/RF012, visão funcionário; RF001, visão cliente):
- *   GET  /status-enum        -> MOCK_STATUSES
- *   GET  /requests/employee  -> MOCK_EMPLOYEE_REQUESTS
- *   GET  /requests/client    -> MOCK_REQUESTS do cliente logado
- *   POST /requests           -> cria em memória e devolve o DTO criado
- *   GET  /categories         -> lista simulada de categorias
- *   POST/PUT/DELETE /categories -> CRUD simulado de categorias
- *   GET/POST/PUT/DELETE /employees -> CRUD simulado de funcionários
+ * Rotas cobertas hoje (RF011/RF012, visão funcionário; RF001, RF003-RF009, visão cliente;
+ * RF017/RF018, CRUD simulado de categorias e funcionários):
+ *   GET  /status-enum                      -> MOCK_STATUSES
+ *   GET  /requests/employee                -> MOCK_EMPLOYEE_REQUESTS
+ *   GET  /requests/client                  -> MOCK_REQUESTS do cliente logado
+ *   GET  /requests/client/{id}             -> detalhe + orçamentos + histórico
+ *   POST /requests                         -> cria em memória e devolve o DTO criado
+ *   POST /requests/client/{id}/approve     -> muda o estado para APROVADA
+ *   POST /requests/client/{id}/reject      -> muda o estado para REJEITADA, grava o motivo
+ *   POST /requests/client/{id}/rescue      -> muda o estado de REJEITADA para APROVADA
+ *   GET  /categories                       -> lista simulada de categorias
+ *   POST/PUT/DELETE /categories            -> CRUD simulado de categorias
+ *   GET/POST/PUT/DELETE /employees         -> CRUD simulado de funcionários
  *
  * Remover este arquivo e a linha correspondente em app.config.ts quando os
  * services HTTP reais forem integrados (marco 08/10 para requests,
@@ -64,7 +71,39 @@ function toResponseDTO(request: Request): MaintenanceRequestResponseDTO {
   };
 }
 
+function toDetailDTO(request: Request): ClientRequestDetailDTO {
+  const status = MOCK_STATUSES.find((s) => s.id === request.statusId);
+  const category = MOCK_CATEGORIES.find((c) => c.id === request.categoryId);
+
+  return {
+    id: request.id,
+    equipmentName: request.equipmentName,
+    defectDescription: request.equipmentDescription,
+    requestDate: request.requestDate.toISOString(),
+    status: status ?? { id: request.statusId, nome: request.status ?? '', cor: '' },
+    categoryName: category?.name ?? '',
+    rejectionReason: request.rejectionReason,
+    budgets: MOCK_BUDGETS.filter((budget) => budget.requestId === request.id),
+    history: MOCK_REQUEST_HISTORY[request.id] ?? [],
+  };
+}
+
+function updateRequestStatus(id: number, statusName: string, rejectionReason?: string): void {
+  const status = MOCK_STATUSES.find((s) => s.nome === statusName);
+
+  mockRequests = mockRequests.map((request) =>
+    request.id === id
+      ? { ...request, statusId: status?.id ?? request.statusId, status: statusName, rejectionReason }
+      : request
+  );
+}
+
 export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
+  const clientDetailMatch = req.url.match(/\/requests\/client\/(\d+)$/);
+  const approveMatch = req.url.match(/\/requests\/client\/(\d+)\/approve$/);
+  const rejectMatch = req.url.match(/\/requests\/client\/(\d+)\/reject$/);
+  const rescueMatch = req.url.match(/\/requests\/client\/(\d+)\/rescue$/);
+
   if (req.method === 'GET') {
     if (req.url.endsWith('/status-enum')) {
       return of(new HttpResponse({ status: 200, body: MOCK_STATUSES })).pipe(delay(150));
@@ -72,6 +111,14 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
 
     if (req.url.endsWith('/requests/employee')) {
       return of(new HttpResponse({ status: 200, body: MOCK_EMPLOYEE_REQUESTS })).pipe(delay(150));
+    }
+
+    if (clientDetailMatch) {
+      const request = mockRequests.find((r) => r.id === Number(clientDetailMatch[1]));
+
+      return request
+        ? of(new HttpResponse({ status: 200, body: toDetailDTO(request) })).pipe(delay(150))
+        : of(new HttpResponse({ status: 404, body: null })).pipe(delay(150));
     }
 
     if (req.url.endsWith('/requests/client')) {
@@ -96,26 +143,47 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     }
   }
 
-  if (req.method === 'POST' && req.url.endsWith('/requests')) {
-    const payload = req.body as MaintenanceRequestCreateDTO;
-    const category = MOCK_CATEGORIES.find((c) => c.id === payload.categoryId);
+  if (req.method === 'POST') {
+    if (req.url.endsWith('/requests')) {
+      const payload = req.body as MaintenanceRequestCreateDTO;
+      const category = MOCK_CATEGORIES.find((c) => c.id === payload.categoryId);
 
-    const created: Request = {
-      id: Math.max(0, ...mockRequests.map((request) => request.id)) + 1,
-      equipmentName: payload.equipmentName,
-      equipmentDescription: payload.defectDescription,
-      requestDate: new Date(),
-      category: category?.name ?? '',
-      categoryId: payload.categoryId,
-      statusId: 1,
-      status: 'ABERTA',
-      clientId: LOGGED_IN_CLIENT_ID,
-      employeeId: 0,
-    };
+      const created: Request = {
+        id: Math.max(0, ...mockRequests.map((request) => request.id)) + 1,
+        equipmentName: payload.equipmentName,
+        equipmentDescription: payload.defectDescription,
+        requestDate: new Date(),
+        category: category?.name ?? '',
+        categoryId: payload.categoryId,
+        statusId: 1,
+        status: 'ABERTA',
+        clientId: LOGGED_IN_CLIENT_ID,
+        employeeId: 0,
+      };
 
-    mockRequests = [created, ...mockRequests];
+      mockRequests = [created, ...mockRequests];
 
-    return of(new HttpResponse({ status: 201, body: toResponseDTO(created) })).pipe(delay(150));
+      return of(new HttpResponse({ status: 201, body: toResponseDTO(created) })).pipe(delay(150));
+    }
+
+    if (approveMatch) {
+      updateRequestStatus(Number(approveMatch[1]), 'APROVADA');
+      return of(new HttpResponse({ status: 200, body: null })).pipe(delay(150));
+    }
+
+    if (rejectMatch) {
+      const payload = req.body as RejectionDTO;
+      updateRequestStatus(Number(rejectMatch[1]), 'REJEITADA', payload?.rejectionReason);
+      return of(new HttpResponse({ status: 200, body: null })).pipe(delay(150));
+    }
+
+    if (rescueMatch) {
+      const id = Number(rescueMatch[1]);
+      updateRequestStatus(id, 'APROVADA');
+      const request = mockRequests.find((r) => r.id === id);
+
+      return of(new HttpResponse({ status: 200, body: request ? toResponseDTO(request) : null })).pipe(delay(150));
+    }
   }
 
   if (req.url.includes('/categories')) {
