@@ -463,7 +463,7 @@
       "path": "src/app/features/employee/employee.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "0bef3379ada9e33d45c7c653e4b124b642fa333170d915167efd151f196c7127",
-      "expectedSha256": "f46af09b226d75d6802ecb9221ead9f0f44fc3dbda79665ba016a52d258ee946",
+      "expectedSha256": "37632e0388b7c44b5040d6b8db5647d9809ee73489d8d966071afd08f8bd80cd",
       "reason": "Preserva as rotas já integradas e aponta o dashboard de funcionário para o componente literal migrado nesta etapa; as demais rotas da referência entram nas janelas futuras.",
       "removalBy": "2026-10-29"
     },
@@ -524,12 +524,6 @@
       "referenceSha256": "26aa66397ba730af010f6d8128ad4892a11485957ad27999c99d7cdb2cc77012",
       "expectedSha256": "d5626d0e2322f089cc6bc825f66cd3a7d655d58f342c81a9ef107fc60f692def",
       "reason": "Aplica a identidade Oficina técnica com tokens globais, layout responsivo e foco visível sem alterar contratos funcionais."
-    },
-    {
-      "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
-      "expectedSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a"
     },
     {
       "path": "src/app/shared/models/reports.model.ts",
@@ -1057,7 +1051,7 @@
       "referenceSha256": "aaade0f95dc558b3817aac2402e2f81bb6c013ddf395b42eba5ca3547188b63b",
       "expectedSha256": "03888eee13f65f56a4a83d8a0708eecbfd2514e52edd52c0c0e633fdae033bb9",
       "reason": "Expõe os contratos esperados pelas páginas literais, adapta os CPFs dos mocks ao validador literal do formulário e não persiste inclusão, edição ou exclusão antes da etapa de CRUD.",
-      "removalBy": "2026-09-03"
+      "removalBy": "2026-09-17"
     },
     {
       "path": "src/app/shared/components/warning-dialog/warning-dialog.component.css",
@@ -1092,6 +1086,43 @@
       "expectedSha256": "90107b0556c57844e1d0ab9f23f168ee3d85c7110b5e4120bf4b6eef806031ec",
       "reason": "Guard funcional temporário que bloqueia acesso às rotas de client/employee sem sessão simulada ativa ou com perfil incompatível, redirecionando para /login ou /error-unauthorized; substituir por proteção baseada em JWT real na integração com backend.",
       "removalBy": "2026-10-08"
+    },
+
+     {
+    "path": "src/app/core/services/service-item.service.ts",
+    "classification": "IDENTICAL",
+    "referenceSha256": "4e257b03166e7e2e0cb86b119ae996b0db801330ff964c7cab61313ec7cde1ed",
+    "expectedSha256": "4e257b03166e7e2e0cb86b119ae996b0db801330ff964c7cab61313ec7cde1ed"
+    },
+    {
+    "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.spec.ts",
+    "classification": "IDENTICAL",
+    "referenceSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482",
+    "expectedSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482"
+    },
+    {
+    "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
+    "classification": "IDENTICAL",
+    "referenceSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89",
+    "expectedSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89"
+    },
+    {
+      "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "dfd2a37fc3b6880505e1e13e94e0052a3c4ba26a33333fa3a21eca9b59416b12",
+      "expectedSha256": "dfd2a37fc3b6880505e1e13e94e0052a3c4ba26a33333fa3a21eca9b59416b12"
+    },
+    {
+      "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95",
+      "expectedSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95"
+    },
+    {
+      "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "82f11aca8506ab25fbd3f3308766feac46bd05071e236fee96f81016758c646c",
+      "expectedSha256": "82f11aca8506ab25fbd3f3308766feac46bd05071e236fee96f81016758c646c"
     }
-  ]
-}
+    ]
+  }

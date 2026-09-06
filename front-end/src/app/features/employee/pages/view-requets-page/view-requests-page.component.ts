@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { Component, inject, computed, ViewChild, effect } from '@angular/core';
-=======
 import { Component, inject, computed, signal, ViewChild, effect } from '@angular/core';
->>>>>>> 296c5c1fa47c5e7f4dc434957d041adbc44fc808
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -43,15 +39,6 @@ export class ViewRequestsPageComponent {
   statuses = toSignal(this.statusService.getAll(), { initialValue: [] as Status[] });
   requests = toSignal(this.requestService.getAllEmployeeRequests(), { initialValue: [] as Request[] });
 
-<<<<<<< HEAD
-  groupedRequests = computed(() => {
-    const statuses = this.statuses();
-    const reqs = this.requests();
-
-    return statuses.map((status) => ({
-      status,
-      requests: reqs.filter((r) => r.statusName === status.nome)
-=======
   // SCAFFOLD: filtro de busca por equipamento/categoria/cliente. Não existe
   // implementação equivalente na referência (o formControlName="search" lá
   // fica sem lógica por trás) — é código novo do grupo, permanente.
@@ -118,7 +105,6 @@ export class ViewRequestsPageComponent {
     return statuses.map((status) => ({
       status,
       requests: filtered.filter((r) => r.statusName === status.nome)
->>>>>>> 296c5c1fa47c5e7f4dc434957d041adbc44fc808
     }));
   });
 
@@ -158,8 +144,4 @@ export class ViewRequestsPageComponent {
   toggleView() {
     this.isKanbanView = !this.isKanbanView;
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 296c5c1fa47c5e7f4dc434957d041adbc44fc808
