@@ -1,0 +1,36 @@
+:host { display: block; }
+
+.container {
+  display: grid;
+  gap: 1.5rem;
+  width: min(100%, 78rem);
+  margin: 0 auto;
+}
+
+.main-header,
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.search-field { min-width: min(22rem, 100%); }
+.add-button { min-height: 3.5rem; }
+
+.table-card {
+  overflow-x: auto;
+  border: 0.0625rem solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: none;
+}
+
+table { min-width: 42rem; }
+
+@media (max-width: 48rem) {
+  .main-header,
+  .header-actions { align-items: stretch; flex-direction: column; }
+  .search-field,
+  .add-button { width: 100%; }
+}

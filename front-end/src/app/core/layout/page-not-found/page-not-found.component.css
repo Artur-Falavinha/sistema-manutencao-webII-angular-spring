@@ -1,0 +1,28 @@
+:host { display: block; }
+
+main {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  padding: 2rem;
+  background: var(--color-background-page);
+}
+
+.error-content {
+  width: min(100%, 34rem);
+  padding: 2rem;
+  text-align: center;
+}
+
+.illustration-error {
+  display: block;
+  width: min(100%, 24rem);
+  height: auto;
+  margin: 0 auto 1.5rem;
+}
+
+.error-content p {
+  margin-bottom: 0.5rem;
+  color: var(--color-brand-mint-dark);
+  font-weight: var(--font-weight-bold);
+}

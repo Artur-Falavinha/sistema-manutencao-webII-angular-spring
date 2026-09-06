@@ -1,0 +1,122 @@
+<mat-dialog-content>
+  <div class="form-header">
+    <h2 mat-dialog-title>{{ isEdit ? 'Editar' : 'Cadastrar' }} Funcionário</h2>
+    <p>Preencha as informações abaixo para continuar.</p>
+  </div>
+
+  <mat-stepper [linear]="true" #stepper>
+
+    <mat-step [stepControl]="personalInfoForm">
+      <form [formGroup]="personalInfoForm">
+        <ng-template matStepLabel>Informações Pessoais</ng-template>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nome Completo</mat-label>
+          <input matInput formControlName="nome" required>
+          <mat-error *ngIf="personalInfoForm.get('nome')?.hasError('required')">
+            O nome é obrigatório.
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>CPF</mat-label>
+            <input 
+              matInput
+              formControlName="cpf"
+              type="text"
+              mask="000.000.000-00"
+              required
+            >
+            <mat-error *ngIf="personalInfoForm.get('cpf')?.hasError('required')">
+              O CPF é obrigatório.
+            </mat-error>
+            <mat-error *ngIf="personalInfoForm.get('cpf')?.hasError('cpfInvalido')">
+              CPF inválido.
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Data de Nascimento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dataNascimento" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="personalInfoForm.get('dataNascimento')?.hasError('required')">
+              Data de nascimento é obrigatória.
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" formControlName="email" required>
+          <mat-error *ngIf="personalInfoForm.get('email')?.hasError('required')">
+            O e-mail é obrigatório.
+          </mat-error>
+          <mat-error *ngIf="personalInfoForm.get('email')?.hasError('email')">
+            Formato de e-mail inválido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Celular</mat-label>
+          <input matInput formControlName="celular" mask="(00) 0 0000-0000" required>
+          <mat-error *ngIf="personalInfoForm.get('celular')?.hasError('required')">
+            O celular é obrigatório.
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-actions first-step">
+          <button mat-raised-button color="primary" matStepperNext>Próximo</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="professionalInfoForm">
+      <form [formGroup]="professionalInfoForm">
+        <ng-template matStepLabel>Informações Profissionais</ng-template>
+
+       <!-- <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Cargo</mat-label>
+          <mat-select formControlName="cargo" required>
+            <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="professionalInfoForm.get('cargo')?.hasError('required')">
+            O cargo é obrigatório.
+          </mat-error>
+        </mat-form-field>-->
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Salário</mat-label>
+          <input matInput type="text" mask="separator.2" prefix="R$ " thousandSeparator="." decimalMarker="," required formControlName="salario">
+          <mat-error *ngIf="professionalInfoForm.get('salario')?.hasError('required')">
+            O salário é obrigatório.
+          </mat-error>
+          <mat-error *ngIf="professionalInfoForm.get('salario')?.hasError('min')">
+            O salário deve ser maior que zero.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width" *ngIf="!isEdit">
+          <mat-label>Senha</mat-label>
+          <input matInput type="password" formControlName="senha" placeholder="">
+          
+          <mat-error *ngIf="professionalInfoForm.get('senha')?.hasError('required')">
+            A senha é obrigatória.
+          </mat-error>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-button matStepperPrevious>Voltar</button>
+          <button mat-raised-button color="primary" (click)="onSubmit()">
+            {{ isEdit ? 'Atualizar' : 'Salvar' }}
+          </button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancelar</button>
+</mat-dialog-actions>

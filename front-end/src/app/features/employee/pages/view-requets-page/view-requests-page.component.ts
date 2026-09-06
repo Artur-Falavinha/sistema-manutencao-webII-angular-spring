@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Component, inject, computed, ViewChild, effect } from '@angular/core';
+=======
+import { Component, inject, computed, signal, ViewChild, effect } from '@angular/core';
+>>>>>>> 296c5c1fa47c5e7f4dc434957d041adbc44fc808
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -39,6 +43,7 @@ export class ViewRequestsPageComponent {
   statuses = toSignal(this.statusService.getAll(), { initialValue: [] as Status[] });
   requests = toSignal(this.requestService.getAllEmployeeRequests(), { initialValue: [] as Request[] });
 
+<<<<<<< HEAD
   groupedRequests = computed(() => {
     const statuses = this.statuses();
     const reqs = this.requests();
@@ -46,6 +51,74 @@ export class ViewRequestsPageComponent {
     return statuses.map((status) => ({
       status,
       requests: reqs.filter((r) => r.statusName === status.nome)
+=======
+  // SCAFFOLD: filtro de busca por equipamento/categoria/cliente. Não existe
+  // implementação equivalente na referência (o formControlName="search" lá
+  // fica sem lógica por trás) — é código novo do grupo, permanente.
+  searchTerm = signal('');
+
+  onSearchChange(value: string): void {
+    this.searchTerm.set(value);
+  }
+
+  // SCAFFOLD: painel de filtro por categoria atrás do botão "Filtros",
+  // também sem equivalente na referência.
+  isFiltersOpen = signal(false);
+  selectedCategory = signal<string | null>(null);
+
+  categories = computed(() => {
+    const names = this.requests()
+      .map((r) => r.categoryName)
+      .filter((c): c is string => !!c);
+    return Array.from(new Set(names)).sort();
+  });
+
+  toggleFilters(): void {
+    this.isFiltersOpen.update((open) => !open);
+  }
+
+  onCategoryChange(value: string): void {
+    this.selectedCategory.set(value || null);
+  }
+
+  clearCategoryFilter(): void {
+    this.selectedCategory.set(null);
+  }
+
+  private matchesSearch(request: Request, term: string): boolean {
+    if (!term) {
+      return true;
+    }
+    const needle = term.trim().toLowerCase();
+    return (
+      request.equipmentName?.toLowerCase().includes(needle) ||
+      request.categoryName?.toLowerCase().includes(needle) ||
+      request.clientName?.toLowerCase().includes(needle) ||
+      false
+    );
+  }
+
+  private matchesCategory(request: Request, category: string | null): boolean {
+    if (!category) {
+      return true;
+    }
+    return request.categoryName === category;
+  }
+
+  groupedRequests = computed(() => {
+    const statuses = this.statuses();
+    const reqs = this.requests();
+    const term = this.searchTerm();
+    const category = this.selectedCategory();
+
+    const filtered = reqs
+      .filter((r) => this.matchesSearch(r, term))
+      .filter((r) => this.matchesCategory(r, category));
+
+    return statuses.map((status) => ({
+      status,
+      requests: filtered.filter((r) => r.statusName === status.nome)
+>>>>>>> 296c5c1fa47c5e7f4dc434957d041adbc44fc808
     }));
   });
 
@@ -85,4 +158,8 @@ export class ViewRequestsPageComponent {
   toggleView() {
     this.isKanbanView = !this.isKanbanView;
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 296c5c1fa47c5e7f4dc434957d041adbc44fc808

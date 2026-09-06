@@ -1,1 +1,20 @@
-<router-outlet />
+@if (isEmployee$ | async) {
+<div class="main-layout">
+  <app-side-bar></app-side-bar>
+
+  <div class="main-section">
+    <app-header></app-header>
+    <main class="content">
+      <ngx-spinner>
+          <p style="color: white"> Carregando... </p>
+      </ngx-spinner>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+} @else {
+<ngx-spinner >
+    <p style="color: white"> Carregando... </p>
+</ngx-spinner>
+<router-outlet></router-outlet>
+}

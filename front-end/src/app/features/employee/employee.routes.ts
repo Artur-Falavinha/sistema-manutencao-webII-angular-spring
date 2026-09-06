@@ -1,22 +1,27 @@
 import { Routes } from '@angular/router';
 
-import { AdministrativePlaceholderPageComponent } from './pages/administrative-placeholder-page/administrative-placeholder-page.component';
-import { EmployeeDashboardPlaceholderPageComponent } from './pages/employee-dashboard-placeholder-page/employee-dashboard-placeholder-page.component';
+import { EmployeeDashboardPageComponent } from './pages/employee-dashboard-page/employee-dashboard-page.component';
+import { EmployeeListComponent } from './pages/employee-list/employee-list.component';
+import { ManageCategoriesPageComponent } from './pages/manage-categories-page/manage-categories-page.component';
 import { ReportsPageComponent } from './pages/reports-page/reports-page.component';
 import { ViewRequestsPageComponent } from './pages/view-requets-page/view-requests-page.component';
 
 export const employeeRoutes: Routes = [
   {
     path: 'dashboard',
-    component: EmployeeDashboardPlaceholderPageComponent
+    component: EmployeeDashboardPageComponent
   },
   {
     path: 'employees-list',
-    component: AdministrativePlaceholderPageComponent
+    component: EmployeeListComponent
   },
   {
     path: 'categories',
-    component: AdministrativePlaceholderPageComponent
+    component: ManageCategoriesPageComponent
+  },
+  {
+    path: 'view-requests',
+    component: ViewRequestsPageComponent
   },
   {
     path: 'view-requests',

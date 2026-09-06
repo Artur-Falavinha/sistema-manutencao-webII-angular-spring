@@ -1,0 +1,38 @@
+.container {
+  display: grid;
+  gap: 1.5rem;
+  width: min(100%, 78rem);
+  margin: 0 auto;
+}
+
+.requests,
+.search-add {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.search-add mat-form-field { min-width: min(22rem, 100%); }
+
+table {
+  overflow: hidden;
+  border: 0.0625rem solid var(--color-line);
+  border-radius: var(--radius-md);
+  box-shadow: none;
+}
+
+.mat-column-description { max-width: 20rem; }
+
+@media (max-width: 48rem) {
+  .requests,
+  .search-add { align-items: stretch; flex-direction: column; }
+  .search-add mat-form-field,
+  .search-add .button-primary { width: 100%; }
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
