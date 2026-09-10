@@ -626,21 +626,21 @@
       "reason": "Adiciona somente provideRouter exigido para instanciar o SignupPageComponent com o serviço de autenticação simulado no TestBed."
     },
     {
-      "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
-      "expectedSha256": "32a31b8fe42a848d232c2deb8acad046044f7108da430e1ce4b4bf2c0cc207cf",
-      "reason": "Scaffold temporário do autocadastro: envia o payload para o AuthService simulado e mantém o retorno visual, sem backend ou ViaCEP nesta janela.",
-      "removalBy": "2026-10-08"
-    },
+  "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
+  "classification": "TEMPORARY_SCAFFOLD",
+  "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
+  "expectedSha256": "0cdb59ce886fabf807ea060b948db91ae2e7690dd990812552b9cdd4f8dde84d",
+  "reason": "Scaffold temporário do autocadastro: envia o payload para o AuthService simulado e mantém o retorno visual, sem backend ou ViaCEP nesta janela. Restaura o bloco de erro (console.error) presente na referência, que havia sido omitido na adaptação anterior.",
+  "removalBy": "2026-10-08"
+},
     {
-      "path": "src/app/core/auth/services/auth.service.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": "28f95d7a55443599aebc93d0572a0723e893a8dac0c503d55122ccca201a2b6c",
-      "expectedSha256": "3253c8eefbb31ae990cc239927bfea237d59b2e15bd2e867bd1263736ba53f27",
-      "reason": "AuthService temporário para login e cadastro simulados usando os mocks existentes. Adiciona persistência de sessão via sessionStorage (sobrevive a reload) e validação de CPF/e-mail duplicados contra MOCK_CLIENTS e MOCK_EMPLOYEES, sem HTTP real; substituir na integração REST.",
-      "removalBy": "2026-10-08"
-    },
+  "path": "src/app/core/auth/services/auth.service.ts",
+  "classification": "TEMPORARY_SCAFFOLD",
+  "referenceSha256": "28f95d7a55443599aebc93d0572a0723e893a8dac0c503d55122ccca201a2b6c",
+  "expectedSha256": "ea59f10c62d29338484aabab5cf30f0fef1772ca3c66e1d5ef0975ee6c9584bd",
+  "reason": "AuthService temporário para login e cadastro simulados usando os mocks existentes, sem HTTP real. Persiste sessão via sessionStorage e valida CPF/e-mail duplicados contra MOCK_CLIENTS e MOCK_EMPLOYEES. Navega para /login ao chamar logout(), já que o guard só reavalia em mudanças de rota e o header.component.ts (IDENTICAL) não pode conter essa navegação; substituir por autenticação real (JWT) na integração REST.",
+  "removalBy": "2026-10-08"
+},
     {
       "path": "src/app/core/auth/services/auth.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
