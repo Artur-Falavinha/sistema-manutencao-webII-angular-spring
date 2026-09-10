@@ -16,6 +16,8 @@ async function createFixture({
   filePath = 'src/example.ts',
   classification = 'IDENTICAL',
   reason,
+  decisionDate,
+  requirement,
   removalBy,
   visualTransform,
   referenceNormalizedSha256,
@@ -37,6 +39,8 @@ async function createFixture({
   };
 
   if (reason) entry.reason = reason;
+  if (decisionDate) entry.decisionDate = decisionDate;
+  if (requirement) entry.requirement = requirement;
   if (removalBy) entry.removalBy = removalBy;
   if (visualTransform) entry.visualTransform = visualTransform;
   if (referenceNormalizedSha256) entry.referenceNormalizedSha256 = referenceNormalizedSha256;
@@ -162,6 +166,28 @@ test('rejects a technical exception without a reason', async () => {
   const fixture = await createFixture({ classification: 'TECHNICAL_EXCEPTION' });
 
   await assert.rejects(() => verifyParity(fixture), /justificativa.*src\/example\.ts/i);
+});
+
+test('accepts a documented scope decision', async () => {
+  const fixture = await createFixture({
+    destinationContent: 'export const listOnly = true;\n',
+    classification: 'SCOPE_DECISION',
+    reason: 'Remove funcionalidade não exigida pelo enunciado.',
+    decisionDate: '2026-09-01',
+    requirement: 'RF013'
+  });
+
+  const report = await verifyParity(fixture);
+  assert.equal(report.counts.SCOPE_DECISION, 1);
+});
+
+test('rejects an undocumented scope decision', async () => {
+  const fixture = await createFixture({
+    destinationContent: 'export const listOnly = true;\n',
+    classification: 'SCOPE_DECISION'
+  });
+
+  await assert.rejects(() => verifyParity(fixture), /decisão de escopo sem justificativa/i);
 });
 
 test('rejects a temporary scaffold without a removal date', async () => {

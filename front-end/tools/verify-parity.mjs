@@ -8,6 +8,7 @@ import { parseTemplate } from '@angular/compiler';
 const CLASSIFICATIONS = [
   'IDENTICAL',
   'VISUAL_ONLY',
+  'SCOPE_DECISION',
   'TECHNICAL_EXCEPTION',
   'TEMPORARY_SCAFFOLD',
   'FORBIDDEN_DIFFERENCE'
@@ -15,9 +16,11 @@ const CLASSIFICATIONS = [
 
 const IGNORED_DIRECTORIES = new Set([
   '.angular',
+  '.playwright-cli',
   'coverage',
   'dist',
   'node_modules',
+  'output',
   'out-tsc',
   'tmp'
 ]);
@@ -127,6 +130,18 @@ function validateManifestEntry(entry, finalFrontend, today, errors) {
     }
     if (!entry.reason) {
       errors.push(`Justificativa ausente em ${entry.path}.`);
+    }
+  }
+
+  if (entry.classification === 'SCOPE_DECISION') {
+    if (!entry.reason) {
+      errors.push(`Decisão de escopo sem justificativa em ${entry.path}.`);
+    }
+    if (!entry.decisionDate) {
+      errors.push(`Decisão de escopo sem data em ${entry.path}.`);
+    }
+    if (!entry.requirement) {
+      errors.push(`Decisão de escopo sem requisito relacionado em ${entry.path}.`);
     }
   }
 
