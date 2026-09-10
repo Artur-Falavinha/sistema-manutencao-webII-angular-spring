@@ -4,7 +4,7 @@
     "repository": "https://github.com/Artur-Falavinha/projeto-referencia-sistema-manutencao-angular-spring",
     "commit": "c6bf109951c06265cb6708c16676c297d0070161"
   },
-  "window": "2026-09-03",
+  "window": "2026-09-10",
   "finalFrontend": false,
   "files": [
     {
@@ -119,8 +119,8 @@
       "path": "src/app/app.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "89b4865ced8af71f2f9976af9ccb4fe9acf173bf54cf114d139a76f2bbc48e15",
-      "expectedSha256": "a7bc177e16a244e1f0f000daa64fe592cad301fe7cbffaca46d33a5fd483e792",
-      "reason": "Remove somente a expectativa obsoleta de texto que não existe no shell da própria referência e valida o router-outlet real."
+      "expectedSha256": "092431cf7aa2fce3451480a2cdd941f510ec0beb2902a86e8c2b390ffff3c74f",
+      "reason": "Adicionado provideRouter() para corrigir falha do TestBed após injeção global do spinner/app-root (RF001)."
     },
     {
       "path": "src/app/app.routes.ts",
@@ -350,7 +350,7 @@
       "path": "src/app/shared/mocks/request.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "e24963915982c09dc27f5d4cebd8260bbfea098b1b38885f46b0a8a013fc73c8",
+      "expectedSha256": "5f5849112e9b33cf2b771a5ef5843acda2d089b5b6e210e9f0374a61374094ba",
       "reason": "Fixture temporária de solicitações para o protótipo sem backend; a referência gera esses dados em runtime via localStorage.",
       "removalBy": "2026-10-08"
     },
@@ -358,7 +358,7 @@
       "path": "src/app/shared/mocks/budget.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "43c1332e09f9b198e634a1582fa117ffffcb0d2ef2c23f25632bf9873ebbcfd2",
+      "expectedSha256": "bb795942bfb14bacf996b244876a16c8e7e44805568c640d031951a8a138b7cf",
       "reason": "Fixture temporária de orçamentos para o protótipo sem backend; a referência gera esses dados em runtime via localStorage.",
       "removalBy": "2026-10-08"
     },
@@ -366,7 +366,7 @@
       "path": "src/app/shared/mocks/request-history.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "77de98cc9708d1d1124e8a32d887d0cc7fc56430505edb62a8aedd103d65ca61",
+      "expectedSha256": "08cc431309312aa1be6ae1a517f7c2928254d9fadf6a1458dc3cb4a3628b03ec",
       "reason": "Fixture temporária de histórico para o protótipo sem backend; sem arquivo equivalente na referência.",
       "removalBy": "2026-10-08"
     },
@@ -433,8 +433,8 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "0fda1fa4fdf80f801bbef83c7c3580317b0ec6cc0827413a6c5659b8ef5b7ed0",
-      "reason": "Intercepta os services literais e devolve dados simulados: CRUD de funcionários e categorias (RF017/RF018), e agora também GET /requests/client/{id}, POST /requests/client/{id}/approve, /reject e /rescue (RF005-RF009), sem comunicação com o backend. Remover quando o backend real for integrado.",
+      "expectedSha256": "287f8ec1ba71b62a6d581b0f16f039dde746861e59fd30ec6430abb75d4653f9",
+      "reason": "Intercepta os services literais e devolve dados simulados: CRUD de funcionários e categorias (RF017/RF018), e GET /requests/client/{id}, POST /requests/client/{id}/approve, /reject, /rescue e /pay (RF005-RF010), sem comunicação com o backend. Remover quando o backend real for integrado.",
       "removalBy": "2026-10-08"
     },
     {
@@ -463,7 +463,7 @@
       "path": "src/app/features/employee/employee.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "0bef3379ada9e33d45c7c653e4b124b642fa333170d915167efd151f196c7127",
-      "expectedSha256": "37632e0388b7c44b5040d6b8db5647d9809ee73489d8d966071afd08f8bd80cd",
+      "expectedSha256": "f46af09b226d75d6802ecb9221ead9f0f44fc3dbda79665ba016a52d258ee946",
       "reason": "Preserva as rotas já integradas e aponta o dashboard de funcionário para o componente literal migrado nesta etapa; as demais rotas da referência entram nas janelas futuras.",
       "removalBy": "2026-10-29"
     },
@@ -524,6 +524,12 @@
       "referenceSha256": "26aa66397ba730af010f6d8128ad4892a11485957ad27999c99d7cdb2cc77012",
       "expectedSha256": "d5626d0e2322f089cc6bc825f66cd3a7d655d58f342c81a9ef107fc60f692def",
       "reason": "Aplica a identidade Oficina técnica com tokens globais, layout responsivo e foco visível sem alterar contratos funcionais."
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
+      "expectedSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a"
     },
     {
       "path": "src/app/shared/models/reports.model.ts",
@@ -620,21 +626,21 @@
       "reason": "Adiciona somente provideRouter exigido para instanciar o SignupPageComponent com o serviço de autenticação simulado no TestBed."
     },
     {
-      "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
-      "expectedSha256": "32a31b8fe42a848d232c2deb8acad046044f7108da430e1ce4b4bf2c0cc207cf",
-      "reason": "Scaffold temporário do autocadastro: envia o payload para o AuthService simulado e mantém o retorno visual, sem backend ou ViaCEP nesta janela.",
-      "removalBy": "2026-10-08"
-    },
+  "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
+  "classification": "TEMPORARY_SCAFFOLD",
+  "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
+  "expectedSha256": "0cdb59ce886fabf807ea060b948db91ae2e7690dd990812552b9cdd4f8dde84d",
+  "reason": "Scaffold temporário do autocadastro: envia o payload para o AuthService simulado e mantém o retorno visual, sem backend ou ViaCEP nesta janela. Restaura o bloco de erro (console.error) presente na referência, que havia sido omitido na adaptação anterior.",
+  "removalBy": "2026-10-08"
+},
     {
-      "path": "src/app/core/auth/services/auth.service.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": "28f95d7a55443599aebc93d0572a0723e893a8dac0c503d55122ccca201a2b6c",
-      "expectedSha256": "3253c8eefbb31ae990cc239927bfea237d59b2e15bd2e867bd1263736ba53f27",
-      "reason": "AuthService temporário para login e cadastro simulados usando os mocks existentes. Adiciona persistência de sessão via sessionStorage (sobrevive a reload) e validação de CPF/e-mail duplicados contra MOCK_CLIENTS e MOCK_EMPLOYEES, sem HTTP real; substituir na integração REST.",
-      "removalBy": "2026-10-08"
-    },
+  "path": "src/app/core/auth/services/auth.service.ts",
+  "classification": "TEMPORARY_SCAFFOLD",
+  "referenceSha256": "28f95d7a55443599aebc93d0572a0723e893a8dac0c503d55122ccca201a2b6c",
+  "expectedSha256": "ea59f10c62d29338484aabab5cf30f0fef1772ca3c66e1d5ef0975ee6c9584bd",
+  "reason": "AuthService temporário para login e cadastro simulados usando os mocks existentes, sem HTTP real. Persiste sessão via sessionStorage e valida CPF/e-mail duplicados contra MOCK_CLIENTS e MOCK_EMPLOYEES. Navega para /login ao chamar logout(), já que o guard só reavalia em mudanças de rota e o header.component.ts (IDENTICAL) não pode conter essa navegação; substituir por autenticação real (JWT) na integração REST.",
+  "removalBy": "2026-10-08"
+},
     {
       "path": "src/app/core/auth/services/auth.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
@@ -710,6 +716,13 @@
       "referenceSha256": "a0dec54286f3957a7da85c3270ed579296ca9a469e36e9b9bc62fadb3857e7e5",
       "expectedSha256": "9175b5a9795c4be2da27b43a5e1c2af90689cae9a366dfa6f064504adad19b77",
       "reason": "Remapeia somente as cores estruturais da ilustração para a paleta Mant, preservando formas, dimensões e conteúdo do SVG."
+    },
+    {
+      "path": "src/assets/icons/warning.svg",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "85f23441e97081d8b9472d77de88f797e6ce9f7456261017b3b9d5f70f4acf9f",
+      "expectedSha256": "90413698037718dbe24ad632d7d74ca55e61735bf6f1790e812ba6c7055395ae",
+      "reason": "Asset referenciado pelo reject-modal (migrado no PR #20) e esquecido naquela janela, causando 404 no ícone do modal de rejeição; adicionado agora com a cor remapeada para --color-danger da paleta Mant, preservando forma e dimensões do SVG."
     },
     {
       "path": "src/assets/images/brazil-nativas.jpeg",
@@ -798,9 +811,35 @@
       "path": "src/app/features/client/client.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "9232fe054b14f3b2028e43c4a48638427a40e64f398943265b044908b77e55e8",
-      "reason": "Migra as rotas dashboard e request-detail/:id do client.routes.ts da referência; as rotas approve-reject-panel (órfã na própria referência, sempre usada como subcomponente) e request-detail/:id/payment pertencem à janela futura de RF010 (10/09).",
+      "expectedSha256": "6802307305ab22e5565666f026b72ee70394b67845e0b174b408345ef26b28e5",
+      "reason": "Migra as rotas dashboard, request-detail/:id e request-detail/:id/payment do client.routes.ts da referência; a rota approve-reject-panel é órfã na própria referência (sempre usada como subcomponente) e não é recriada.",
       "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/features/client/payment-panel/payment-panel.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb",
+      "expectedSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb"
+    },
+    {
+      "path": "src/app/features/client/payment-panel/payment-panel.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571",
+      "expectedSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571"
+    },
+    {
+      "path": "src/app/features/client/payment-panel/payment-panel.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "1a36a88b2c3f0d3bbf69d162ec9dbfbbbfbca9466dc9a355cdcf9332a473ff12",
+      "expectedSha256": "21ca2b666fde9bce573d34634cbd5b32fe169940106069f5bd6951d59845b4d5",
+      "reason": "Remapeia cores e espaçamentos fixos para os tokens atuais da identidade Mant, preservando seletores e estrutura (inclusive a tag body raiz do template)."
+    },
+    {
+      "path": "src/app/features/client/payment-panel/payment-panel.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "a5ad8aeb17fdd2272dfb621fd4aba6883461f8acf019f72ba4a5009cd14c6414",
+      "expectedSha256": "0dad8c7fed36c52caccf7545a2f60e8258ae902b47883f4621cfd6c75ae02096",
+      "reason": "Adiciona provideRouter([]), provideHttpClient() e provideToastr() ao TestBed: o componente injeta ActivatedRoute, MaintenanceRequestService (HTTP literal) e ToastService/ToastrService; sem esses providers o TestBed não os resolve (NullInjectorError). A suíte da referência não declarava esses providers."
     },
     {
       "path": "src/app/shared/components/reject-modal/reject-modal.component.ts",
@@ -1051,7 +1090,7 @@
       "referenceSha256": "aaade0f95dc558b3817aac2402e2f81bb6c013ddf395b42eba5ca3547188b63b",
       "expectedSha256": "03888eee13f65f56a4a83d8a0708eecbfd2514e52edd52c0c0e633fdae033bb9",
       "reason": "Expõe os contratos esperados pelas páginas literais, adapta os CPFs dos mocks ao validador literal do formulário e não persiste inclusão, edição ou exclusão antes da etapa de CRUD.",
-      "removalBy": "2026-09-17"
+      "removalBy": "2026-10-29"
     },
     {
       "path": "src/app/shared/components/warning-dialog/warning-dialog.component.css",
@@ -1087,24 +1126,95 @@
       "reason": "Guard funcional temporário que bloqueia acesso às rotas de client/employee sem sessão simulada ativa ou com perfil incompatível, redirecionando para /login ou /error-unauthorized; substituir por proteção baseada em JWT real na integração com backend.",
       "removalBy": "2026-10-08"
     },
-
-     {
-    "path": "src/app/core/services/service-item.service.ts",
-    "classification": "IDENTICAL",
-    "referenceSha256": "4e257b03166e7e2e0cb86b119ae996b0db801330ff964c7cab61313ec7cde1ed",
-    "expectedSha256": "4e257b03166e7e2e0cb86b119ae996b0db801330ff964c7cab61313ec7cde1ed"
+    {
+      "path": "src/app/core/services/budget.service.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee",
+      "referenceSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee"
     },
     {
-    "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.spec.ts",
-    "classification": "IDENTICAL",
-    "referenceSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482",
-    "expectedSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482"
+      "path": "src/app/core/services/busy.service.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "567e8aa3295a01fead9d631ec4e0b93f7203a8362428982897b9b5956325b57a",
+      "referenceSha256": "567e8aa3295a01fead9d631ec4e0b93f7203a8362428982897b9b5956325b57a"
     },
     {
-    "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
-    "classification": "IDENTICAL",
-    "referenceSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89",
-    "expectedSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89"
+      "path": "src/app/core/services/request-history.service.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "68921356a3b702f4ff78d99d96912abd959edff76c015bed420229f412896bd2",
+      "referenceSha256": "68921356a3b702f4ff78d99d96912abd959edff76c015bed420229f412896bd2"
+    },
+    {
+      "path": "src/app/core/services/service-item.service.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "4e257b03166e7e2e0cb86b119ae996b0db801330ff964c7cab61313ec7cde1ed",
+      "referenceSha256": "4e257b03166e7e2e0cb86b119ae996b0db801330ff964c7cab61313ec7cde1ed"
+    },
+    {
+      "path": "src/app/core/services/storage.service.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "6aa47ba9ff664485b92fa596185ddbc2f095e5e70c7f461a30139173d888448e",
+      "referenceSha256": "6aa47ba9ff664485b92fa596185ddbc2f095e5e70c7f461a30139173d888448e"
+    },
+    {
+      "path": "src/app/core/services/viacep.service.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "7b4a631ee14da549e3fcd8940951e35c548fdae427963697c991888d4dbe4ae8",
+      "referenceSha256": "7b4a631ee14da549e3fcd8940951e35c548fdae427963697c991888d4dbe4ae8"
+    },
+    {
+      "path": "src/app/shared/models/request-data.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "d654cc1113585b8a195363d03a4ab66213372dc288657093c52c89dd59fef5ee",
+      "referenceSha256": "d654cc1113585b8a195363d03a4ab66213372dc288657093c52c89dd59fef5ee"
+    },
+    {
+      "path": "src/app/shared/pipes/cep.pipes.pipe.spec.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "0e0bf41bfe49a6c12f24614f132a012cbfa8e4850446c4a3d927946a08414782",
+      "referenceSha256": "0e0bf41bfe49a6c12f24614f132a012cbfa8e4850446c4a3d927946a08414782"
+    },
+    {
+      "path": "src/app/shared/pipes/cep.pipes.pipe.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "e38f7cbbb6115ebc4c9ebbb5374bec4e2eb1719f1a109e449adc94df8d053545",
+      "referenceSha256": "e38f7cbbb6115ebc4c9ebbb5374bec4e2eb1719f1a109e449adc94df8d053545"
+    },
+    {
+      "path": "src/app/shared/pipes/cpf.pipes.pipe.spec.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "71710c2112b80bafce39689b2ba6eb5335085707c5b37e58147bbdc1da02bb59",
+      "referenceSha256": "71710c2112b80bafce39689b2ba6eb5335085707c5b37e58147bbdc1da02bb59"
+    },
+    {
+      "path": "src/app/shared/pipes/cpf.pipes.pipe.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "2bf1b3f9f943373edf7c107151871509ca06ca9e78e8c3c84087435e7cf90a4e",
+      "referenceSha256": "2bf1b3f9f943373edf7c107151871509ca06ca9e78e8c3c84087435e7cf90a4e"
+    },
+    {
+      "path": "src/app/shared/pipes/test-pipe.pipe.spec.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "0ac39949189d4dc6feb291764ae26dec0c3b5fce8765c060d417fd4c4b4137fc",
+      "referenceSha256": "0ac39949189d4dc6feb291764ae26dec0c3b5fce8765c060d417fd4c4b4137fc"
+    },
+    {
+      "path": "src/app/shared/pipes/test-pipe.pipe.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "989daf8f6d2d0edde78aba036b2f625eefa281e854376d9a7132b99b5c366912",
+      "referenceSha256": "989daf8f6d2d0edde78aba036b2f625eefa281e854376d9a7132b99b5c366912"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482",
+      "expectedSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482"
+    },
+    {
+      "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89",
+      "expectedSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89"
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
@@ -1124,5 +1234,5 @@
       "referenceSha256": "82f11aca8506ab25fbd3f3308766feac46bd05071e236fee96f81016758c646c",
       "expectedSha256": "82f11aca8506ab25fbd3f3308766feac46bd05071e236fee96f81016758c646c"
     }
-    ]
-  }
+  ]
+}
