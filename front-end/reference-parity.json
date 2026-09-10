@@ -119,8 +119,8 @@
       "path": "src/app/app.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "89b4865ced8af71f2f9976af9ccb4fe9acf173bf54cf114d139a76f2bbc48e15",
-      "expectedSha256": "a7bc177e16a244e1f0f000daa64fe592cad301fe7cbffaca46d33a5fd483e792",
-      "reason": "Remove somente a expectativa obsoleta de texto que não existe no shell da própria referência e valida o router-outlet real."
+      "expectedSha256": "092431cf7aa2fce3451480a2cdd941f510ec0beb2902a86e8c2b390ffff3c74f",
+      "reason": "Adicionado provideRouter() para corrigir falha do TestBed após injeção global do spinner/app-root (RF001)."
     },
     {
       "path": "src/app/app.routes.ts",
@@ -1092,6 +1092,84 @@
       "expectedSha256": "90107b0556c57844e1d0ab9f23f168ee3d85c7110b5e4120bf4b6eef806031ec",
       "reason": "Guard funcional temporário que bloqueia acesso às rotas de client/employee sem sessão simulada ativa ou com perfil incompatível, redirecionando para /login ou /error-unauthorized; substituir por proteção baseada em JWT real na integração com backend.",
       "removalBy": "2026-10-08"
+    },
+    {
+      "path": "src/app/core/services/budget.service.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee",
+      "referenceSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee"
+    },
+    {
+      "path": "src/app/core/services/busy.service.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "567e8aa3295a01fead9d631ec4e0b93f7203a8362428982897b9b5956325b57a",
+      "referenceSha256": "567e8aa3295a01fead9d631ec4e0b93f7203a8362428982897b9b5956325b57a"
+    },
+    {
+      "path": "src/app/core/services/request-history.service.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "68921356a3b702f4ff78d99d96912abd959edff76c015bed420229f412896bd2",
+      "referenceSha256": "68921356a3b702f4ff78d99d96912abd959edff76c015bed420229f412896bd2"
+    },
+    {
+      "path": "src/app/core/services/service-item.service.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "4e257b03166e7e2e0cb86b119ae996b0db801330ff964c7cab61313ec7cde1ed",
+      "referenceSha256": "4e257b03166e7e2e0cb86b119ae996b0db801330ff964c7cab61313ec7cde1ed"
+    },
+    {
+      "path": "src/app/core/services/storage.service.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "6aa47ba9ff664485b92fa596185ddbc2f095e5e70c7f461a30139173d888448e",
+      "referenceSha256": "6aa47ba9ff664485b92fa596185ddbc2f095e5e70c7f461a30139173d888448e"
+    },
+    {
+      "path": "src/app/core/services/viacep.service.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "7b4a631ee14da549e3fcd8940951e35c548fdae427963697c991888d4dbe4ae8",
+      "referenceSha256": "7b4a631ee14da549e3fcd8940951e35c548fdae427963697c991888d4dbe4ae8"
+    },
+    {
+      "path": "src/app/shared/models/request-data.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "d654cc1113585b8a195363d03a4ab66213372dc288657093c52c89dd59fef5ee",
+      "referenceSha256": "d654cc1113585b8a195363d03a4ab66213372dc288657093c52c89dd59fef5ee"
+    },
+    {
+      "path": "src/app/shared/pipes/cep.pipes.pipe.spec.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "0e0bf41bfe49a6c12f24614f132a012cbfa8e4850446c4a3d927946a08414782",
+      "referenceSha256": "0e0bf41bfe49a6c12f24614f132a012cbfa8e4850446c4a3d927946a08414782"
+    },
+    {
+      "path": "src/app/shared/pipes/cep.pipes.pipe.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "e38f7cbbb6115ebc4c9ebbb5374bec4e2eb1719f1a109e449adc94df8d053545",
+      "referenceSha256": "e38f7cbbb6115ebc4c9ebbb5374bec4e2eb1719f1a109e449adc94df8d053545"
+    },
+    {
+      "path": "src/app/shared/pipes/cpf.pipes.pipe.spec.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "71710c2112b80bafce39689b2ba6eb5335085707c5b37e58147bbdc1da02bb59",
+      "referenceSha256": "71710c2112b80bafce39689b2ba6eb5335085707c5b37e58147bbdc1da02bb59"
+    },
+    {
+      "path": "src/app/shared/pipes/cpf.pipes.pipe.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "2bf1b3f9f943373edf7c107151871509ca06ca9e78e8c3c84087435e7cf90a4e",
+      "referenceSha256": "2bf1b3f9f943373edf7c107151871509ca06ca9e78e8c3c84087435e7cf90a4e"
+    },
+    {
+      "path": "src/app/shared/pipes/test-pipe.pipe.spec.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "0ac39949189d4dc6feb291764ae26dec0c3b5fce8765c060d417fd4c4b4137fc",
+      "referenceSha256": "0ac39949189d4dc6feb291764ae26dec0c3b5fce8765c060d417fd4c4b4137fc"
+    },
+    {
+      "path": "src/app/shared/pipes/test-pipe.pipe.ts",
+      "classification": "IDENTICAL",
+      "expectedSha256": "989daf8f6d2d0edde78aba036b2f625eefa281e854376d9a7132b99b5c366912",
+      "referenceSha256": "989daf8f6d2d0edde78aba036b2f625eefa281e854376d9a7132b99b5c366912"
     }
   ]
 }
