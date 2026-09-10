@@ -1,44 +1,75 @@
-  <section class="title-section">
-    <h1 class="heading_1">Visão Geral de Solicitação</h1>
-    <div class="action-row">
-      <div class="filter-container">
-        <mat-form-field appearance="outline" class="search-field">
-          <mat-icon matPrefix>search</mat-icon>
-          <input matInput name="search" placeholder="Pesquise por equipamento, categoria, etc.">
-        </mat-form-field>
-        <button mat-flat-button color="primary" type="button" class="filter-button">
-          <mat-icon fontIcon="filter_list" aria-hidden="true"></mat-icon>
-          Filtros
-        </button>
-      </div>
-    </div>
-  </section>
-  <section class="list-section">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-          <ng-container matColumnDef="equipmentName">
-            <th mat-header-cell *matHeaderCellDef> Nome do Equipamento </th>
-            <td mat-cell *matCellDef="let element"> {{element.equipmentName}} </td>
-          </ng-container>
-          <ng-container matColumnDef="categoryName">
-            <th mat-header-cell *matHeaderCellDef> Categoria </th>
-            <td mat-cell *matCellDef="let element"> {{element.categoryName}} </td>
-          </ng-container>
-          <ng-container matColumnDef="clientName">
-            <th mat-header-cell *matHeaderCellDef> Cliente </th>
-            <td mat-cell *matCellDef="let element"> {{element.clientName}} </td>
-          </ng-container>
-          <ng-container matColumnDef="requestDate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Data </th>
-            <td mat-cell *matCellDef="let element"> {{element.requestDate | date:'dd/MM/yyyy HH:mm'}} </td>
-          </ng-container>
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef> Status </th>
-            <td mat-cell *matCellDef="let element"> 
-              <span class="status-badge label_large" [style.backgroundColor]="element.statusColor">{{ element.statusName }}</span>
-            </td>
-          </ng-container>
+<section class="title-section">
+  <h1 class="heading_1">Visão Geral de Solicitação</h1>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-  </section>
+  <div class="action-row">
+    <div class="filter-container">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          #searchInput
+          name="search"
+          placeholder="Pesquise por equipamento, categoria, etc."
+          (input)="onSearchChange(searchInput.value)"
+        >
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="button" class="filter-button" (click)="toggleFilters()">
+        <mat-icon fontIcon="filter_list" aria-hidden="true"></mat-icon>
+        Filtros
+      </button>
+
+      @if (isFiltersOpen()) {
+        <div class="filter-panel">
+          <mat-form-field appearance="outline" class="category-filter-field">
+            <mat-label>Categoria</mat-label>
+            <mat-select [value]="selectedCategory() ?? ''" (valueChange)="onCategoryChange($event)">
+              <mat-option value="">Todas</mat-option>
+              @for (category of categories(); track category) {
+                <mat-option [value]="category">{{ category }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          @if (selectedCategory()) {
+            <button mat-button type="button" (click)="clearCategoryFilter()">Limpar filtro</button>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="list-section">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+    <ng-container matColumnDef="equipmentName">
+      <th mat-header-cell *matHeaderCellDef>Nome do Equipamento</th>
+      <td mat-cell *matCellDef="let element">{{ element.equipmentName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="categoryName">
+      <th mat-header-cell *matHeaderCellDef>Categoria</th>
+      <td mat-cell *matCellDef="let element">{{ element.categoryName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="clientName">
+      <th mat-header-cell *matHeaderCellDef>Cliente</th>
+      <td mat-cell *matCellDef="let element">{{ element.clientName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="requestDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+      <td mat-cell *matCellDef="let element">{{ element.requestDate | date:'dd/MM/yyyy HH:mm' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="status-badge label_large" [style.backgroundColor]="element.statusColor">{{ element.statusName }}</span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</section>

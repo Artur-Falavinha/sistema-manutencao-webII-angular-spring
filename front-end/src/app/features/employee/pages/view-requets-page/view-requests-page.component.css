@@ -14,11 +14,31 @@
 
 .action-row { justify-content: space-between; }
 
+.filter-container { position: relative; }
+
 .search-field {
   flex: 0 1 46ch;
   inline-size: 46ch;
   max-inline-size: 46ch;
 }
+
+.filter-panel {
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-end: 0;
+  z-index: 10;
+  display: grid;
+  inline-size: min(100%, 24ch);
+  gap: 0.75rem;
+  margin-block-start: 0.5rem;
+  padding: 1rem;
+  border: 0.0625rem solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 15%);
+}
+
+.category-filter-field { inline-size: 100%; }
 
 .list-section {
   width: min(100%, 90rem);
@@ -32,6 +52,8 @@
   .action-row,
   .filter-container { align-items: stretch; flex-direction: column; }
   .search-field,
-  .filter-button { inline-size: 100%; }
+  .filter-button,
+  .filter-panel { inline-size: 100%; }
   .search-field { max-inline-size: 100%; }
+  .filter-panel { position: static; }
 }
