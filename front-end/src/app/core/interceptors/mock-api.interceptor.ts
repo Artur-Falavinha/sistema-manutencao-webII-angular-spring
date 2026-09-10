@@ -22,7 +22,7 @@ import { ClientRequestDetailDTO, MaintenanceRequestCreateDTO, MaintenanceRequest
  * e devolve dados simulados no shape real dos DTOs. Nenhum desses services
  * foi alterado — a "troca de motor" acontece só aqui.
  *
- * Rotas cobertas hoje (RF011/RF012, visão funcionário; RF001, RF003-RF009, visão cliente;
+ * Rotas cobertas hoje (RF011/RF012, visão funcionário; RF001, RF003-RF010, visão cliente;
  * RF017/RF018, CRUD simulado de categorias e funcionários):
  *   GET  /status-enum                      -> MOCK_STATUSES
  *   GET  /requests/employee                -> MOCK_EMPLOYEE_REQUESTS
@@ -32,6 +32,7 @@ import { ClientRequestDetailDTO, MaintenanceRequestCreateDTO, MaintenanceRequest
  *   POST /requests/client/{id}/approve     -> muda o estado para APROVADA
  *   POST /requests/client/{id}/reject      -> muda o estado para REJEITADA, grava o motivo
  *   POST /requests/client/{id}/rescue      -> muda o estado de REJEITADA para APROVADA
+ *   POST /requests/client/{id}/pay         -> muda o estado para PAGA
  *   GET  /categories                       -> lista simulada de categorias
  *   POST/PUT/DELETE /categories            -> CRUD simulado de categorias
  *   GET/POST/PUT/DELETE /employees         -> CRUD simulado de funcionários
@@ -103,6 +104,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
   const approveMatch = req.url.match(/\/requests\/client\/(\d+)\/approve$/);
   const rejectMatch = req.url.match(/\/requests\/client\/(\d+)\/reject$/);
   const rescueMatch = req.url.match(/\/requests\/client\/(\d+)\/rescue$/);
+  const payMatch = req.url.match(/\/requests\/client\/(\d+)\/pay$/);
 
   if (req.method === 'GET') {
     if (req.url.endsWith('/status-enum')) {
@@ -180,6 +182,14 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     if (rescueMatch) {
       const id = Number(rescueMatch[1]);
       updateRequestStatus(id, 'APROVADA');
+      const request = mockRequests.find((r) => r.id === id);
+
+      return of(new HttpResponse({ status: 200, body: request ? toResponseDTO(request) : null })).pipe(delay(150));
+    }
+
+    if (payMatch) {
+      const id = Number(payMatch[1]);
+      updateRequestStatus(id, 'PAGA');
       const request = mockRequests.find((r) => r.id === id);
 
       return of(new HttpResponse({ status: 200, body: request ? toResponseDTO(request) : null })).pipe(delay(150));
