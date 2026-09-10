@@ -626,13 +626,13 @@
       "reason": "Adiciona somente provideRouter exigido para instanciar o SignupPageComponent com o serviço de autenticação simulado no TestBed."
     },
     {
-      "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
-      "expectedSha256": "32a31b8fe42a848d232c2deb8acad046044f7108da430e1ce4b4bf2c0cc207cf",
-      "reason": "Scaffold temporário do autocadastro: envia o payload para o AuthService simulado e mantém o retorno visual, sem backend ou ViaCEP nesta janela.",
-      "removalBy": "2026-10-08"
-    },
+  "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
+  "classification": "TEMPORARY_SCAFFOLD",
+  "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
+  "expectedSha256": "0cdb59ce886fabf807ea060b948db91ae2e7690dd990812552b9cdd4f8dde84d",
+  "reason": "Scaffold temporário do autocadastro: envia o payload para o AuthService simulado e mantém o retorno visual, sem backend ou ViaCEP nesta janela. Restaura o bloco de erro (console.error) presente na referência, que havia sido omitido na adaptação anterior.",
+  "removalBy": "2026-10-08"
+},
     {
       "path": "src/app/core/auth/services/auth.service.ts",
       "classification": "TEMPORARY_SCAFFOLD",

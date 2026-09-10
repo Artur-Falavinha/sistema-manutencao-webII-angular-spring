@@ -79,10 +79,13 @@ export class SignupPageComponent {
       };
 
       this.authService.signup(requestData).subscribe({
-        next: () => {
-          this.showModal = true;
-        },
-      });
+  next: () => {
+    this.showModal = true;
+  },
+  error: (err) => {
+    console.error('Erro no cadastro:', err);
+  },
+});
     } else {
       this.firstFormGroup.markAllAsTouched();
       this.secondFormGroup.markAllAsTouched();
