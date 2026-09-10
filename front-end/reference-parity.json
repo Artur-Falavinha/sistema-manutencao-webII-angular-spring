@@ -350,7 +350,7 @@
       "path": "src/app/shared/mocks/request.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "e24963915982c09dc27f5d4cebd8260bbfea098b1b38885f46b0a8a013fc73c8",
+      "expectedSha256": "5f5849112e9b33cf2b771a5ef5843acda2d089b5b6e210e9f0374a61374094ba",
       "reason": "Fixture temporária de solicitações para o protótipo sem backend; a referência gera esses dados em runtime via localStorage.",
       "removalBy": "2026-10-08"
     },
@@ -358,7 +358,7 @@
       "path": "src/app/shared/mocks/budget.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "43c1332e09f9b198e634a1582fa117ffffcb0d2ef2c23f25632bf9873ebbcfd2",
+      "expectedSha256": "bb795942bfb14bacf996b244876a16c8e7e44805568c640d031951a8a138b7cf",
       "reason": "Fixture temporária de orçamentos para o protótipo sem backend; a referência gera esses dados em runtime via localStorage.",
       "removalBy": "2026-10-08"
     },
@@ -366,7 +366,7 @@
       "path": "src/app/shared/mocks/request-history.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "77de98cc9708d1d1124e8a32d887d0cc7fc56430505edb62a8aedd103d65ca61",
+      "expectedSha256": "08cc431309312aa1be6ae1a517f7c2928254d9fadf6a1458dc3cb4a3628b03ec",
       "reason": "Fixture temporária de histórico para o protótipo sem backend; sem arquivo equivalente na referência.",
       "removalBy": "2026-10-08"
     },
@@ -1057,7 +1057,7 @@
       "referenceSha256": "aaade0f95dc558b3817aac2402e2f81bb6c013ddf395b42eba5ca3547188b63b",
       "expectedSha256": "03888eee13f65f56a4a83d8a0708eecbfd2514e52edd52c0c0e633fdae033bb9",
       "reason": "Expõe os contratos esperados pelas páginas literais, adapta os CPFs dos mocks ao validador literal do formulário e não persiste inclusão, edição ou exclusão antes da etapa de CRUD.",
-      "removalBy": "2026-09-03"
+      "removalBy": "2026-10-29"
     },
     {
       "path": "src/app/shared/components/warning-dialog/warning-dialog.component.css",
