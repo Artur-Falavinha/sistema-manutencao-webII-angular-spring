@@ -5,12 +5,16 @@ import { MOCK_CATEGORIES } from '../../shared/mocks/category.mock';
 import { MOCK_EMPLOYEES } from '../../shared/mocks/employee.mock';
 import { Category } from '../../shared/models/category';
 import { Employee } from '../../shared/models/employee';
-import { mockApiInterceptor } from './mock-api.interceptor';
+import { mockApiInterceptor, resetMockData } from './mock-api.interceptor';
 
 describe('mockApiInterceptor', () => {
   const next = () => {
     throw new Error('A rota deveria ser atendida pelo mock.');
   };
+
+  beforeEach(() => {
+    resetMockData();
+  });
 
   it('returns the local category catalog without a backend', async () => {
     const request = new HttpRequest('GET', 'http://localhost:8080/api/categories');

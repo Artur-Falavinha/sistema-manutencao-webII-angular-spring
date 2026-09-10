@@ -39,6 +39,12 @@ let mockRequests: Request[] = [...MOCK_REQUESTS];
 let mockCategories: Category[] = MOCK_CATEGORIES.map((category) => ({ ...category }));
 let mockEmployees: Employee[] = MOCK_EMPLOYEES.map((employee) => ({ ...employee }));
 
+export function resetMockData(): void {
+  mockRequests = [...MOCK_REQUESTS];
+  mockCategories = MOCK_CATEGORIES.map((category) => ({ ...category }));
+  mockEmployees = MOCK_EMPLOYEES.map((employee) => ({ ...employee }));
+}
+
 function toResponseDTO(request: Request): MaintenanceRequestResponseDTO {
   const status = MOCK_STATUSES.find((s) => s.id === request.statusId);
   const category = MOCK_CATEGORIES.find((c) => c.id === request.categoryId);

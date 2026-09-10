@@ -127,7 +127,7 @@
       "referenceSha256": null,
       "expectedSha256": "ff7a3b1fd8034477f38c887908c81a1bf292abf40fda6677c596d624910b8f65",
       "reason": "Scaffold temporário do shell: raiz para login, login/signup/client/employee sem guards e páginas de erro até a integração da autenticação.",
-      "removalBy": "2026-09-03"
+      "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/core/layout/header/header.component.ts",
@@ -430,18 +430,18 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "cd243ac567211615e3f8a28033b1d2ae540caa0bbaa6f9f2ae5424f156f5f333",
+      "expectedSha256": "c32907eb32f8ca0231aff80382c4fbb9b036fe76489fc886e350acbb4d171ea7",
       "reason": "Intercepta os services literais e devolve dados simulados, incluindo CRUD de funcionários e categorias, sem comunicação com o backend. Remover quando o backend real for integrado.",
       "removalBy": "2026-10-08"
     },
-      {
-        "path": "src/app/core/interceptors/mock-api.interceptor.spec.ts",
-        "classification": "TECHNICAL_EXCEPTION",
-        "referenceSha256": null,
-        "expectedSha256": "9991f1175ef5612e0458a28bccaa67a0de32ce4aa88da54f4d6938ec18215f1e",
-        "reason": "Testes do CRUD simulado usado pelo protótipo sem backend."
-      },
-      {
+    {
+      "path": "src/app/core/interceptors/mock-api.interceptor.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "9d9e1a7d921d369365978b66641b33993f2c614458fe8a9dd8cfc7ccb2a5b590",
+      "reason": "Testes do CRUD simulado usado pelo protótipo sem backend."
+    },
+    {
       "path": "src/app/shared/mocks/maintenance-request.mock.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
@@ -801,7 +801,7 @@
       "path": "src/app/features/client/client.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "92eb21145951f879d20d662a09460e1d00416f643eecd7162990b4704b0f2cfb",
+      "expectedSha256": "d38e77495d5fb7475fc9875afb2a240f1128d7fed3032b72cb531f0af6651104",
       "reason": "Migra apenas a rota dashboard do client.routes.ts da referência; as rotas request-detail/:id, approve-reject-panel e request-detail/:id/payment pertencem a janelas futuras (RF005-RF010) e dependem de core/auth, que ainda não existe.",
       "removalBy": "2026-10-29"
     },
@@ -926,7 +926,7 @@
       "referenceSha256": "aaade0f95dc558b3817aac2402e2f81bb6c013ddf395b42eba5ca3547188b63b",
       "expectedSha256": "03888eee13f65f56a4a83d8a0708eecbfd2514e52edd52c0c0e633fdae033bb9",
       "reason": "Expõe os contratos esperados pelas páginas literais, adapta os CPFs dos mocks ao validador literal do formulário e não persiste inclusão, edição ou exclusão antes da etapa de CRUD.",
-      "removalBy": "2026-09-03"
+      "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/shared/components/warning-dialog/warning-dialog.component.css",
@@ -953,6 +953,141 @@
       "classification": "IDENTICAL",
       "referenceSha256": "0e7ac1c02b04b016d668205ddd1865d53cb1d35aeb6c0bce15ad81dc8e0b0c72",
       "expectedSha256": "0e7ac1c02b04b016d668205ddd1865d53cb1d35aeb6c0bce15ad81dc8e0b0c72"
+    },
+    {
+      "path": "src/app/shared/models/request-data.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "d654cc1113585b8a195363d03a4ab66213372dc288657093c52c89dd59fef5ee",
+      "expectedSha256": "d654cc1113585b8a195363d03a4ab66213372dc288657093c52c89dd59fef5ee"
+    },
+    {
+      "path": "src/app/core/services/budget.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee",
+      "expectedSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee"
+    },
+    {
+      "path": "src/app/shared/components/reject-modal/reject-modal.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "080e0f5577a0fd4ecbf3985fa26d6b4ebf70bd6a4dc01ea53002df406d131aa9",
+      "expectedSha256": "080e0f5577a0fd4ecbf3985fa26d6b4ebf70bd6a4dc01ea53002df406d131aa9"
+    },
+    {
+      "path": "src/app/shared/components/reject-modal/reject-modal.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a9c24d40f51823405ee15d645439b2b3d3cc5d8dd5ddf5aa56096d9fc1eeb678",
+      "expectedSha256": "a9c24d40f51823405ee15d645439b2b3d3cc5d8dd5ddf5aa56096d9fc1eeb678"
+    },
+    {
+      "path": "src/app/shared/components/reject-modal/reject-modal.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "6cf65748fb62396d39886bd71d7b78552c4689472d6835251fb1874678f02460",
+      "expectedSha256": "6cf65748fb62396d39886bd71d7b78552c4689472d6835251fb1874678f02460"
+    },
+    {
+      "path": "src/app/shared/components/reject-modal/reject-modal.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "27636d420d4d0f45ab0e66bdd85f743e2d98ff3420cb3b94e8b08d6d48da3f11",
+      "expectedSha256": "27636d420d4d0f45ab0e66bdd85f743e2d98ff3420cb3b94e8b08d6d48da3f11"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/request-detail-page.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "8088eda3db811cf84d06ba9ee006ec6d71c176d4577096c9ba06e730625180dd",
+      "expectedSha256": "8088eda3db811cf84d06ba9ee006ec6d71c176d4577096c9ba06e730625180dd"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/request-detail-page.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "ce84c6fc063de0e0c5b985ab4e1f8be9562762fc6fceb724209327a7882f76a5",
+      "expectedSha256": "ce84c6fc063de0e0c5b985ab4e1f8be9562762fc6fceb724209327a7882f76a5"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/request-detail-page.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "3be93b50209b5fddf05032d5dcfcb0f93609d5b0cd3d6bd63b9324dc6629024b",
+      "expectedSha256": "23329aae7de9a1a956d9546233eb2ec8fe5e26a7b8a9ff256a76eb5e32a0fb0c",
+      "reason": "Configura explicitamente os providers necessários (provideRouter, provideHttpClient e/ou provideToastr) no TestBed do componente standalone."
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/request-detail-page.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a263329f269fd6b28c9a2d214da29c02dcadc37c648f585d5e071f5a3e6053da",
+      "expectedSha256": "a263329f269fd6b28c9a2d214da29c02dcadc37c648f585d5e071f5a3e6053da"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "b16c7d6612f5ff4884b7ca6c2f46fc308201d2b79267444b14db32143bb14903",
+      "expectedSha256": "b16c7d6612f5ff4884b7ca6c2f46fc308201d2b79267444b14db32143bb14903"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "7bea38570d91d0b433c5274bfa8f7a8acd717c0638b9344c8ba170363f144723",
+      "expectedSha256": "7bea38570d91d0b433c5274bfa8f7a8acd717c0638b9344c8ba170363f144723"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "ff642eece19e864536a5237a17699d9898e47ca0bb50db966062ccf2e5db0388",
+      "expectedSha256": "774c56804e495211ce6c0ce5b1d84a36f5d92d24297756ab0f212b2c68fdd9f0",
+      "reason": "Configura explicitamente os providers necessários (provideRouter, provideHttpClient e/ou provideToastr) no TestBed do componente standalone."
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "7dc8cc31f469aae59f8953c415043833ac873818a24b7d12fbbbf281c55322c6",
+      "expectedSha256": "7dc8cc31f469aae59f8953c415043833ac873818a24b7d12fbbbf281c55322c6"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/request-description/request-description.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "b6e170b3cbddeed555fb02020a3348ab99da8310cca6cf7d738186142a283e79",
+      "expectedSha256": "b6e170b3cbddeed555fb02020a3348ab99da8310cca6cf7d738186142a283e79"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/request-description/request-description.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "c4e0f28692e27fcf2174e9948859c8f3be17f7ae555cbffc1eae5abc0fb77677",
+      "expectedSha256": "c4e0f28692e27fcf2174e9948859c8f3be17f7ae555cbffc1eae5abc0fb77677"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/request-description/request-description.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "dc35208f4152183e58890708f7645456cfd4ee24ad193ff9277875348d32e7ab",
+      "expectedSha256": "1a887204550f4d85d8a6dc3b8215a98d48e4c84647a43b0fa84ca57ad278bea4",
+      "reason": "Configura explicitamente os providers necessários (provideRouter, provideHttpClient e/ou provideToastr) no TestBed do componente standalone."
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/request-description/request-description.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "f6f24ee9fc8328368213787ac040229f13f6a6b598528b82f34adab57ad19e1f",
+      "expectedSha256": "f6f24ee9fc8328368213787ac040229f13f6a6b598528b82f34adab57ad19e1f"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/request-history/request-history.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "341cf6bf6fce29907322155510db4f3f427cdc394f5c4825f1add2eb03acc410",
+      "expectedSha256": "341cf6bf6fce29907322155510db4f3f427cdc394f5c4825f1add2eb03acc410"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/request-history/request-history.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "3448860c3a58e879a6b9bc46e1d159fde2fa27bd58fac17c5f1db8ee01b840fd",
+      "expectedSha256": "3448860c3a58e879a6b9bc46e1d159fde2fa27bd58fac17c5f1db8ee01b840fd"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/request-history/request-history.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "cb6391aa75ce670f86e2c0095bebe1f6f37c3e9f07cb33d2195fb8f70ea9c61e",
+      "expectedSha256": "cb6391aa75ce670f86e2c0095bebe1f6f37c3e9f07cb33d2195fb8f70ea9c61e"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/request-history/request-history.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "2a581f4e5300a6970ee99707a65e337825b2b3cddc7e8e4ff21114363f085e04",
+      "expectedSha256": "2a581f4e5300a6970ee99707a65e337825b2b3cddc7e8e4ff21114363f085e04"
     }
   ]
 }
