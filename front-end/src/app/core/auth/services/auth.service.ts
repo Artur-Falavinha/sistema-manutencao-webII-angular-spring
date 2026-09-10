@@ -1,5 +1,6 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, map, Observable, of, tap, throwError } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject, map, Observable, of, tap, throwError } from 'rxjs';
 import { MOCK_CLIENTS } from "../../../shared/mocks/client.mock";
 import { MOCK_EMPLOYEES } from "../../../shared/mocks/employee.mock";
 import { RegisterRequest } from "../../../shared/models/register-request";
@@ -35,7 +36,7 @@ export class AuthService {
   get currentUserValue(): UserState {
     return this.currentUserSubject.value;
   }
-
+constructor(private router: Router) {}
   login(email: string, password: string): Observable<UserState> {
     const user = this.findMockUser(email, password);
 
@@ -78,9 +79,10 @@ export class AuthService {
     return of(undefined);
   }
 
-  logout(): void {
+    logout(): void {
     this.currentUserSubject.next(null);
     this.persistToStorage(null);
+    this.router.navigate(["/login"]);
   }
 
   private findMockUser(email: string, password: string): UserState {
