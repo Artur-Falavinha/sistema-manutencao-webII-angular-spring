@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { NewCategoryModalComponent } from './new-category-modal.component';
 
@@ -8,7 +9,11 @@ describe('NewCategoryModalComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NewCategoryModalComponent]
+      imports: [NewCategoryModalComponent],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: null },
+        { provide: MatDialogRef, useValue: { close: () => undefined } },
+      ],
     })
     .compileComponents();
 

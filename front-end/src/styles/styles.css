@@ -188,6 +188,15 @@ button:disabled,
 }
 
 .mat-mdc-row:hover { background: var(--color-row-hover); }
+
+mat-form-field .mat-mdc-form-field-icon-prefix,
+[dir='rtl'] mat-form-field .mat-mdc-form-field-icon-suffix {
+  padding: 0;
+}
+
+mat-form-field .mat-mdc-form-field-subscript-wrapper:has(.mat-mdc-form-field-hint-spacer:only-child) {
+  display: none;
+}
 .mat-sort-header-container { justify-content: flex-start; }
 
 .mat-step-icon-selected,

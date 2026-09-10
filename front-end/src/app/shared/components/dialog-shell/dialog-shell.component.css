@@ -1,0 +1,35 @@
+:host { display: block; }
+
+.dialog-shell__content {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  max-height: 75svh;
+  padding: 1.5rem;
+}
+
+.dialog-shell__title {
+  margin: 0;
+  color: var(--color-heading-default);
+}
+
+.dialog-shell__description {
+  margin: 0.5rem 0 0;
+  color: var(--color-text-secondary);
+}
+
+.dialog-shell__body { min-width: 0; }
+
+.dialog-shell__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 1.5rem;
+  border-top: 0.0625rem solid var(--color-line);
+}
+
+@media (max-width: 40rem) {
+  .dialog-shell__content,
+  .dialog-shell__actions { padding: 1rem; }
+}

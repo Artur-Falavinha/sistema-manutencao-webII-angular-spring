@@ -1,6 +1,6 @@
 <div class="header-category">
   <h1 class="heading_1">Categorias de Equipamento</h1>
-  <button class="button-primary label_large btn-new-category" (click)="openNewCategoryModal()">
+  <button mat-flat-button color="primary" type="button" class="btn-new-category" (click)="openNewCategoryModal()">
     <mat-icon>add</mat-icon>
     Nova categoria
   </button>
@@ -61,11 +61,3 @@
 <p *ngIf="categories.length === 0" class="no-categories">
   Nenhuma categoria cadastrada.
 </p>
-
-<app-new-category-modal
-  *ngIf="isModalShowing"
-  [editingCategory]="selectedCategory"
-  (submitted)="onModalSubmit($event)"
-  (closeModal)="onModalClose()"
->
-</app-new-category-modal>

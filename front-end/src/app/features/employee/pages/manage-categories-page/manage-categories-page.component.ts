@@ -4,20 +4,19 @@ import { CategoryService } from '../../services/category.service';
 import { Category } from '../../../../shared/models/category';
 import { NewCategoryModalComponent } from '../../components/new-category-modal/new-category-modal.component';
 import { MatIcon } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { WarningDialogComponent } from '../../../../shared/components/warning-dialog/warning-dialog.component';
 import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-manage-categories-page',
-  imports: [CommonModule, NewCategoryModalComponent, MatIcon],
+  imports: [CommonModule, MatIcon, MatButtonModule],
   templateUrl: './manage-categories-page.component.html',
   styleUrls: ['./manage-categories-page.component.css'],
 })
 export class ManageCategoriesPageComponent implements OnInit {
   categories: Category[] = [];
-  isModalShowing = false;
-  selectedCategory: Category | null = null;
 
   constructor(private categoryService: CategoryService, private dialog: MatDialog, private toast: ToastService) {}
 
@@ -38,21 +37,33 @@ export class ManageCategoriesPageComponent implements OnInit {
   }
 
   openNewCategoryModal(): void {
-    this.selectedCategory = null;
-    this.isModalShowing = true;
+    this.openCategoryModal();
   }
 
   editCategory(category: Category): void {
-    this.selectedCategory = { ...category };
-    this.isModalShowing = true;
+    this.openCategoryModal(category);
   }
 
-  onModalSubmit(category: Category): void {
-    if (this.selectedCategory) {
+  private openCategoryModal(category?: Category): void {
+    const isEditing = Boolean(category);
+    const dialogRef = this.dialog.open(NewCategoryModalComponent, {
+      width: '34rem',
+      maxWidth: 'calc(100vw - 2rem)',
+      data: category ?? null,
+    });
+
+    dialogRef.afterClosed().subscribe((result: Category | undefined) => {
+      if (result) {
+        this.onModalSubmit(result, isEditing);
+      }
+    });
+  }
+
+  private onModalSubmit(category: Category, isEditing: boolean): void {
+    if (isEditing) {
       this.categoryService.updateCategory(category).subscribe({
         next: () => {
           this.getAllCategories();
-          this.isModalShowing = false;
           this.toast.success('Sucesso', 'Categoria atualizada com sucesso');
         },
         error: (err: unknown) => {
@@ -64,7 +75,6 @@ export class ManageCategoriesPageComponent implements OnInit {
       this.categoryService.addCategory(category).subscribe({
         next: () => {
           this.getAllCategories();
-          this.isModalShowing = false;
           this.toast.success('Sucesso', 'Categoria adicionada com sucesso');
         },
         error: (err: unknown) => {
@@ -73,10 +83,6 @@ export class ManageCategoriesPageComponent implements OnInit {
         }
       });
     }
-  }
-
-  onModalClose(): void {
-    this.isModalShowing = false;
   }
 
   deleteCategory(id: number): void {

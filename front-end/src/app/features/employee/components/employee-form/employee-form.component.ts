@@ -17,13 +17,14 @@ import { EmployeService } from '../../services/employe.service';
 import { Employee } from '../../../../shared/models/employee';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { provideNgxMask, NgxMaskDirective } from 'ngx-mask';
+import { DialogShellComponent } from '../../../../shared/components/dialog-shell/dialog-shell.component';
 
 @Component({
   selector: 'app-employee-form',
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatDialogModule,
+    DialogShellComponent,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
