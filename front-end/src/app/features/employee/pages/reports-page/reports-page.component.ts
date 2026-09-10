@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { ReportService } from '../../../../core/services/report.service';
 import { RevenueByCategory, RevenueByDate } from '../../../../shared/models/reports.model';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -20,6 +21,7 @@ import { MatPaginator } from '@angular/material/paginator';
   selector: 'app-reports-page',
   imports: [
     MatIcon,
+    MatButtonModule,
     MatFormFieldModule,
     MatDatepickerModule,
     MatInputModule,
