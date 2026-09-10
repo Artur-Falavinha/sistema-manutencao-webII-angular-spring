@@ -1,0 +1,175 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: var(--color-page);
+}
+
+.card {
+  display: flex;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.card-left {
+  width: 42.75rem;
+  padding: var(--spacing-lg) var(--spacing-md);
+  background: var(--color-background-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.back-link {
+  color: var(--color-primary-default);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  display: inline-block;
+  margin-bottom: var(--spacing-xs);
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.info-section {
+  margin-bottom: var(--spacing-md);
+}
+
+.info-item {
+  margin-bottom: var(--spacing-xs);
+}
+
+.info-item h3,
+.info-section h3 {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 0.375rem;
+}
+
+.info-item p,
+.info-section p {
+  color: var(--color-text-default);
+  font-size: var(--font-size-default);
+  margin: 0;
+}
+
+.payment-item {
+  display: flex;
+  flex-direction: column;
+  margin: var(--spacing-2xs) 0;
+}
+
+.payment-item.total {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-2xs);
+  border-top: 0.125rem solid var(--color-line);
+}
+
+.payment-title {
+  font-size: var(--font-size-xl);
+  color: var(--color-text-default);
+  margin: 0;
+}
+
+.payment-title-total {
+  font-size: var(--font-size-3xl);
+  color: var(--color-text-default);
+  margin: 0;
+}
+
+.payment-desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.payment-price {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-dark);
+}
+
+.payment-price-total {
+  font-size: var(--font-size-6xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-dark);
+}
+
+.card-right {
+  width: 39.1875rem;
+  background: var(--color-page);
+  padding: 4.75rem 4.4375rem;
+}
+
+.card-right h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-heading-subtle);
+}
+
+.payment-methods {
+  display: flex;
+  gap: var(--spacing-xs);
+  margin: var(--spacing-md) 0;
+}
+
+.pay-btn {
+  padding: var(--spacing-2xs) var(--spacing-md);
+  border: 0.125rem solid var(--color-primary-default);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  font-size: var(--font-size-default);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-primary-default);
+  transition: all 0.3s;
+}
+
+.pay-btn:hover {
+  background: var(--color-primary-lightest);
+}
+
+.pay-btn.selected {
+  background: var(--color-primary-default);
+  color: var(--color-surface);
+}
+
+.pay-now {
+  width: 100%;
+  padding: var(--spacing-xs);
+  background: var(--color-primary-default);
+  color: var(--color-surface);
+  font-size: var(--font-size-lg);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-weight: var(--font-weight-bold);
+  transition: background 0.3s;
+}
+
+.pay-now:hover {
+  background: var(--color-primary-dark);
+}
+
+@media (max-width: 48rem) {
+  .card {
+    flex-direction: column;
+  }
+
+  .card-left,
+  .card-right {
+    width: 100%;
+  }
+
+  .card-right {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+}
