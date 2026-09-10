@@ -4,7 +4,7 @@
     "repository": "https://github.com/Artur-Falavinha/projeto-referencia-sistema-manutencao-angular-spring",
     "commit": "c6bf109951c06265cb6708c16676c297d0070161"
   },
-  "window": "2026-09-03",
+  "window": "2026-09-10",
   "finalFrontend": false,
   "files": [
     {
@@ -433,8 +433,8 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "0fda1fa4fdf80f801bbef83c7c3580317b0ec6cc0827413a6c5659b8ef5b7ed0",
-      "reason": "Intercepta os services literais e devolve dados simulados: CRUD de funcionários e categorias (RF017/RF018), e agora também GET /requests/client/{id}, POST /requests/client/{id}/approve, /reject e /rescue (RF005-RF009), sem comunicação com o backend. Remover quando o backend real for integrado.",
+      "expectedSha256": "287f8ec1ba71b62a6d581b0f16f039dde746861e59fd30ec6430abb75d4653f9",
+      "reason": "Intercepta os services literais e devolve dados simulados: CRUD de funcionários e categorias (RF017/RF018), e GET /requests/client/{id}, POST /requests/client/{id}/approve, /reject, /rescue e /pay (RF005-RF010), sem comunicação com o backend. Remover quando o backend real for integrado.",
       "removalBy": "2026-10-08"
     },
     {
@@ -718,6 +718,13 @@
       "reason": "Remapeia somente as cores estruturais da ilustração para a paleta Mant, preservando formas, dimensões e conteúdo do SVG."
     },
     {
+      "path": "src/assets/icons/warning.svg",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "85f23441e97081d8b9472d77de88f797e6ce9f7456261017b3b9d5f70f4acf9f",
+      "expectedSha256": "90413698037718dbe24ad632d7d74ca55e61735bf6f1790e812ba6c7055395ae",
+      "reason": "Asset referenciado pelo reject-modal (migrado no PR #20) e esquecido naquela janela, causando 404 no ícone do modal de rejeição; adicionado agora com a cor remapeada para --color-danger da paleta Mant, preservando forma e dimensões do SVG."
+    },
+    {
       "path": "src/assets/images/brazil-nativas.jpeg",
       "classification": "IDENTICAL",
       "referenceSha256": "890c610df181ebcc70405655d8d2bfbf47c3ec2eba587852562edb918772437f",
@@ -804,9 +811,35 @@
       "path": "src/app/features/client/client.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "9232fe054b14f3b2028e43c4a48638427a40e64f398943265b044908b77e55e8",
-      "reason": "Migra as rotas dashboard e request-detail/:id do client.routes.ts da referência; as rotas approve-reject-panel (órfã na própria referência, sempre usada como subcomponente) e request-detail/:id/payment pertencem à janela futura de RF010 (10/09).",
+      "expectedSha256": "6802307305ab22e5565666f026b72ee70394b67845e0b174b408345ef26b28e5",
+      "reason": "Migra as rotas dashboard, request-detail/:id e request-detail/:id/payment do client.routes.ts da referência; a rota approve-reject-panel é órfã na própria referência (sempre usada como subcomponente) e não é recriada.",
       "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/features/client/payment-panel/payment-panel.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb",
+      "expectedSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb"
+    },
+    {
+      "path": "src/app/features/client/payment-panel/payment-panel.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571",
+      "expectedSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571"
+    },
+    {
+      "path": "src/app/features/client/payment-panel/payment-panel.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "1a36a88b2c3f0d3bbf69d162ec9dbfbbbfbca9466dc9a355cdcf9332a473ff12",
+      "expectedSha256": "21ca2b666fde9bce573d34634cbd5b32fe169940106069f5bd6951d59845b4d5",
+      "reason": "Remapeia cores e espaçamentos fixos para os tokens atuais da identidade Mant, preservando seletores e estrutura (inclusive a tag body raiz do template)."
+    },
+    {
+      "path": "src/app/features/client/payment-panel/payment-panel.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "a5ad8aeb17fdd2272dfb621fd4aba6883461f8acf019f72ba4a5009cd14c6414",
+      "expectedSha256": "0dad8c7fed36c52caccf7545a2f60e8258ae902b47883f4621cfd6c75ae02096",
+      "reason": "Adiciona provideRouter([]), provideHttpClient() e provideToastr() ao TestBed: o componente injeta ActivatedRoute, MaintenanceRequestService (HTTP literal) e ToastService/ToastrService; sem esses providers o TestBed não os resolve (NullInjectorError). A suíte da referência não declarava esses providers."
     },
     {
       "path": "src/app/shared/components/reject-modal/reject-modal.component.ts",
