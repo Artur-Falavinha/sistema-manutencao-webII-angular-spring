@@ -1,29 +1,24 @@
-import { Component, inject, computed, ViewChild, effect } from '@angular/core';
+import { Component, inject, ViewChild, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InputPrimaryComponent } from '../../../../shared/components/input-primary/input-primary.component';
 import { MatIcon } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { StatusService } from '../../../../core/services/status.service';
-import { Status } from '../../../../shared/models/status';
 import { MaintenanceRequestResponseDTO as Request } from '../../../../shared/models/maintenance-request.models';
-import { StatusColumnComponent } from './components/status-column/status-column.component';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MaintenanceRequestService } from '../../../../core/services/maintenance-request.service';
 import { MatSort } from '@angular/material/sort';
 import { MatSortModule } from '@angular/material/sort';
 
-interface GroupedRequests {
-  status: Status;
-  requests: Request[];
-}
-
 @Component({
   selector: 'app-view-requests-page',
   imports: [
-    InputPrimaryComponent,
     MatIcon,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
     CommonModule,
-    StatusColumnComponent,
     MatTableModule,
     MatSortModule,
   ],
@@ -31,38 +26,17 @@ interface GroupedRequests {
   styleUrl: './view-requests-page.component.css',
 })
 export class ViewRequestsPageComponent {
-  isKanbanView = true;
-
   @ViewChild(MatSort) sort!: MatSort;
 
-  private statusService = inject(StatusService);
   private requestService = inject(MaintenanceRequestService);
 
-  statuses = toSignal(this.statusService.getAll(), { initialValue: [] as Status[] });
   requests = toSignal(this.requestService.getAllEmployeeRequests(), { initialValue: [] as Request[] });
-
-  groupedRequests = computed(() => {
-    const statuses = this.statuses();
-    const reqs = this.requests();
-
-    return statuses.map((status) => ({
-      status,
-      requests: reqs.filter((r) => r.statusName === status.nome)
-    }));
-  });
 
   dataSource = new MatTableDataSource<Request>();
 
   constructor() {
     effect(() => {
-      const rows = this.groupedRequests().flatMap((g) =>
-        g.requests.map((r) => ({
-          ...r,
-          status: g.status.nome,
-        }))
-      );
-
-      this.dataSource.data = rows;
+      this.dataSource.data = this.requests();
     });
   }
 
@@ -84,7 +58,4 @@ export class ViewRequestsPageComponent {
     };
   }
 
-  toggleView() {
-    this.isKanbanView = !this.isKanbanView;
-  }
 }

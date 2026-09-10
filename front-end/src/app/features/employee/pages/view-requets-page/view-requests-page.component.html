@@ -1,56 +1,19 @@
   <section class="title-section">
     <h1 class="heading_1">Visão Geral de Solicitação</h1>
     <div class="action-row">
-      <div class="switch-container">
-        <button
-          (click)="toggleView()"
-          [class.active]="isKanbanView"
-          class="switch-option label_large"
-        >
-          <mat-icon  aria-hidden="false" fontIcon="view_week_outline"></mat-icon>
-          Kanban
-        </button>
-        <button
-          (click)="toggleView()"
-          [class.active]="!isKanbanView"
-          class="switch-option label_large"
-        >
-            <mat-icon aria-hidden="false" fontIcon="view_list"></mat-icon>
-          Lista
-        </button>
-      </div>
       <div class="filter-container">
-        <app-input-primary
-          formControlName="search"
-          type="text"
-          inputName="search"
-          placeholder="Pesquise por equipamento, categoria, etc."
-          class="input-search"
-        >
-          </app-input-primary>
-        <button class="button-primary label_large">
-          <mat-icon aria-hidden="false" fontIcon="filter_list"></mat-icon
-          >Filtros
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-icon matPrefix>search</mat-icon>
+          <input matInput name="search" placeholder="Pesquise por equipamento, categoria, etc.">
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="button" class="filter-button">
+          <mat-icon fontIcon="filter_list" aria-hidden="true"></mat-icon>
+          Filtros
         </button>
       </div>
     </div>
   </section>
-  @if (isKanbanView) {
-  <section class="stats-section">
-    <div class="kanban-board">
-      @for (group of groupedRequests(); track group.status.id) {
-      <div class="column">
-        <app-status-column
-          [title]="group.status.nome"
-          [requests]="group.requests"
-        >
-        </app-status-column>
-      </div>
-      }
-    </div>
-  </section>
-  } @else {
-    <section class="list-section">
+  <section class="list-section">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
           <ng-container matColumnDef="equipmentName">
             <th mat-header-cell *matHeaderCellDef> Nome do Equipamento </th>
@@ -78,7 +41,4 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-
-
-    </section>
-  }
+  </section>
