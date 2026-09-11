@@ -659,13 +659,6 @@
       "reason": "Reestruturação exclusiva do CSS para a identidade Mant, sem alteração de HTML ou comportamento."
     },
     {
-      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482",
-      "expectedSha256": "0f31513a6567851d20725317a10b0e42c6f4c413d4d1fcbe156bf4c322f17aba",
-      "reason": "Preenche o @Input obrigatório antes da primeira detecção de mudanças; corrige exclusivamente a fixture quebrada da referência, sem alterar o componente de produção."
-    },
-    {
       "path": "src/app/core/auth/pages/login-page/login-page.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "deb80f6aab935428f8f362723be7976b02bcefb9e8e36c238a937a111db86620",

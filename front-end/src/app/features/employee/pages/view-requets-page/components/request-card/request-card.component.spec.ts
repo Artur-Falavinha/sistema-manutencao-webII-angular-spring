@@ -23,13 +23,13 @@ describe('RequestCardComponent', () => {
     component = fixture.componentInstance;
     component.request = {
       id: 1,
-      equipmentName: 'Notebook',
-      defectDescription: 'Não liga',
-      requestDate: '2026-09-01T09:00:00',
+      equipmentName: 'Notebook Dell Inspiron 15',
+      defectDescription: 'Não liga.',
+      requestDate: '2026-08-10T09:15:00',
       statusName: 'ABERTA',
-      statusColor: '#6b7280',
+      statusColor: '#777777',
       categoryName: 'Informática',
-      clientName: 'Cliente'
+      clientName: 'Ana Souza'
     };
     fixture.detectChanges();
   });
