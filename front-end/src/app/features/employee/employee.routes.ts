@@ -24,10 +24,6 @@ export const employeeRoutes: Routes = [
     component: ViewRequestsPageComponent
   },
   {
-    path: 'view-requests',
-    component: ViewRequestsPageComponent
-  },
-  {
     path: 'reports',
     component: ReportsPageComponent
   },

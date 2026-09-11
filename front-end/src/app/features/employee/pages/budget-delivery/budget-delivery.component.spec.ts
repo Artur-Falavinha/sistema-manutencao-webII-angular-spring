@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideToastr } from 'ngx-toastr';
 
 import { BudgetDeliveryComponent } from './budget-delivery.component';
+import { mockApiInterceptor } from '../../../../core/interceptors/mock-api.interceptor';
 
 describe('BudgetDeliveryComponent', () => {
   let component: BudgetDeliveryComponent;
@@ -8,7 +12,12 @@ describe('BudgetDeliveryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BudgetDeliveryComponent]
+      imports: [BudgetDeliveryComponent],
+      providers: [
+        provideRouter([]),
+        provideHttpClient(withInterceptors([mockApiInterceptor])),
+        provideToastr()
+      ]
     })
     .compileComponents();
 
