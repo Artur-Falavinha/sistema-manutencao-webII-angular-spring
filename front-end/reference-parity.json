@@ -611,12 +611,6 @@
       "reason": "Aplica a identidade Oficina técnica com tokens globais, layout responsivo e foco visível sem alterar contratos funcionais."
     },
     {
-      "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
-      "expectedSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a"
-    },
-    {
       "path": "src/app/shared/models/reports.model.ts",
       "classification": "IDENTICAL",
       "referenceSha256": "9cd7688f8f65e416ee4b46bb2d490964ee51ab5602ab2f4296dd4df900ea7469",
@@ -1341,6 +1335,38 @@
       "classification": "IDENTICAL",
       "expectedSha256": "989daf8f6d2d0edde78aba036b2f625eefa281e854376d9a7132b99b5c366912",
       "referenceSha256": "989daf8f6d2d0edde78aba036b2f625eefa281e854376d9a7132b99b5c366912"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482",
+      "expectedSha256": "a64ce45b172c7d62eeb23370edad3d7fd866ae3a4eaa99b0791df322ba2047ad",
+      "reason": "Adiciona o provider do roteador, o interceptor HTTP simulado e um objeto de entrada mínimo para instanciar o card com input obrigatório no teste."
+    },
+    {
+      "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89",
+      "expectedSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89"
+    },
+    {
+      "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "dfd2a37fc3b6880505e1e13e94e0052a3c4ba26a33333fa3a21eca9b59416b12",
+      "expectedSha256": "dfd2a37fc3b6880505e1e13e94e0052a3c4ba26a33333fa3a21eca9b59416b12"
+    },
+    {
+      "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.css",
+      "classification": "IDENTICAL",
+      "referenceSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95",
+      "expectedSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95"
+    },
+    {
+      "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "82f11aca8506ab25fbd3f3308766feac46bd05071e236fee96f81016758c646c",
+      "expectedSha256": "ebb308484c181e1af27db15b6a570594c83aafb315670e3cf3925e0df467732b",
+      "reason": "Adiciona os providers de roteamento, HTTP simulado e toastr necessários para instanciar o componente que depende de ActivatedRoute e dos services migrados."
     }
   ]
 }

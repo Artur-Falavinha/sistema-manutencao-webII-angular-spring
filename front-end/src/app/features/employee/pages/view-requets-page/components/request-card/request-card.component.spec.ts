@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { RequestCardComponent } from './request-card.component';
+import { mockApiInterceptor } from '../../../../../../core/interceptors/mock-api.interceptor';
 
 describe('RequestCardComponent', () => {
   let component: RequestCardComponent;
@@ -8,7 +11,11 @@ describe('RequestCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RequestCardComponent]
+      imports: [RequestCardComponent],
+      providers: [
+        provideRouter([]),
+        provideHttpClient(withInterceptors([mockApiInterceptor]))
+      ]
     })
     .compileComponents();
 
