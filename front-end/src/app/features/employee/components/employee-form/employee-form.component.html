@@ -1,8 +1,6 @@
-<mat-dialog-content>
-  <div class="form-header">
-    <h2 mat-dialog-title>{{ isEdit ? 'Editar' : 'Cadastrar' }} Funcionário</h2>
-    <p>Preencha as informações abaixo para continuar.</p>
-  </div>
+<app-dialog-shell
+  [title]="isEdit ? 'Editar Funcionário' : 'Cadastrar Funcionário'"
+>
 
   <mat-stepper [linear]="true" #stepper>
 
@@ -66,9 +64,6 @@
           </mat-error>
         </mat-form-field>
 
-        <div class="form-actions first-step">
-          <button mat-raised-button color="primary" matStepperNext>Próximo</button>
-        </div>
       </form>
     </mat-step>
 
@@ -106,17 +101,19 @@
           </mat-error>
         </mat-form-field>
 
-        <div class="form-actions">
-          <button mat-button matStepperPrevious>Voltar</button>
-          <button mat-raised-button color="primary" (click)="onSubmit()">
-            {{ isEdit ? 'Atualizar' : 'Salvar' }}
-          </button>
-        </div>
       </form>
     </mat-step>
   </mat-stepper>
-</mat-dialog-content>
-
-<mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()">Cancelar</button>
-</mat-dialog-actions>
+  <ng-container dialog-action>
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <ng-container *ngIf="stepper.selectedIndex === 0; else finalStepActions">
+      <button mat-raised-button color="primary" (click)="stepper.next()">Próximo</button>
+    </ng-container>
+    <ng-template #finalStepActions>
+      <button mat-button (click)="stepper.previous()">Voltar</button>
+      <button mat-raised-button color="primary" (click)="onSubmit()">
+        {{ isEdit ? 'Atualizar' : 'Salvar' }}
+      </button>
+    </ng-template>
+  </ng-container>
+</app-dialog-shell>

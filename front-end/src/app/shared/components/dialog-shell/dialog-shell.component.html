@@ -1,0 +1,16 @@
+<mat-dialog-content class="dialog-shell__content">
+  <header class="dialog-shell__header">
+    <h2 mat-dialog-title class="dialog-shell__title">{{ title() }}</h2>
+    @if (description()) {
+      <p class="dialog-shell__description">{{ description() }}</p>
+    }
+  </header>
+
+  <div class="dialog-shell__body">
+    <ng-content />
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-shell__actions">
+  <ng-content select="[dialog-action]" />
+</mat-dialog-actions>

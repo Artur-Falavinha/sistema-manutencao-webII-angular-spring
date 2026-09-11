@@ -26,11 +26,18 @@
 .header-right > div { cursor: pointer; }
 
 .user-avatar {
+  display: grid;
+  place-items: center;
   color: var(--color-primary-default);
   line-height: 1;
 }
 
-.user-avatar mat-icon { font-size: 2rem; }
+.user-avatar mat-icon {
+  inline-size: 1em;
+  block-size: 1em;
+  font-size: var(--font-size-2xl);
+  line-height: 1;
+}
 
 .icon-button {
   display: grid;

@@ -7,16 +7,24 @@
   margin: 0 auto;
 }
 
-.main-header,
+.main-header {
+  display: grid;
+  gap: 1.25rem;
+}
+
 .header-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
-.search-field { min-width: min(22rem, 100%); }
-.add-button { min-height: 3.5rem; }
+.search-field {
+  flex: 0 1 46ch;
+  inline-size: 46ch;
+  max-inline-size: 46ch;
+}
 
 .table-card {
   overflow-x: auto;
@@ -31,6 +39,6 @@ table { min-width: 42rem; }
 @media (max-width: 48rem) {
   .main-header,
   .header-actions { align-items: stretch; flex-direction: column; }
-  .search-field,
-  .add-button { width: 100%; }
+  .search-field { max-inline-size: 100%; }
+  .add-button { inline-size: 100%; }
 }
