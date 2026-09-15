@@ -641,13 +641,13 @@
   "reason": "AuthService temporário para login e cadastro simulados usando os mocks existentes, sem HTTP real. Persiste sessão via sessionStorage e valida CPF/e-mail duplicados contra MOCK_CLIENTS e MOCK_EMPLOYEES. Navega para /login ao chamar logout(), já que o guard só reavalia em mudanças de rota e o header.component.ts (IDENTICAL) não pode conter essa navegação; substituir por autenticação real (JWT) na integração REST.",
   "removalBy": "2026-10-08"
 },
-    {
-      "path": "src/app/core/auth/services/auth.service.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "de32fbfdbc54b0a7c8ccfc4d17408ea17c0d948c474516cca49500f0a4d83c4a",
-      "reason": "Testes de comportamento da autenticação simulada com os usuários mock do protótipo."
-    },
+   {
+  "path": "src/app/core/auth/services/auth.service.spec.ts",
+  "classification": "TECHNICAL_EXCEPTION",
+  "referenceSha256": null,
+  "expectedSha256": "6fad26ad9cf32238507ecb6767550fe066d7342e6270e32e76c0e2b2db9b1b43",
+  "reason": "Testes de comportamento da autenticação simulada com os usuários mock do protótipo, incluindo signup (CPF/e-mail duplicado e caso válido) e logout navegando para /login."
+},
     {
       "path": "src/app/shared/models/register-request.ts",
       "classification": "IDENTICAL",
@@ -1207,6 +1207,20 @@
   "classification": "IDENTICAL",
   "referenceSha256": "f8a507f1878591decb7723c4cd28e0ee16cceac704e5e7c5ae0c336d1177685b",
   "expectedSha256": "f8a507f1878591decb7723c4cd28e0ee16cceac704e5e7c5ae0c336d1177685b"
+},
+{
+  "path": "src/app/core/auth/guards/auth.guard.spec.ts",
+  "classification": "TECHNICAL_EXCEPTION",
+  "referenceSha256": null,
+  "expectedSha256": "fef9fceec0d6714d8428bd822ab232df78c3ad889dda6a72447ec58e139785bb",
+  "reason": "Testes do AuthGuard sem equivalente na referência (que não possui spec para esse guard); cobre sessão válida e ausência de sessão com redirecionamento para /login incluindo returnUrl."
+},
+{
+  "path": "src/app/core/auth/guards/role.guard.spec.ts",
+  "classification": "TECHNICAL_EXCEPTION",
+  "referenceSha256": null,
+  "expectedSha256": "70909813bb6b67c235a2e2135f772d1438872951bfa0e1df454cf3106a4e60b6",
+  "reason": "Testes do RoleGuard sem equivalente na referência (que não possui spec para esse guard); cobre role compatível, role incompatível (redireciona para /error-unauthorized) e ausência de sessão (redireciona para /login)."
 }
   ]
 }

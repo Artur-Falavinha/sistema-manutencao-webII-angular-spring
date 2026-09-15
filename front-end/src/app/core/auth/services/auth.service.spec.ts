@@ -1,5 +1,5 @@
+import { Router } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
-
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
@@ -68,5 +68,74 @@ describe('AuthService', () => {
     service.login('func1@mant.com', 'tads').subscribe();
 
     expect(isEmployee).toBeTrue();
+  });
+    it('rejects signup with a CPF that already exists in the mocks', (done) => {
+    service.signup({
+      name: 'Novo Usuário',
+      cpf: '123.456.789-00',
+      email: 'novo@example.com',
+      phoneNumber: '11999999999',
+      zipCode: '00000000',
+      street: 'Rua Teste',
+      number: '1',
+      neighborhood: 'Centro',
+      city: 'Curitiba',
+      state: 'PR',
+    }).subscribe({
+      error: (err) => {
+        expect(err.message).toBe('CPF já cadastrado.');
+        done();
+      },
+    });
+  });
+
+  it('rejects signup with an email that already exists in the mocks', (done) => {
+    service.signup({
+      name: 'Novo Usuário',
+      cpf: '000.000.000-00',
+      email: 'cli1@mant.com',
+      phoneNumber: '11999999999',
+      zipCode: '00000000',
+      street: 'Rua Teste',
+      number: '1',
+      neighborhood: 'Centro',
+      city: 'Curitiba',
+      state: 'PR',
+    }).subscribe({
+      error: (err) => {
+        expect(err.message).toBe('E-mail já cadastrado.');
+        done();
+      },
+    });
+  });
+
+  it('accepts signup with unique CPF and email', (done) => {
+    service.signup({
+      name: 'Novo Usuário',
+      cpf: '000.000.000-00',
+      email: 'novo@example.com',
+      phoneNumber: '11999999999',
+      zipCode: '00000000',
+      street: 'Rua Teste',
+      number: '1',
+      neighborhood: 'Centro',
+      city: 'Curitiba',
+      state: 'PR',
+    }).subscribe({
+      next: (result) => {
+        expect(result).toBeUndefined();
+        done();
+      },
+    });
+  });
+
+  it('navigates to /login on logout', () => {
+    const router = TestBed.inject(Router);
+    const navigateSpy = spyOn(router, 'navigate');
+
+    service.login('func1@mant.com', 'tads').subscribe();
+    service.logout();
+
+    expect(navigateSpy).toHaveBeenCalledWith(['/login']);
   });
 });
