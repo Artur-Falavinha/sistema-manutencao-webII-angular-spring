@@ -857,12 +857,9 @@
     },
     {
       "path": "src/app/features/client/new-request-page/new-request-page.component.html",
-      "classification": "SCOPE_DECISION",
+      "classification": "IDENTICAL",
       "referenceSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5",
-      "expectedSha256": "a432040db5504df77bead70c89d8a296174b5168c6d7e779eb1a6e7bfcf77906",
-      "reason": "Remove o parágrafo de dica \"* Campo de preenchimento obrigatório\": nenhum campo do formulário deixa de ser obrigatório (validação e required preservados), é só o texto auxiliar.",
-      "decisionDate": "2026-09-14",
-      "requirement": "RF004"
+      "expectedSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5"
     },
     {
       "path": "src/app/features/client/new-request-page/new-request-page.component.css",
