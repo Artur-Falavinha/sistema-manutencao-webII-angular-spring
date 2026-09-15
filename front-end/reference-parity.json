@@ -6,95 +6,6 @@
   },
   "window": "2026-09-10",
   "finalFrontend": false,
-  "scopeDecisions": [
-    {
-      "date": "2026-09-01",
-      "requirement": "RF013",
-      "decision": "Manter somente a listagem de solicitações exigida pelo enunciado e remover a visualização alternativa em Kanban.",
-      "reason": "O Kanban não é exigido pelo trabalho e sua remoção reduz código e conteúdo de defesa sem retirar filtros, ordenação, cores ou ações obrigatórias.",
-      "removedReferencePaths": [
-        "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.ts",
-        "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.html",
-        "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.css"
-      ]
-    },
-    {
-      "date": "2026-09-03",
-      "requirement": "N/A",
-      "decision": "Remover o container e o codigo morto de notificacoes do cabecalho.",
-      "reason": "O enunciado nao exige notificacoes e a referencia nao possui painel, botao ou itens renderizados; a remocao reduz codigo sem consumidor e conteudo de defesa.",
-      "affectedReferencePaths": [
-        "src/app/core/layout/header/header.component.ts",
-        "src/app/core/layout/header/header.component.html"
-      ]
-    },
-    {
-      "date": "2026-09-10",
-      "requirement": "RF013",
-      "decision": "Remover a imagem decorativa de Brazil Nativas do card de solicitacao e apresentar a data como terceiro dado do card.",
-      "reason": "A imagem nao representa dado exigido do RF013, nao possui vinculo com a solicitacao e adiciona asset sem funcao ao fluxo de demonstracao.",
-      "affectedReferencePaths": [
-        "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.html"
-      ]
-    },
-    {
-      "date": "2026-09-10",
-      "requirement": "RF018",
-      "decision": "Centralizar no rodape padrao do dialogo as acoes de avancar, voltar e salvar do formulario de funcionario.",
-      "reason": "Centraliza as acoes do modal sem alterar a validacao linear, o fluxo das etapas ou a operacao de cadastro e edicao.",
-      "affectedReferencePaths": [
-        "src/app/features/employee/components/employee-form/employee-form.component.html"
-      ]
-    },
-    {
-      "date": "2026-09-10",
-      "requirement": "RF017",
-      "decision": "Usar MatDialog e um shell visual compartilhado nos formularios de categoria e funcionario.",
-      "reason": "Centraliza titulo, conteudo rolavel, espacos e acoes do dialogo sem alterar campos, validacoes ou operacoes de cadastro, edicao e exclusao.",
-      "affectedReferencePaths": [
-        "src/app/features/employee/components/employee-form/employee-form.component.ts",
-        "src/app/features/employee/components/employee-form/employee-form.component.html",
-        "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.ts",
-        "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.html",
-        "src/app/features/employee/components/new-category-modal/new-category-modal.component.ts",
-        "src/app/features/employee/components/new-category-modal/new-category-modal.component.html"
-      ],
-      "createdPaths": [
-        "src/app/shared/components/dialog-shell/dialog-shell.component.ts",
-        "src/app/shared/components/dialog-shell/dialog-shell.component.html",
-        "src/app/shared/components/dialog-shell/dialog-shell.component.css"
-      ]
-    },
-    {
-      "date": "2026-09-10",
-      "requirement": "RF017",
-      "decision": "Usar campos Angular Material no formulario de categoria.",
-      "reason": "Alinha fonte, espacamento, rotulos e estados visuais aos campos do formulario de funcionario, preservando ngModel, nomes, valores, obrigatoriedade, opcoes e submissao.",
-      "affectedReferencePaths": [
-        "src/app/features/employee/components/new-category-modal/new-category-modal.component.ts",
-        "src/app/features/employee/components/new-category-modal/new-category-modal.component.html"
-      ]
-    },
-    {
-      "date": "2026-09-10",
-      "requirement": "RF017",
-      "decision": "Manter o fechamento padrao do MatDialog no formulario de categoria.",
-      "reason": "Permite fechar pelo backdrop e pela tecla Escape, como no formulario de funcionario, sem alterar dados, validacao, servicos ou operacoes de RF017.",
-      "affectedReferencePaths": [
-        "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.ts"
-      ]
-    },
-    {
-      "date": "2026-09-10",
-      "requirement": "RF019-RF020",
-      "decision": "Padronizar os botoes da pagina de relatorios com Angular Material.",
-      "reason": "Usa mat-button na alternancia de visao e mat-flat-button na exportacao, preservando eventos, dados simulados, alertas e tabela Material existentes.",
-      "affectedReferencePaths": [
-        "src/app/features/employee/pages/reports-page/reports-page.component.ts",
-        "src/app/features/employee/pages/reports-page/reports-page.component.html"
-      ]
-    }
-  ],
   "files": [
     {
       "path": "tsconfig.json",
@@ -146,7 +57,7 @@
       "path": "src/styles/styles.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "2b4823436acc3502e0f551d8988e5085412df210cf64c8d0cba3838da4c0a039",
-      "expectedSha256": "980a010091b16197de9d022383c6b1cd14d93c9907070928292478ae33add633",
+      "expectedSha256": "094da9ecaf951512f81540b81289443929caac5d36b831368c68a6c437331c33",
       "reason": "Aplicação global das fontes, cores e foco visível da nova identidade."
     },
     {
@@ -174,15 +85,15 @@
       "path": "tools/verify-parity.mjs",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "1a9dd2e9366d15bdc1a03ca9927c560d38985ae65884fff6ada8fbb2f1e4f8da",
-      "reason": "Ferramenta técnica de auditoria da migração literal e das decisões permanentes de escopo."
+      "expectedSha256": "34d6510e42c4f3c94f1f42a33f3344b8ddbf9bc75fca6f038a366752e93a1039",
+      "reason": "Ferramenta técnica de auditoria da migração literal."
     },
     {
       "path": "tools/verify-parity.spec.mjs",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "3b23e1577a61d31de187a36b9694207bbce7d3224774e5b7651a0a138456627a",
-      "reason": "Testes automatizados da ferramenta de auditoria, incluindo decisões permanentes de escopo."
+      "expectedSha256": "6eef472080f21c846128a0dd8d98728eaf1f48906e865811d9bfffb0556edb5c",
+      "reason": "Testes automatizados da ferramenta de auditoria."
     },
     {
       "path": "src/app/app.component.ts",
@@ -212,36 +123,30 @@
       "reason": "Adicionado provideRouter() para corrigir falha do TestBed após injeção global do spinner/app-root (RF001)."
     },
     {
-      "path": "src/app/app.routes.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "2a84668e9120ed0d8b6b7cfe2ae052ae65afd9101f64a9caba533c8f313e2127",
-      "reason": "Scaffold temporário do shell: aplica authGuard funcional às rotas de client/employee com base na sessão simulada, redirecionando para login ou página de erro 401 conforme o perfil.",
-      "removalBy": "2026-10-08"
-    },
+  "path": "src/app/app.routes.ts",
+  "classification": "TEMPORARY_SCAFFOLD",
+  "referenceSha256": null,
+  "expectedSha256": "942794a55dfaa15b4baba1a2c624eda97d1d35c8caed0f4949bf7713f41e78d6",
+  "reason": "Scaffold temporário do shell: aplica AuthGuard e RoleGuard literais da referência às rotas de client/employee com base na sessão simulada, usando data.expectedRole conforme o contrato real.",
+  "removalBy": "2026-10-08"
+},
     {
       "path": "src/app/core/layout/header/header.component.ts",
-      "classification": "SCOPE_DECISION",
+      "classification": "IDENTICAL",
       "referenceSha256": "b26dc12aa5747b912d5eddfcda31c3a482569ef20f5095f7864ab18ea9d68e37",
-      "expectedSha256": "b834455f1d6df783ca94d56ff7b27803589070149d27af3035802acea48f532e",
-      "reason": "Remove somente estado, dados, imports e metodos sem consumidor para notificacoes nao exigidas.",
-      "decisionDate": "2026-09-03",
-      "requirement": "N/A"
+      "expectedSha256": "b26dc12aa5747b912d5eddfcda31c3a482569ef20f5095f7864ab18ea9d68e37"
     },
     {
       "path": "src/app/core/layout/header/header.component.html",
-      "classification": "SCOPE_DECISION",
+      "classification": "IDENTICAL",
       "referenceSha256": "902ac006c3e57c57ba67e65ea2e7e626fd7e2439f27ce3d1ad013174870ded9c",
-      "expectedSha256": "f544e59e45c711d96869a2da24d21c784705f5362b51ddf64741725b0522ca69",
-      "reason": "Remove o container vazio de notificacoes, sem binding, evento ou conteudo renderizado.",
-      "decisionDate": "2026-09-03",
-      "requirement": "N/A"
+      "expectedSha256": "902ac006c3e57c57ba67e65ea2e7e626fd7e2439f27ce3d1ad013174870ded9c"
     },
     {
       "path": "src/app/core/layout/header/header.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "4da05d4436f4bd0f8a800fadf657b626cb20990ce854d8867b42d97ac46baef2",
-      "expectedSha256": "c1c51b27795cd37e9efc9574581b632ebcec96afe4487201225315ed422dbc4e",
+      "expectedSha256": "a5da02c0d6c302890986666587eebbd1241364f0602f74bcf62ecb08831745dd",
       "reason": "Redesenho visual Oficina técnica, responsivo e acessível, sem alterar o contrato do componente."
     },
     {
@@ -467,36 +372,49 @@
     },
     {
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.ts",
-      "classification": "SCOPE_DECISION",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "f274ebd55bb6b3b3ea03e0600c6dde8e2c6acb16dae35de3e924757da9d29994",
-      "expectedSha256": "499b72d17776395a6cb8ae60d55474e331f30ad18794e33b299223de2ca52bb9",
-      "reason": "Mantém somente a listagem de RF013, preserva a busca e o filtro por categoria incorporados à main e usa controles Angular Material sem alterar a fonte de dados.",
-      "decisionDate": "2026-09-01",
-      "requirement": "RF013"
+      "expectedSha256": "28f9f48744efd402355d2c18ace51623f55b2a69336825b55abb8d915ba56b84",
+      "reason": "Mantém input nativo temporário no lugar de app-input-primary (componente já existe no projeto mas ainda não reconectado aqui) e adiciona filtro de busca por texto + filtro por categoria, que não existem implementados na referência."
     },
     {
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.html",
-      "classification": "SCOPE_DECISION",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "64c1f22bdc89318d17f551ee10e76d90b744d1cdbfdc0da4a03333cb8338e761",
-      "expectedSha256": "583a5ae28c75154d0e08bc5004912687b608f53de5eb2154164d6d139e54d394",
-      "reason": "Mantém uma única listagem de RF013, preserva busca e filtro por categoria e substitui os controles customizados por Angular Material.",
-      "decisionDate": "2026-09-01",
-      "requirement": "RF013"
+      "expectedSha256": "7130ee6df0b3866bbd0542c6360b8beab43bbc08a2221bd2e7ab440ca99a1d49",
+      "reason": "Input nativo temporário no lugar de app-input-primary + painel de filtro por categoria + wiring da busca por texto (onSearchChange)."
     },
     {
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.css",
-      "classification": "SCOPE_DECISION",
+      "classification": "VISUAL_ONLY",
       "referenceSha256": "e32b7b96101c696b1ebb37a5ade94241f08aa505f1e85c67b61667b6a828a838",
-      "expectedSha256": "1023840f356f57fcbc30d20e06594b6a1df821145a765c83dda9a4907e46a2ee",
-      "reason": "Remove regras sem uso após a retirada do Kanban e dimensiona a busca e o filtro por categoria com controles Angular Material.",
-      "decisionDate": "2026-09-01",
-      "requirement": "RF013"
+      "expectedSha256": "c761c29ec12c5344eeb10f3a9e5acaf825562c8834fd079cbf5b980eeae430da",
+      "reason": "Reestruturação exclusiva do CSS para a identidade Mant, sem alteração de HTML ou comportamento."
     },
     {
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.spec.ts",
       "classification": "IDENTICAL",
       "referenceSha256": "92259311f119d745ed899c7ac4cb52533b6accd2e299f441211ad5e55e7f4213",
       "expectedSha256": "92259311f119d745ed899c7ac4cb52533b6accd2e299f441211ad5e55e7f4213"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "7ce5b5e119c61143da8cffe1b9d1f76cbf5f42e667c45a8abab2adcea7687239",
+      "expectedSha256": "7ce5b5e119c61143da8cffe1b9d1f76cbf5f42e667c45a8abab2adcea7687239"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.html",
+      "classification": "IDENTICAL",
+      "referenceSha256": "cb1110753d17d27e308cc69deb8a68ba981b865f6577befc7f4bb312ef9463f7",
+      "expectedSha256": "cb1110753d17d27e308cc69deb8a68ba981b865f6577befc7f4bb312ef9463f7"
+    },
+    {
+      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.css",
+      "classification": "VISUAL_ONLY",
+      "referenceSha256": "54df946597e40054b5c4624cf742cb3e89a9ae7ddb207419fde15a22c048f96b",
+      "expectedSha256": "e7b4756f521bdeda88c40bb3335249d22418d427ada5188b1742d34231616d80",
+      "reason": "Reestruturação exclusiva do CSS para a identidade Mant, sem alteração de HTML ou comportamento."
     },
     {
       "path": "src/app/features/employee/services/category.service.ts",
@@ -537,8 +455,8 @@
       "path": "src/app/app.config.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "069005a459f46bdde9a00c4dcb894725c15381d3da80caeebf90f5eb59b23a99",
-      "reason": "Combina provideHttpClient + mockApiInterceptor com provideNgxMask, provideAnimationsAsync e provideToastr adicionados por outra janela em paralelo. Registra o locale pt-BR (LOCALE_ID + registerLocaleData) para corrigir datas e moedas em inglês nos pipes date/currency, achado na checagem de regressão do protótipo.",
+      "expectedSha256": "6dd2bad99d504bbe54f4d85c431d9578e37b78c776e101c5a2e303888bdd8a72",
+      "reason": "Combina provideHttpClient + mockApiInterceptor com provideNgxMask, provideAnimationsAsync e provideToastr adicionados por outra janela em paralelo.",
       "removalBy": "2026-10-08"
     },
     {
@@ -590,18 +508,15 @@
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "8f49290b24e210a02e019b863aa57f577bfa414487f615b611bd36d28cd6a3ca",
-      "expectedSha256": "ccd2d581b59df6acef368ad7f11fe81e416ce12dcd6fb53da02dfe8cc9f841a8",
-      "reason": "Adaptação temporária tipada para consumir mocks locais, reassociar o paginador ao alternar visões, usar MatButtonModule nos controles visuais e substituir Toast e download real por alertas simulados, sem comunicação com o backend.",
+      "expectedSha256": "8dacc36d1ec7b7217b2904ee62288cc749014a519629101ac054a81aa69ccf3f",
+      "reason": "Adaptação temporária tipada para consumir mocks locais, reassociar o paginador ao alternar visões e substituir Toast e download real por alertas simulados, sem comunicação com o backend.",
       "removalBy": "2026-10-29"
     },
     {
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.html",
-      "classification": "SCOPE_DECISION",
+      "classification": "IDENTICAL",
       "referenceSha256": "61e1b0c0c25bd4e39cbf9aaad051e71a092033a572c0919711f2d64883829bc4",
-      "expectedSha256": "c7da89abf9c1ecbbbb1d41396240f1fb197bd46b90216734e416da7f4ed9b933",
-      "reason": "Substitui somente botoes estilizados manualmente por controles Angular Material, preservando alternancia, exportacao, tabela, dados e paginacao.",
-      "decisionDate": "2026-09-10",
-      "requirement": "RF019-RF020"
+      "expectedSha256": "61e1b0c0c25bd4e39cbf9aaad051e71a092033a572c0919711f2d64883829bc4"
     },
     {
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.css",
@@ -609,6 +524,12 @@
       "referenceSha256": "26aa66397ba730af010f6d8128ad4892a11485957ad27999c99d7cdb2cc77012",
       "expectedSha256": "d5626d0e2322f089cc6bc825f66cd3a7d655d58f342c81a9ef107fc60f692def",
       "reason": "Aplica a identidade Oficina técnica com tokens globais, layout responsivo e foco visível sem alterar contratos funcionais."
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
+      "expectedSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a"
     },
     {
       "path": "src/app/shared/models/reports.model.ts",
@@ -644,18 +565,15 @@
     },
     {
       "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.html",
-      "classification": "SCOPE_DECISION",
+      "classification": "IDENTICAL",
       "referenceSha256": "1e95de138f4a126636b6fcdb5c497863fba9f9f5f077a88e7305a6b62635f0da",
-      "expectedSha256": "27674f84ebd9dba5150a7ddbba4985730170ea679c4b59eb34289683b75115a5",
-      "reason": "Remove somente a imagem decorativa sem vinculo com RF013 e apresenta a data como dado do card.",
-      "decisionDate": "2026-09-10",
-      "requirement": "RF013"
+      "expectedSha256": "1e95de138f4a126636b6fcdb5c497863fba9f9f5f077a88e7305a6b62635f0da"
     },
     {
       "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "4ccf2a5513dd7408a2c82003cb4b21e744e361f8d34dd517af87697cfca124a0",
-      "expectedSha256": "b580550d70412793efd28bc9cf08a70dae0ead4c67d1d09176d8ce06161087fa",
+      "expectedSha256": "7f367084c54eeb4c00fd960afebaf98b43d5fcbc9979b225df20a3304d7ee7a4",
       "reason": "Reestruturação exclusiva do CSS para a identidade Mant, sem alteração de HTML ou comportamento."
     },
     {
@@ -708,21 +626,21 @@
       "reason": "Adiciona somente provideRouter exigido para instanciar o SignupPageComponent com o serviço de autenticação simulado no TestBed."
     },
     {
-      "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
-      "expectedSha256": "0cdb59ce886fabf807ea060b948db91ae2e7690dd990812552b9cdd4f8dde84d",
-      "reason": "Scaffold temporário do autocadastro: envia o payload para o AuthService simulado e mantém o retorno visual, sem backend ou ViaCEP nesta janela. Restaura o bloco de erro (console.error) presente na referência, que havia sido omitido na adaptação anterior.",
-      "removalBy": "2026-10-08"
-    },
+  "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
+  "classification": "TEMPORARY_SCAFFOLD",
+  "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
+  "expectedSha256": "0cdb59ce886fabf807ea060b948db91ae2e7690dd990812552b9cdd4f8dde84d",
+  "reason": "Scaffold temporário do autocadastro: envia o payload para o AuthService simulado e mantém o retorno visual, sem backend ou ViaCEP nesta janela. Restaura o bloco de erro (console.error) presente na referência, que havia sido omitido na adaptação anterior.",
+  "removalBy": "2026-10-08"
+},
     {
-      "path": "src/app/core/auth/services/auth.service.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": "28f95d7a55443599aebc93d0572a0723e893a8dac0c503d55122ccca201a2b6c",
-      "expectedSha256": "ea59f10c62d29338484aabab5cf30f0fef1772ca3c66e1d5ef0975ee6c9584bd",
-      "reason": "AuthService temporário para login e cadastro simulados usando os mocks existentes, sem HTTP real. Persiste sessão via sessionStorage e valida CPF/e-mail duplicados contra MOCK_CLIENTS e MOCK_EMPLOYEES. Navega para /login ao chamar logout(), já que o guard só reavalia em mudanças de rota e o header.component.ts (IDENTICAL) não pode conter essa navegação; substituir por autenticação real (JWT) na integração REST.",
-      "removalBy": "2026-10-08"
-    },
+  "path": "src/app/core/auth/services/auth.service.ts",
+  "classification": "TEMPORARY_SCAFFOLD",
+  "referenceSha256": "28f95d7a55443599aebc93d0572a0723e893a8dac0c503d55122ccca201a2b6c",
+  "expectedSha256": "ea59f10c62d29338484aabab5cf30f0fef1772ca3c66e1d5ef0975ee6c9584bd",
+  "reason": "AuthService temporário para login e cadastro simulados usando os mocks existentes, sem HTTP real. Persiste sessão via sessionStorage e valida CPF/e-mail duplicados contra MOCK_CLIENTS e MOCK_EMPLOYEES. Navega para /login ao chamar logout(), já que o guard só reavalia em mudanças de rota e o header.component.ts (IDENTICAL) não pode conter essa navegação; substituir por autenticação real (JWT) na integração REST.",
+  "removalBy": "2026-10-08"
+},
     {
       "path": "src/app/core/auth/services/auth.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
@@ -740,7 +658,7 @@
       "path": "src/app/shared/components/input-primary/input-primary.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "20f8d5513517bdf102457e683419daa17675f5e6996127076252e6271d9e6d3a",
-      "expectedSha256": "fafd7de3404fa668a0c0f72aa0c12a7c72b043b24be3009815e8323bf2b8fe20",
+      "expectedSha256": "5bea82bd3d41623a883a2abcb0fd5b38be41390d4fcdcb758e7d7971e7ed565b",
       "reason": "Alinha o campo compartilhado aos tokens da identidade Oficina técnica sem alterar seu contrato."
     },
     {
@@ -822,10 +740,11 @@
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "57ee945c9524bc1f3b7955fc6281c20e046155f842c4f8253b329da3a54d4f88",
-      "expectedSha256": "0753909c6ee8058e8443b98d63e64af0dd7a0b592e7ce9a71063942297cb7f8a",
-      "reason": "Correção de regressão: displayedColumns tinha ficado sem 'acoes' desde a época em que RF005-RF010 ainda não existiam (ver histórico da entrada), o que impedia qualquer navegação a partir do dashboard. 'acoes' foi restaurado agora que request-detail-page e payment-panel já existem (#20, #24); 'description' é mantido como coluna extra (UX), além do conjunto de colunas da referência."
+      "expectedSha256": "2bdcf97547681a0d91e929150490087d2a783f310341d736e5a3706335417e4d",
+      "reason": "Adapta temporariamente o dashboard aos serviços em memória, remove dependências de autenticação e layout ainda ausentes e exibe a descrição simulada no lugar das ações reservadas para 03/09 e 10/09.",
+      "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.html",
@@ -839,8 +758,8 @@
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "86adcbe415fe0b1139d18362ac4dd3a48f367c731eb386aa3e1faa6781cda8ec",
-      "expectedSha256": "73e1fa5c7eac30f592c01faa39061f34e6f4ce5a26281aad80ee00f9ed07ea9f",
-      "reason": "Aplica tokens da identidade Mant, organiza busca e botão e adiciona rolagem controlada e layout responsivo para 360, 768 e 1440 px. Correções de regressão: título heading_1 (44px) desproporcional reduzido para heading_3; overflow horizontal real (~96px) em telas de notebook (1024-1366px) corrigido com flex-wrap e flex-shrink:0 no botão/título; altura do botão igualada aos 56px do mat-form-field; padding adicionado ao container, que grudava no topo/bordas; e cabeçalho da coluna 'Ações' centralizado para alinhar com os botões da coluna."
+      "expectedSha256": "11830ad0a00fc270951f5ba160c0f32ffd134dc7d7272af59a913cd2f1955962",
+      "reason": "Aplica tokens da identidade Oficina técnica, organiza busca e botão e adiciona rolagem controlada e layout responsivo para 360, 768 e 1440 px."
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.spec.ts",
@@ -1054,17 +973,14 @@
       "path": "src/app/features/employee/components/employee-form/employee-form.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "0e2e2eacd4a6fc3764126e07010b24813d435117abc55ac6bcb3835f13a7bc86",
-      "expectedSha256": "b21e38bf8f6a4b7ccc5fa1e20a73cd266dae9283570aba823e6bd4e628240715",
-      "reason": "Mantem somente os estilos especificos do formulario; titulo, conteudo e acoes passam ao shell visual compartilhado."
+      "expectedSha256": "fc396e7345ba542dfed46f68b779faa9edf90a1ca670e492c064df2afb5ac3d7",
+      "reason": "Aplica a identidade Oficina técnica ao formulário, com responsividade e foco visível, sem alterar seu contrato."
     },
     {
       "path": "src/app/features/employee/components/employee-form/employee-form.component.html",
-      "classification": "SCOPE_DECISION",
+      "classification": "IDENTICAL",
       "referenceSha256": "9e29eb877a21abedd2d3a4c60ebb9f09f026b1ecb54e102a4f6dc6919780a9a8",
-      "expectedSha256": "fa74c319ef99d13a2bc45635714b5a6ce3782e441c9e8f54ecf948e573fc2cc4",
-      "reason": "Projeta formularios e acoes no shell visual compartilhado sem descricao auxiliar, preservando validacao linear do stepper, formularios e submissao.",
-      "decisionDate": "2026-09-10",
-      "requirement": "RF018"
+      "expectedSha256": "9e29eb877a21abedd2d3a4c60ebb9f09f026b1ecb54e102a4f6dc6919780a9a8"
     },
     {
       "path": "src/app/features/employee/components/employee-form/employee-form.component.spec.ts",
@@ -1075,51 +991,41 @@
     },
     {
       "path": "src/app/features/employee/components/employee-form/employee-form.component.ts",
-      "classification": "SCOPE_DECISION",
+      "classification": "IDENTICAL",
       "referenceSha256": "ccec16909fb8de56e817921a90a926e517a974d7b946db0ff19d10ebab95f983",
-      "expectedSha256": "b96ad3647e4c4f7245004dee01b0321bce971ee7bae8b0477cc67bd6e53e3639",
-      "reason": "Importa somente o shell visual compartilhado; campos, validacao, service e submissao permanecem inalterados.",
-      "decisionDate": "2026-09-10",
-      "requirement": "RF018"
+      "expectedSha256": "ccec16909fb8de56e817921a90a926e517a974d7b946db0ff19d10ebab95f983"
     },
     {
       "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "f6a0ea6ddd82b0f6d6c6627906a55eada1b33fe4620793863c69cd659ca289b0",
-      "expectedSha256": "8c44813a66c12ca0fb4491ed61a186c8ddcafbd3530128db161b3991fbd54d0c",
-      "reason": "Mantem somente o espacamento local do formulario; a aparencia dos controles passa aos componentes Angular Material."
+      "expectedSha256": "a069b127a77951e422a51c3584ce96c1c893e25653bc2d91e334b33f38ef3f0b",
+      "reason": "Aplica a identidade Oficina técnica ao modal de categoria, com layout móvel e foco visível."
     },
     {
       "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.html",
-      "classification": "SCOPE_DECISION",
+      "classification": "IDENTICAL",
       "referenceSha256": "70b291a18d26e300ef806912fbc7304b22af85a618740e7d11664a4424460d2b",
-      "expectedSha256": "ee612cf69418a24fba3b483fad4a263f138095c61f5ac9408a2268e7560169b0",
-      "reason": "Projeta campos e acoes no shell visual compartilhado e usa controles Material, preservando ngModel, ids, nomes, valores, opcoes, validacao e submit.",
-      "decisionDate": "2026-09-10",
-      "requirement": "RF017"
+      "expectedSha256": "70b291a18d26e300ef806912fbc7304b22af85a618740e7d11664a4424460d2b"
     },
     {
       "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
+      "classification": "IDENTICAL",
       "referenceSha256": "c2ad7abb6345bd106f3295f7d3d14574b14994e67e5e3b551c5492f8d4f9d967",
-      "expectedSha256": "e247d009565a37e83f0c1fb2e6052df560fb758fd3d6603bbda6ea9bcdd95f12",
-      "reason": "Adiciona somente os stubs de MAT_DIALOG_DATA e MatDialogRef exigidos para instanciar o componente no TestBed."
+      "expectedSha256": "c2ad7abb6345bd106f3295f7d3d14574b14994e67e5e3b551c5492f8d4f9d967"
     },
     {
       "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.ts",
-      "classification": "SCOPE_DECISION",
+      "classification": "IDENTICAL",
       "referenceSha256": "97e4907ee471b3a2ced677f9ddc076f1e8346efcf387328f65fa35f67d8e61d1",
-      "expectedSha256": "771f662b2b98b81dd84f3f13ee9fc9ea54b0e12e9d5172fc9eed4888b32ce12d",
-      "reason": "Recebe dados e devolve resultado pelo MatDialog e importa campos Material e shell visual compartilhado; categoria, validacao e dados submetidos permanecem.",
-      "decisionDate": "2026-09-10",
-      "requirement": "RF017"
+      "expectedSha256": "97e4907ee471b3a2ced677f9ddc076f1e8346efcf387328f65fa35f67d8e61d1"
     },
     {
       "path": "src/app/features/employee/pages/employee-list/employee-list.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "c17c6d38bc91439dea6972db55f4d4631ab871a7189eac5f18d679ac5bee8814",
-      "expectedSha256": "84a80af65eaeb3431807215db227abe8ee4bcfb8966f84d3c8100e434ac976f0",
-      "reason": "Aplica a identidade Mant, alinha titulo e linha de acoes ao padrao das solicitacoes e contem a tabela em rolagem horizontal controlada nas larguras moveis."
+      "expectedSha256": "185cd017854de991addb847253adcd38d787b87e35aef6ef0ab1c0df0cbfd7b3",
+      "reason": "Aplica a identidade Oficina técnica e contém a tabela em rolagem horizontal controlada nas larguras móveis."
     },
     {
       "path": "src/app/features/employee/pages/employee-list/employee-list.component.html",
@@ -1148,12 +1054,9 @@
     },
     {
       "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.html",
-      "classification": "SCOPE_DECISION",
+      "classification": "IDENTICAL",
       "referenceSha256": "63a59fb7124988d5e6b4867b559952c7ce48596a4be31eedf9edae8569fe8218",
-      "expectedSha256": "e109f18db3b45ad066225ffffa76298889e024c99acd4e9a0b99e52fa94277af",
-      "reason": "Remove somente a instancia condicional do overlay proprio; o formulario passa a abrir pelo MatDialog.",
-      "decisionDate": "2026-09-10",
-      "requirement": "RF017"
+      "expectedSha256": "63a59fb7124988d5e6b4867b559952c7ce48596a4be31eedf9edae8569fe8218"
     },
     {
       "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.spec.ts",
@@ -1164,12 +1067,9 @@
     },
     {
       "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.ts",
-      "classification": "SCOPE_DECISION",
+      "classification": "IDENTICAL",
       "referenceSha256": "2c09aa0526e580497d9ac8b878117bafce8d58ebf924a67a2324a5e8f571f789",
-      "expectedSha256": "7b23a73b3689263147d7194d2dd5d05c947d8599699cf20444f706b5c104d6c0",
-      "reason": "Abre o formulario de categoria via MatDialog e importa MatButtonModule para padronizar a acao de abertura; usa seu fechamento padrao e processa o resultado sem alterar services ou operacoes de RF017.",
-      "decisionDate": "2026-09-10",
-      "requirement": "RF017"
+      "expectedSha256": "2c09aa0526e580497d9ac8b878117bafce8d58ebf924a67a2324a5e8f571f789"
     },
     {
       "path": "src/app/features/employee/services/category.service.spec.ts",
@@ -1191,30 +1091,6 @@
       "expectedSha256": "03888eee13f65f56a4a83d8a0708eecbfd2514e52edd52c0c0e633fdae033bb9",
       "reason": "Expõe os contratos esperados pelas páginas literais, adapta os CPFs dos mocks ao validador literal do formulário e não persiste inclusão, edição ou exclusão antes da etapa de CRUD.",
       "removalBy": "2026-10-29"
-    },
-    {
-      "path": "src/app/shared/components/dialog-shell/dialog-shell.component.css",
-      "classification": "SCOPE_DECISION",
-      "expectedSha256": "595655ff703acbd70c11f19b477fc8cd756034c1dd59d5ec102bc84dddaa9800",
-      "reason": "Cria a apresentacao compartilhada de titulo, conteudo rolavel e acoes dos dialogos de RF017 e RF018, sem margem inferior adicional no cabecalho.",
-      "decisionDate": "2026-09-10",
-      "requirement": "RF017-RF018"
-    },
-    {
-      "path": "src/app/shared/components/dialog-shell/dialog-shell.component.html",
-      "classification": "SCOPE_DECISION",
-      "expectedSha256": "21681fe585a475ae3c77e3f887aec643981cb478b6e8f88d1be6347fac616391",
-      "reason": "Projeta somente conteudo e acoes das features, sem conhecer campos, validacoes ou operacoes de negocio.",
-      "decisionDate": "2026-09-10",
-      "requirement": "RF017-RF018"
-    },
-    {
-      "path": "src/app/shared/components/dialog-shell/dialog-shell.component.ts",
-      "classification": "SCOPE_DECISION",
-      "expectedSha256": "28ec1c19958643e8ddd9e4fe9d13b5f6dade5614f65c396fe36de0586290d29d",
-      "reason": "Define somente o contrato visual de titulo e descricao do shell compartilhado.",
-      "decisionDate": "2026-09-10",
-      "requirement": "RF017-RF018"
     },
     {
       "path": "src/app/shared/components/warning-dialog/warning-dialog.component.css",
@@ -1243,13 +1119,11 @@
       "expectedSha256": "0e7ac1c02b04b016d668205ddd1865d53cb1d35aeb6c0bce15ad81dc8e0b0c72"
     },
     {
-      "path": "src/app/core/auth/guards/auth.guard.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "90107b0556c57844e1d0ab9f23f168ee3d85c7110b5e4120bf4b6eef806031ec",
-      "reason": "Guard funcional temporário que bloqueia acesso às rotas de client/employee sem sessão simulada ativa ou com perfil incompatível, redirecionando para /login ou /error-unauthorized; substituir por proteção baseada em JWT real na integração com backend.",
-      "removalBy": "2026-10-08"
-    },
+  "path": "src/app/core/auth/guards/auth.guard.ts",
+  "classification": "IDENTICAL",
+  "referenceSha256": "e57ed26e797c836eb9f798282fbad035d16cd62668ae7a75fa1d88496f447ec2",
+  "expectedSha256": "e57ed26e797c836eb9f798282fbad035d16cd62668ae7a75fa1d88496f447ec2"
+},
     {
       "path": "src/app/core/services/budget.service.ts",
       "classification": "IDENTICAL",
@@ -1329,90 +1203,10 @@
       "referenceSha256": "989daf8f6d2d0edde78aba036b2f625eefa281e854376d9a7132b99b5c366912"
     },
     {
-      "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": "ea8109ed5e41cc451b099554da0779f258bba31944a03ad3d635f3335fe3f482",
-      "expectedSha256": "a64ce45b172c7d62eeb23370edad3d7fd866ae3a4eaa99b0791df322ba2047ad",
-      "reason": "Adiciona o provider do roteador, o interceptor HTTP simulado e um objeto de entrada mínimo para instanciar o card com input obrigatório no teste."
-    },
-    {
-      "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89",
-      "expectedSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89"
-    },
-    {
-      "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
-      "classification": "IDENTICAL",
-      "referenceSha256": "dfd2a37fc3b6880505e1e13e94e0052a3c4ba26a33333fa3a21eca9b59416b12",
-      "expectedSha256": "dfd2a37fc3b6880505e1e13e94e0052a3c4ba26a33333fa3a21eca9b59416b12"
-    },
-    {
-      "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.css",
-      "classification": "IDENTICAL",
-      "referenceSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95",
-      "expectedSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95"
-    },
-    {
-      "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": "82f11aca8506ab25fbd3f3308766feac46bd05071e236fee96f81016758c646c",
-      "expectedSha256": "ebb308484c181e1af27db15b6a570594c83aafb315670e3cf3925e0df467732b",
-      "reason": "Adiciona os providers de roteamento, HTTP simulado e toastr necessários para instanciar o componente que depende de ActivatedRoute e dos services migrados."
-    },
-    {
-      "path": "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.css",
-      "classification": "IDENTICAL",
-      "expectedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "referenceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.html",
-      "classification": "IDENTICAL",
-      "expectedSha256": "3eabd4072e723137738035144c747918fd1836005ae9399aa50853b270b2e957",
-      "referenceSha256": "3eabd4072e723137738035144c747918fd1836005ae9399aa50853b270b2e957"
-    },
-    {
-      "path": "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.spec.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "7271fb2a84c1b1ffd72bd96ac178bbae5ddefe050d9d487a528fcc8b13d90b66",
-      "referenceSha256": "7271fb2a84c1b1ffd72bd96ac178bbae5ddefe050d9d487a528fcc8b13d90b66"
-    },
-    {
-      "path": "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "f1f31235bf2a8960ca1a02309da28966e406fc68fcf0593740040853d4f281b9",
-      "referenceSha256": "f1f31235bf2a8960ca1a02309da28966e406fc68fcf0593740040853d4f281b9"
-    },
-    {
-      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.css",
-      "classification": "IDENTICAL",
-      "expectedSha256": "54df946597e40054b5c4624cf742cb3e89a9ae7ddb207419fde15a22c048f96b",
-      "referenceSha256": "54df946597e40054b5c4624cf742cb3e89a9ae7ddb207419fde15a22c048f96b"
-    },
-    {
-      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.html",
-      "classification": "IDENTICAL",
-      "expectedSha256": "cb1110753d17d27e308cc69deb8a68ba981b865f6577befc7f4bb312ef9463f7",
-      "referenceSha256": "cb1110753d17d27e308cc69deb8a68ba981b865f6577befc7f4bb312ef9463f7"
-    },
-    {
-      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.spec.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "58e924b4fec3815c17ecef754f37199c5a38079b9bf9f9835602f1c490a0feb5",
-      "referenceSha256": "58e924b4fec3815c17ecef754f37199c5a38079b9bf9f9835602f1c490a0feb5"
-    },
-    {
-      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "7ce5b5e119c61143da8cffe1b9d1f76cbf5f42e667c45a8abab2adcea7687239",
-      "referenceSha256": "7ce5b5e119c61143da8cffe1b9d1f76cbf5f42e667c45a8abab2adcea7687239"
-    },
-    {
-      "path": "src/assets/illustrations/under-development.svg",
-      "classification": "IDENTICAL",
-      "expectedSha256": "d395ac9165a1ccf57869a1feca382f39e7d883e8a41662792880ec08bd10ff2f",
-      "referenceSha256": "d395ac9165a1ccf57869a1feca382f39e7d883e8a41662792880ec08bd10ff2f"
-    }
+  "path": "src/app/core/auth/guards/role.guard.ts",
+  "classification": "IDENTICAL",
+  "referenceSha256": "f8a507f1878591decb7723c4cd28e0ee16cceac704e5e7c5ae0c336d1177685b",
+  "expectedSha256": "f8a507f1878591decb7723c4cd28e0ee16cceac704e5e7c5ae0c336d1177685b"
+}
   ]
 }

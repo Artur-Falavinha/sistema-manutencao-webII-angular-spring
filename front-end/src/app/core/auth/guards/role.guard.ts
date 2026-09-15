@@ -6,7 +6,7 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class RoleGuard implements CanActivate {
 
   constructor(
     private authService: AuthService,
@@ -19,11 +19,19 @@ export class AuthGuard implements CanActivate {
 
     const currentUser = this.authService.currentUserValue;
 
-    if (currentUser) {
+    const expectedRole = route.data['expectedRole'];
+
+    if (!currentUser) {
+      this.router.navigate(['/login']);
+      return false;
+    }
+
+    if (currentUser.userAccess === expectedRole) {
       return true;
     }
 
-    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    console.error(`Acesso negado. Rota exige role '${expectedRole}', mas o usuário tem role '${currentUser.userAccess}'.`);
+    this.router.navigate(['/error-unauthorized']); 
     return false;
   }
 }
