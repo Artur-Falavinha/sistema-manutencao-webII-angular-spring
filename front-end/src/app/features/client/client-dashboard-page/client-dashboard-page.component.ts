@@ -34,6 +34,7 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
     'requestDate',
     'status',
     'description',
+    'acoes',
   ];
   dataSource = new MatTableDataSource<Request>();
 
