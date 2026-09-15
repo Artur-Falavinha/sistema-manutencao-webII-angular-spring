@@ -537,8 +537,8 @@
       "path": "src/app/app.config.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "6dd2bad99d504bbe54f4d85c431d9578e37b78c776e101c5a2e303888bdd8a72",
-      "reason": "Combina provideHttpClient + mockApiInterceptor com provideNgxMask, provideAnimationsAsync e provideToastr adicionados por outra janela em paralelo.",
+      "expectedSha256": "069005a459f46bdde9a00c4dcb894725c15381d3da80caeebf90f5eb59b23a99",
+      "reason": "Combina provideHttpClient + mockApiInterceptor com provideNgxMask, provideAnimationsAsync e provideToastr adicionados por outra janela em paralelo. Registra o locale pt-BR (LOCALE_ID + registerLocaleData) para corrigir datas e moedas em inglês nos pipes date/currency, achado na checagem de regressão do protótipo.",
       "removalBy": "2026-10-08"
     },
     {
@@ -822,11 +822,10 @@
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "57ee945c9524bc1f3b7955fc6281c20e046155f842c4f8253b329da3a54d4f88",
-      "expectedSha256": "2bdcf97547681a0d91e929150490087d2a783f310341d736e5a3706335417e4d",
-      "reason": "Adapta temporariamente o dashboard aos serviços em memória, remove dependências de autenticação e layout ainda ausentes e exibe a descrição simulada no lugar das ações reservadas para 03/09 e 10/09.",
-      "removalBy": "2026-10-08"
+      "expectedSha256": "0753909c6ee8058e8443b98d63e64af0dd7a0b592e7ce9a71063942297cb7f8a",
+      "reason": "Correção de regressão: displayedColumns tinha ficado sem 'acoes' desde a época em que RF005-RF010 ainda não existiam (ver histórico da entrada), o que impedia qualquer navegação a partir do dashboard. 'acoes' foi restaurado agora que request-detail-page e payment-panel já existem (#20, #24); 'description' é mantido como coluna extra (UX), além do conjunto de colunas da referência."
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.html",
@@ -840,8 +839,8 @@
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "86adcbe415fe0b1139d18362ac4dd3a48f367c731eb386aa3e1faa6781cda8ec",
-      "expectedSha256": "11830ad0a00fc270951f5ba160c0f32ffd134dc7d7272af59a913cd2f1955962",
-      "reason": "Aplica tokens da identidade Oficina técnica, organiza busca e botão e adiciona rolagem controlada e layout responsivo para 360, 768 e 1440 px."
+      "expectedSha256": "73e1fa5c7eac30f592c01faa39061f34e6f4ce5a26281aad80ee00f9ed07ea9f",
+      "reason": "Aplica tokens da identidade Mant, organiza busca e botão e adiciona rolagem controlada e layout responsivo para 360, 768 e 1440 px. Correções de regressão: título heading_1 (44px) desproporcional reduzido para heading_3; overflow horizontal real (~96px) em telas de notebook (1024-1366px) corrigido com flex-wrap e flex-shrink:0 no botão/título; altura do botão igualada aos 56px do mat-form-field; padding adicionado ao container, que grudava no topo/bordas; e cabeçalho da coluna 'Ações' centralizado para alinhar com os botões da coluna."
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.spec.ts",
@@ -858,9 +857,12 @@
     },
     {
       "path": "src/app/features/client/new-request-page/new-request-page.component.html",
-      "classification": "IDENTICAL",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5",
-      "expectedSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5"
+      "expectedSha256": "a432040db5504df77bead70c89d8a296174b5168c6d7e779eb1a6e7bfcf77906",
+      "reason": "Remove o parágrafo de dica \"* Campo de preenchimento obrigatório\": nenhum campo do formulário deixa de ser obrigatório (validação e required preservados), é só o texto auxiliar.",
+      "decisionDate": "2026-09-14",
+      "requirement": "RF004"
     },
     {
       "path": "src/app/features/client/new-request-page/new-request-page.component.css",
