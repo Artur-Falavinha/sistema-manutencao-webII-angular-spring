@@ -3,7 +3,8 @@ import { PageNotFoundComponent } from "./core/layout/page-not-found/page-not-fou
 import { UnauthorizedPageComponent } from "./core/layout/unauthorized-page/unauthorized-page.component";
 import { LoginPageComponent } from "./core/auth/pages/login-page/login-page.component";
 import { SignupPageComponent } from "./core/auth/pages/signup-page/signup-page.component";
-import { authGuard } from "./core/auth/guards/auth.guard";
+import { AuthGuard } from './core/auth/guards/auth.guard';
+import { RoleGuard } from './core/auth/guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -23,21 +24,21 @@ export const routes: Routes = [
     path: "error-unauthorized",
     component: UnauthorizedPageComponent,
   },
-  {
-    path: "employee",
-    canActivate: [authGuard],
-    data: { requiredRole: "employee" },
+    {
+    path: 'employee',
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'employee' },
     loadChildren: () =>
-      import("./features/employee/employee.routes").then(
+      import('./features/employee/employee.routes').then(
         (module) => module.employeeRoutes,
       ),
   },
   {
-    path: "client",
-    canActivate: [authGuard],
-    data: { requiredRole: "client" },
+    path: 'client',
+    canActivate: [AuthGuard, RoleGuard],
+    data: { expectedRole: 'client' },
     loadChildren: () =>
-      import("./features/client/client.routes").then(
+      import('./features/client/client.routes').then(
         (module) => module.clientRoutes,
       ),
   },
