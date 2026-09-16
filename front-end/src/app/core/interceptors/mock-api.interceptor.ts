@@ -3,39 +3,58 @@ import { of } from 'rxjs';
 import { delay } from 'rxjs/operators';
 import { MOCK_STATUSES } from '../../shared/mocks/status.mock';
 import { MOCK_CATEGORIES } from '../../shared/mocks/category.mock';
-import { MOCK_EMPLOYEE_REQUESTS } from '../../shared/mocks/maintenance-request.mock';
 import { MOCK_REQUESTS } from '../../shared/mocks/request.mock';
 import { MOCK_CLIENTS } from '../../shared/mocks/client.mock';
 import { MOCK_EMPLOYEES } from '../../shared/mocks/employee.mock';
-import { MOCK_BUDGETS } from '../../shared/mocks/budget.mock';
+import { MOCK_BUDGETS, MOCK_SERVICE_ITEMS } from '../../shared/mocks/budget.mock';
 import { MOCK_REQUEST_HISTORY } from '../../shared/mocks/request-history.mock';
 import { Category } from '../../shared/models/category';
 import { Employee } from '../../shared/models/employee';
 import { Request } from '../../shared/models/request';
-import { ClientRequestDetailDTO, MaintenanceRequestCreateDTO, MaintenanceRequestResponseDTO, RejectionDTO } from '../../shared/models/maintenance-request.models';
+import { Budget, BudgetCreateDTO } from '../../shared/models/budget.model';
+import { MaintenanceRecordDTO } from '../../shared/models/maintenance-record.model';
+import {
+  ClientRequestDetailDTO,
+  EmployeeRequestDetailDTO,
+  MaintenanceRequestCreateDTO,
+  MaintenanceRequestResponseDTO,
+  RejectionDTO,
+} from '../../shared/models/maintenance-request.models';
 
 /**
  * SCAFFOLD TEMPORÁRIO — declarado no plano do semestre.
  *
  * Intercepta chamadas HTTP feitas pelos services migrados literalmente
- * (status.service.ts, maintenance-request.service.ts, category.service.ts)
- * e devolve dados simulados no shape real dos DTOs. Nenhum desses services
- * foi alterado — a "troca de motor" acontece só aqui.
+ * (status.service.ts, maintenance-request.service.ts, category.service.ts,
+ * service-item.service.ts) e devolve dados simulados no shape real dos DTOs.
+ * Nenhum desses services foi alterado — a "troca de motor" acontece só aqui.
  *
- * Rotas cobertas hoje (RF011/RF012, visão funcionário; RF001, RF003-RF010, visão cliente;
- * RF017/RF018, CRUD simulado de categorias e funcionários):
- *   GET  /status-enum                      -> MOCK_STATUSES
- *   GET  /requests/employee                -> MOCK_EMPLOYEE_REQUESTS
- *   GET  /requests/client                  -> MOCK_REQUESTS do cliente logado
- *   GET  /requests/client/{id}             -> detalhe + orçamentos + histórico
- *   POST /requests                         -> cria em memória e devolve o DTO criado
- *   POST /requests/client/{id}/approve     -> muda o estado para APROVADA
- *   POST /requests/client/{id}/reject      -> muda o estado para REJEITADA, grava o motivo
- *   POST /requests/client/{id}/rescue      -> muda o estado de REJEITADA para APROVADA
- *   POST /requests/client/{id}/pay         -> muda o estado para PAGA
- *   GET  /categories                       -> lista simulada de categorias
- *   POST/PUT/DELETE /categories            -> CRUD simulado de categorias
- *   GET/POST/PUT/DELETE /employees         -> CRUD simulado de funcionários
+ * O lado funcionário e o lado cliente agora compartilham o MESMO estado em
+ * memória (mockRequests) — uma ação de um lado (ex: cliente paga) reflete
+ * no outro (ex: funcionário pode finalizar). Antes disso, o funcionário
+ * usava um array estático separado (MOCK_EMPLOYEE_REQUESTS), aposentado
+ * nesta janela.
+ *
+ * Rotas cobertas hoje (RF001, RF003-RF010 visão cliente; RF011-RF016 visão
+ * funcionário; RF017/RF018 CRUD simulado de categorias e funcionários):
+ *   GET  /status-enum                          -> MOCK_STATUSES
+ *   GET  /services                             -> MOCK_SERVICE_ITEMS
+ *   GET  /requests/employee                    -> lista (deriva de mockRequests)
+ *   GET  /requests/employee/{id}               -> detalhe completo do funcionário
+ *   POST /requests/employee/{id}/redirect      -> reatribui o funcionário responsável
+ *   POST /requests/employee/{id}/budget        -> registra orçamento, muda para ORÇADA
+ *   POST /requests/employee/{id}/maintenance   -> registra manutenção
+ *   POST /requests/employee/{id}/finalize      -> muda o estado para FINALIZADA
+ *   GET  /requests/client                      -> MOCK_REQUESTS do cliente logado
+ *   GET  /requests/client/{id}                 -> detalhe + orçamentos + histórico
+ *   POST /requests                             -> cria em memória e devolve o DTO criado
+ *   POST /requests/client/{id}/approve         -> muda o estado para APROVADA
+ *   POST /requests/client/{id}/reject          -> muda o estado para REJEITADA, grava o motivo
+ *   POST /requests/client/{id}/rescue          -> muda o estado de REJEITADA para APROVADA
+ *   POST /requests/client/{id}/pay             -> muda o estado para PAGA
+ *   GET  /categories                           -> lista simulada de categorias
+ *   POST/PUT/DELETE /categories                -> CRUD simulado de categorias
+ *   GET/POST/PUT/DELETE /employees              -> CRUD simulado de funcionários
  *
  * Remover este arquivo e a linha correspondente em app.config.ts quando os
  * services HTTP reais forem integrados (marco 08/10 para requests,
@@ -46,11 +65,15 @@ const LOGGED_IN_CLIENT_ID = 1;
 let mockRequests: Request[];
 let mockCategories: Category[];
 let mockEmployees: Employee[];
+let mockBudgets: Budget[];
+let mockMaintenanceRecords: Record<number, MaintenanceRecordDTO>;
 
 export function resetMockApiState(): void {
   mockRequests = MOCK_REQUESTS.map((request) => ({ ...request }));
   mockCategories = MOCK_CATEGORIES.map((category) => ({ ...category }));
   mockEmployees = MOCK_EMPLOYEES.map((employee) => ({ ...employee }));
+  mockBudgets = MOCK_BUDGETS.map((budget) => ({ ...budget }));
+  mockMaintenanceRecords = {};
 }
 
 resetMockApiState();
@@ -84,8 +107,28 @@ function toDetailDTO(request: Request): ClientRequestDetailDTO {
     status: status ?? { id: request.statusId, nome: request.status ?? '', cor: '' },
     categoryName: category?.name ?? '',
     rejectionReason: request.rejectionReason,
-    budgets: MOCK_BUDGETS.filter((budget) => budget.requestId === request.id),
+    budgets: mockBudgets.filter((budget) => budget.requestId === request.id),
     history: MOCK_REQUEST_HISTORY[request.id] ?? [],
+  };
+}
+
+function toEmployeeDetailDTO(request: Request): EmployeeRequestDetailDTO {
+  const status = MOCK_STATUSES.find((s) => s.id === request.statusId);
+  const category = MOCK_CATEGORIES.find((c) => c.id === request.categoryId);
+  const client = MOCK_CLIENTS.find((c) => c.id === request.clientId);
+  const assignedEmployee = mockEmployees.find((e) => e.id === request.employeeId);
+
+  return {
+    id: request.id,
+    equipmentName: request.equipmentName,
+    defectDescription: request.equipmentDescription,
+    requestDate: request.requestDate.toISOString(),
+    status: status ?? { id: request.statusId, nome: request.status ?? '', cor: '' },
+    categoryName: category?.name ?? '',
+    client: client!,
+    assignedEmployeeName: request.employeeId ? assignedEmployee?.name : undefined,
+    budgets: mockBudgets.filter((budget) => budget.requestId === request.id),
+    maintenanceRecord: mockMaintenanceRecords[request.id],
   };
 }
 
@@ -106,13 +149,32 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
   const rescueMatch = req.url.match(/\/requests\/client\/(\d+)\/rescue$/);
   const payMatch = req.url.match(/\/requests\/client\/(\d+)\/pay$/);
 
+  const employeeDetailMatch = req.url.match(/\/requests\/employee\/(\d+)$/);
+  const redirectMatch = req.url.match(/\/requests\/employee\/(\d+)\/redirect$/);
+  const budgetMatch = req.url.match(/\/requests\/employee\/(\d+)\/budget$/);
+  const maintenanceMatch = req.url.match(/\/requests\/employee\/(\d+)\/maintenance$/);
+  const finalizeMatch = req.url.match(/\/requests\/employee\/(\d+)\/finalize$/);
+
   if (req.method === 'GET') {
     if (req.url.endsWith('/status-enum')) {
       return of(new HttpResponse({ status: 200, body: MOCK_STATUSES })).pipe(delay(150));
     }
 
+    if (req.url.endsWith('/services')) {
+      return of(new HttpResponse({ status: 200, body: MOCK_SERVICE_ITEMS })).pipe(delay(150));
+    }
+
+    if (employeeDetailMatch) {
+      const request = mockRequests.find((r) => r.id === Number(employeeDetailMatch[1]));
+
+      return request
+        ? of(new HttpResponse({ status: 200, body: toEmployeeDetailDTO(request) })).pipe(delay(150))
+        : of(new HttpResponse({ status: 404, body: null })).pipe(delay(150));
+    }
+
     if (req.url.endsWith('/requests/employee')) {
-      return of(new HttpResponse({ status: 200, body: MOCK_EMPLOYEE_REQUESTS })).pipe(delay(150));
+      const employeeResponses = mockRequests.map(toResponseDTO);
+      return of(new HttpResponse({ status: 200, body: employeeResponses })).pipe(delay(150));
     }
 
     if (clientDetailMatch) {
@@ -193,6 +255,70 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
       const request = mockRequests.find((r) => r.id === id);
 
       return of(new HttpResponse({ status: 200, body: request ? toResponseDTO(request) : null })).pipe(delay(150));
+    }
+
+    if (redirectMatch) {
+      const requestId = Number(redirectMatch[1]);
+      const targetEmployeeId = Number(req.params.get('targetEmployeeId'));
+
+      mockRequests = mockRequests.map((r) =>
+        r.id === requestId ? { ...r, employeeId: targetEmployeeId } : r
+      );
+
+      const updated = mockRequests.find((r) => r.id === requestId);
+      return of(new HttpResponse({ status: 200, body: updated ? toResponseDTO(updated) : null })).pipe(delay(150));
+    }
+
+    if (budgetMatch) {
+      const requestId = Number(budgetMatch[1]);
+      const payload = req.body as BudgetCreateDTO;
+      const chosenServices = MOCK_SERVICE_ITEMS.filter((s) => payload.serviceIds.includes(s.id));
+      const total = payload.totalValue ?? chosenServices.reduce((acc, s) => acc + s.valorServico, 0);
+      const requestBeingBudgeted = mockRequests.find((r) => r.id === requestId);
+
+      const budget: Budget = {
+        id: nextId(mockBudgets),
+        requestId,
+        employeeId: requestBeingBudgeted?.employeeId ?? 0,
+        total,
+        services: chosenServices.map((s) => s.nome).join(', '),
+        serviceIds: payload.serviceIds,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      mockBudgets = [...mockBudgets, budget];
+      updateRequestStatus(requestId, 'ORÇADA');
+
+      const updated = mockRequests.find((r) => r.id === requestId);
+      return of(new HttpResponse({ status: 201, body: updated ? toResponseDTO(updated) : null })).pipe(delay(150));
+    }
+
+    if (maintenanceMatch) {
+      const requestId = Number(maintenanceMatch[1]);
+      const payload = req.body as MaintenanceRecordDTO;
+      const existing = mockMaintenanceRecords[requestId];
+
+      mockMaintenanceRecords = {
+        ...mockMaintenanceRecords,
+        [requestId]: {
+          id: existing?.id ?? Object.keys(mockMaintenanceRecords).length + 1,
+          maintenanceDescription: payload.maintenanceDescription,
+          clientGuidelines: payload.clientGuidelines,
+          finishedAt: new Date().toISOString(),
+        },
+      };
+
+      const updated = mockRequests.find((r) => r.id === requestId);
+      return of(new HttpResponse({ status: 200, body: updated ? toResponseDTO(updated) : null })).pipe(delay(150));
+    }
+
+    if (finalizeMatch) {
+      const requestId = Number(finalizeMatch[1]);
+      updateRequestStatus(requestId, 'FINALIZADA');
+
+      const updated = mockRequests.find((r) => r.id === requestId);
+      return of(new HttpResponse({ status: 200, body: updated ? toResponseDTO(updated) : null })).pipe(delay(150));
     }
   }
 

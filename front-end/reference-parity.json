@@ -515,8 +515,8 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "287f8ec1ba71b62a6d581b0f16f039dde746861e59fd30ec6430abb75d4653f9",
-      "reason": "Intercepta os services literais e devolve dados simulados: CRUD de funcionários e categorias (RF017/RF018), e GET /requests/client/{id}, POST /requests/client/{id}/approve, /reject, /rescue e /pay (RF005-RF010), sem comunicação com o backend. Remover quando o backend real for integrado.",
+      "expectedSha256": "f87238e908b3af283a922c34a02bcb6060de967f2e38c7969ed1bb2711bfaffa",
+      "reason": "Intercepta os services literais e devolve dados simulados: CRUD de funcionários e categorias (RF017/RF018), fluxo cliente (RF005-RF010) e fluxo funcionário RF011-RF016 (lista unificada, detalhe, redirect, budget, maintenance, finalize e GET /services), sem comunicação com o backend. Remover quando o backend real for integrado.",
       "removalBy": "2026-10-08"
     },
     {
