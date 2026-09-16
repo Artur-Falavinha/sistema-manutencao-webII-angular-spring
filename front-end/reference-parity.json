@@ -15,7 +15,8 @@
       "removedReferencePaths": [
         "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.ts",
         "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.html",
-        "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.css"
+        "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.css",
+        "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.spec.ts"
       ]
     },
     {
@@ -92,6 +93,22 @@
       "affectedReferencePaths": [
         "src/app/features/employee/pages/reports-page/reports-page.component.ts",
         "src/app/features/employee/pages/reports-page/reports-page.component.html"
+      ]
+    },
+    {
+      "date": "2026-09-16",
+      "requirement": "RF001",
+      "decision": "Substituir o componente successful-signup e o modal de cadastro por toast e redirecionamento automatico para /login.",
+      "reason": "O enunciado exige autocadastro funcional, nao um componente dedicado de sucesso; o toast alinha ao feedback visual dos demais fluxos simulados do prototipo.",
+      "removedReferencePaths": [
+        "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.ts",
+        "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.html",
+        "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.css",
+        "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.spec.ts"
+      ],
+      "affectedReferencePaths": [
+        "src/app/core/auth/pages/signup-page/signup-page.component.ts",
+        "src/app/core/auth/pages/signup-page/signup-page.component.html"
       ]
     }
   ],
@@ -231,48 +248,27 @@
     },
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.html",
-      "classification": "IDENTICAL",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "5037632d727e5b6a0db95ad7940f64a0894ed7143f741a7cf7576dcf3e159a58",
-      "expectedSha256": "5037632d727e5b6a0db95ad7940f64a0894ed7143f741a7cf7576dcf3e159a58"
+      "expectedSha256": "d47027389a351d432602c2f3532df128e9ae22902bb19013d4f090973165dd84",
+      "reason": "Remove o modal de sucesso embutido e mantem somente o formulario de autocadastro exigido por RF001.",
+      "decisionDate": "2026-09-16",
+      "requirement": "RF001"
     },
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a3238eb745118493c2ba23689ba07a30a7eb4f969847d4ff9de9a49fc2395250",
-      "expectedSha256": "8802871f849eadd2c0a41f3b0f34ed49cc2e0d54f1804368da406d6c4c29dc26",
-      "reason": "Adiciona somente provideRouter exigido para instanciar o SignupPageComponent com o serviço de autenticação simulado no TestBed."
+      "expectedSha256": "8b9be477e45e909c88cf4d7a551aac15c942b6a0b6ba5a1ad363eb414fd6ab08",
+      "reason": "Adiciona provideRouter e mock de ToastService exigidos para instanciar o SignupPageComponent no TestBed."
     },
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
-      "expectedSha256": "0cdb59ce886fabf807ea060b948db91ae2e7690dd990812552b9cdd4f8dde84d",
-      "reason": "Scaffold temporário do autocadastro: envia o payload para o AuthService simulado e mantém o retorno visual, sem backend ou ViaCEP nesta janela. Restaura o bloco de erro (console.error) presente na referência, que havia sido omitido na adaptação anterior.",
+      "expectedSha256": "3dc29c19dd3b01ebfc29d551e1d7b9f2abe61839ce3a3d6565f6c06b12c8dc42",
+      "reason": "Scaffold temporario do autocadastro: envia o payload para o AuthService simulado, exibe toast de sucesso e redireciona para /login, sem backend ou ViaCEP nesta janela.",
       "removalBy": "2026-10-08"
-    },
-    {
-      "path": "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.css",
-      "classification": "IDENTICAL",
-      "expectedSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "referenceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.html",
-      "classification": "IDENTICAL",
-      "expectedSha256": "3eabd4072e723137738035144c747918fd1836005ae9399aa50853b270b2e957",
-      "referenceSha256": "3eabd4072e723137738035144c747918fd1836005ae9399aa50853b270b2e957"
-    },
-    {
-      "path": "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.spec.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "7271fb2a84c1b1ffd72bd96ac178bbae5ddefe050d9d487a528fcc8b13d90b66",
-      "referenceSha256": "7271fb2a84c1b1ffd72bd96ac178bbae5ddefe050d9d487a528fcc8b13d90b66"
-    },
-    {
-      "path": "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "f1f31235bf2a8960ca1a02309da28966e406fc68fcf0593740040853d4f281b9",
-      "referenceSha256": "f1f31235bf2a8960ca1a02309da28966e406fc68fcf0593740040853d4f281b9"
     },
     {
       "path": "src/app/core/auth/services/auth.service.spec.ts",
@@ -912,30 +908,6 @@
       "classification": "IDENTICAL",
       "referenceSha256": "c0eacb6e3a594779685f99658799bd476d364a518b6bb5dd96439b38f0bb9e1c",
       "expectedSha256": "c0eacb6e3a594779685f99658799bd476d364a518b6bb5dd96439b38f0bb9e1c"
-    },
-    {
-      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.css",
-      "classification": "IDENTICAL",
-      "expectedSha256": "54df946597e40054b5c4624cf742cb3e89a9ae7ddb207419fde15a22c048f96b",
-      "referenceSha256": "54df946597e40054b5c4624cf742cb3e89a9ae7ddb207419fde15a22c048f96b"
-    },
-    {
-      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.html",
-      "classification": "IDENTICAL",
-      "expectedSha256": "cb1110753d17d27e308cc69deb8a68ba981b865f6577befc7f4bb312ef9463f7",
-      "referenceSha256": "cb1110753d17d27e308cc69deb8a68ba981b865f6577befc7f4bb312ef9463f7"
-    },
-    {
-      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.spec.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "58e924b4fec3815c17ecef754f37199c5a38079b9bf9f9835602f1c490a0feb5",
-      "referenceSha256": "58e924b4fec3815c17ecef754f37199c5a38079b9bf9f9835602f1c490a0feb5"
-    },
-    {
-      "path": "src/app/features/employee/pages/view-requets-page/components/status-column/status-column.component.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "7ce5b5e119c61143da8cffe1b9d1f76cbf5f42e667c45a8abab2adcea7687239",
-      "referenceSha256": "7ce5b5e119c61143da8cffe1b9d1f76cbf5f42e667c45a8abab2adcea7687239"
     },
     {
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.css",

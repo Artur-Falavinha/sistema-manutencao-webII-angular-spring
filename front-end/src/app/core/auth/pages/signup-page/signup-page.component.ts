@@ -9,9 +9,8 @@ import {
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from '../../services/auth.service';
-import { AppSuccessModalComponent } from '../../../../shared/components/modal-mensagem/app-success-modal';
+import { ToastService } from '../../../services/toast.service';
 import { RegisterRequest } from '../../../../shared/models/register-request';
 import { CustomValidators } from '../../../../shared/utils/cpf-validator';
 
@@ -22,8 +21,6 @@ import { CustomValidators } from '../../../../shared/utils/cpf-validator';
     ReactiveFormsModule,
     MatStepperModule,
     MatIconModule,
-    MatDialogModule,
-    AppSuccessModalComponent,
   ],
   templateUrl: './signup-page.component.html',
   styleUrls: ['./signup-page.component.css'],
@@ -31,12 +28,12 @@ import { CustomValidators } from '../../../../shared/utils/cpf-validator';
 export class SignupPageComponent {
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
-  showModal = false;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toast: ToastService,
   ) {}
 
   ngOnInit(): void {
@@ -79,13 +76,17 @@ export class SignupPageComponent {
       };
 
       this.authService.signup(requestData).subscribe({
-  next: () => {
-    this.showModal = true;
-  },
-  error: (err) => {
-    console.error('Erro no cadastro:', err);
-  },
-});
+        next: () => {
+          this.toast.success(
+            'Cadastro concluído',
+            'Conta criada com sucesso. Faça login com a senha enviada ao seu e-mail.',
+          );
+          this.router.navigate(['/login']);
+        },
+        error: (err) => {
+          console.error('Erro no cadastro:', err);
+        },
+      });
     } else {
       this.firstFormGroup.markAllAsTouched();
       this.secondFormGroup.markAllAsTouched();
