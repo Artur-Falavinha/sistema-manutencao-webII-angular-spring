@@ -749,8 +749,8 @@
       "path": "src/app/features/employee/employee.routes.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "0bef3379ada9e33d45c7c653e4b124b642fa333170d915167efd151f196c7127",
-      "expectedSha256": "f46af09b226d75d6802ecb9221ead9f0f44fc3dbda79665ba016a52d258ee946",
-      "reason": "Preserva as rotas já integradas e aponta o dashboard de funcionário para o componente literal migrado nesta etapa; as demais rotas da referência entram nas janelas futuras.",
+      "expectedSha256": "4dec7f0ef28588a58f263088b077519d420446741d354ce9a624cf388b51a3b9",
+      "reason": "Preserva as rotas já integradas, inclui budget-delivery/:id para RF011–RF016 e aponta o dashboard de funcionário para o componente literal migrado nesta etapa.",
       "removalBy": "2026-10-29"
     },
     {
@@ -762,8 +762,8 @@
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
       "classification": "IDENTICAL",
-      "referenceSha256": "dfd2a37fc3b6880505e1e13e94e0052a3c4ba26a33333fa3a21eca9b59416b12",
-      "expectedSha256": "dfd2a37fc3b6880505e1e13e94e0052a3c4ba26a33333fa3a21eca9b59416b12"
+      "referenceSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f",
+      "expectedSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f"
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.spec.ts",
@@ -950,8 +950,8 @@
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "64c1f22bdc89318d17f551ee10e76d90b744d1cdbfdc0da4a03333cb8338e761",
-      "expectedSha256": "583a5ae28c75154d0e08bc5004912687b608f53de5eb2154164d6d139e54d394",
-      "reason": "Mantém uma única listagem de RF013, preserva busca e filtro por categoria e substitui os controles customizados por Angular Material.",
+      "expectedSha256": "b295781facd9a5e5d95c0f2cc6ff4228689b77bef2c8f493a65dfd339d1becbb",
+      "reason": "Mantém uma única listagem de RF013, preserva busca e filtro por categoria, usa Angular Material e adiciona clique na linha para navegar ao fluxo budget-delivery.",
       "decisionDate": "2026-09-01",
       "requirement": "RF013"
     },
@@ -965,8 +965,8 @@
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.ts",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "f274ebd55bb6b3b3ea03e0600c6dde8e2c6acb16dae35de3e924757da9d29994",
-      "expectedSha256": "499b72d17776395a6cb8ae60d55474e331f30ad18794e33b299223de2ca52bb9",
-      "reason": "Mantém somente a listagem de RF013, preserva a busca e o filtro por categoria incorporados à main e usa controles Angular Material sem alterar a fonte de dados.",
+      "expectedSha256": "e61b22fe218fa1cd022d5f85595ff8265c6e5811d9458846dcef4bddb9cb2cfe",
+      "reason": "Mantém somente a listagem de RF013, preserva a busca e o filtro por categoria incorporados à main, usa controles Angular Material e navega para /employee/budget-delivery/:id ao selecionar uma solicitação.",
       "decisionDate": "2026-09-01",
       "requirement": "RF013"
     },
