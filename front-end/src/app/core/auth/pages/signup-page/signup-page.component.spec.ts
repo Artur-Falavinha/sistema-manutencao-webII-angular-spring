@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
 import { SignupPageComponent } from './signup-page.component';
+import { ToastService } from '../../../services/toast.service';
 
 describe('SignupPageComponent', () => {
   let component: SignupPageComponent;
@@ -10,7 +11,13 @@ describe('SignupPageComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SignupPageComponent],
-      providers: [provideRouter([])],
+      providers: [
+        provideRouter([]),
+        {
+          provide: ToastService,
+          useValue: jasmine.createSpyObj('ToastService', ['success', 'error', 'info', 'warn']),
+        },
+      ],
     })
     .compileComponents();
 
