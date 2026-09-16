@@ -1,4 +1,5 @@
 import { Component, computed, effect, inject, signal, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,6 +31,7 @@ export class ViewRequestsPageComponent {
   @ViewChild(MatSort) sort!: MatSort;
 
   private requestService = inject(MaintenanceRequestService);
+  private router = inject(Router);
 
   requests = toSignal(this.requestService.getAllEmployeeRequests(), { initialValue: [] as Request[] });
   searchTerm = signal('');
@@ -78,6 +80,10 @@ export class ViewRequestsPageComponent {
 
   clearCategoryFilter(): void {
     this.selectedCategory.set(null);
+  }
+
+  openRequest(request: Request): void {
+    this.router.navigate(['/employee/budget-delivery', request.id]);
   }
 
   ngAfterViewInit(): void {
