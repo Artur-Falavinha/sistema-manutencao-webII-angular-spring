@@ -100,8 +100,8 @@
       "path": "angular.json",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "9364d6e11ff00d652294412e0dddfa546061f6f57a75ab9a51175a11b2ddf210",
-      "expectedSha256": "52dbd3227230748c028327acbbd8cb1e210832c38450045fd741edd352c14c08",
-      "reason": "Mantém a pasta pública, inclui src/assets e registra a configuração global de testes necessária aos componentes standalone."
+      "expectedSha256": "cee42693882e5e1024dbbb544d91442e0e336bf9ed4778b52a2d3a14f642ba9c",
+      "reason": "Mantém a pasta pública, inclui src/assets, registra a configuração global de testes e eleva o budget anyComponentStyle para 10 kB para acomodar o CSS literal de budget-delivery (~8,9 kB) sem alterar o arquivo da referência."
     },
     {
       "path": "package-lock.json",
