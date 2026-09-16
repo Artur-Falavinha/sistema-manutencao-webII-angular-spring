@@ -445,7 +445,7 @@
       "path": "src/app/shared/mocks/request.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "5f5849112e9b33cf2b771a5ef5843acda2d089b5b6e210e9f0374a61374094ba",
+      "expectedSha256": "8ea224e3b850d453564a9ab1ddeb2df9bed5f43b86ed6a544d545834c13ed0b5",
       "reason": "Fixture temporária de solicitações para o protótipo sem backend; a referência gera esses dados em runtime via localStorage.",
       "removalBy": "2026-10-08"
     },
@@ -453,7 +453,7 @@
       "path": "src/app/shared/mocks/budget.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "bb795942bfb14bacf996b244876a16c8e7e44805568c640d031951a8a138b7cf",
+      "expectedSha256": "8b856073739b1c4dff7bb3f6ea18659173e681099a5a8c2ce99798ef26170cc4",
       "reason": "Fixture temporária de orçamentos para o protótipo sem backend; a referência gera esses dados em runtime via localStorage.",
       "removalBy": "2026-10-08"
     },
@@ -461,7 +461,7 @@
       "path": "src/app/shared/mocks/request-history.mock.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "08cc431309312aa1be6ae1a517f7c2928254d9fadf6a1458dc3cb4a3628b03ec",
+      "expectedSha256": "172ca84d82f8970c5e00773f06c25df247518b236d5ed1104ec4748d2beb6046",
       "reason": "Fixture temporária de histórico para o protótipo sem backend; sem arquivo equivalente na referência.",
       "removalBy": "2026-10-08"
     },
