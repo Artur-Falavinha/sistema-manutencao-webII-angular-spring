@@ -16,6 +16,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     provideRouter(routes),
+    // mockApiInterceptor é scaffold temporário — remover junto com o
+    // interceptor quando o backend real for integrado (ver core/interceptors).
     provideHttpClient(withInterceptors([mockApiInterceptor])),
     provideNgxMask(),
     provideAnimationsAsync(),

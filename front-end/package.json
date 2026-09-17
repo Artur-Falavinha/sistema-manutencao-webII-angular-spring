@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "verify:parity": "node --test tools/verify-parity.spec.mjs && node tools/verify-parity.mjs"
   },
   "private": true,
   "dependencies": {
