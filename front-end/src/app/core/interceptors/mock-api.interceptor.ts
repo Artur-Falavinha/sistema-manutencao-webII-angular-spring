@@ -21,45 +21,6 @@ import {
   RejectionDTO,
 } from '../../shared/models/maintenance-request.models';
 
-/**
- * SCAFFOLD TEMPORÁRIO — declarado no plano do semestre.
- *
- * Intercepta chamadas HTTP feitas pelos services migrados literalmente
- * (status.service.ts, maintenance-request.service.ts, category.service.ts,
- * service-item.service.ts) e devolve dados simulados no shape real dos DTOs.
- * Nenhum desses services foi alterado — a "troca de motor" acontece só aqui.
- *
- * O lado funcionário e o lado cliente agora compartilham o MESMO estado em
- * memória (mockRequests) — uma ação de um lado (ex: cliente paga) reflete
- * no outro (ex: funcionário pode finalizar). Antes disso, o funcionário
- * usava um array estático separado (MOCK_EMPLOYEE_REQUESTS), aposentado
- * nesta janela.
- *
- * Rotas cobertas hoje (RF001, RF003-RF010 visão cliente; RF011-RF016 visão
- * funcionário; RF017/RF018 CRUD simulado de categorias e funcionários):
- *   GET  /status-enum                          -> MOCK_STATUSES
- *   GET  /services                             -> MOCK_SERVICE_ITEMS
- *   GET  /requests/employee                    -> lista (deriva de mockRequests)
- *   GET  /requests/employee/{id}               -> detalhe completo do funcionário
- *   POST /requests/employee/{id}/redirect      -> reatribui o funcionário responsável
- *   POST /requests/employee/{id}/budget        -> registra orçamento, muda para ORÇADA
- *   POST /requests/employee/{id}/maintenance   -> registra manutenção
- *   POST /requests/employee/{id}/finalize      -> muda o estado para FINALIZADA
- *   GET  /requests/client                      -> MOCK_REQUESTS do cliente logado
- *   GET  /requests/client/{id}                 -> detalhe + orçamentos + histórico
- *   POST /requests                             -> cria em memória e devolve o DTO criado
- *   POST /requests/client/{id}/approve         -> muda o estado para APROVADA
- *   POST /requests/client/{id}/reject          -> muda o estado para REJEITADA, grava o motivo
- *   POST /requests/client/{id}/rescue          -> muda o estado de REJEITADA para APROVADA
- *   POST /requests/client/{id}/pay             -> muda o estado para PAGA
- *   GET  /categories                           -> lista simulada de categorias
- *   POST/PUT/DELETE /categories                -> CRUD simulado de categorias
- *   GET/POST/PUT/DELETE /employees              -> CRUD simulado de funcionários
- *
- * Remover este arquivo e a linha correspondente em app.config.ts quando os
- * services HTTP reais forem integrados (marco 08/10 para requests,
- * 15/10 para o restante do backend).
- */
 const LOGGED_IN_CLIENT_ID = 1;
 
 let mockRequests: Request[];

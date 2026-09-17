@@ -1,10 +1,5 @@
 import { MaintenanceRequestResponseDTO } from '../models/maintenance-request.models';
 
-/**
- * SCAFFOLD TEMPORÁRIO — dados simulados no shape real de MaintenanceRequestResponseDTO.
- * Consumido apenas pelo MockApiInterceptor. Remover quando o backend
- * de solicitações for integrado (marco 08/10, RF011-RF016).
- */
 export const MOCK_EMPLOYEE_REQUESTS: MaintenanceRequestResponseDTO[] = [
   {
     id: 1,
