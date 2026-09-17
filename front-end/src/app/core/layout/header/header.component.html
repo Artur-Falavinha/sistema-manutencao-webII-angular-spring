@@ -6,7 +6,7 @@
   </div>
 
   <div class="header-right">
-    <span class="body_medium">Olá {{ nomeDeUsuario }}</span>
+    <span class="body_medium">Olá {{ (currentUser$ | async)?.name }}</span>
 
     <div class="user-avatar">
       <mat-icon>account_circle</mat-icon>
