@@ -303,7 +303,7 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "f87238e908b3af283a922c34a02bcb6060de967f2e38c7969ed1bb2711bfaffa",
+      "expectedSha256": "16bc287369f4ac13e71af183a8a4808a915a84f49668900939e510e8de3b1292",
       "reason": "Intercepta os services literais e devolve dados simulados: CRUD de funcionários e categorias (RF017/RF018), fluxo cliente (RF005-RF010) e fluxo funcionário RF011-RF016 (lista unificada, detalhe, redirect, budget, maintenance, finalize e GET /services), sem comunicação com o backend. Remover quando o backend real for integrado.",
       "removalBy": "2026-10-08"
     },
@@ -418,12 +418,6 @@
       "expectedSha256": "8bb5fab2e668086b7966581af769063fa73f60a07f4a8593dfbb8544f3eb507b"
     },
     {
-      "path": "src/app/core/services/budget.service.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee",
-      "referenceSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee"
-    },
-    {
       "path": "src/app/core/services/busy.service.ts",
       "classification": "IDENTICAL",
       "expectedSha256": "567e8aa3295a01fead9d631ec4e0b93f7203a8362428982897b9b5956325b57a",
@@ -442,12 +436,6 @@
       "expectedSha256": "712d888f852686b76b43fce09bd70a558bc51baf900cf53cd6b8600ab273433e",
       "reason": "Implementação temporária usando os dados simulados (mocks) locais em memória para permitir a demonstração da janela sem comunicação com o backend.",
       "removalBy": "2026-10-29"
-    },
-    {
-      "path": "src/app/core/services/request-history.service.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "68921356a3b702f4ff78d99d96912abd959edff76c015bed420229f412896bd2",
-      "referenceSha256": "68921356a3b702f4ff78d99d96912abd959edff76c015bed420229f412896bd2"
     },
     {
       "path": "src/app/core/services/service-item.service.ts",
@@ -770,9 +758,10 @@
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89",
-      "expectedSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89"
+      "expectedSha256": "b6e99daf3d9b34f1a69bc1ba7576fbff9d1959148236808850e8c9cb52858f3a",
+      "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10."
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.css",
@@ -1165,9 +1154,10 @@
     },
     {
       "path": "src/app/shared/models/budget.model.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "911dafaf82bd35e5685f2b02649c8320f600f14715655ecd0c4ef20507298fb0",
-      "expectedSha256": "911dafaf82bd35e5685f2b02649c8320f600f14715655ecd0c4ef20507298fb0"
+      "expectedSha256": "4f3878442e28a84d302f517702d0038b90d699d065115c9e8757358eed509e3a",
+      "reason": "Renomeia BudgetCreateDTO.totalValue para total, alinhando com o campo `total` de BudgetDTO no back-end. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10."
     },
     {
       "path": "src/app/shared/models/category.ts",

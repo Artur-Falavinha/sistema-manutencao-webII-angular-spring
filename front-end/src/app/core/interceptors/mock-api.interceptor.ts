@@ -273,7 +273,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
       const requestId = Number(budgetMatch[1]);
       const payload = req.body as BudgetCreateDTO;
       const chosenServices = MOCK_SERVICE_ITEMS.filter((s) => payload.serviceIds.includes(s.id));
-      const total = payload.totalValue ?? chosenServices.reduce((acc, s) => acc + s.valorServico, 0);
+      const total = payload.total ?? chosenServices.reduce((acc, s) => acc + s.valorServico, 0);
       const requestBeingBudgeted = mockRequests.find((r) => r.id === requestId);
 
       const budget: Budget = {

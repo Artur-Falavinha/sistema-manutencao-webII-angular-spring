@@ -10,6 +10,6 @@ export interface Budget {
 }
 
 export interface BudgetCreateDTO {
-  serviceIds: number[]; 
-  totalValue?: number; 
+  serviceIds: number[];
+  total?: number;
 }
