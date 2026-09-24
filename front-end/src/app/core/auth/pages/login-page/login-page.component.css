@@ -64,18 +64,11 @@ main {
 .form-content { gap: 1.5rem; }
 .form-text h3 { color: var(--color-primary-default); }
 .row-link-btn { display: flex; }
-.row-link-btn .button-primary { width: 100%; }
+.row-link-btn .submit-btn { width: 100%; }
 
 a {
   font-weight: var(--font-weight-semibold);
   text-decoration: none;
-}
-
-.error-message {
-  padding: 0.75rem;
-  border-radius: var(--radius-sm);
-  background: var(--color-danger-light);
-  color: var(--color-danger);
 }
 
 @media (max-width: 48rem) {

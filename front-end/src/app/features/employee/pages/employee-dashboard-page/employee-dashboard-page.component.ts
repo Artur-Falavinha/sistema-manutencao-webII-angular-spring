@@ -1,5 +1,6 @@
-import { Component, computed, inject, Input } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { RequestCardComponent } from '../view-requets-page/components/request-card/request-card.component';
 import { MaintenanceRequestResponseDTO as Request } from '../../../../shared/models/maintenance-request.models';
@@ -7,6 +8,7 @@ import { StatusService } from '../../../../core/services/status.service';
 import { Status } from '../../../../shared/models/status';
 import { MaintenanceRequestService } from '../../../../core/services/maintenance-request.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 interface GroupedRequests {
@@ -21,6 +23,7 @@ interface GroupedRequests {
     MatGridListModule,
     RequestCardComponent,
     MatIconModule,
+    MatButtonModule,
   ],
   templateUrl: './employee-dashboard-page.component.html',
   styleUrl: './employee-dashboard-page.component.css',
@@ -28,6 +31,7 @@ interface GroupedRequests {
 export class EmployeeDashboardPageComponent {
   private statusService = inject(StatusService);
   private requestService = inject(MaintenanceRequestService);
+  private router = inject(Router);
 
   statuses = toSignal(this.statusService.getAll(), { initialValue: [] });
   requests = toSignal(this.requestService.getAllEmployeeRequests(), { initialValue: [] });
@@ -47,8 +51,8 @@ export class EmployeeDashboardPageComponent {
   noResponsible = 0;
   createdToday = 0;
 
-  makeQuote(request: any) {
-  
+  makeQuote(request: Request) {
+    this.router.navigate(['/employee/budget-delivery', request.id]);
   }
   getOpenRequestCount(): number {
     const requests = this.requests;

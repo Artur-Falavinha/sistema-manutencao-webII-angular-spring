@@ -5,6 +5,7 @@ import { MOCK_CATEGORIES } from '../../shared/mocks/category.mock';
 import { MOCK_EMPLOYEES } from '../../shared/mocks/employee.mock';
 import { Category } from '../../shared/models/category';
 import { Employee } from '../../shared/models/employee';
+import { MOCK_AUTH_SESSION_KEY } from './mock-api.persistence';
 import { mockApiInterceptor, resetMockApiState } from './mock-api.interceptor';
 
 describe('mockApiInterceptor', () => {
@@ -41,6 +42,31 @@ describe('mockApiInterceptor', () => {
 
     expect(response.status).toBe(201);
     expect(response.body).toEqual({ ...employee, id: MOCK_EMPLOYEES.length + 1 });
+  });
+
+  it('deletes an employee from the local collection', async () => {
+    const request = new HttpRequest('DELETE', 'http://localhost:8080/api/employees/2');
+    const response = await firstValueFrom(mockApiInterceptor(request, next)) as HttpResponse<null>;
+
+    expect(response.status).toBe(204);
+
+    const listRequest = new HttpRequest('GET', 'http://localhost:8080/api/employees');
+    const listResponse = await firstValueFrom(mockApiInterceptor(listRequest, next)) as HttpResponse<Employee[]>;
+
+    expect(listResponse.body?.some((employee) => employee.id === 2)).toBeFalse();
+  });
+
+  it('blocks deleting the authenticated employee', async () => {
+    sessionStorage.setItem(
+      MOCK_AUTH_SESSION_KEY,
+      JSON.stringify({ id: 1, userAccess: 'employee', name: 'João Pedro Alves' }),
+    );
+
+    const request = new HttpRequest('DELETE', 'http://localhost:8080/api/employees/1');
+
+    await expectAsync(firstValueFrom(mockApiInterceptor(request, next))).toBeRejectedWith(
+      jasmine.objectContaining({ status: 400 }),
+    );
   });
 
   it('updates a category in the local collection', async () => {

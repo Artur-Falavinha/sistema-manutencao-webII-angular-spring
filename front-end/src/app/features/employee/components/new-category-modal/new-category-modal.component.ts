@@ -7,7 +7,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 import { DialogShellComponent } from '../../../../shared/components/dialog-shell/dialog-shell.component';
+import {
+  CATEGORY_ICON_OPTIONS,
+  normalizeCategoryIcon,
+} from '../../../../shared/constants/category-icon-options';
 
 @Component({
   selector: 'app-new-category-modal',
@@ -18,6 +23,7 @@ import { DialogShellComponent } from '../../../../shared/components/dialog-shell
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatIconModule,
     DialogShellComponent,
   ],
   templateUrl: './new-category-modal.component.html',
@@ -25,6 +31,7 @@ import { DialogShellComponent } from '../../../../shared/components/dialog-shell
 })
 export class NewCategoryModalComponent implements OnInit{
   category: Category = {id: 0, name: '', icon: '', active: true};
+  readonly iconOptions = CATEGORY_ICON_OPTIONS;
 
   constructor(
     private readonly dialogRef: MatDialogRef<NewCategoryModalComponent>,
@@ -33,13 +40,19 @@ export class NewCategoryModalComponent implements OnInit{
 
   ngOnInit(): void {
     if (this.editingCategory) {
-      this.category = { ...this.editingCategory };
+      this.category = {
+        ...this.editingCategory,
+        icon: normalizeCategoryIcon(this.editingCategory.icon),
+      };
     }
   }
 
   onSubmit(form: NgForm) : void{
     if (form.valid) {
-      this.dialogRef.close(this.category);
+      this.dialogRef.close({
+        ...this.category,
+        icon: normalizeCategoryIcon(this.category.icon),
+      });
     }
   }
 

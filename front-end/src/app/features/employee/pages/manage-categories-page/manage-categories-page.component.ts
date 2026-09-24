@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { WarningDialogComponent } from '../../../../shared/components/warning-dialog/warning-dialog.component';
 import { ToastService } from '../../../../core/services/toast.service';
+import { normalizeCategoryIcon } from '../../../../shared/constants/category-icon-options';
 
 @Component({
   selector: 'app-manage-categories-page',
@@ -42,6 +43,10 @@ export class ManageCategoriesPageComponent implements OnInit {
 
   editCategory(category: Category): void {
     this.openCategoryModal(category);
+  }
+
+  getCategoryIcon(icon: string | undefined): string {
+    return normalizeCategoryIcon(icon);
   }
 
   private openCategoryModal(category?: Category): void {

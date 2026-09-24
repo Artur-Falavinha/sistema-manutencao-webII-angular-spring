@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { InputPrimaryComponent } from '../../../../shared/components/input-primary/input-primary.component';
 import {
   FormBuilder,
@@ -8,9 +8,13 @@ import {
 } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
+import { ViaCepService } from '../../../services/viacep.service';
 import { RegisterRequest } from '../../../../shared/models/register-request';
 import { CustomValidators } from '../../../../shared/utils/cpf-validator';
 
@@ -21,19 +25,22 @@ import { CustomValidators } from '../../../../shared/utils/cpf-validator';
     ReactiveFormsModule,
     MatStepperModule,
     MatIconModule,
+    MatButtonModule,
   ],
   templateUrl: './signup-page.component.html',
   styleUrls: ['./signup-page.component.css'],
 })
-export class SignupPageComponent {
+export class SignupPageComponent implements OnInit, OnDestroy {
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
+  private cepLookupSub?: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
     private toast: ToastService,
+    private viaCepService: ViaCepService,
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +59,27 @@ export class SignupPageComponent {
       city: ['', [Validators.required]],
       state: ['', [Validators.required]],
     });
+
+    this.setupCepAutoLookup();
+  }
+
+  ngOnDestroy(): void {
+    this.cepLookupSub?.unsubscribe();
+  }
+
+  private setupCepAutoLookup(): void {
+    const cepControl = this.secondFormGroup.get('cep');
+    if (!cepControl) {
+      return;
+    }
+
+    this.cepLookupSub = cepControl.valueChanges
+      .pipe(
+        map((value) => (value ?? '').replace(/\D/g, '')),
+        distinctUntilChanged(),
+        filter((digits) => digits.length === 8),
+      )
+      .subscribe((digits) => this.fetchAddressByCep(digits));
   }
 
   onSubmit(): void {
@@ -85,6 +113,11 @@ export class SignupPageComponent {
         },
         error: (err) => {
           console.error('Erro no cadastro:', err);
+          const message =
+            typeof err?.error === 'string'
+              ? err.error
+              : err?.error?.message ?? 'Não foi possível concluir o cadastro. Verifique os dados informados.';
+          this.toast.error('Erro', message);
         },
       });
     } else {
@@ -97,8 +130,48 @@ export class SignupPageComponent {
     this.router.navigate(['/login']);
   }
 
-  searchCep() {
+  searchCep(): void {
+    const cep = this.secondFormGroup.get('cep')?.value as string | null;
     this.secondFormGroup.get('cep')?.markAsTouched();
+
+    if (!cep) {
+      return;
+    }
+
+    const digits = cep.replace(/\D/g, '');
+    if (digits.length !== 8) {
+      this.toast.warn('CEP inválido', 'Informe um CEP com 8 dígitos.');
+      return;
+    }
+
+    this.fetchAddressByCep(digits);
+  }
+
+  private fetchAddressByCep(digits: string): void {
+    this.viaCepService.buscarCep(digits).subscribe({
+      next: (res) => {
+        if ((res as { erro?: boolean | string }).erro) {
+          this.toast.warn('CEP não encontrado', 'Verifique o CEP informado.');
+          return;
+        }
+
+        const patch: Record<string, string> = {
+          address: res.logradouro || '',
+          neighborhood: res.bairro || '',
+          city: res.localidade || '',
+          state: res.uf || '',
+        };
+
+        if (res.complemento) {
+          patch['complement'] = res.complemento;
+        }
+
+        this.secondFormGroup.patchValue(patch);
+      },
+      error: () => {
+        this.toast.error('Erro', 'Não foi possível consultar o CEP. Tente novamente.');
+      },
+    });
   }
 
   get isCepValid(): boolean {

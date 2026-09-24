@@ -16,7 +16,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { InputPrimaryComponent } from '../../../../shared/components/input-primary/input-primary.component';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { Toast } from 'ngx-toastr';
 import { ToastService } from '../../../services/toast.service';
 
 @Component({
@@ -33,8 +32,7 @@ import { ToastService } from '../../../services/toast.service';
 })
 export class LoginPageComponent implements OnInit {
   loginForm!: FormGroup;
-  isLoading = false; 
-  loginError: string | null = null;
+  isLoading = false;
   hide = signal(true);
 
   constructor(
@@ -57,7 +55,6 @@ export class LoginPageComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loginError = null;
     this.isLoading = true;
 
     if (this.loginForm.invalid) {
@@ -80,14 +77,11 @@ export class LoginPageComponent implements OnInit {
           }
         } else {
           this.toast.error('Erro', 'Login falhou. E-mail ou senha incorretos.');
-          this.loginError = 'O e-mail ou a senha informados estão incorretos.';
         }
       },
-      error: (err) => {
-        this.isLoading = false; 
+      error: () => {
+        this.isLoading = false;
         this.toast.error('Erro', 'Login falhou');
-        this.loginError =
-          'Ocorreu um erro inesperado. Tente novamente mais tarde.';
       },
     });
     

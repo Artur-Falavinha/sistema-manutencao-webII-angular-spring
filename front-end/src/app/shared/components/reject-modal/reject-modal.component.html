@@ -19,8 +19,8 @@
     </div>
 
     <div class="modal-actions">
-      <button class="cancel-button" (click)="cancel.emit()">Cancelar</button>
-      <button class="reject-button" [disabled]="!rejectionReason.trim()" (click)="onConfirm()">Reprovar</button>
+      <button mat-stroked-button type="button" (click)="cancel.emit()">Cancelar</button>
+      <button mat-flat-button color="warn" type="button" [disabled]="!rejectionReason.trim()" (click)="onConfirm()">Reprovar</button>
     </div>
   </div>
 </div>

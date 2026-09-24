@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { map, Observable, of } from "rxjs";
 import { MOCK_BUDGETS } from "../../shared/mocks/budget.mock";
 import { MOCK_CATEGORIES } from "../../shared/mocks/category.mock";
 import { MOCK_REQUESTS } from "../../shared/mocks/request.mock";
@@ -7,6 +7,11 @@ import {
   RevenueByCategory,
   RevenueByDate,
 } from "../../shared/models/reports.model";
+import {
+  createTextPdf,
+  formatReportCurrency,
+  formatReportDate,
+} from "../../shared/utils/pdf-text-report";
 
 @Injectable({
   providedIn: "root",
@@ -87,24 +92,55 @@ export class ReportService {
     startDate: string,
     endDate: string,
   ): Observable<Blob> {
-    const mockBlob = new Blob(
-      [
-        "Relatório Simulado - Receita por Data\n" +
-          `Período: ${startDate || "início"} até ${endDate || "fim"}`,
-      ],
-      {
-        type: "application/pdf",
-      },
-    );
+    return this.getRevenueByDateData(startDate, endDate).pipe(
+      map((data) => {
+        const periodLabel =
+          startDate && endDate
+            ? `${formatReportDate(startDate)} ate ${formatReportDate(endDate)}`
+            : "Periodo completo";
 
-    return of(mockBlob);
+        const totalRevenue = data.reduce(
+          (total, item) => total + item.totalRevenue,
+          0,
+        );
+
+        const lines = [
+          `Periodo: ${periodLabel}`,
+          "",
+          "Data              Receita",
+          ...data.map(
+            (item) =>
+              `${formatReportDate(item.date).padEnd(16)} ${formatReportCurrency(item.totalRevenue)}`,
+          ),
+          "",
+          `Receita total: ${formatReportCurrency(totalRevenue)}`,
+        ];
+
+        return createTextPdf("Relatorio de Receitas por Data", lines);
+      }),
+    );
   }
 
   generateCategoriesReport(): Observable<Blob> {
-    const mockBlob = new Blob(["Relatório Simulado - Receita por Categoria"], {
-      type: "application/pdf",
-    });
+    return this.getRevenueByCategoryData().pipe(
+      map((data) => {
+        const totalRevenue = data.reduce(
+          (total, item) => total + item.totalRevenue,
+          0,
+        );
 
-    return of(mockBlob);
+        const lines = [
+          "Categoria                    Receita",
+          ...data.map(
+            (item) =>
+              `${item.categoryName.padEnd(24)} ${formatReportCurrency(item.totalRevenue)}`,
+          ),
+          "",
+          `Receita total: ${formatReportCurrency(totalRevenue)}`,
+        ];
+
+        return createTextPdf("Relatorio de Receitas por Categoria", lines);
+      }),
+    );
   }
 }

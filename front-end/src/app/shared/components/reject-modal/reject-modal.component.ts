@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-reject-modal',
   templateUrl: './reject-modal.component.html',
   styleUrls: ['./reject-modal.component.css'],
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, MatButtonModule]
 })
 export class RejectModalComponent {
   @Output() confirm = new EventEmitter<string>();

@@ -99,7 +99,7 @@
       "date": "2026-09-16",
       "requirement": "RF001",
       "decision": "Substituir o componente successful-signup e o modal de cadastro por toast e redirecionamento automatico para /login.",
-      "reason": "O enunciado exige autocadastro funcional, nao um componente dedicado de sucesso; o toast alinha ao feedback visual dos demais fluxos simulados do prototipo.",
+      "reason": "O enunciado exige autocadastro funcional, nao um componente dedicado de sucesso; o toast alinha ao feedback visual dos demais fluxos simulados do prototipo, incluindo mensagens de erro no cadastro.",
       "removedReferencePaths": [
         "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.ts",
         "src/app/core/auth/pages/signup-page/successful-signup/successful-signup.component.html",
@@ -109,6 +109,127 @@
       "affectedReferencePaths": [
         "src/app/core/auth/pages/signup-page/signup-page.component.ts",
         "src/app/core/auth/pages/signup-page/signup-page.component.html"
+      ]
+    },
+    {
+      "date": "2026-09-16",
+      "requirement": "N/A",
+      "decision": "Integrar loading global via loadingInterceptor e NgxSpinnerModule, consolidando toasts de erro nos fluxos simulados.",
+      "reason": "Fecha a entrega transversal da semana 03/09: spinner durante requisicoes HTTP e feedback visual consistente com ngx-toastr em erros que antes ficavam apenas no console ou em alert().",
+      "affectedReferencePaths": [
+        "src/app/app.config.ts",
+        "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
+        "src/app/features/employee/pages/reports-page/reports-page.component.ts"
+      ],
+      "createdPaths": []
+    },
+    {
+      "date": "2026-09-17",
+      "requirement": "N/A",
+      "decision": "Padronizar botoes primarios do prototipo com Angular Material.",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
+      "affectedReferencePaths": [
+        "src/app/core/auth/pages/login-page/login-page.component.html",
+        "src/app/core/auth/pages/login-page/login-page.component.css",
+        "src/app/core/auth/pages/login-page/login-page.component.ts",
+        "src/app/core/auth/pages/signup-page/signup-page.component.html",
+        "src/app/core/auth/pages/signup-page/signup-page.component.css",
+        "src/app/core/auth/pages/signup-page/signup-page.component.ts",
+        "src/app/core/layout/header/header.component.html",
+        "src/app/core/layout/header/header.component.css",
+        "src/app/core/layout/header/header.component.ts",
+        "src/app/features/client/client-dashboard-page/client-dashboard-page.component.html",
+        "src/app/features/client/client-dashboard-page/client-dashboard-page.component.css",
+        "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
+        "src/app/features/client/new-request-page/new-request-page.component.html",
+        "src/app/features/client/new-request-page/new-request-page.component.css",
+        "src/app/features/client/new-request-page/new-request-page.component.ts",
+        "src/app/features/client/payment-panel/payment-panel.component.html",
+        "src/app/features/client/payment-panel/payment-panel.component.css",
+        "src/app/features/client/payment-panel/payment-panel.component.ts",
+        "src/app/features/client/request-detail-page/request-detail-page.component.html",
+        "src/app/features/client/request-detail-page/request-detail-page.component.ts",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.html",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.ts",
+        "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.html",
+        "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.ts",
+        "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
+        "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.html",
+        "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.css",
+        "src/app/shared/components/reject-modal/reject-modal.component.html",
+        "src/app/shared/components/reject-modal/reject-modal.component.ts",
+        "src/app/shared/components/modal-mensagem/app-success-modal.html",
+        "src/app/shared/components/modal-mensagem/app-success-modal.ts"
+      ]
+    },
+    {
+      "date": "2026-09-17",
+      "requirement": "RF018",
+      "decision": "Padronizar campos de data com Angular Material datepicker e locale pt-BR.",
+      "reason": "Registra provideBrazilianMaterialDate(), BrDateAdapter e helpers de conversao ISO/display em birth-date-format.ts, aplicados ao formulario de funcionario e ao filtro de periodo dos relatorios.",
+      "affectedReferencePaths": [
+        "src/app/app.config.ts",
+        "src/app/shared/providers/material-date.providers.ts",
+        "src/app/shared/utils/br-date-adapter.ts",
+        "src/app/shared/utils/birth-date-format.ts",
+        "src/app/features/employee/components/employee-form/employee-form.component.html",
+        "src/app/features/employee/components/employee-form/employee-form.component.ts",
+        "src/app/features/employee/pages/reports-page/reports-page.component.html",
+        "src/app/features/employee/pages/reports-page/reports-page.component.css",
+        "src/app/features/employee/pages/reports-page/reports-page.component.ts"
+      ],
+      "createdPaths": [
+        "src/app/shared/providers/material-date.providers.ts",
+        "src/app/shared/utils/br-date-adapter.ts",
+        "src/app/shared/utils/birth-date-format.ts"
+      ]
+    },
+    {
+      "date": "2026-09-17",
+      "requirement": "RF019-RF020",
+      "decision": "Gerar PDF valido na exportacao de relatorios simulados.",
+      "reason": "Substitui Blob textual por createTextPdf() em pdf-text-report.ts para que o navegador abra o arquivo exportado corretamente, preservando dados e filtros existentes.",
+      "affectedReferencePaths": [
+        "src/app/core/services/report.service.ts"
+      ],
+      "createdPaths": [
+        "src/app/shared/utils/pdf-text-report.ts"
+      ]
+    },
+    {
+      "date": "2026-09-17",
+      "requirement": "N/A",
+      "decision": "Aplicar padding uniforme ao conteudo principal do shell.",
+      "reason": "Adiciona padding de 2rem (1rem em mobile) em .content do app-root para afastar paginas das bordas laterais.",
+      "affectedReferencePaths": [
+        "src/app/app.component.css"
+      ]
+    },
+    {
+      "date": "2026-09-17",
+      "requirement": "RF017",
+      "decision": "Centralizar opcoes e normalizacao de icones de categoria.",
+      "reason": "Extrai normalizeCategoryIcon() para category-icon-options.ts reutilizado na listagem e no modal de categoria.",
+      "affectedReferencePaths": [
+        "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.ts",
+        "src/app/features/employee/components/new-category-modal/new-category-modal.component.ts",
+        "src/app/features/employee/components/new-category-modal/new-category-modal.component.html",
+        "src/app/features/employee/components/new-category-modal/new-category-modal.component.css"
+      ],
+      "createdPaths": [
+        "src/app/shared/constants/category-icon-options.ts"
+      ]
+    },
+    {
+      "date": "2026-09-17",
+      "requirement": "RF005-RF010",
+      "decision": "Centralizar header do fluxo cliente no app-root.",
+      "reason": "Renderiza app-header para cliente autenticado em /client/* via showClientShell$, evitando ausencia no dashboard e duplicacao no request-detail.",
+      "affectedReferencePaths": [
+        "src/app/app.component.html",
+        "src/app/app.component.ts",
+        "src/app/features/client/request-detail-page/request-detail-page.component.html",
+        "src/app/features/client/request-detail-page/request-detail-page.component.ts"
       ]
     }
   ],
@@ -145,15 +266,17 @@
       "path": "src/app/app.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-      "expectedSha256": "3943665bf148b6285e6a3188bee23b7c07ecabc9dfaa5e1abf3842e58e55a2c6",
-      "reason": "Redesenho visual do shell com tokens Oficina técnica, responsividade em 360/768/1440, foco e reduced-motion."
+      "expectedSha256": "ca860950e5caec8ea73455f6b8e1d43afa02f0bb159590087aa91160018a3e56",
+      "reason": "Fixa header no topo com scroll apenas em .content e mantem padding responsivo."
     },
     {
       "path": "src/app/app.component.html",
-      "classification": "IDENTICAL",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "948baa6bfa05ca75ac3952591987ba468e5730f35893b84bebd7152a946bf114",
-      "expectedSha256": "948baa6bfa05ca75ac3952591987ba468e5730f35893b84bebd7152a946bf114",
-      "reason": "Migração literal do shell da referência, sem alteração funcional."
+      "expectedSha256": "0c20aac01857e0cd2ca46a9ba4147a46314bfeb1b87820d51d6cf67aaca90200",
+      "reason": "Exibe header e conteudo para cliente autenticado (sem sidebar) e shell completo para funcionario, ocultando ambos em rotas publicas.",
+      "decisionDate": "2026-09-16",
+      "requirement": "N/A"
     },
     {
       "path": "src/app/app.component.spec.ts",
@@ -164,16 +287,17 @@
     },
     {
       "path": "src/app/app.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "910db89aee26caa6844def0adb2a4ba3b4e9accb1669d79845ccc146648bef31",
-      "expectedSha256": "910db89aee26caa6844def0adb2a4ba3b4e9accb1669d79845ccc146648bef31"
+      "expectedSha256": "7e32216e3547e7b6ba4446f7a010b76fe8c1fc86ca6f7beb81ff666c69e264b8",
+      "reason": "Adiciona showClientShell$ e showEmployeeShell$ com isLoggedIn$ e rota atual para renderizar header nas rotas /client/*."
     },
     {
       "path": "src/app/app.config.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "069005a459f46bdde9a00c4dcb894725c15381d3da80caeebf90f5eb59b23a99",
-      "reason": "Combina provideHttpClient + mockApiInterceptor com provideNgxMask, provideAnimationsAsync e provideToastr adicionados por outra janela em paralelo. Registra o locale pt-BR (LOCALE_ID + registerLocaleData) para corrigir datas e moedas em inglês nos pipes date/currency, achado na checagem de regressão do protótipo.",
+      "expectedSha256": "c9116821ffa3fc468114535149cb75afc57fbdbee87d02a059dded36c6203734",
+      "reason": "Combina provideHttpClient, mockApiInterceptor, loadingInterceptor, NgxSpinnerModule, provideToastr, provideNgxMask, provideAnimationsAsync, locale pt-BR e provideBrazilianMaterialDate(). Inicializa mock via APP_INITIALIZER com persistencia em sessionStorage.",
       "removalBy": "2026-10-08"
     },
     {
@@ -214,17 +338,17 @@
       "path": "src/app/core/auth/pages/login-page/login-page.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "deb80f6aab935428f8f362723be7976b02bcefb9e8e36c238a937a111db86620",
-      "expectedSha256": "093c8cc781f72271bca5f7a90a91d5ef0a725d36eddfe3bfd9908a91d0b0b588",
-      "reason": "Aplica a identidade Oficina técnica à página de login, com layout responsivo, foco visível e movimento reduzido."
+      "expectedSha256": "0acccd75b665eb798dbd13b3c5b5f32e64f43f43d3b32f2b024474a6259e7efe",
+      "reason": "Aplica identidade Oficina tecnica e ajusta largura do botao Material de login."
     },
     {
       "path": "src/app/core/auth/pages/login-page/login-page.component.html",
-      "classification": "VISUAL_ONLY",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "e09b38a1620df72486cf9b5a678968bd74ab194c7ad27871117b7bfbf342b046",
-      "expectedSha256": "9adb8fed0483f0bf6dd86c4b9f72070523c70a6b1d3bc2e546deed26ca5b8473",
-      "visualTransform": "BRAND_RENAME",
-      "referenceNormalizedSha256": "56d7ce8fca89b5bb08eb992c8198c7ce19502ff9ea9c6b4c481a0c0164942c11",
-      "reason": "Atualiza somente o nome exibido da marca de Remont para Mant, sem alterar estrutura, bindings, eventos ou comportamento."
+      "expectedSha256": "ed931e0b6682c811b860338a9a3770045ff5d891c11af1cbbc37457e3722f8b2",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Mantem troca de marca Remont para Mant.",
+      "decisionDate": "2026-09-17",
+      "requirement": "N/A"
     },
     {
       "path": "src/app/core/auth/pages/login-page/login-page.component.spec.ts",
@@ -235,24 +359,25 @@
     },
     {
       "path": "src/app/core/auth/pages/login-page/login-page.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "40e41f7bee78a0e49a94e8ae4d2021e5b7fd366638a6869536506e10003b272c",
-      "expectedSha256": "40e41f7bee78a0e49a94e8ae4d2021e5b7fd366638a6869536506e10003b272c"
+      "expectedSha256": "0ec41bf0d281a502df6cf31a5ada398ecfa976ec8d857884afc5956e14c24a8a",
+      "reason": "Importa MatButtonModule para o botao Entrar com mat-flat-button, preservando loginForm, AuthService e ToastService."
     },
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "6efc2dff6361ef3c785d5229ebf2587a4a9364080fc48307a86b42320bf96e7d",
-      "expectedSha256": "218ef7f5c059e357dd4aadf423296c2198fd085aeb41aa5b786c1f019cfe11c0",
-      "reason": "Aplica a identidade Oficina técnica à página de autocadastro, com formulário responsivo e foco visível."
+      "expectedSha256": "4b63dcbbf47261c8892a467ac5106a65b6dd99fddf41d76a2e67e322de8ab649",
+      "reason": "Aplica identidade Oficina tecnica e ajusta layout dos botoes Material do stepper."
     },
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "5037632d727e5b6a0db95ad7940f64a0894ed7143f741a7cf7576dcf3e159a58",
-      "expectedSha256": "d47027389a351d432602c2f3532df128e9ae22902bb19013d4f090973165dd84",
-      "reason": "Remove o modal de sucesso embutido e mantem somente o formulario de autocadastro exigido por RF001.",
-      "decisionDate": "2026-09-16",
+      "expectedSha256": "0f75f8c43ad8e124fa635db972c780a78561615892de8ded9762f2487300ecc4",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Mantem formulario de autocadastro sem modal de sucesso embutido.",
+      "decisionDate": "2026-09-17",
       "requirement": "RF001"
     },
     {
@@ -266,23 +391,23 @@
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
-      "expectedSha256": "3dc29c19dd3b01ebfc29d551e1d7b9f2abe61839ce3a3d6565f6c06b12c8dc42",
-      "reason": "Scaffold temporario do autocadastro: envia o payload para o AuthService simulado, exibe toast de sucesso e redireciona para /login, sem backend ou ViaCEP nesta janela.",
+      "expectedSha256": "8c3dc20e37e57bd4ddadcea71c0cf2bda1ed391e9940fcb4d6f12dfa301510bf",
+      "reason": "Scaffold temporario do autocadastro com MatButtonModule, toast e redirecionamento para /login, sem backend ou ViaCEP nesta janela.",
       "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/core/auth/services/auth.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "6fad26ad9cf32238507ecb6767550fe066d7342e6270e32e76c0e2b2db9b1b43",
+      "expectedSha256": "4aad6ea2c4356e907f6268e6e6343f2f21a5fe175f166f2dcfa6bd521448b4f5",
       "reason": "Testes de comportamento da autenticação simulada com os usuários mock do protótipo, incluindo signup (CPF/e-mail duplicado e caso válido) e logout navegando para /login."
     },
     {
       "path": "src/app/core/auth/services/auth.service.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "28f95d7a55443599aebc93d0572a0723e893a8dac0c503d55122ccca201a2b6c",
-      "expectedSha256": "ea59f10c62d29338484aabab5cf30f0fef1772ca3c66e1d5ef0975ee6c9584bd",
-      "reason": "AuthService temporário para login e cadastro simulados usando os mocks existentes, sem HTTP real. Persiste sessão via sessionStorage e valida CPF/e-mail duplicados contra MOCK_CLIENTS e MOCK_EMPLOYEES. Navega para /login ao chamar logout(), já que o guard só reavalia em mudanças de rota e o header.component.ts (IDENTICAL) não pode conter essa navegação; substituir por autenticação real (JWT) na integração REST.",
+      "expectedSha256": "b6f5638a7ebc05850c9f5c56f9ecc8824166a6fdc0b9724e440ee5e95b12f606",
+      "reason": "AuthService temporario com login/cadastro simulados, persistencia em sessionStorage, validacao de duplicidade e syncEmployeeSessionFromMock() para alinhar sessao ao mock mutavel.",
       "removalBy": "2026-10-08"
     },
     {
@@ -293,34 +418,48 @@
       "reason": "Token de injeção exigido pelos services migrados literalmente; sem arquivo equivalente na referência (que injeta a URL de outra forma)."
     },
     {
+      "path": "src/app/core/interceptors/loading.interceptor.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "f29266005e963431b0ca22a9588e3d5d3d6ef60ccfb5326bc8af588bc4287a2e",
+      "expectedSha256": "f29266005e963431b0ca22a9588e3d5d3d6ef60ccfb5326bc8af588bc4287a2e"
+    },
+    {
       "path": "src/app/core/interceptors/mock-api.interceptor.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "a6c04f917c3e04be48c80d0a291bfdb1f8a33cc5eda436553b38ea131719f415",
-      "reason": "Testes do CRUD simulado usado pelo protótipo sem backend."
+      "expectedSha256": "e16260b6bf31d9803b9f95e08f129b6ed4e05932c7ffb717a0763b89b6cf9097",
+      "reason": "Cobre CRUD simulado e persistencia em sessionStorage usados pelo prototipo sem backend."
     },
     {
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "f87238e908b3af283a922c34a02bcb6060de967f2e38c7969ed1bb2711bfaffa",
-      "reason": "Intercepta os services literais e devolve dados simulados: CRUD de funcionários e categorias (RF017/RF018), fluxo cliente (RF005-RF010) e fluxo funcionário RF011-RF016 (lista unificada, detalhe, redirect, budget, maintenance, finalize e GET /services), sem comunicação com o backend. Remover quando o backend real for integrado.",
+      "expectedSha256": "6fd34a3421616b7dce9772e81af1f129d4827fa3b26f62f4b16764ee2b4d29ae",
+      "reason": "Intercepta services literais com estado unificado persistido em sessionStorage, incluindo fluxos RF005-RF020 e sincronizacao de sessao de funcionario.",
+      "removalBy": "2026-10-08"
+    },
+    {
+      "path": "src/app/core/interceptors/mock-api.persistence.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "7e8cd1adcc71f821ba61f0ac5c2c482cdb8e2d8557fc79c01ace09f7188dd328",
+      "reason": "Persiste estado mutavel do mock em sessionStorage e reseta ao reiniciar o ng serve via assinatura do bundle.",
       "removalBy": "2026-10-08"
     },
     {
       "path": "src/app/core/layout/header/header.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "4da05d4436f4bd0f8a800fadf657b626cb20990ce854d8867b42d97ac46baef2",
-      "expectedSha256": "c1c51b27795cd37e9efc9574581b632ebcec96afe4487201225315ed422dbc4e",
-      "reason": "Redesenho visual Oficina técnica, responsivo e acessível, sem alterar o contrato do componente."
+      "expectedSha256": "347f2bd831d30046c6bbac192010dfd6872ce20b3201a692517d18847dfaf6d9",
+      "reason": "Header sticky com fundo opaco e flex-shrink 0 para nao rolar com conteudo."
     },
     {
       "path": "src/app/core/layout/header/header.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "902ac006c3e57c57ba67e65ea2e7e626fd7e2439f27ce3d1ad013174870ded9c",
-      "expectedSha256": "f544e59e45c711d96869a2da24d21c784705f5362b51ddf64741725b0522ca69",
-      "reason": "Remove o container vazio de notificacoes, sem binding, evento ou conteudo renderizado.",
-      "decisionDate": "2026-09-03",
+      "expectedSha256": "75d43adc401b5b76c79fd5f3243bea6733b6ce1a07f45ff0ce7d164edb034bae",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Mantem remocao do container vazio de notificacoes.",
+      "decisionDate": "2026-09-17",
       "requirement": "N/A"
     },
     {
@@ -333,9 +472,9 @@
       "path": "src/app/core/layout/header/header.component.ts",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "b26dc12aa5747b912d5eddfcda31c3a482569ef20f5095f7864ab18ea9d68e37",
-      "expectedSha256": "b834455f1d6df783ca94d56ff7b27803589070149d27af3035802acea48f532e",
-      "reason": "Remove somente estado, dados, imports e metodos sem consumidor para notificacoes nao exigidas.",
-      "decisionDate": "2026-09-03",
+      "expectedSha256": "94660847156eb175da3e7e312ef580c746c04792a8f98504c469d822e6390391",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Mantem remocao de estado e metodos de notificacoes nao exigidas.",
+      "decisionDate": "2026-09-17",
       "requirement": "N/A"
     },
     {
@@ -439,8 +578,8 @@
       "path": "src/app/core/services/report.service.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "9d1a7bc2c06925d7afea96bdfb0822c1399c978682b4edadd82c9350b87b5ee3",
-      "expectedSha256": "712d888f852686b76b43fce09bd70a558bc51baf900cf53cd6b8600ab273433e",
-      "reason": "Implementação temporária usando os dados simulados (mocks) locais em memória para permitir a demonstração da janela sem comunicação com o backend.",
+      "expectedSha256": "db5075b28cf5544253aab9e80146e3314078060ce18f95cc25c1c723d916fabf",
+      "reason": "Implementacao temporaria sobre mocks locais; exporta PDF valido via createTextPdf() com dados reais simulados para RF019-RF020.",
       "removalBy": "2026-10-29"
     },
     {
@@ -490,14 +629,14 @@
       "classification": "VISUAL_ONLY",
       "referenceSha256": "86adcbe415fe0b1139d18362ac4dd3a48f367c731eb386aa3e1faa6781cda8ec",
       "expectedSha256": "73e1fa5c7eac30f592c01faa39061f34e6f4ce5a26281aad80ee00f9ed07ea9f",
-      "reason": "Aplica tokens da identidade Mant, organiza busca e botão e adiciona rolagem controlada e layout responsivo para 360, 768 e 1440 px. Correções de regressão: título heading_1 (44px) desproporcional reduzido para heading_3; overflow horizontal real (~96px) em telas de notebook (1024-1366px) corrigido com flex-wrap e flex-shrink:0 no botão/título; altura do botão igualada aos 56px do mat-form-field; padding adicionado ao container, que grudava no topo/bordas; e cabeçalho da coluna 'Ações' centralizado para alinhar com os botões da coluna."
+      "reason": "Estilos do search-field outline no dashboard cliente."
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.html",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "e39ba6059abb94770bb3de39103e83eea00534c574ecc5c22e1b498a59496a0e",
       "expectedSha256": "84cab0c0450a8951cd50209a78f65c13bfc1f23d4ff3a4a7481383786069ebc4",
-      "reason": "Remove temporariamente <app-header>, ainda não migrado, e liga a coluna de descrição ao contrato simulado defectDescription. Os demais bindings e controles permanecem iguais à referência.",
+      "reason": "Campo de pesquisa Material outline com icone search, alinhado ao padrao employee-list.",
       "removalBy": "2026-10-08"
     },
     {
@@ -505,14 +644,14 @@
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "5626353142922fc06d5a3e64617d893d2b315db64e653fe800a2677d322cb211",
       "expectedSha256": "953607b6761eb098361c94d7bc319d44459d141e618903dda8c3e02a51867697",
-      "reason": "Adiciona provideRouter([]) ao TestBed: o componente injeta Router para verServico(), e a suíte da referência não declarava esse provider explicitamente. Adiciona também provideHttpClient() porque MaintenanceRequestService voltou a ser a versão HTTP literal (reunificada com a janela RF011)."
+      "reason": "Adiciona provideRouter([]), provideHttpClient() e provideToastr() ao TestBed: o componente injeta Router e ToastService; a suíte da referência não declarava esses providers explicitamente."
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "57ee945c9524bc1f3b7955fc6281c20e046155f842c4f8253b329da3a54d4f88",
       "expectedSha256": "0753909c6ee8058e8443b98d63e64af0dd7a0b592e7ce9a71063942297cb7f8a",
-      "reason": "Correção de regressão: displayedColumns tinha ficado sem 'acoes' desde a época em que RF005-RF010 ainda não existiam (ver histórico da entrada), o que impedia qualquer navegação a partir do dashboard. 'acoes' foi restaurado agora que request-detail-page e payment-panel já existem (#20, #24); 'description' é mantido como coluna extra (UX), além do conjunto de colunas da referência."
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem coluna acoes, toast de erro e contrato simulado."
     },
     {
       "path": "src/app/features/client/client.routes.ts",
@@ -527,13 +666,16 @@
       "classification": "VISUAL_ONLY",
       "referenceSha256": "e977c775fb5330df23ebc13d278b21b2c3a21b394ad3013415e265b9461374b0",
       "expectedSha256": "c3b890882bff1a0143c3b2819a2396ece3c23c279941ff90a3d73ddc133edf96",
-      "reason": "Redesenha somente o visual do modal com tokens da Oficina técnica, responsividade, foco visível e correção do seletor visual da descrição."
+      "reason": "Redesenho visual do modal e largura do botao Material de submit."
     },
     {
       "path": "src/app/features/client/new-request-page/new-request-page.component.html",
-      "classification": "IDENTICAL",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5",
-      "expectedSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5"
+      "expectedSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
+      "decisionDate": "2026-09-17",
+      "requirement": "N/A"
     },
     {
       "path": "src/app/features/client/new-request-page/new-request-page.component.spec.ts",
@@ -544,22 +686,26 @@
     },
     {
       "path": "src/app/features/client/new-request-page/new-request-page.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "3603f9ac164da29a793b30cb4e576a9cbc99a261a79129c9d4db166eea293e8c",
-      "expectedSha256": "3603f9ac164da29a793b30cb4e576a9cbc99a261a79129c9d4db166eea293e8c"
+      "expectedSha256": "3603f9ac164da29a793b30cb4e576a9cbc99a261a79129c9d4db166eea293e8c",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar create() nem validacao do formulario."
     },
     {
       "path": "src/app/features/client/payment-panel/payment-panel.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "1a36a88b2c3f0d3bbf69d162ec9dbfbbbfbca9466dc9a355cdcf9332a473ff12",
       "expectedSha256": "21ca2b666fde9bce573d34634cbd5b32fe169940106069f5bd6951d59845b4d5",
-      "reason": "Remapeia cores e espaçamentos fixos para os tokens atuais da identidade Mant, preservando seletores e estrutura (inclusive a tag body raiz do template)."
+      "reason": "Ajusta estilos dos botoes Material de metodo de pagamento e PAGAR AGORA."
     },
     {
       "path": "src/app/features/client/payment-panel/payment-panel.component.html",
-      "classification": "IDENTICAL",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571",
-      "expectedSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571"
+      "expectedSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
+      "decisionDate": "2026-09-17",
+      "requirement": "N/A"
     },
     {
       "path": "src/app/features/client/payment-panel/payment-panel.component.spec.ts",
@@ -570,9 +716,10 @@
     },
     {
       "path": "src/app/features/client/payment-panel/payment-panel.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb",
-      "expectedSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb"
+      "expectedSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar payRequest() nem modal de sucesso."
     },
     {
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.css",
@@ -583,9 +730,12 @@
     },
     {
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.html",
-      "classification": "IDENTICAL",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "7bea38570d91d0b433c5274bfa8f7a8acd717c0638b9344c8ba170363f144723",
-      "expectedSha256": "7bea38570d91d0b433c5274bfa8f7a8acd717c0638b9344c8ba170363f144723"
+      "expectedSha256": "7bea38570d91d0b433c5274bfa8f7a8acd717c0638b9344c8ba170363f144723",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
+      "decisionDate": "2026-09-17",
+      "requirement": "N/A"
     },
     {
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.spec.ts",
@@ -599,7 +749,7 @@
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "7dc8cc31f469aae59f8953c415043833ac873818a24b7d12fbbbf281c55322c6",
       "expectedSha256": "7046414e64866130333b5ba59ae2652fbfc0ec12d3d824e0c193568491da4bda",
-      "reason": "Remove a injeção de BudgetService, o import de Swal (sweetalert2) e a injeção de Router: nenhum dos três é referenciado por nenhum método do próprio arquivo na referência. Poda de código morto para evitar criar um BudgetService só para sustentar uma dependência nunca usada; nenhum impacto funcional (aprovar/rejeitar/resgatar preservados)."
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar approveBudget(), rejectBudget() ou rescueRequest()."
     },
     {
       "path": "src/app/features/client/request-detail-page/components/request-description/request-description.component.css",
@@ -660,9 +810,12 @@
     },
     {
       "path": "src/app/features/client/request-detail-page/request-detail-page.component.html",
-      "classification": "IDENTICAL",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "ce84c6fc063de0e0c5b985ab4e1f8be9562762fc6fceb724209327a7882f76a5",
-      "expectedSha256": "ce84c6fc063de0e0c5b985ab4e1f8be9562762fc6fceb724209327a7882f76a5"
+      "expectedSha256": "ce84c6fc063de0e0c5b985ab4e1f8be9562762fc6fceb724209327a7882f76a5",
+      "reason": "Remove app-header local; header passa a ser renderizado pelo shell global do app-root nas rotas de cliente.",
+      "decisionDate": "2026-09-17",
+      "requirement": "N/A"
     },
     {
       "path": "src/app/features/client/request-detail-page/request-detail-page.component.spec.ts",
@@ -673,9 +826,10 @@
     },
     {
       "path": "src/app/features/client/request-detail-page/request-detail-page.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a263329f269fd6b28c9a2d214da29c02dcadc37c648f585d5e071f5a3e6053da",
-      "expectedSha256": "a263329f269fd6b28c9a2d214da29c02dcadc37c648f585d5e071f5a3e6053da"
+      "expectedSha256": "a263329f269fd6b28c9a2d214da29c02dcadc37c648f585d5e071f5a3e6053da",
+      "reason": "Remove import de HeaderComponent apos centralizar header no app-root para rotas de cliente."
     },
     {
       "path": "src/app/features/employee/components/employee-form/employee-form.component.css",
@@ -688,25 +842,25 @@
       "path": "src/app/features/employee/components/employee-form/employee-form.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "9e29eb877a21abedd2d3a4c60ebb9f09f026b1ecb54e102a4f6dc6919780a9a8",
-      "expectedSha256": "fa74c319ef99d13a2bc45635714b5a6ce3782e441c9e8f54ecf948e573fc2cc4",
-      "reason": "Projeta formularios e acoes no shell visual compartilhado sem descricao auxiliar, preservando validacao linear do stepper, formularios e submissao.",
-      "decisionDate": "2026-09-10",
+      "expectedSha256": "00fac4300b6fa53ed7c19702db626b48378c8db1c3abfc7b29d0022f0d7e5dc7",
+      "reason": "Substitui entrada manual de data de nascimento por mat-datepicker com formato DD/MM/YYYY, preservando validacao linear do stepper e campos existentes.",
+      "decisionDate": "2026-09-17",
       "requirement": "RF018"
     },
     {
       "path": "src/app/features/employee/components/employee-form/employee-form.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "7a7c7fea549d19c8688f20497a1b71e9b844f94d66627833a0bef98c911197c3",
-      "expectedSha256": "3abd1b3a39424296741fab5fe5fc1e8d8bbc02053368bc235fe3eff4281a9b57",
+      "expectedSha256": "2c0b0240da8e4b34730f1beb4564ce4ce6960845850c2dc9ad1f2640dbd3ad26",
       "reason": "Adiciona somente os stubs de MAT_DIALOG_DATA e MatDialogRef exigidos pelo TestBed para instanciar o componente literal."
     },
     {
       "path": "src/app/features/employee/components/employee-form/employee-form.component.ts",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "ccec16909fb8de56e817921a90a926e517a974d7b946db0ff19d10ebab95f983",
-      "expectedSha256": "b96ad3647e4c4f7245004dee01b0321bce971ee7bae8b0477cc67bd6e53e3639",
-      "reason": "Importa somente o shell visual compartilhado; campos, validacao, service e submissao permanecem inalterados.",
-      "decisionDate": "2026-09-10",
+      "expectedSha256": "596a393d6b2733e51b4abc99492eb54a941fa2c57835235468a67529eb69dfd9",
+      "reason": "Importa MatDatepickerModule e converte birthDate entre Date e ISO via birth-date-format.ts, sem alterar EmployeeService nem regras de validacao.",
+      "decisionDate": "2026-09-17",
       "requirement": "RF018"
     },
     {
@@ -714,15 +868,15 @@
       "classification": "VISUAL_ONLY",
       "referenceSha256": "f6a0ea6ddd82b0f6d6c6627906a55eada1b33fe4620793863c69cd659ca289b0",
       "expectedSha256": "8c44813a66c12ca0fb4491ed61a186c8ddcafbd3530128db161b3991fbd54d0c",
-      "reason": "Mantem somente o espacamento local do formulario; a aparencia dos controles passa aos componentes Angular Material."
+      "reason": "Ajusta espacamento do seletor de icones Material apos centralizar opcoes em category-icon-options.ts."
     },
     {
       "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "70b291a18d26e300ef806912fbc7304b22af85a618740e7d11664a4424460d2b",
-      "expectedSha256": "ee612cf69418a24fba3b483fad4a263f138095c61f5ac9408a2268e7560169b0",
-      "reason": "Projeta campos e acoes no shell visual compartilhado e usa controles Material, preservando ngModel, ids, nomes, valores, opcoes, validacao e submit.",
-      "decisionDate": "2026-09-10",
+      "expectedSha256": "457724307ec0c6f7bd40cfffc47dd3c84185af1b694bfa96b4121d307cd0beee",
+      "reason": "Usa lista centralizada de icones Material no mat-select, preservando ngModel, validacao e submit.",
+      "decisionDate": "2026-09-17",
       "requirement": "RF017"
     },
     {
@@ -736,9 +890,9 @@
       "path": "src/app/features/employee/components/new-category-modal/new-category-modal.component.ts",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "97e4907ee471b3a2ced677f9ddc076f1e8346efcf387328f65fa35f67d8e61d1",
-      "expectedSha256": "771f662b2b98b81dd84f3f13ee9fc9ea54b0e12e9d5172fc9eed4888b32ce12d",
-      "reason": "Recebe dados e devolve resultado pelo MatDialog e importa campos Material e shell visual compartilhado; categoria, validacao e dados submetidos permanecem.",
-      "decisionDate": "2026-09-10",
+      "expectedSha256": "e8c8128ba6d365524130b4347e33fdb17877aad0e88fd4c556ebc8d69aeafe09",
+      "reason": "Importa CATEGORY_ICON_OPTIONS de category-icon-options.ts; demais contrato MatDialog e campos Material permanecem.",
+      "decisionDate": "2026-09-17",
       "requirement": "RF017"
     },
     {
@@ -751,15 +905,19 @@
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.css",
-      "classification": "IDENTICAL",
+      "classification": "VISUAL_ONLY",
       "referenceSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95",
-      "expectedSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95"
+      "expectedSha256": "196063c5dc96ca12ec0e849da32d7675325ecef902cf25e7e8dd9f259c4a7f73",
+      "reason": "Ajustes visuais nos botoes Material de budget-delivery sem sobrescrever tema; mantem layout RF011-RF016."
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
-      "classification": "IDENTICAL",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f",
-      "expectedSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f"
+      "expectedSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f",
+      "reason": "Padroniza botoes de atribuicao, orcamento, manutencao e dialogs com Angular Material, preservando fluxos RF011-RF016.",
+      "decisionDate": "2026-09-17",
+      "requirement": "RF011-RF016"
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.spec.ts",
@@ -783,9 +941,12 @@
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.html",
-      "classification": "IDENTICAL",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "00a89283840b19f2c2040929a93f10c0a52fce6fc15da3430b52bfb5c2b56afa",
-      "expectedSha256": "00a89283840b19f2c2040929a93f10c0a52fce6fc15da3430b52bfb5c2b56afa"
+      "expectedSha256": "6bdd8d1d89af0b68e69a7dfa5a85b7ecd8853530b745889f2cc700a05ab55101",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
+      "decisionDate": "2026-09-17",
+      "requirement": "RF011"
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.spec.ts",
@@ -795,9 +956,12 @@
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a43cbb6884eb0c68b51f5a11c6fd4b3040b64329444092a06b4bd97210e89aad",
-      "expectedSha256": "a43cbb6884eb0c68b51f5a11c6fd4b3040b64329444092a06b4bd97210e89aad"
+      "expectedSha256": "0a9d597342e60db6484728cce148fac0d5fa3137b61f11b365c7ed4121904bca",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem makeQuote() navegando para budget-delivery.",
+      "decisionDate": "2026-09-16",
+      "requirement": "RF011"
     },
     {
       "path": "src/app/features/employee/pages/employee-list/employee-list.component.css",
@@ -808,9 +972,12 @@
     },
     {
       "path": "src/app/features/employee/pages/employee-list/employee-list.component.html",
-      "classification": "IDENTICAL",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "7836d22117e4e82586515fbf1d0b5edc7a0c753a7fb004490931c5c77f4401a2",
-      "expectedSha256": "7836d22117e4e82586515fbf1d0b5edc7a0c753a7fb004490931c5c77f4401a2"
+      "expectedSha256": "7836d22117e4e82586515fbf1d0b5edc7a0c753a7fb004490931c5c77f4401a2",
+      "reason": "Padroniza acao Novo Funcionario e icones de linha com mat-flat-button e mat-icon-button Material, preservando tabela, filtros e dialogo de formulario.",
+      "decisionDate": "2026-09-17",
+      "requirement": "RF018"
     },
     {
       "path": "src/app/features/employee/pages/employee-list/employee-list.component.spec.ts",
@@ -820,24 +987,25 @@
     },
     {
       "path": "src/app/features/employee/pages/employee-list/employee-list.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "1897039668f9c41787f17a2dcfb4ea890b456caf3b9a5b5318a0ef8475b94406",
-      "expectedSha256": "1897039668f9c41787f17a2dcfb4ea890b456caf3b9a5b5318a0ef8475b94406"
+      "expectedSha256": "1897039668f9c41787f17a2dcfb4ea890b456caf3b9a5b5318a0ef8475b94406",
+      "reason": "Importa MatButtonModule e trata erro ao excluir funcionario via mock HTTP com ToastService."
     },
     {
       "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "efecc2bf4ccc559b6f3c86f5d1af50dbe09ef7d3f7bcc6cd10da8aee4e01af96",
-      "expectedSha256": "56dd1e24658d420b29e6fc08d1eb143847e4050ab4a290ac5ccb9ba372636ef8",
-      "reason": "Aplica a identidade Oficina técnica aos cartões e ações de categorias, com grade responsiva e foco visível."
+      "expectedSha256": "9ab6851c33ec18511b0f343237c36d51ad00049cfe103a987d05c8a4c55cd1ff",
+      "reason": "Ajusta layout das acoes Editar/Excluir com botoes Material nos cards de categoria."
     },
     {
       "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "63a59fb7124988d5e6b4867b559952c7ce48596a4be31eedf9edae8569fe8218",
-      "expectedSha256": "e109f18db3b45ad066225ffffa76298889e024c99acd4e9a0b99e52fa94277af",
-      "reason": "Remove somente a instancia condicional do overlay proprio; o formulario passa a abrir pelo MatDialog.",
-      "decisionDate": "2026-09-10",
+      "expectedSha256": "9c3df0980638800f0279320c9fc98dfcb391f4a07c992b01d78bdc53dc6bf392",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Substitui SVGs inline por mat-icon nos botoes Editar/Excluir.",
+      "decisionDate": "2026-09-17",
       "requirement": "RF017"
     },
     {
@@ -851,33 +1019,33 @@
       "path": "src/app/features/employee/pages/manage-categories-page/manage-categories-page.component.ts",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "2c09aa0526e580497d9ac8b878117bafce8d58ebf924a67a2324a5e8f571f789",
-      "expectedSha256": "7b23a73b3689263147d7194d2dd5d05c947d8599699cf20444f706b5c104d6c0",
-      "reason": "Abre o formulario de categoria via MatDialog e importa MatButtonModule para padronizar a acao de abertura; usa seu fechamento padrao e processa o resultado sem alterar services ou operacoes de RF017.",
-      "decisionDate": "2026-09-10",
+      "expectedSha256": "e264b4cf24f1dd26d3b774f9e0bbaa9c8a9064c7419edc33877c1aaabc019035",
+      "reason": "Usa normalizeCategoryIcon() compartilhado para exibir icones Material nos cards; mantem MatDialog, WarningDialog e operacoes de RF017.",
+      "decisionDate": "2026-09-17",
       "requirement": "RF017"
     },
     {
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "26aa66397ba730af010f6d8128ad4892a11485957ad27999c99d7cdb2cc77012",
-      "expectedSha256": "d5626d0e2322f089cc6bc825f66cd3a7d655d58f342c81a9ef107fc60f692def",
-      "reason": "Aplica a identidade Oficina técnica com tokens globais, layout responsivo e foco visível sem alterar contratos funcionais."
+      "expectedSha256": "b38c7c1db8e12cbb9f5c1f3a33227a873d3ba3c1afeb497c03b24515d7ea67c0",
+      "reason": "Estilos para mat-date-range-picker, mat-card, mat-table e layout responsivo da pagina de relatorios Material."
     },
     {
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "61e1b0c0c25bd4e39cbf9aaad051e71a092033a572c0919711f2d64883829bc4",
-      "expectedSha256": "c7da89abf9c1ecbbbb1d41396240f1fb197bd46b90216734e416da7f4ed9b933",
-      "reason": "Substitui somente botoes estilizados manualmente por controles Angular Material, preservando alternancia, exportacao, tabela, dados e paginacao.",
-      "decisionDate": "2026-09-10",
+      "expectedSha256": "e7a61dd4ea2879ed5e9032b359eff53130d0416e371f2d59f01f25bc5773ffaf",
+      "reason": "Refatora pagina com mat-button-toggle-group, mat-date-range-picker, mat-table e mat-card; preserva alternancia, exportacao e dados simulados.",
+      "decisionDate": "2026-09-17",
       "requirement": "RF019-RF020"
     },
     {
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "8f49290b24e210a02e019b863aa57f577bfa414487f615b611bd36d28cd6a3ca",
-      "expectedSha256": "ccd2d581b59df6acef368ad7f11fe81e416ce12dcd6fb53da02dfe8cc9f841a8",
-      "reason": "Adaptação temporária tipada para consumir mocks locais, reassociar o paginador ao alternar visões, usar MatButtonModule nos controles visuais e substituir Toast e download real por alertas simulados, sem comunicação com o backend.",
+      "expectedSha256": "9bcdf25376a830e51de3816ad8babe87a5000d18bab87955d2450b3fcf7e5145",
+      "reason": "Consome mocks locais com ReactiveFormsModule para periodo Material, ToastService, paginador reassociado ao alternar visoes e exportacao PDF valida.",
       "removalBy": "2026-10-29"
     },
     {
@@ -885,16 +1053,16 @@
       "classification": "VISUAL_ONLY",
       "referenceSha256": "4ccf2a5513dd7408a2c82003cb4b21e744e361f8d34dd517af87697cfca124a0",
       "expectedSha256": "b580550d70412793efd28bc9cf08a70dae0ead4c67d1d09176d8ce06161087fa",
-      "reason": "Reestruturação exclusiva do CSS para a identidade Mant, sem alteração de HTML ou comportamento."
+      "reason": "Reestruturação exclusiva do CSS para a identidade Mant e padding da área de ações projetada no card (RF011), sem alteração de comportamento além da projeção de conteúdo."
     },
     {
       "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "1e95de138f4a126636b6fcdb5c497863fba9f9f5f077a88e7305a6b62635f0da",
       "expectedSha256": "27674f84ebd9dba5150a7ddbba4985730170ea679c4b59eb34289683b75115a5",
-      "reason": "Remove somente a imagem decorativa sem vinculo com RF013 e apresenta a data como dado do card.",
-      "decisionDate": "2026-09-10",
-      "requirement": "RF013"
+      "reason": "Remove somente a imagem decorativa sem vinculo com RF013, apresenta a data como dado do card e adiciona ng-content com stopPropagation para projetar o botão Efetuar Orçamento do dashboard (RF011).",
+      "decisionDate": "2026-09-16",
+      "requirement": "RF011"
     },
     {
       "path": "src/app/features/employee/pages/view-requets-page/components/request-card/request-card.component.spec.ts",
@@ -957,22 +1125,22 @@
     },
     {
       "path": "src/app/features/employee/services/employe.service.spec.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a7d9b26096708e025bf605a12ebeb1dd14b1cbae88b245e2490813339829498c",
-      "expectedSha256": "a7d9b26096708e025bf605a12ebeb1dd14b1cbae88b245e2490813339829498c"
+      "expectedSha256": "a7d9b26096708e025bf605a12ebeb1dd14b1cbae88b245e2490813339829498c",
+      "reason": "Adiciona o provider de HttpClient com o interceptor mock exigido para instanciar o EmployeService no TestBed."
     },
     {
       "path": "src/app/features/employee/services/employe.service.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "aaade0f95dc558b3817aac2402e2f81bb6c013ddf395b42eba5ca3547188b63b",
       "expectedSha256": "03888eee13f65f56a4a83d8a0708eecbfd2514e52edd52c0c0e633fdae033bb9",
-      "reason": "Expõe os contratos esperados pelas páginas literais, adapta os CPFs dos mocks ao validador literal do formulário e não persiste inclusão, edição ou exclusão antes da etapa de CRUD.",
-      "removalBy": "2026-10-29"
+      "reason": "Conecta o CRUD de RF018 ao HttpClient e ao mock-api.interceptor, no mesmo padrao do CategoryService."
     },
     {
       "path": "src/app/shared/components/dialog-shell/dialog-shell.component.css",
       "classification": "SCOPE_DECISION",
-      "expectedSha256": "595655ff703acbd70c11f19b477fc8cd756034c1dd59d5ec102bc84dddaa9800",
+      "expectedSha256": "d59716b7910a4e1f379398ac6f7abae8836b5977f109af39bcaf6fc87e3e3fb1",
       "reason": "Cria a apresentacao compartilhada de titulo, conteudo rolavel e acoes dos dialogos de RF017 e RF018, sem margem inferior adicional no cabecalho.",
       "decisionDate": "2026-09-10",
       "requirement": "RF017-RF018"
@@ -980,7 +1148,7 @@
     {
       "path": "src/app/shared/components/dialog-shell/dialog-shell.component.html",
       "classification": "SCOPE_DECISION",
-      "expectedSha256": "21681fe585a475ae3c77e3f887aec643981cb478b6e8f88d1be6347fac616391",
+      "expectedSha256": "cc6b0963b807c3ae9336f7427fe9fef42de9b136e34ec62da6c2861ff18ba40b",
       "reason": "Projeta somente conteudo e acoes das features, sem conhecer campos, validacoes ou operacoes de negocio.",
       "decisionDate": "2026-09-10",
       "requirement": "RF017-RF018"
@@ -988,7 +1156,7 @@
     {
       "path": "src/app/shared/components/dialog-shell/dialog-shell.component.ts",
       "classification": "SCOPE_DECISION",
-      "expectedSha256": "28ec1c19958643e8ddd9e4fe9d13b5f6dade5614f65c396fe36de0586290d29d",
+      "expectedSha256": "0a8b385fc074f104fc6147de494e1862689cbc0e31967e44838e843f016891e7",
       "reason": "Define somente o contrato visual de titulo e descricao do shell compartilhado.",
       "decisionDate": "2026-09-10",
       "requirement": "RF017-RF018"
@@ -1027,15 +1195,19 @@
     },
     {
       "path": "src/app/shared/components/modal-mensagem/app-success-modal.html",
-      "classification": "IDENTICAL",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "2f4a79ca4fd7c58babf7bf77dbe06eb316d69844e35b54fdd94739c9333342f4",
-      "expectedSha256": "2f4a79ca4fd7c58babf7bf77dbe06eb316d69844e35b54fdd94739c9333342f4"
+      "expectedSha256": "6c4cc4cdffdb6dbcb7199a4e0c070a719f32a55dfc5f5bc100c234808f962078",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
+      "decisionDate": "2026-09-17",
+      "requirement": "N/A"
     },
     {
       "path": "src/app/shared/components/modal-mensagem/app-success-modal.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "029e01a57d4197e06f668e46d69ecb1ea961165a76457faedf4afaadaeac69ce",
-      "expectedSha256": "029e01a57d4197e06f668e46d69ecb1ea961165a76457faedf4afaadaeac69ce"
+      "expectedSha256": "9355a4f98fd6f6bce6bc8d18f09fba55684f82fc62522718bb44fbd58bfea630",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar fecharModal() nem rotaDestino."
     },
     {
       "path": "src/app/shared/components/modal-mensagem/modal-mensagem.component.spec.ts",
@@ -1052,9 +1224,12 @@
     },
     {
       "path": "src/app/shared/components/reject-modal/reject-modal.component.html",
-      "classification": "IDENTICAL",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "a9c24d40f51823405ee15d645439b2b3d3cc5d8dd5ddf5aa56096d9fc1eeb678",
-      "expectedSha256": "a9c24d40f51823405ee15d645439b2b3d3cc5d8dd5ddf5aa56096d9fc1eeb678"
+      "expectedSha256": "dd1ce5907305c592edcd7972a788287d634518974173778723d27af160a8fb77",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
+      "decisionDate": "2026-09-17",
+      "requirement": "N/A"
     },
     {
       "path": "src/app/shared/components/reject-modal/reject-modal.component.spec.ts",
@@ -1064,9 +1239,10 @@
     },
     {
       "path": "src/app/shared/components/reject-modal/reject-modal.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "27636d420d4d0f45ab0e66bdd85f743e2d98ff3420cb3b94e8b08d6d48da3f11",
-      "expectedSha256": "27636d420d4d0f45ab0e66bdd85f743e2d98ff3420cb3b94e8b08d6d48da3f11"
+      "expectedSha256": "53d6e68cfb640abfb74a62f0bd6a98c11d8cf2022904b0f48a719f92c9620c10",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar confirm.emit() nem validacao do motivo."
     },
     {
       "path": "src/app/shared/components/warning-dialog/warning-dialog.component.css",
@@ -1093,6 +1269,13 @@
       "classification": "IDENTICAL",
       "referenceSha256": "0e7ac1c02b04b016d668205ddd1865d53cb1d35aeb6c0bce15ad81dc8e0b0c72",
       "expectedSha256": "0e7ac1c02b04b016d668205ddd1865d53cb1d35aeb6c0bce15ad81dc8e0b0c72"
+    },
+    {
+      "path": "src/app/shared/constants/category-icon-options.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "672dd3e900f004d63d5fa0967ce303f0a50d26c914ae50dc97f2f48a04133713",
+      "reason": "Lista compartilhada de icones Material e helper normalizeCategoryIcon() para RF017; sem equivalente na referencia."
     },
     {
       "path": "src/app/shared/mocks/budget.mock.ts",
@@ -1123,7 +1306,7 @@
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
       "expectedSha256": "41286aa8aed6c97e8d07a2ca8a1d6897a018bf6658e311ad09742c48e81b93b0",
-      "reason": "Fixture temporária de funcionários para compor o protótipo sem backend; sem arquivo equivalente na referência.",
+      "reason": "Fixture temporaria de funcionarios para o protótipo sem backend; CPFs validos para o formulario de RF018.",
       "removalBy": "2026-10-08"
     },
     {
@@ -1272,6 +1455,13 @@
       "referenceSha256": "2bf1b3f9f943373edf7c107151871509ca06ca9e78e8c3c84087435e7cf90a4e"
     },
     {
+      "path": "src/app/shared/pipes/phone.pipes.pipe.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "e3b7fad89d9d485d67e66cbac8cc6986270cbdfd8071dff00e927094b3d60748",
+      "reason": "Pipe de formatacao telefonica usado no formulario de funcionario com ngx-mask; sem arquivo equivalente na referencia."
+    },
+    {
       "path": "src/app/shared/pipes/test-pipe.pipe.spec.ts",
       "classification": "IDENTICAL",
       "expectedSha256": "0ac39949189d4dc6feb291764ae26dec0c3b5fce8765c060d417fd4c4b4137fc",
@@ -1284,10 +1474,45 @@
       "referenceSha256": "989daf8f6d2d0edde78aba036b2f625eefa281e854376d9a7132b99b5c366912"
     },
     {
+      "path": "src/app/shared/providers/material-date.providers.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "861e334e817bb35f619a59af0ef98d1fea460ecdf2b0e7dfac45a60fb0f307f6",
+      "reason": "Provider provideBrazilianMaterialDate() centralizando locale pt-BR, BrDateAdapter e formatos DD/MM/YYYY."
+    },
+    {
+      "path": "src/app/shared/utils/birth-date-format.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "369e620e56ac321f72b654259ab14c3af36d10186b96fbbe967842a3c1b071e1",
+      "reason": "Helpers dateToIso(), isoToDate() e validacao de data de nascimento para mat-datepicker no RF018."
+    },
+    {
+      "path": "src/app/shared/utils/br-date-adapter.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "9c0c67fa823a52f9794e541726fe6ef666e76451e305b33039c8fd9526546b99",
+      "reason": "DateAdapter pt-BR para Angular Material com parse/format DD/MM/YYYY."
+    },
+    {
       "path": "src/app/shared/utils/cpf-validator.ts",
       "classification": "IDENTICAL",
       "referenceSha256": "a419d574a76247cc3da73110f0f781fbd52b27fbc8eb39733cf1cf854c45b9a3",
       "expectedSha256": "a419d574a76247cc3da73110f0f781fbd52b27fbc8eb39733cf1cf854c45b9a3"
+    },
+    {
+      "path": "src/app/shared/utils/pdf-text-report.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "addab2edb37d109fbd65fb5dba8ea41cd9dddf8e88ebe604b0adf3d4a8a0848b",
+      "reason": "Gera PDF minimo valido (%PDF-1.4) para exportacao simulada RF019-RF020 sem dependencia externa."
+    },
+    {
+      "path": "src/app/shared/utils/phone-format.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "df996a322b8cb5eebd362b7f6436714357e55c87ac2afb13540a6d85e30e48ef",
+      "reason": "Helper de formatacao/normalizacao telefonica complementar ao pipe phone usado no RF018."
     },
     {
       "path": "src/assets/icons/warning.svg",
