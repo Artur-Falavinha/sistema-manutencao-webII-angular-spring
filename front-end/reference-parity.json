@@ -758,8 +758,8 @@
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
       "classification": "IDENTICAL",
-      "referenceSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f",
-      "expectedSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f"
+      "referenceSha256": "328cc3036938d41fedc58a5defd91010c1d272cc62269d3439063c3ca358c777",
+      "expectedSha256": "328cc3036938d41fedc58a5defd91010c1d272cc62269d3439063c3ca358c777"
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.spec.ts",
@@ -771,8 +771,8 @@
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
       "classification": "IDENTICAL",
-      "referenceSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89",
-      "expectedSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89"
+      "referenceSha256":"20d81b067718cc656f8ae5d8444304987e9488d153857a208e6ffda4cfefc47b",
+      "expectedSha256": "20d81b067718cc656f8ae5d8444304987e9488d153857a208e6ffda4cfefc47b"
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.css",
