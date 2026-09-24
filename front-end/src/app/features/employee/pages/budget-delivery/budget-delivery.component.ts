@@ -103,6 +103,9 @@ export class BudgetDeliveryComponent implements OnInit {
   finalizacaoDialogRef: any;
   dataFinalizacao = '';
 
+  readonly MANUTENCAO_MIN_LENGTH = 10;
+  readonly MANUTENCAO_MAX_LENGTH = 500;
+
   ngOnInit(): void {
     this.statusService.getAll().subscribe(statuses => {
       this.statuses = statuses;
@@ -170,8 +173,18 @@ export class BudgetDeliveryComponent implements OnInit {
     });
   }
 
+  mesmoResponsavelSelecionado(): boolean {
+    return !!this.selectedFuncionario && !!this.responsavel
+      && this.selectedFuncionario.id === this.responsavel.id;
+  }
+
   atribuirResponsavel() {
     if (!this.selectedFuncionario || !this.request) return;
+
+    if (this.mesmoResponsavelSelecionado()) {
+      this.toast.warn('Atenção', 'Esse já é o responsável atual pela solicitação.');
+      return;
+    }
 
     const funcionarioId = this.selectedFuncionario.id; 
 
@@ -191,11 +204,6 @@ export class BudgetDeliveryComponent implements OnInit {
           this.toast.error('Erro', 'Não foi possível atribuir o responsável.');
         }
       });
-      
-  }
-    mesmoResponsavelSelecionado(): boolean {
-    return !!this.selectedFuncionario && !!this.responsavel
-      && this.selectedFuncionario.id === this.responsavel.id;
   }
 
   cancelarDialog() {
@@ -231,6 +239,11 @@ export class BudgetDeliveryComponent implements OnInit {
 
   confirmarOrcamento() {
     if (!this.request) return;
+
+    if (!this.orcamentoValido()) {
+      this.toast.warn('Atenção', 'Selecione ao menos um serviço com valor válido antes de confirmar.');
+      return;
+    }
 
     const budgetPayload: BudgetCreateDTO = {
       serviceIds: this.servicosSelecionados.map(s => s.id),
@@ -281,14 +294,26 @@ export class BudgetDeliveryComponent implements OnInit {
       this.manutencaoDialogRef.close();
     }
   }
-  private readonly MANUTENCAO_MIN_LENGTH = 10;
 
   isManutencaoFormValid(): boolean {
+    const descricao = this.manutencaoDescricaoInput.trim().length;
+    const orientacao = this.manutencaoOrientacaoInput.trim().length;
     return (
-      this.manutencaoDescricaoInput.trim().length >= this.MANUTENCAO_MIN_LENGTH &&
-      this.manutencaoOrientacaoInput.trim().length >= this.MANUTENCAO_MIN_LENGTH
+      descricao >= this.MANUTENCAO_MIN_LENGTH && descricao <= this.MANUTENCAO_MAX_LENGTH &&
+      orientacao >= this.MANUTENCAO_MIN_LENGTH && orientacao <= this.MANUTENCAO_MAX_LENGTH
     );
   }
+
+  descricaoManutencaoInvalida(): boolean {
+    const len = this.manutencaoDescricaoInput.trim().length;
+    return len > 0 && (len < this.MANUTENCAO_MIN_LENGTH || len > this.MANUTENCAO_MAX_LENGTH);
+  }
+
+  orientacaoManutencaoInvalida(): boolean {
+    const len = this.manutencaoOrientacaoInput.trim().length;
+    return len > 0 && (len < this.MANUTENCAO_MIN_LENGTH || len > this.MANUTENCAO_MAX_LENGTH);
+  }
+
   permitidoCriarManutencao(): boolean {
     if (this.temOrcamento) return true;
     return this.request.status.nome === 'APROVADO'  || this.request.status.nome === 'REDIRECIONADA';
@@ -296,6 +321,11 @@ export class BudgetDeliveryComponent implements OnInit {
 
   confirmarManutencao() {
     if (!this.request) return;
+
+    if (!this.isManutencaoFormValid()) {
+      this.toast.warn('Atenção', `Preencha os dois campos com pelo menos ${this.MANUTENCAO_MIN_LENGTH} caracteres.`);
+      return;
+    }
 
     if (this.responsavel?.name !==  this.nomeDeUsuario) {
       this.toast.error('Erro ao Efetuar Manutenção', 'Você não é o funcionário designado para essa soliciação');
