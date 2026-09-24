@@ -191,6 +191,11 @@ export class BudgetDeliveryComponent implements OnInit {
           this.toast.error('Erro', 'Não foi possível atribuir o responsável.');
         }
       });
+      
+  }
+    mesmoResponsavelSelecionado(): boolean {
+    return !!this.selectedFuncionario && !!this.responsavel
+      && this.selectedFuncionario.id === this.responsavel.id;
   }
 
   cancelarDialog() {
@@ -218,6 +223,10 @@ export class BudgetDeliveryComponent implements OnInit {
       0
     );
     this.cdr.markForCheck();
+  }
+
+  orcamentoValido(): boolean {
+    return this.servicosSelecionados.length > 0 && this.valorTotal > 0;
   }
 
   confirmarOrcamento() {
@@ -272,14 +281,14 @@ export class BudgetDeliveryComponent implements OnInit {
       this.manutencaoDialogRef.close();
     }
   }
+  private readonly MANUTENCAO_MIN_LENGTH = 10;
 
   isManutencaoFormValid(): boolean {
     return (
-      this.manutencaoDescricaoInput.trim().length > 0 &&
-      this.manutencaoOrientacaoInput.trim().length > 0
+      this.manutencaoDescricaoInput.trim().length >= this.MANUTENCAO_MIN_LENGTH &&
+      this.manutencaoOrientacaoInput.trim().length >= this.MANUTENCAO_MIN_LENGTH
     );
   }
-
   permitidoCriarManutencao(): boolean {
     if (this.temOrcamento) return true;
     return this.request.status.nome === 'APROVADO'  || this.request.status.nome === 'REDIRECIONADA';

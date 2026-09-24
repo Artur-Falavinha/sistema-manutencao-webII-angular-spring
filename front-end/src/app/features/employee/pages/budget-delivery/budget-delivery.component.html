@@ -200,7 +200,7 @@
         Cancelar
       </button>
       <button mat-flat-button color="primary" class="dialog-btn"
-              [disabled]="selectedFuncionario === undefined"
+              [disabled]="selectedFuncionario === undefined || mesmoResponsavelSelecionado()"
               (click)="atribuirResponsavel()">
         Atribuir
       </button>
@@ -254,7 +254,7 @@
         mat-flat-button
         color="primary"
         class="orcamento-dialog-confirm"
-        [disabled]="servicosSelecionados.length === 0"
+        [disabled]="!orcamentoValido()"
         (click)="confirmarOrcamento()"
       >
         Efetuar Orçamento
@@ -283,6 +283,7 @@
           [(ngModel)]="manutencaoDescricaoInput"
           placeholder="Descreva a manutenção"
         ></textarea>
+        <mat-hint>Mínimo de 10 caracteres</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="manutencao-dialog-field full">
@@ -293,6 +294,7 @@
           [(ngModel)]="manutencaoOrientacaoInput"
           placeholder="Descreva as orientações"
         ></textarea>
+        <mat-hint>Mínimo de 10 caracteres</mat-hint>
       </mat-form-field>
     </div>
 
