@@ -912,12 +912,9 @@
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
-      "classification": "SCOPE_DECISION",
-      "referenceSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f",
-      "expectedSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f",
-      "reason": "Padroniza botoes de atribuicao, orcamento, manutencao e dialogs com Angular Material, preservando fluxos RF011-RF016.",
-      "decisionDate": "2026-09-17",
-      "requirement": "RF011-RF016"
+      "classification": "IDENTICAL",
+      "referenceSha256": "328cc3036938d41fedc58a5defd91010c1d272cc62269d3439063c3ca358c777",
+      "expectedSha256": "328cc3036938d41fedc58a5defd91010c1d272cc62269d3439063c3ca358c777"
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.spec.ts",
@@ -929,8 +926,8 @@
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
       "classification": "IDENTICAL",
-      "referenceSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89",
-      "expectedSha256": "f12b991d8ec89dfc4c28b507b4f80e18156f4e9bf2043ebbfc6893b373cf7c89"
+      "referenceSha256": "20d81b067718cc656f8ae5d8444304987e9488d153857a208e6ffda4cfefc47b",
+      "expectedSha256": "20d81b067718cc656f8ae5d8444304987e9488d153857a208e6ffda4cfefc47b"
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.css",
@@ -1628,6 +1625,13 @@
       "referenceSha256": "c6ba2c144471c65b935adf89961dbc9b4e7ad235983556c3baf95b19de135a1c",
       "expectedSha256": "26edaf1711d2bdb2379840defdc8c59790ed75ff82e789af117c3e5c7d91ec20",
       "reason": "Inclui exclusivamente o setup global de testes necessário para configurar ngx-mask nos testes literais da referência."
+    },
+    {
+      "path": "matriz-validacao-formularios.md",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "269f888aa5ad218120a18acf65e57597d1aece9cdcb7c04c8dd1e911636976c1",
+      "reason": "Artefato de documentação de testes cruzados e QA exigido pela sprint."
     }
   ]
 }
