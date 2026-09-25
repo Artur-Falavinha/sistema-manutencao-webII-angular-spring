@@ -690,7 +690,7 @@
       "path": "src/app/features/client/payment-panel/payment-panel.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571",
-      "expectedSha256": "bcd0672a69a113b4075921df7b3a80dab84856f0084faa375c59a5595d50d654",
+      "expectedSha256": "7be5d9eddb2b6369af8eb53757ab0cd06c1f47183666266abf713cb63823dde9",
       "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Desabilita o botao PAGAR AGORA e exibe aviso enquanto nenhuma forma de pagamento estiver selecionada, consolidando o formulario de pagamento com os de solicitacao e rejeicao: entrada invalida bloqueia a confirmacao.",
       "decisionDate": "2026-09-24",
       "requirement": "RF008/RF010"
@@ -706,7 +706,7 @@
       "path": "src/app/features/client/payment-panel/payment-panel.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb",
-      "expectedSha256": "4440196edc753ccb9afc1f3c1e0ab89124ec3aaca4480f2ff2182bf1bea5bd53",
+      "expectedSha256": "64f356b70e1a751dfba419e4616783e12be6b9a490ab8f07e1ef679f5facf72a",
       "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar payRequest() nem modal de sucesso. Substitui o alert() nativo por ToastService.warn() ao tentar confirmar sem forma de pagamento selecionada, alinhando o feedback de erro com o restante do fluxo do cliente."
     },
     {
@@ -1622,13 +1622,6 @@
       "referenceSha256": null,
       "expectedSha256": "269f888aa5ad218120a18acf65e57597d1aece9cdcb7c04c8dd1e911636976c1",
       "reason": "Artefato de documentação de testes cruzados e QA exigido pela sprint."
-    },
-    {
-      "path": "pendencias-pr39-semana-24-09.md",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "2efbdeb41bff806a6ff163deb8996f866d9ab244da894793f14c7b40fd8000e8",
-      "reason": "Artefato de documentação das pendências de QA e integração levantadas na entrega da semana 24/09 (PR #39), sem correspondente no projeto de referência."
     }
   ]
 }
