@@ -59,7 +59,9 @@
         </button>
       </div>
 
-      <button class="pay-now" (click)="payRequest()">
+      <p class="required-field" *ngIf="!selectedMethod">* Selecione uma forma de pagamento</p>
+
+      <button class="pay-now" [disabled]="!selectedMethod" (click)="payRequest()">
         PAGAR AGORA
       </button>
     </div>
@@ -75,3 +77,8 @@
     [rotaDestino]="modalRotaDestino">
   </app-success-modal>
 </body>
+
+
+
+
+

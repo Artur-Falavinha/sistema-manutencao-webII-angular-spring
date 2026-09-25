@@ -434,7 +434,7 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "6fd34a3421616b7dce9772e81af1f129d4827fa3b26f62f4b16764ee2b4d29ae",
+      "expectedSha256": "4dd07300cf412a872d33ac305e942882438fa2438fd7bea916703bd3d7b5fa3f",
       "reason": "Intercepta services literais com estado unificado persistido em sessionStorage, incluindo fluxos RF005-RF020 e sincronizacao de sessao de funcionario.",
       "removalBy": "2026-10-08"
     },
@@ -557,12 +557,6 @@
       "expectedSha256": "8bb5fab2e668086b7966581af769063fa73f60a07f4a8593dfbb8544f3eb507b"
     },
     {
-      "path": "src/app/core/services/budget.service.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee",
-      "referenceSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee"
-    },
-    {
       "path": "src/app/core/services/busy.service.ts",
       "classification": "IDENTICAL",
       "expectedSha256": "567e8aa3295a01fead9d631ec4e0b93f7203a8362428982897b9b5956325b57a",
@@ -581,12 +575,6 @@
       "expectedSha256": "db5075b28cf5544253aab9e80146e3314078060ce18f95cc25c1c723d916fabf",
       "reason": "Implementacao temporaria sobre mocks locais; exporta PDF valido via createTextPdf() com dados reais simulados para RF019-RF020.",
       "removalBy": "2026-10-29"
-    },
-    {
-      "path": "src/app/core/services/request-history.service.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "68921356a3b702f4ff78d99d96912abd959edff76c015bed420229f412896bd2",
-      "referenceSha256": "68921356a3b702f4ff78d99d96912abd959edff76c015bed420229f412896bd2"
     },
     {
       "path": "src/app/core/services/service-item.service.ts",
@@ -695,17 +683,17 @@
       "path": "src/app/features/client/payment-panel/payment-panel.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "1a36a88b2c3f0d3bbf69d162ec9dbfbbbfbca9466dc9a355cdcf9332a473ff12",
-      "expectedSha256": "21ca2b666fde9bce573d34634cbd5b32fe169940106069f5bd6951d59845b4d5",
-      "reason": "Ajusta estilos dos botoes Material de metodo de pagamento e PAGAR AGORA."
+      "expectedSha256": "a4b2bdd58044fffbd8e61146933b6422799d8b68e976dcefcf693923ad2cb074",
+      "reason": "Ajusta estilos dos botoes Material de metodo de pagamento e PAGAR AGORA. Adiciona estado :disabled do botao PAGAR AGORA e estilo do aviso de campo obrigatorio, para consolidar o bloqueio de confirmacao com entrada invalida (RF008/RF010)."
     },
     {
       "path": "src/app/features/client/payment-panel/payment-panel.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571",
-      "expectedSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
-      "decisionDate": "2026-09-17",
-      "requirement": "N/A"
+      "expectedSha256": "7be5d9eddb2b6369af8eb53757ab0cd06c1f47183666266abf713cb63823dde9",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Desabilita o botao PAGAR AGORA e exibe aviso enquanto nenhuma forma de pagamento estiver selecionada, consolidando o formulario de pagamento com os de solicitacao e rejeicao: entrada invalida bloqueia a confirmacao.",
+      "decisionDate": "2026-09-24",
+      "requirement": "RF008/RF010"
     },
     {
       "path": "src/app/features/client/payment-panel/payment-panel.component.spec.ts",
@@ -718,8 +706,8 @@
       "path": "src/app/features/client/payment-panel/payment-panel.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb",
-      "expectedSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar payRequest() nem modal de sucesso."
+      "expectedSha256": "64f356b70e1a751dfba419e4616783e12be6b9a490ab8f07e1ef679f5facf72a",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar payRequest() nem modal de sucesso. Substitui o alert() nativo por ToastService.warn() ao tentar confirmar sem forma de pagamento selecionada, alinhando o feedback de erro com o restante do fluxo do cliente."
     },
     {
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.css",
@@ -925,9 +913,10 @@
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "20d81b067718cc656f8ae5d8444304987e9488d153857a208e6ffda4cfefc47b",
-      "expectedSha256": "20d81b067718cc656f8ae5d8444304987e9488d153857a208e6ffda4cfefc47b"
+      "expectedSha256": "f23db70e02f6d5316fbcd3716cc2a223f4a0c8a0493b9e937e79a78ede85e732",
+      "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10."
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.css",
@@ -1345,9 +1334,10 @@
     },
     {
       "path": "src/app/shared/models/budget.model.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "911dafaf82bd35e5685f2b02649c8320f600f14715655ecd0c4ef20507298fb0",
-      "expectedSha256": "911dafaf82bd35e5685f2b02649c8320f600f14715655ecd0c4ef20507298fb0"
+      "expectedSha256": "dfaa9494fa63e05f2af727e6586891165106d41159b42cd219c023d1790ce388",
+      "reason": "Renomeia BudgetCreateDTO.totalValue para total, alinhando com o campo `total` de BudgetDTO no back-end. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10."
     },
     {
       "path": "src/app/shared/models/category.ts",

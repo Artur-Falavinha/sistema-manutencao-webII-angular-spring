@@ -247,7 +247,7 @@ export class BudgetDeliveryComponent implements OnInit {
 
     const budgetPayload: BudgetCreateDTO = {
       serviceIds: this.servicosSelecionados.map(s => s.id),
-      totalValue: this.valorTotal 
+      total: this.valorTotal
     };
 
     this.maintenanceRequestService.createBudget(this.request.id, budgetPayload)
