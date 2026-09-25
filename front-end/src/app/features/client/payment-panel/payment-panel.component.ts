@@ -62,6 +62,9 @@ export class PaymentPanelComponent implements OnInit {
   }
 
   payRequest(): void {
+    // tirei o alert() que estava aqui
+    // trocado pelo toast pra ficar igual o resto do fluxo do cliente
+    // (o botao fica desabilitado)
     if (!this.selectedMethod) {
       this.toast.warn('Atenção', 'Selecione uma forma de pagamento antes de continuar.');
       return;
