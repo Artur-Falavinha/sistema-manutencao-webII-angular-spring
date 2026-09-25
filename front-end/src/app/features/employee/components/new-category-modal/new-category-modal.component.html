@@ -20,10 +20,10 @@
         </mat-form-field>
 
     </form>
-    <ng-container dialog-action>
+    <div dialog-action class="dialog-shell__action-group">
         <button mat-button type="button" (click)="confirmClose()">Cancelar</button>
         <button mat-raised-button color="primary" type="submit" form="category-form">
             {{ editingCategory ? 'Salvar categoria' : 'Adicionar categoria' }}
         </button>
-    </ng-container>
+    </div>
 </app-dialog-shell>

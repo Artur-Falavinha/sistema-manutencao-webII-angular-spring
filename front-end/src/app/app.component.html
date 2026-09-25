@@ -1,7 +1,19 @@
-@if (isEmployee$ | async) {
+@if (showEmployeeShell$ | async) {
 <div class="main-layout">
   <app-side-bar></app-side-bar>
 
+  <div class="main-section">
+    <app-header></app-header>
+    <main class="content">
+      <ngx-spinner>
+          <p style="color: white"> Carregando... </p>
+      </ngx-spinner>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+} @else if (showClientShell$ | async) {
+<div class="main-layout">
   <div class="main-section">
     <app-header></app-header>
     <main class="content">

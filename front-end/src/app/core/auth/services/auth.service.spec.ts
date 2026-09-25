@@ -1,11 +1,14 @@
 import { Router } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
 import { AuthService } from './auth.service';
+import { resetMockApiState } from '../../interceptors/mock-api.interceptor';
 
 describe('AuthService', () => {
   let service: AuthService;
 
   beforeEach(() => {
+    sessionStorage.clear();
+    resetMockApiState();
     TestBed.configureTestingModule({});
     service = TestBed.inject(AuthService);
   });
@@ -123,8 +126,15 @@ describe('AuthService', () => {
       state: 'PR',
     }).subscribe({
       next: (result) => {
-        expect(result).toBeUndefined();
-        done();
+        expect(result.generatedPassword).toMatch(/^\d{4}$/);
+
+        service.login('novo@example.com', result.generatedPassword).subscribe({
+          next: () => {
+            expect(service.currentUserValue?.userAccess).toBe('client');
+            expect(service.currentUserValue?.email).toBe('novo@example.com');
+            done();
+          },
+        });
       },
     });
   });

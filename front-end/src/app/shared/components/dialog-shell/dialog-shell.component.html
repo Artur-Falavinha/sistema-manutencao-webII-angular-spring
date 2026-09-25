@@ -1,10 +1,15 @@
+<div class="dialog-shell__header">
+  @if (showWarningIcon()) {
+    <mat-icon class="dialog-shell__warning-icon" aria-hidden="true">warning</mat-icon>
+  }
+
+  <h2 mat-dialog-title class="dialog-shell__title">{{ title() }}</h2>
+</div>
+
 <mat-dialog-content class="dialog-shell__content">
-  <header class="dialog-shell__header">
-    <h2 mat-dialog-title class="dialog-shell__title">{{ title() }}</h2>
-    @if (description()) {
-      <p class="dialog-shell__description">{{ description() }}</p>
-    }
-  </header>
+  @if (description()) {
+    <p class="dialog-shell__description">{{ description() }}</p>
+  }
 
   <div class="dialog-shell__body">
     <ng-content />

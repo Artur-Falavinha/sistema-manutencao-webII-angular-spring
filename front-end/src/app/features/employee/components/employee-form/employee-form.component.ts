@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CustomValidators } from '../../../../shared/utils/cpf-validator';
@@ -9,15 +9,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { provideNativeDateAdapter } from '@angular/material/core';
 
 import { EmployeService } from '../../services/employe.service';
 import { Employee } from '../../../../shared/models/employee';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { provideNgxMask, NgxMaskDirective } from 'ngx-mask';
 import { DialogShellComponent } from '../../../../shared/components/dialog-shell/dialog-shell.component';
+import { AuthService } from '../../../../core/auth/services/auth.service';
+import { formatBrazilianPhone } from '../../../../shared/utils/phone-format';
+import {
+  dateToIso,
+  isoToDate,
+} from '../../../../shared/utils/birth-date-format';
 
 @Component({
   selector: 'app-employee-form',
@@ -31,13 +35,11 @@ import { DialogShellComponent } from '../../../../shared/components/dialog-shell
     MatSelectModule,
     MatStepperModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatIconModule,
     NgxMaskDirective
 ],
     providers: [
-    provideNativeDateAdapter(),
-    provideNgxMask() 
+    provideNgxMask()
   ],
   templateUrl: './employee-form.component.html',
   styleUrls: ['./employee-form.component.css']
@@ -47,6 +49,7 @@ export class EmployeeFormComponent implements OnInit {
   professionalInfoForm: FormGroup;
 
   isEdit = false;
+  private authService = inject(AuthService);
 
   constructor(
     private fb: FormBuilder,
@@ -58,7 +61,7 @@ export class EmployeeFormComponent implements OnInit {
     this.personalInfoForm = this.fb.group({
       nome: ['', Validators.required],
       cpf: ['', [Validators.required, CustomValidators.useExistingCpfValidator()]],
-      dataNascimento: ['', Validators.required],
+      dataNascimento: [null, Validators.required],
       email: ['', [Validators.required, Validators.email]],
       celular: ['', Validators.required],
     });
@@ -76,7 +79,7 @@ ngOnInit(): void {
       this.personalInfoForm.patchValue({
         nome: this.data.name,
         cpf: this.data.cpf,
-        dataNascimento: this.data.birthDate,
+        dataNascimento: isoToDate(this.data.birthDate),
         email: this.data.email,
         celular: this.data.phone
       });
@@ -105,8 +108,8 @@ onSubmit(): void {
     name: this.personalInfoForm.value.nome,
     email: this.personalInfoForm.value.email,
     cpf: this.personalInfoForm.value.cpf,
-    phone: this.personalInfoForm.value.celular,
-    birthDate: this.personalInfoForm.value.dataNascimento,
+    phone: formatBrazilianPhone(this.personalInfoForm.value.celular),
+    birthDate: dateToIso(this.personalInfoForm.value.dataNascimento),
     wage: this.professionalInfoForm.value.salario,
     password: this.professionalInfoForm.value.senha,
     active: true
@@ -118,6 +121,16 @@ onSubmit(): void {
 
   request$.subscribe({
     next: () => {
+      if (
+        this.isEdit
+        && employeeData.id === this.authService.currentUserValue?.id
+      ) {
+        this.authService.updateCurrentUser({
+          name: employeeData.name,
+          email: employeeData.email,
+        });
+      }
+
       this.dialogref.close(true);
     },
     error: (err) => {

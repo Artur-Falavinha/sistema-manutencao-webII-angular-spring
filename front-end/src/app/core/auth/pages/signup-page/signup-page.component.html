@@ -49,7 +49,7 @@
             required
           ></app-input-primary>
           <div class="first-button">
-            <button class="button-primary label_large" matStepperNext>
+            <button mat-flat-button color="primary" class="label_large" type="button" matStepperNext>
               Próximo
             </button>
           </div>
@@ -67,17 +67,16 @@
               placeholder="___-__"
               mask="00000-000"
             />
-            <span
+            <button
+              mat-stroked-button
+              type="button"
               class="button-search-cep label_large"
-              [class.disabled]="!isCepValid"
-              (click)="isCepValid && searchCep()"
-              ><mat-icon
-                aria-hidden="false"
-                aria-label="Pesquisar"
-                fontIcon="search"
-              ></mat-icon>
-              Pesquisar</span
+              [disabled]="!isCepValid"
+              (click)="searchCep()"
             >
+              <mat-icon aria-hidden="false" aria-label="Pesquisar" fontIcon="search"></mat-icon>
+              Pesquisar
+            </button>
           </div>
           <div class="div-row">
             <app-input-primary
@@ -129,11 +128,14 @@
             />
           </div>
           <div class="div-row row-button">
-            <button class="button-secondary label_large" matStepperPrevious>
+            <button mat-stroked-button type="button" class="label_large" matStepperPrevious>
               Voltar
             </button>
             <button
-              class="button-primary label_large"
+              mat-flat-button
+              color="primary"
+              type="button"
+              class="label_large"
               matStepperNext
               (click)="onSubmit()"
             >
