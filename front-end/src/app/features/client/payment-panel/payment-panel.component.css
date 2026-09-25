@@ -155,8 +155,19 @@ body {
   transition: background 0.3s;
 }
 
-.pay-now:hover {
+.pay-now:hover:not(:disabled) {
   background: var(--color-primary-dark);
+}
+
+.pay-now:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.required-field {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin: var(--spacing-2xs) 0 0;
 }
 
 @media (max-width: 48rem) {

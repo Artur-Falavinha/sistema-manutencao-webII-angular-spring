@@ -63,7 +63,7 @@ export class PaymentPanelComponent implements OnInit {
 
   payRequest(): void {
     if (!this.selectedMethod) {
-      alert('Selecione uma forma de pagamento antes de continuar.');
+      this.toast.warn('Atenção', 'Selecione uma forma de pagamento antes de continuar.');
       return;
     }
     this.requestService.payRequest(this.currentRequestId).subscribe({
