@@ -1,4 +1,8 @@
-:host { display: block; }
+:host {
+  display: block;
+  flex-shrink: 0;
+  z-index: 10;
+}
 
 .app-header {
   display: flex;
@@ -7,6 +11,9 @@
   padding: 0 1.5rem;
   border-bottom: 0.0625rem solid var(--color-line);
   background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .header-left,
@@ -23,7 +30,13 @@
 }
 
 .header-right { gap: 1rem; }
-.header-right > div { cursor: pointer; }
+
+.logout-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-secondary);
+}
 
 .user-avatar {
   display: grid;
@@ -37,15 +50,6 @@
   block-size: 1em;
   font-size: var(--font-size-2xl);
   line-height: 1;
-}
-
-.icon-button {
-  display: grid;
-  place-items: center;
-  border: 0;
-  background: transparent;
-  color: var(--color-text-secondary);
-  cursor: pointer;
 }
 
 @media (max-width: 40rem) {

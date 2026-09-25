@@ -46,17 +46,17 @@
             >{{ hide() ? "visibility_off" : "visibility" }}</mat-icon
           >
         </app-input-primary>
-        @if (loginError) {
-          <div  class="error-message">
-            {{ loginError }}
-          </div>
-        }
         <div class="row-link-btn">
-          <button class="button-primary label_large" type="submit" [disabled]="loginForm.invalid || isLoading" [style.opacity]=" !isLoading ? '1' : '0.7'">
+          <button
+            mat-flat-button
+            color="primary"
+            class="label_large submit-btn"
+            type="submit"
+            [disabled]="loginForm.invalid || isLoading"
+          >
             @if (!isLoading) {
               Entrar
-            } @else
-            {
+            } @else {
               Aguarde...
             }
           </button>

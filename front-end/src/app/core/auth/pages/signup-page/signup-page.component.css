@@ -81,6 +81,6 @@ a {
 @media (max-width: 40rem) {
   .div-row,
   .row-form-cpf-phone { flex-direction: column; }
-  .row-button .button-primary,
-  .row-button .button-secondary { flex: 1; }
+  .row-button button[mat-flat-button],
+  .row-button button[mat-stroked-button] { flex: 1; }
 }

@@ -36,11 +36,19 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Data de Nascimento</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="dataNascimento" required>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <input
+              matInput
+              [matDatepicker]="birthDatePicker"
+              formControlName="dataNascimento"
+              required
+            >
+            <mat-datepicker-toggle matSuffix [for]="birthDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #birthDatePicker></mat-datepicker>
             <mat-error *ngIf="personalInfoForm.get('dataNascimento')?.hasError('required')">
               Data de nascimento é obrigatória.
+            </mat-error>
+            <mat-error *ngIf="personalInfoForm.get('dataNascimento')?.hasError('matDatepickerParse')">
+              Data inválida.
             </mat-error>
           </mat-form-field>
         </div>
@@ -58,7 +66,7 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Celular</mat-label>
-          <input matInput formControlName="celular" mask="(00) 0 0000-0000" required>
+          <input matInput formControlName="celular" mask="(00) 00000-0000" required>
           <mat-error *ngIf="personalInfoForm.get('celular')?.hasError('required')">
             O celular é obrigatório.
           </mat-error>

@@ -9,7 +9,7 @@ body, .main-content {
 }
   
 .top-actions {
-  margin: 32px auto 16px auto;
+  margin: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -17,10 +17,14 @@ body, .main-content {
   
 .main-content {
   margin: 0 auto 16px auto;
+  width: 100%;
+  max-width: 1120px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 24px;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
   
 /* Detalhes */
@@ -57,83 +61,192 @@ body, .main-content {
 .detalhes-defeito-value { color: #374343; font-size: 20px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 28px; }
   
 /* Cards inferiores */
-.cards-row { display: flex; align-items: flex-start; gap: 24px; width: 100%; }
-  
-.tecnico-card, .side-card {
+.cards-row {
+  display: flex;
   width: 100%;
-  height: 354px;
-  padding: 32px;
+}
+
+.orcamento-manutencao-card {
+  width: 100%;
   background: var(--color-background-card, #FAFAFA);
   border-radius: 16px;
+  box-shadow: none;
+  padding: 0;
+  overflow: hidden;
+}
+
+.orcamento-tabs {
+  width: 100%;
+}
+
+.orcamento-tabs ::ng-deep .mat-mdc-tab-header {
+  border-bottom: 1px solid #d9e0e0;
+}
+
+.orcamento-tabs ::ng-deep .mat-mdc-tab-labels {
+  padding: 0 16px;
+}
+
+.orcamento-tabs ::ng-deep .mat-mdc-tab-body-wrapper,
+.orcamento-tabs ::ng-deep .mat-mdc-tab-body-content {
+  overflow: visible;
+}
+
+.tab-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.tab-panel {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  box-shadow: none;
-}
-.tecnico-card { align-items: center; }
-  
-.tecnico-header { display: flex; align-items: center; gap: 8px; width: 100%; margin-bottom: 32px; }
-.tecnico-title { color: #546666; font-size: 20px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px; }
-  
-.tecnico-content {
-  color: #7C9493; font-size: 20px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px;
-  margin: 32px 0; text-align: center; width: 100%;
-}
-  
-/* Botão Atribuir/Trocar Responsável (stroked) na cor padrão */
-.atribuir-btn {
-  width: 100%; height: 48px; border-radius: 8px; border-width: 2px;
-  border-color: var(--color-primary-default) !important;
-  color: var(--color-primary-default) !important;
-  font-size: 18px; font-family: 'Inter', sans-serif; font-weight: 600; line-height: 24px;
-  background: transparent; transition: background 0.2s; outline: none; box-shadow: none;
-}
-  
-.orcamento-manutencao-card {
-  width: 100%; height: 356px; background: var(--color-background-card, #FAFAFA);
-  border-radius: 16px; display: flex; flex-direction: column; box-shadow: none; padding: 0;
-}
-  
-/* Abas */
-.orcamento-tabs { width: 100%; }
-.orcamento-content, .manutencao-content {
-  padding: 32px 32px 0 32px; display: flex; flex-direction: column; align-items: center;
-  gap: 32px; width: 100%; height: 260px; justify-content: center; overflow-y: auto;
-}
-.manutencao-content.tem-manutencao { justify-content: flex-start; }
-  
-.orcamento-empty {
-  color: #7C9493; font-family: Inter, sans-serif; font-size: 20px; font-weight: 500;
-  text-align: center; margin-bottom: 24px;
-}
-  
-/* Mantém Orçamento como estava */
-.orcamento-btn {
-  width: 100%; height: 48px;;
+  gap: 24px;
+  padding: 28px 32px 32px;
+  box-sizing: border-box;
 }
 
-/* Manutenção com cor padrão */
-.manutencao-btn {
-  width: 100%; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600;
-  background: var(--color-primary-default) !important; color: #fff !important; border: none; margin-top: 12px;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
+.tab-panel--empty {
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  text-align: center;
 }
 
-  
-.orcamento-total-label { color: #627877; font-family: Inter, sans-serif; font-size: 20px; font-weight: 600; text-align: center; }
-.orcamento-total { color: #3B598E; font-family: Inter, sans-serif; font-size: 40px; font-weight: 700; text-align: center; margin-bottom: 16px; }
-.orcamento-servicos-label { color: #627877; font-family: Inter, sans-serif; font-size: 18px; font-weight: 600; margin-top: 16px; text-align: center; }
-.orcamento-servicos { color: #374343; font-family: Roboto, sans-serif; font-size: 18px; font-weight: 400; text-align: center; }
-  
-/* Mais contraste no card de Manutenção */
-.manutencao-descricao, .manutencao-orientacao {
-  color: #3E4C4B !important; /* texto principal mais escuro */
-  font-family: Roboto, sans-serif; font-size: 18px; font-weight: 400;
-  text-align: left; margin-bottom: 8px; width: 100%;
+.tab-panel--filled {
+  align-items: stretch;
+  min-height: 220px;
 }
-.manutencao-descricao b, .manutencao-orientacao b {
-  color: #3E4C4B !important; /* rótulos com contraste maior */
-  font-family: Inter, sans-serif; font-size: 18px; font-weight: 600;
+
+.panel-empty-message {
+  margin: 0;
+  color: #7c9493;
+  font-family: Inter, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.panel-actions--stacked {
+  flex-direction: column;
+  width: min(100%, 420px);
+}
+
+.panel-action-btn {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.panel-actions--stacked .panel-action-btn,
+.tab-panel--empty .panel-action-btn {
+  width: 100%;
+}
+
+.field-label {
+  display: block;
+  color: #627877;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.field-value {
+  margin: 0;
+  color: #374343;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.orcamento-summary {
+  text-align: center;
+}
+
+.orcamento-total {
+  display: block;
+  color: #3b598e;
+  font-family: Inter, sans-serif;
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.orcamento-services {
+  padding-top: 8px;
+  border-top: 1px solid #e5e9e9;
+}
+
+.orcamento-servicos {
+  margin: 0;
+  color: #374343;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.manutencao-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.manutencao-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.finalizar-solicitacao-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+}
+
+.dialog-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.dialog-btn-cancel,
+.dialog-btn-confirm {
+  flex: 1;
+  min-height: 48px;
+}
+
+.orcamento-dialog-confirm,
+.manutencao-dialog-confirm {
+  min-width: 245px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.finalizacao-back-btn {
+  min-height: 44px;
 }
   
 /* Voltar (link no topo à esquerda) */
@@ -143,19 +256,30 @@ body, .main-content {
 }
 .voltar-pagina-inicial:hover { text-decoration: underline; }
 .voltar-icon { font-size: 22px; color: var(--color-primary-default); }
-  
-/* Botão Finalizar Solicitação (topo direito) na cor padrão */
-.finalizar-solicitacao-btn {
-  height: 40px; border-radius: 8px; font-size: 16px; font-family: Inter, sans-serif; font-weight: 600;
-  display: inline-flex; align-items: center; gap: 8px; padding: 0 16px;
-  background: var(--color-primary-default) !important; color: #fff !important;
+
+@media (max-width: 768px) {
+  .tab-panel {
+    padding: 20px 16px 24px;
+  }
+
+  .panel-actions--stacked {
+    width: 100%;
+  }
+
+  .detalhes-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detalhes-info-row {
+    flex-direction: column;
+  }
 }
   
 /* Dialog padrão */
 .dialog-container { width: 350px; padding: 24px 24px 16px 24px; display: flex; flex-direction: column; align-items: stretch; }
 .dialog-title { font-family: Inter, sans-serif; font-size: 22px; font-weight: 600; margin-bottom: 16px; }
 .dialog-field { margin-bottom: 24px; }
-.dialog-btn { width: 100%; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; background: var(--color-primary-default) !important; color: #fff !important; }
 .custom-dialog .mat-dialog-container { border-radius: 16px; padding: 0; }
   
 /* Dialog Efetuar Orçamento */
@@ -169,8 +293,12 @@ body, .main-content {
 .orcamento-dialog-actions { display: flex; align-items: center; justify-content: space-between; }
 .orcamento-dialog-helper { color: #627877; font-size: 16px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 16px; }
 .orcamento-dialog-confirm {
-  width: 245px; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600;
-  background: var(--color-primary-default) !important; color: #fff !important; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-width: 245px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 .orcamento-dialog-confirm[disabled] { opacity: 0.6; }
   
@@ -185,8 +313,12 @@ body, .main-content {
 .manutencao-dialog-actions { display: flex; align-items: center; justify-content: space-between; }
 .manutencao-dialog-helper { color: #627877; font-size: 16px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 16px; }
 .manutencao-dialog-confirm {
-  width: 245px; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600;
-  background: var(--color-primary-default) !important; color: #fff !important; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-width: 245px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 .manutencao-dialog-confirm[disabled] { opacity: 0.6; }
   
@@ -203,6 +335,5 @@ body, .main-content {
 .finalizacao-title { color: #3E4C4B; font-size: 20px; font-family: Inter, sans-serif; font-weight: 600; text-align: center; }
 .finalizacao-date { color: #627877; font-size: 14px; font-family: Roboto, sans-serif; font-weight: 400; }
 .finalizacao-back-btn {
-  width: 100%; height: 44px; border-radius: 8px; font-size: 16px; font-family: Inter, sans-serif; font-weight: 600;
-  background: var(--color-primary-default) !important; color: #fff !important;
+  min-height: 44px;
 }

@@ -57,7 +57,7 @@
     @for (req of requests(); track req.id) {
     @if (req.statusName == 'ABERTA') {
       <app-request-card class="request-card" [request]="req">
-        <button (click)="makeQuote(req)">Efetuar Orçamento</button>
+        <button (click)="makeQuote(req)" mat-flat-button color="primary" type="button">Efetuar Orçamento</button>
       </app-request-card>
     }
   } @empty {

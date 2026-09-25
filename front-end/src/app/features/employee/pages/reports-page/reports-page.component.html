@@ -1,98 +1,126 @@
-  <section class="header-section">
-    <div class="title-container">
-      <h1 class="heading_1">Relatório</h1>
-      <div class="switch-container">
-        <button
-          mat-button
-          type="button"
-          (click)="toggleView()"
-          [class.active]="isReportsTotalView"
-          class="switch-option label_large"
-        >
-          <mat-icon aria-hidden="false" fontIcon="payments"></mat-icon>
-          Receitas Total
-        </button>
-        <button
-          mat-button
-          type="button"
-          (click)="toggleView()"
-          [class.active]="!isReportsTotalView"
-          class="switch-option label_large"
-        >
-          <mat-icon aria-hidden="false" fontIcon="category"></mat-icon>
+<div class="container">
+  <div class="main-header">
+    <div class="title-row">
+      <h1 class="heading_1">Relatórios</h1>
+
+      <mat-button-toggle-group
+        class="view-toggle"
+        [value]="isReportsTotalView ? 'date' : 'category'"
+        (change)="onViewChange($event.value)"
+        aria-label="Tipo de relatório"
+      >
+        <mat-button-toggle value="date">
+          <mat-icon>payments</mat-icon>
+          Receitas por Data
+        </mat-button-toggle>
+        <mat-button-toggle value="category">
+          <mat-icon>category</mat-icon>
           Por Categoria
-        </button>
-      </div>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
     </div>
-    <div class="button-group">
+
+    <div class="header-actions">
       @if (isReportsTotalView) {
-        <mat-form-field>
-          <mat-label>Enter a date range</mat-label>
+        <mat-form-field appearance="outline" class="date-range-field">
+          <mat-label>Período</mat-label>
           <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-            <input matStartDate formControlName="start" placeholder="Start date">
-            <input matEndDate formControlName="end" placeholder="End date">
+            <input matStartDate formControlName="start" placeholder="Data inicial">
+            <input matEndDate formControlName="end" placeholder="Data final">
           </mat-date-range-input>
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
 
-          @if (start.hasError('matStartDateInvalid')) {
-            <mat-error>Invalid start date</mat-error>
+          @if (start.hasError("matStartDateInvalid")) {
+            <mat-error>Data inicial inválida</mat-error>
           }
-          @if (end.hasError('matEndDateInvalid')) {
-            <mat-error>Invalid end date</mat-error>
+          @if (end.hasError("matEndDateInvalid")) {
+            <mat-error>Data final inválida</mat-error>
           }
         </mat-form-field>
 
-        <button mat-flat-button color="primary" type="button" (click)="generateRevenueByDateReport()">
-          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-          Exportar Relatório
-        </button>
-      } @else {
-        <button mat-flat-button color="primary" type="button" (click)="generateCategoriesReport()">
-          <mat-icon aria-hidden="false" fontIcon="add"></mat-icon>
-          Exportar Relatório
+        <button mat-stroked-button type="button" class="filter-button" (click)="applyDateFilter()">
+          <mat-icon>filter_list</mat-icon>
+          Filtrar
         </button>
       }
+
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        class="export-button"
+        (click)="isReportsTotalView ? generateRevenueByDateReport() : generateCategoriesReport()"
+      >
+        <mat-icon>download</mat-icon>
+        Exportar PDF
+      </button>
     </div>
-  </section>
+  </div>
+
+  <mat-card class="summary-card">
+    <mat-card-content>
+      <span class="summary-label label_medium">Receita total</span>
+      <p class="summary-value heading_2">{{ receitaTotal | currency: "BRL" }}</p>
+    </mat-card-content>
+  </mat-card>
+
   @if (isReportsTotalView) {
-  <section>
-    <div class="financial-summary report">
-      
+    <div class="table-card mat-elevation-z4">
+      <table mat-table [dataSource]="datasource">
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Data</th>
+          <td mat-cell *matCellDef="let element">{{ element.date | date: "dd/MM/yyyy" }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalRevenue">
+          <th mat-header-cell *matHeaderCellDef>Receita Total</th>
+          <td mat-cell *matCellDef="let element">{{ element.totalRevenue | currency: "BRL" }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell empty-row" [attr.colspan]="displayedColumns.length">
+            Nenhum registro encontrado para o período selecionado.
+          </td>
+        </tr>
+      </table>
+
+      <mat-paginator
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+      ></mat-paginator>
     </div>
-    <table  mat-table [dataSource]="datasource" class="mat-elevation-z8">
-
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef style="width: 100%;"> Data </th>
-        <td mat-cell *matCellDef="let element" style="width: 100%;" class="body_large"> {{element.date | date:'dd/MM/yyyy'}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="totalRevenue">
-        <th mat-header-cell *matHeaderCellDef  style="width: 100%;"> Receita Total </th>
-        <td mat-cell *matCellDef="let element" style="width: 100%;" class="body_large"> {{element.totalRevenue | currency:'BRL'}} </td>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </table>
-    <mat-paginator
-      [pageSize]="5"
-      [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons>
-    </mat-paginator>
-  </section>
   } @else {
-  <section class="list-section">
-    <div class="financial-summary category">
-      @for (category of revenueByCategory; track category.categoryName) {
-      <div class="summary-item category">
-        <span class="label label_medium">
-          <mat-icon aria-hidden="false" fontIcon="category"></mat-icon>
-          {{ category.categoryName }}
-        </span>
-        <p class="amount heading_1">{{ category.totalRevenue | currency:'BRL' }}</p>
-      </div>
-    }
+    <div class="table-card mat-elevation-z4">
+      <table mat-table [dataSource]="categoryDataSource">
+        <ng-container matColumnDef="categoryName">
+          <th mat-header-cell *matHeaderCellDef>Categoria</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="category-cell">
+              <mat-icon>category</mat-icon>
+              {{ element.categoryName }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalRevenue">
+          <th mat-header-cell *matHeaderCellDef>Receita Total</th>
+          <td mat-cell *matCellDef="let element">{{ element.totalRevenue | currency: "BRL" }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="categoryDisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: categoryDisplayedColumns"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell empty-row" [attr.colspan]="categoryDisplayedColumns.length">
+            Nenhuma categoria com receita registrada.
+          </td>
+        </tr>
+      </table>
     </div>
-  </section>
   }
+</div>
