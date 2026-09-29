@@ -1622,6 +1622,12 @@
       "referenceSha256": null,
       "expectedSha256": "269f888aa5ad218120a18acf65e57597d1aece9cdcb7c04c8dd1e911636976c1",
       "reason": "Artefato de documentação de testes cruzados e QA exigido pela sprint."
+    },
+    {
+      "path": "front.dockerfile",
+      "classification": "IDENTICAL",
+      "referenceSha256": "e91823c44d6633cf6e9006631e623301f28f0d3d1158c891631538b502518d99",
+      "expectedSha256": "e91823c44d6633cf6e9006631e623301f28f0d3d1158c891631538b502518d99"
     }
   ]
 }
