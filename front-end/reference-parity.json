@@ -368,13 +368,13 @@
       "decisionDate": "2026-09-17",
       "requirement": "N/A"
     },
-    {
-      "path": "src/app/core/auth/pages/login-page/login-page.component.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": "e8f9d1320d1754c80a8b19c799533f54a0f1aeb171a9ffc5d10a701bcaf7a66c",
-      "expectedSha256": "2efa86377258d2bb9b54126282686e4d5f59205550c60ab7765dc8d42f112f05",
-      "reason": "Adiciona somente provideRouter e provideToastr exigidos para instanciar o LoginPageComponent restaurado com AuthService e ToastService no TestBed."
-    },
+   {
+  "path": "src/app/core/auth/pages/login-page/login-page.component.spec.ts",
+  "classification": "TECHNICAL_EXCEPTION",
+  "referenceSha256": "e8f9d1320d1754c80a8b19c799533f54a0f1aeb171a9ffc5d10a701bcaf7a66c",
+  "expectedSha256": "7775efba6cfdc874a14cc3c6c8fbaa2a35cac0747b5c8a6f41330b072e7c60dc",
+  "reason": "Adiciona provideRouter e mocks de AuthService/ToastService exigidos para instanciar o LoginPageComponent no TestBed. Amplia a cobertura com casos de formulário inválido, login de cliente/funcionário com redirecionamento por perfil, credenciais incorretas e erro inesperado, todos via toast (loginError foi removido do componente)."
+},
     {
       "path": "src/app/core/auth/pages/login-page/login-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
@@ -399,12 +399,12 @@
       "requirement": "RF001"
     },
     {
-      "path": "src/app/core/auth/pages/signup-page/signup-page.component.spec.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": "a3238eb745118493c2ba23689ba07a30a7eb4f969847d4ff9de9a49fc2395250",
-      "expectedSha256": "8b9be477e45e909c88cf4d7a551aac15c942b6a0b6ba5a1ad363eb414fd6ab08",
-      "reason": "Adiciona provideRouter e mock de ToastService exigidos para instanciar o SignupPageComponent no TestBed."
-    },
+  "path": "src/app/core/auth/pages/signup-page/signup-page.component.spec.ts",
+  "classification": "TECHNICAL_EXCEPTION",
+  "referenceSha256": "a3238eb745118493c2ba23689ba07a30a7eb4f969847d4ff9de9a49fc2395250",
+  "expectedSha256": "6c77956aa92023d91e40a5cf422c318b61e941f8a93d5092652d16518c94ec17",
+  "reason": "Adiciona provideRouter e mocks de AuthService/ToastService/ViaCepService exigidos para instanciar o SignupPageComponent no TestBed. Amplia a cobertura com casos de formulário inválido, cadastro valido navegando para /login com toast de sucesso, e erro por CPF/email duplicado (showModal foi removido do componente em favor do fluxo com SignupResult e senha gerada)."
+},
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
       "classification": "TEMPORARY_SCAFFOLD",
@@ -1118,7 +1118,7 @@
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "64c1f22bdc89318d17f551ee10e76d90b744d1cdbfdc0da4a03333cb8338e761",
-      "expectedSha256": "b295781facd9a5e5d95c0f2cc6ff4228689b77bef2c8f493a65dfd339d1becbb",
+      "expectedSha256": "31404b1109bf529f1078e9a1b6f3c653869a33e09a0b86f09def9795670eb046",
       "reason": "Mantém uma única listagem de RF013, preserva busca e filtro por categoria, usa Angular Material e adiciona clique na linha para navegar ao fluxo budget-delivery.",
       "decisionDate": "2026-09-01",
       "requirement": "RF013"
@@ -1133,7 +1133,7 @@
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.ts",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "f274ebd55bb6b3b3ea03e0600c6dde8e2c6acb16dae35de3e924757da9d29994",
-      "expectedSha256": "e61b22fe218fa1cd022d5f85595ff8265c6e5811d9458846dcef4bddb9cb2cfe",
+      "expectedSha256": "a2f84a21b55b92c4cfe62513e6581924dcfb367ea9cdf6b26904cc8a962926fd",
       "reason": "Mantém somente a listagem de RF013, preserva a busca e o filtro por categoria incorporados à main, usa controles Angular Material e navega para /employee/budget-delivery/:id ao selecionar uma solicitação.",
       "decisionDate": "2026-09-01",
       "requirement": "RF013"

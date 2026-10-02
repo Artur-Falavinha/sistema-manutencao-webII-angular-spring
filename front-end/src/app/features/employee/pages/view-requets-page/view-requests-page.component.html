@@ -34,6 +34,46 @@
           @if (selectedCategory()) {
             <button mat-button type="button" (click)="clearCategoryFilter()">Limpar filtro</button>
           }
+
+          <mat-button-toggle-group
+            class="date-filter-toggle"
+            [value]="dateFilterMode()"
+            (change)="onDateFilterModeChange($event.value)"
+          >
+            <mat-button-toggle value="todos">Todos</mat-button-toggle>
+            <mat-button-toggle value="hoje">Hoje</mat-button-toggle>
+            <mat-button-toggle value="periodo">Período</mat-button-toggle>
+          </mat-button-toggle-group>
+
+          @if (dateFilterMode() === 'periodo') {
+            <div class="period-filter-fields">
+              <mat-form-field appearance="outline" class="period-date-field">
+                <mat-label>De</mat-label>
+                <input
+                  matInput
+                  type="date"
+                  #periodStartInput
+                  [value]="periodStart() ?? ''"
+                  (change)="onPeriodStartChange(periodStartInput.value)"
+                >
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="period-date-field">
+                <mat-label>Até</mat-label>
+                <input
+                  matInput
+                  type="date"
+                  #periodEndInput
+                  [value]="periodEnd() ?? ''"
+                  (change)="onPeriodEndChange(periodEndInput.value)"
+                >
+              </mat-form-field>
+
+              @if (!periodoValido()) {
+                <span class="period-error">Informe as duas datas, com início antes do fim.</span>
+              }
+            </div>
+          }
         </div>
       }
     </div>
@@ -68,7 +108,6 @@
         <span class="status-badge label_large" [style.backgroundColor]="element.statusColor">{{ element.statusName }}</span>
       </td>
     </ng-container>
-
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr
       mat-row
