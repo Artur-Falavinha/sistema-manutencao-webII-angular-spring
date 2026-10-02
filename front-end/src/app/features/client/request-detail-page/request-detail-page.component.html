@@ -1,4 +1,3 @@
-<app-header></app-header>
 
 @if (isLoading === false) {
 <main>
@@ -7,7 +6,9 @@
       <mat-icon>arrow_back</mat-icon>Voltar para Página Inicial
     </a>
     @if (request!.status.nome === 'ARRUMADA') {
-    <button class="label_large button-primary" (click)="goToPaymentPage()">Pagar Solicitação <mat-icon>payment</mat-icon></button>
+    <button mat-flat-button color="primary" type="button" class="label_large" (click)="goToPaymentPage()">
+      Pagar Solicitação <mat-icon>payment</mat-icon>
+    </button>
     } @else {
       <div></div>
     }

@@ -1,84 +1,93 @@
-<body>
-  <div class="card" >
-    <div class="card-left">
+@if (isLoading) {
+  <div class="loading-state">Carregando pagamento...</div>
+} @else if (requests) {
+  <main>
+    <div class="header-wrapper">
       <a [routerLink]="['/client/request-detail', currentRequestId]" class="label_large back-link">
-        <mat-icon>arrow_back</mat-icon>Voltar para Página Inicial
+        <mat-icon>arrow_back</mat-icon>Voltar para Detalhes da Solicitação
       </a>
-
-      <div class="info-section" *ngIf="requests">
-        <div class="info-item">
-          <h3>Item</h3>
-          <p>{{ requests.equipmentName }}</p>
-        </div>
-        <div class="info-item">
-          <h3>Categoria</h3>
-          <p>{{ requests.categoryName }}</p>
-        </div>
-      </div>
-
-      <div class="info-section" *ngIf="requests">
-        <h3>Descrição do Defeito</h3>
-        <p>{{ requests!.defectDescription }}</p>
-      </div>
-
-      <div class="info-section" *ngIf="requests">
-        <h3>Resumo do Pagamento</h3>
-
-        <div class="payment-item" *ngFor="let budget of requests.budgets">
-          <div>
-            <p class="payment-title">{{ budget.services }}</p>
-          </div>
-          <div class="payment-item total">
-              <span class="payment-title-total"><strong>Total</strong></span>
-              <span class="payment-price-total"><strong>R$ {{budget.total}}</strong></span>
-          </div>
-        </div>
-        
-        
-      
-
-      </div>
+      <div></div>
     </div>
 
-    <div class="card-right">
-      <h2>Pagamento</h2>
+    <div class="payment-layout">
+      <mat-card class="summary-card">
+        <mat-card-header>
+          <mat-card-title>Resumo da solicitação</mat-card-title>
+        </mat-card-header>
 
-      <div class="payment-methods">
-        <button 
-          class="pay-btn" 
-          [class.selected]="selectedMethod === 'cartao'" 
-          (click)="selectMethod('cartao')">
-          Cartão
-        </button>
+        <mat-card-content class="summary-content">
+          <div class="info-grid">
+            <div class="info-field">
+              <span class="field-label">Item</span>
+              <span class="field-value">{{ requests.equipmentName }}</span>
+            </div>
+            <div class="info-field">
+              <span class="field-label">Categoria</span>
+              <span class="field-value">{{ requests.categoryName }}</span>
+            </div>
+          </div>
 
-        <button 
-          class="pay-btn" 
-          [class.selected]="selectedMethod === 'pix'" 
-          (click)="selectMethod('pix')">
-          Pix
-        </button>
-      </div>
+          <div class="info-field">
+            <span class="field-label">Descrição do defeito</span>
+            <p class="field-value field-value--multiline">{{ requests.defectDescription }}</p>
+          </div>
 
-      <p class="required-field" *ngIf="!selectedMethod">* Selecione uma forma de pagamento</p>
+          @for (budget of requests.budgets; track budget.id) {
+            <div class="budget-block">
+              <span class="field-label">Serviços inclusos</span>
+              <p class="field-value field-value--multiline">{{ budget.services }}</p>
+              <div class="total-row">
+                <span class="total-label">Total</span>
+                <span class="total-value">R$ {{ budget.total | number:'1.2-2' }}</span>
+              </div>
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
 
-      <button class="pay-now" [disabled]="!selectedMethod" (click)="payRequest()">
-        PAGAR AGORA
-      </button>
+      <mat-card class="checkout-card">
+        <mat-card-header>
+          <mat-card-title>Pagamento</mat-card-title>
+          <mat-card-subtitle>Selecione a forma de pagamento</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content class="checkout-content">
+          @if (canPay) {
+            <mat-button-toggle-group
+              class="payment-toggle-group"
+              [(ngModel)]="selectedMethod"
+              name="paymentMethod"
+            >
+              <mat-button-toggle value="cartao">Cartão</mat-button-toggle>
+              <mat-button-toggle value="pix">Pix</mat-button-toggle>
+            </mat-button-toggle-group>
+
+            <button
+              mat-flat-button
+              color="primary"
+              type="button"
+              class="pay-now-btn"
+              [disabled]="isProcessingPayment"
+              (click)="openPaymentConfirmDialog()"
+            >
+              Pagar agora
+            </button>
+          } @else {
+            <p class="checkout-message">
+              Pagamento indisponível para o status atual da solicitação.
+            </p>
+            <button
+              mat-stroked-button
+              color="primary"
+              type="button"
+              class="pay-now-btn"
+              [routerLink]="['/client/request-detail', currentRequestId]"
+            >
+              Voltar para detalhes
+            </button>
+          }
+        </mat-card-content>
+      </mat-card>
     </div>
-  </div>
-  
-  <!-- Modal de confirmação de pagamento -->
-  <app-success-modal 
-    [(mostrar)]="mostrarModal"
-    [titulo]="modalTitulo"
-    [subtitulo]="modalSubtitulo"
-    [dadosAdicionais]="modalDadosAdicionais"
-    [textoBotao]="modalTextoBotao"
-    [rotaDestino]="modalRotaDestino">
-  </app-success-modal>
-</body>
-
-
-
-
-
+  </main>
+}

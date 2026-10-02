@@ -6,8 +6,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MaintenanceRequestService } from '../../../core/services/maintenance-request.service';
 import { ClientRequestDetailDTO } from '../../../shared/models/maintenance-request.models';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { ApproveRejectPanelComponent } from './components/approve-reject-panel/approve-reject-panel.component';
-import { HeaderComponent } from '../../../core/layout/header/header.component';
 import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
@@ -17,9 +17,9 @@ import { ToastService } from '../../../core/services/toast.service';
     RequestHistoryComponent,
     CommonModule,
     MatIconModule,
+    MatButtonModule,
     RouterModule,
     ApproveRejectPanelComponent,
-    HeaderComponent,
   ],
   templateUrl: './request-detail-page.component.html',
   styleUrl: './request-detail-page.component.css',
