@@ -1,7 +1,7 @@
 <div class="modal-overlay" role="dialog" aria-modal="true"> 
     <div class="request-modal-container">
 
-        <button class="close-button" aria-label="Fechar modal" (click)="confirmCloseRequest()">
+        <button mat-icon-button type="button" class="close-button" aria-label="Fechar modal" (click)="confirmCloseRequest()">
           <mat-icon>close</mat-icon>
         </button>
 
@@ -10,7 +10,7 @@
         <form #formRequest="ngForm" (ngSubmit)="send()" class="request-form-body">
             
             <div class="form-group">
-                <label for="equipmentName">Equipamento</label>
+                <label for="equipmentName">*Equipamento</label>
                 <input 
                     type="text" 
                     id="equipmentName" 
@@ -22,7 +22,7 @@
             </div>
 
             <div class="form-group">
-                <label for="categoryId">Categoria</label>
+                <label for="categoryId">*Categoria</label>
                 <select 
                     id="categoryId" 
                     name="categoryId" 
@@ -37,7 +37,7 @@
             </div>
                 
             <div class="form-group">
-                <label for="defectDescription">Descrição do defeito</label>
+                <label for="defectDescription">*Descrição do defeito</label>
                 <textarea 
                     id="defectDescription" 
                     name="defectDescription" 
@@ -49,7 +49,7 @@
 
             <p class="required-field">* Campo de preenchimento obrigatório</p>
 
-            <button type="submit" class="submit-button" [disabled]="formRequest.invalid">
+            <button mat-flat-button color="primary" type="submit" class="submit-button" [disabled]="formRequest.invalid">
                 Solicitar manutenção
                 <mat-icon>check</mat-icon>
             </button> 

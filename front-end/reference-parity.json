@@ -223,6 +223,32 @@
         "src/app/features/client/request-detail-page/request-detail-page.component.html",
         "src/app/features/client/request-detail-page/request-detail-page.component.ts"
       ]
+    },
+    {
+      "date": "2026-09-24",
+      "requirement": "N/A",
+      "decision": "Substituir modais inline do fluxo cliente por dialogos MatDialog com DialogShell.",
+      "reason": "Padroniza confirmacao de pagamento, aprovacao, rejeicao e resgate de orcamento com o mesmo shell visual dos formularios de funcionario, preservando validacoes e chamadas de API.",
+      "affectedReferencePaths": [
+        "src/app/features/client/payment-panel/payment-panel.component.ts",
+        "src/app/features/client/payment-panel/payment-panel.component.html",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.ts",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.html"
+      ],
+      "createdPaths": [
+        "src/app/features/client/payment-panel/payment-confirm-dialog.component.css",
+        "src/app/features/client/payment-panel/payment-confirm-dialog.component.html",
+        "src/app/features/client/payment-panel/payment-confirm-dialog.component.ts",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-approve-confirm-dialog.component.css",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-approve-confirm-dialog.component.html",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-approve-confirm-dialog.component.ts",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-reject-dialog.component.css",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-reject-dialog.component.html",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-reject-dialog.component.ts",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component.css",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component.html",
+        "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component.ts"
+      ]
     }
   ],
   "files": [
@@ -608,14 +634,14 @@
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "86adcbe415fe0b1139d18362ac4dd3a48f367c731eb386aa3e1faa6781cda8ec",
-      "expectedSha256": "73e1fa5c7eac30f592c01faa39061f34e6f4ce5a26281aad80ee00f9ed07ea9f",
+      "expectedSha256": "9445c653245c198398d0071968841c19755edfcde27d2910c4c1c6da97968f35",
       "reason": "Estilos do search-field outline no dashboard cliente."
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.html",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "e39ba6059abb94770bb3de39103e83eea00534c574ecc5c22e1b498a59496a0e",
-      "expectedSha256": "84cab0c0450a8951cd50209a78f65c13bfc1f23d4ff3a4a7481383786069ebc4",
+      "expectedSha256": "31ce6341f76f14f7228c4fd020041920ca6160dd0ae915b6b802aa419fbad493",
       "reason": "Campo de pesquisa Material outline com icone search, alinhado ao padrao employee-list.",
       "removalBy": "2026-10-08"
     },
@@ -623,14 +649,14 @@
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "5626353142922fc06d5a3e64617d893d2b315db64e653fe800a2677d322cb211",
-      "expectedSha256": "953607b6761eb098361c94d7bc319d44459d141e618903dda8c3e02a51867697",
+      "expectedSha256": "8252aac77ed4e84eaae7dba5fd85d8b980db8d871ad30a0015b587c43f6e7fe7",
       "reason": "Adiciona provideRouter([]), provideHttpClient() e provideToastr() ao TestBed: o componente injeta Router e ToastService; a suíte da referência não declarava esses providers explicitamente."
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "57ee945c9524bc1f3b7955fc6281c20e046155f842c4f8253b329da3a54d4f88",
-      "expectedSha256": "0753909c6ee8058e8443b98d63e64af0dd7a0b592e7ce9a71063942297cb7f8a",
+      "expectedSha256": "27650e25fdfc0d571ffa36f04e61bedd27c8aa81f6e30dbd5f5a1e3e94716ac5",
       "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem coluna acoes, toast de erro e contrato simulado."
     },
     {
@@ -645,14 +671,14 @@
       "path": "src/app/features/client/new-request-page/new-request-page.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "e977c775fb5330df23ebc13d278b21b2c3a21b394ad3013415e265b9461374b0",
-      "expectedSha256": "c3b890882bff1a0143c3b2819a2396ece3c23c279941ff90a3d73ddc133edf96",
+      "expectedSha256": "2896f2c7d67efbad843b165de5aaa91ee1d72e79294c591c708c2162945ecc20",
       "reason": "Redesenho visual do modal e largura do botao Material de submit."
     },
     {
       "path": "src/app/features/client/new-request-page/new-request-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5",
-      "expectedSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5",
+      "expectedSha256": "070cb2c55424c1d13b6b0ef3166bab117aafb44bf8767bd27b5b7224045b4bb7",
       "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
       "decisionDate": "2026-09-17",
       "requirement": "N/A"
@@ -668,22 +694,22 @@
       "path": "src/app/features/client/new-request-page/new-request-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "3603f9ac164da29a793b30cb4e576a9cbc99a261a79129c9d4db166eea293e8c",
-      "expectedSha256": "3603f9ac164da29a793b30cb4e576a9cbc99a261a79129c9d4db166eea293e8c",
+      "expectedSha256": "4633e591b5ed85c1427a3f05e8014be938dafebd335cb02dbec1a7e136068a60",
       "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar create() nem validacao do formulario."
     },
     {
       "path": "src/app/features/client/payment-panel/payment-panel.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "1a36a88b2c3f0d3bbf69d162ec9dbfbbbfbca9466dc9a355cdcf9332a473ff12",
-      "expectedSha256": "a4b2bdd58044fffbd8e61146933b6422799d8b68e976dcefcf693923ad2cb074",
-      "reason": "Ajusta estilos dos botoes Material de metodo de pagamento e PAGAR AGORA. Adiciona estado :disabled do botao PAGAR AGORA e estilo do aviso de campo obrigatorio, para consolidar o bloqueio de confirmacao com entrada invalida (RF008/RF010)."
+      "expectedSha256": "10108df482c2e065eb865ecd236bedf3e4d7dc639900274ecde9beb7fbefa1ae",
+      "reason": "Layout em grid responsivo para resumo e checkout do pagamento com tokens Mant."
     },
     {
       "path": "src/app/features/client/payment-panel/payment-panel.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571",
-      "expectedSha256": "7be5d9eddb2b6369af8eb53757ab0cd06c1f47183666266abf713cb63823dde9",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Desabilita o botao PAGAR AGORA e exibe aviso enquanto nenhuma forma de pagamento estiver selecionada, consolidando o formulario de pagamento com os de solicitacao e rejeicao: entrada invalida bloqueia a confirmacao.",
+      "expectedSha256": "50cba2e7a94b70dff7cacaff147fcea8b57bc56d7fe096effb1f21d5b4366d94",
+      "reason": "Reorganiza pagamento em mat-card com resumo e checkout, mat-button-toggle para Cartao/Pix e dialogo de confirmacao.",
       "decisionDate": "2026-09-24",
       "requirement": "RF008/RF010"
     },
@@ -691,28 +717,52 @@
       "path": "src/app/features/client/payment-panel/payment-panel.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a5ad8aeb17fdd2272dfb621fd4aba6883461f8acf019f72ba4a5009cd14c6414",
-      "expectedSha256": "0dad8c7fed36c52caccf7545a2f60e8258ae902b47883f4621cfd6c75ae02096",
-      "reason": "Adiciona provideRouter([]), provideHttpClient() e provideToastr() ao TestBed: o componente injeta ActivatedRoute, MaintenanceRequestService (HTTP literal) e ToastService/ToastrService; sem esses providers o TestBed não os resolve (NullInjectorError). A suíte da referência não declarava esses providers."
+      "expectedSha256": "6f563e85ad4291f1b568c6600f435c68d9f6fb525231f14b48a519d17b554363",
+      "reason": "Adiciona MatDialogModule ao TestBed para o fluxo de confirmacao de pagamento."
     },
     {
       "path": "src/app/features/client/payment-panel/payment-panel.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb",
-      "expectedSha256": "64f356b70e1a751dfba419e4616783e12be6b9a490ab8f07e1ef679f5facf72a",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar payRequest() nem modal de sucesso. Substitui o alert() nativo por ToastService.warn() ao tentar confirmar sem forma de pagamento selecionada, alinhando o feedback de erro com o restante do fluxo do cliente."
+      "expectedSha256": "93531e309899ceb51e089574025cd274c5f1eaf658a074f092bcdb497e8f5479",
+      "reason": "Substitui app-success-modal por MatDialog de confirmacao, valida status ARRUMADA/PAGA e bloqueia pagamento sem metodo selecionado com toast."
+    },
+    {
+      "path": "src/app/features/client/payment-panel/payment-confirm-dialog.component.css",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "465156c0223328ac9edcd4bf67bb5c0f859b5d88720a91cddd8c099faa05dc18",
+      "reason": "Cria dialogo de confirmacao de pagamento com DialogShell, substituindo app-success-modal no fluxo do cliente.",
+      "decisionDate": "2026-09-24",
+      "requirement": "N/A"
+    },
+    {
+      "path": "src/app/features/client/payment-panel/payment-confirm-dialog.component.html",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "b5a305feed53bc2d9a9e81e8324f15e0f6dc7693d11a660b421961ce3b834258",
+      "reason": "Exibe resumo do pagamento e acoes confirmar/cancelar antes de processar a solicitacao.",
+      "decisionDate": "2026-09-24",
+      "requirement": "N/A"
+    },
+    {
+      "path": "src/app/features/client/payment-panel/payment-confirm-dialog.component.ts",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "0679ff4e55f4c8e5b42f97af54c9bb469424d054f7da61899a7e73617433d07f",
+      "reason": "Encapsula o contrato MatDialog de confirmacao de pagamento do cliente.",
+      "decisionDate": "2026-09-24",
+      "requirement": "N/A"
     },
     {
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "b16c7d6612f5ff4884b7ca6c2f46fc308201d2b79267444b14db32143bb14903",
-      "expectedSha256": "b61d5edbe33cb362c1ef937ca189b4c13e2ade36235282a78812ef744d076aac",
+      "expectedSha256": "f42ca184deff4f19576f074c68836b6a268f40850e43522da01f6865d7b72b8f",
       "reason": "Remapeia cores de status/ação e espaçamentos para os tokens atuais da identidade Mant, preservando seletores, grid e responsividade em 768px."
     },
     {
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "7bea38570d91d0b433c5274bfa8f7a8acd717c0638b9344c8ba170363f144723",
-      "expectedSha256": "7bea38570d91d0b433c5274bfa8f7a8acd717c0638b9344c8ba170363f144723",
+      "expectedSha256": "600f68f287359b4919929874d1ff0fecabdcd0a454bcb7f31f3c5045463e4958",
       "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
       "decisionDate": "2026-09-17",
       "requirement": "N/A"
@@ -728,8 +778,8 @@
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "7dc8cc31f469aae59f8953c415043833ac873818a24b7d12fbbbf281c55322c6",
-      "expectedSha256": "7046414e64866130333b5ba59ae2652fbfc0ec12d3d824e0c193568491da4bda",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar approveBudget(), rejectBudget() ou rescueRequest()."
+      "expectedSha256": "2995c79758e710de8cc572e63c8cff8604752f8db77a78139b03eac2020fb093",
+      "reason": "Centraliza aprovacao, rejeicao e resgate de orcamento em dialogos MatDialog com DialogShell."
     },
     {
       "path": "src/app/features/client/request-detail-page/components/request-description/request-description.component.css",
@@ -792,7 +842,7 @@
       "path": "src/app/features/client/request-detail-page/request-detail-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "ce84c6fc063de0e0c5b985ab4e1f8be9562762fc6fceb724209327a7882f76a5",
-      "expectedSha256": "ce84c6fc063de0e0c5b985ab4e1f8be9562762fc6fceb724209327a7882f76a5",
+      "expectedSha256": "913a63ff1857372503fecec037a9253760c76cdd3dea3f4e4f99b57e01ba1227",
       "reason": "Remove app-header local; header passa a ser renderizado pelo shell global do app-root nas rotas de cliente.",
       "decisionDate": "2026-09-17",
       "requirement": "N/A"
@@ -808,7 +858,7 @@
       "path": "src/app/features/client/request-detail-page/request-detail-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a263329f269fd6b28c9a2d214da29c02dcadc37c648f585d5e071f5a3e6053da",
-      "expectedSha256": "a263329f269fd6b28c9a2d214da29c02dcadc37c648f585d5e071f5a3e6053da",
+      "expectedSha256": "4fb3fc9e26ffd85ec9a05c82f856f2782bfa6626a8bc4cff641ebaf2ff52428f",
       "reason": "Remove import de HeaderComponent apos centralizar header no app-root para rotas de cliente."
     },
     {
@@ -1620,6 +1670,78 @@
       "classification": "IDENTICAL",
       "referenceSha256": "e91823c44d6633cf6e9006631e623301f28f0d3d1158c891631538b502518d99",
       "expectedSha256": "e91823c44d6633cf6e9006631e623301f28f0d3d1158c891631538b502518d99"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-approve-confirm-dialog.component.css",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "465156c0223328ac9edcd4bf67bb5c0f859b5d88720a91cddd8c099faa05dc18",
+      "reason": "Estilos do dialogo de confirmacao de aprovacao de orcamento.",
+      "decisionDate": "2026-09-24",
+      "requirement": "N/A"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-approve-confirm-dialog.component.html",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "25fc03d64f6ab7e8de26da9006b1f281e9dc3588ba61a8ff0de59ff0dd607be4",
+      "reason": "Confirma aprovacao do orcamento antes de chamar a API.",
+      "decisionDate": "2026-09-24",
+      "requirement": "N/A"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-approve-confirm-dialog.component.ts",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "5831db1f9b10bb91fd327342aaaf1ea08187a641b333ae9d08c7f7bd39909a1b",
+      "reason": "Encapsula o contrato MatDialog de aprovacao de orcamento.",
+      "decisionDate": "2026-09-24",
+      "requirement": "N/A"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-reject-dialog.component.css",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "842159faaa8e2cadd449ff1fa5a1ec0db5f227ee30fe034e732465f27b5e8ed4",
+      "reason": "Estilos do dialogo de rejeicao de orcamento com motivo obrigatorio.",
+      "decisionDate": "2026-09-24",
+      "requirement": "N/A"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-reject-dialog.component.html",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "c357ef691919424504ab6c3f4ba6f6ff6401429302b43f110a4af01a5314db37",
+      "reason": "Coleta motivo da rejeicao antes de enviar a solicitacao.",
+      "decisionDate": "2026-09-24",
+      "requirement": "N/A"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-reject-dialog.component.ts",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "958d7359a0926079b749d4efae14ad8dafae2cebf57598b83b755ef1ae631864",
+      "reason": "Valida motivo e fecha o dialogo com o payload de rejeicao.",
+      "decisionDate": "2026-09-24",
+      "requirement": "N/A"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component.css",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "d6ccf1ed4ec5be425a0301eef48595bb9541fe50b0ea6b765bc8f78980abb74c",
+      "reason": "Estilos do dialogo de confirmacao de resgate de orcamento rejeitado.",
+      "decisionDate": "2026-09-24",
+      "requirement": "N/A"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component.html",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "a5fba88b7942242cd21b286d0191a119e43ede5b20434b9419dd1b050b0d2aaf",
+      "reason": "Confirma resgate do orcamento rejeitado antes de chamar a API.",
+      "decisionDate": "2026-09-24",
+      "requirement": "N/A"
+    },
+    {
+      "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component.ts",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "2af787cf130fa057bed5a80209b6c11f067804bb94b7b901d7be63bff96f84b0",
+      "reason": "Encapsula o contrato MatDialog de resgate de orcamento.",
+      "decisionDate": "2026-09-24",
+      "requirement": "N/A"
     },
     {
       "path": "matriz-testes-formatacao.md",
