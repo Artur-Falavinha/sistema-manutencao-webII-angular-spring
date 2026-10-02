@@ -2,8 +2,15 @@
   <div class="header">
     <div class="title-section">
       <h2 class="heading_3">Orçamento #{{request.id}}</h2>
-      <button *ngIf="request.status.nome === 'REJEITADA'" class="button-primary label_large" (click)="resgatarServico()">
-        Resgatar Orçamento
+      <button
+        *ngIf="request.status.nome === 'REJEITADA'"
+        mat-flat-button
+        color="primary"
+        type="button"
+        class="label_large"
+        (click)="openRescueConfirmDialog()"
+      >
+        Resgatar Serviço
       </button>
     </div>
   </div>
@@ -33,26 +40,9 @@
     </div>
 
     <div class="action-buttons" *ngIf="request.status.nome === 'ORÇADA'">
-      <button class="reject-button label_large" (click)="openRejectModal()">Recusar</button>
-      <button class="approve-button label_large" (click)="onApprove()">Aprovar Orçamento</button>
-    </div>
-
-    <div *ngIf="request.status.nome === 'REJEITADA'" class="rejection-info">
-      <p class="rejection-status">Orçamento Reprovado</p>
-      <p class="rejection-reason">{{request.rejectionReason}}</p>
-    </div>
-
-    <div *ngIf="request.status.nome === 'APROVADA'" class="approval-info">
-      <p class="approval-status">Orçamento Aprovado</p>
-      <p class="approval-message">Orçamento aprovado no valor de {{ budget.total | currency:'BRL' }}.</p>
+      <button mat-stroked-button color="warn" type="button" class="label_large" (click)="openRejectDialog()">Recusar</button>
+      <button mat-flat-button color="primary" type="button" class="label_large" (click)="openApproveConfirmDialog()">Aprovar Orçamento</button>
     </div>
   </section>
-
-
-  <app-reject-modal
-    *ngIf="showRejectModal"
-    (confirm)="confirmRejection($event)"
-    (cancel)="onRejectCancel()">
-  </app-reject-modal>
 }
 </main>

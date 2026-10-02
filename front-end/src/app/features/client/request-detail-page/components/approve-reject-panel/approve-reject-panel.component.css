@@ -90,48 +90,6 @@
   text-decoration: underline;
 }
 
-.rejection-info {
-  margin-top: var(--spacing-xs);
-  padding: var(--spacing-xs);
-  background-color: var(--color-danger-light);
-  border-radius: var(--radius-sm);
-}
-
-.rejection-status {
-  color: var(--color-danger);
-  font-size: var(--font-size-default);
-  font-weight: var(--font-weight-medium);
-  margin: 0 0 var(--spacing-3xs) 0;
-}
-
-.rejection-reason {
-  color: var(--color-heading-default);
-  font-size: var(--font-size-sm);
-  line-height: 1.5;
-  margin: 0;
-}
-
-.approval-info {
-  margin-top: var(--spacing-xs);
-  padding: var(--spacing-xs);
-  background-color: var(--color-success-light);
-  border-radius: var(--radius-sm);
-}
-
-.approval-status {
-  color: var(--color-success);
-  font-size: var(--font-size-default);
-  font-weight: var(--font-weight-medium);
-  margin: 0 0 var(--spacing-3xs) 0;
-}
-
-.approval-message {
-  color: var(--color-heading-default);
-  font-size: var(--font-size-sm);
-  line-height: 1.5;
-  margin: 0;
-}
-
 .request-details {
   display: flex;
   flex-direction: column;

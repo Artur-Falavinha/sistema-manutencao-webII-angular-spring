@@ -7,12 +7,13 @@ import { MaintenanceRequestService } from '../../../core/services/maintenance-re
 import { CategoryService } from '../../employee/services/category.service'; 
 import { Category } from '../../../shared/models/category'; 
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
   selector: 'app-new-request-page',
   standalone: true,
-  imports: [FormsModule, CommonModule, MatIconModule],
+  imports: [FormsModule, CommonModule, MatIconModule, MatButtonModule],
   templateUrl: './new-request-page.component.html',
   styleUrl: './new-request-page.component.css',
 })
