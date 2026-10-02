@@ -1,0 +1,17 @@
+<app-dialog-shell
+  title="Confirmar aprovação do orçamento"
+  description="Revise os dados antes de aprovar o serviço."
+  [showWarningIcon]="true"
+>
+  <div class="confirm-details">
+    <p><span class="detail-label">Equipamento:</span> {{ data.equipmentName }}</p>
+    <p><span class="detail-label">Valor do serviço:</span> {{ data.total | currency:'BRL' }}</p>
+  </div>
+
+  <div dialog-action class="dialog-shell__action-group">
+    <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button color="primary" type="button" (click)="onConfirm()">
+      Confirmar aprovação
+    </button>
+  </div>
+</app-dialog-shell>

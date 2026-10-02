@@ -1,0 +1,16 @@
+.confirm-details {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.confirm-details p {
+  margin: 0;
+  color: var(--color-text-default);
+  text-align: left;
+}
+
+.detail-label {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-semibold);
+}

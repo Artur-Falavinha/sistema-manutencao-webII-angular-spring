@@ -1,0 +1,35 @@
+<app-dialog-shell
+  title="Confirmar rejeição do orçamento"
+  description="Informe o motivo da recusa antes de confirmar."
+  [showWarningIcon]="true"
+>
+  <div class="confirm-details">
+    <p><span class="detail-label">Equipamento:</span> {{ data.equipmentName }}</p>
+    <p><span class="detail-label">Valor do serviço:</span> {{ data.total | currency:'BRL' }}</p>
+  </div>
+
+  <mat-form-field appearance="outline" class="reason-field">
+    <mat-label>Motivo da rejeição</mat-label>
+    <textarea
+      matInput
+      rows="4"
+      name="rejectionReason"
+      [(ngModel)]="rejectionReason"
+      placeholder="Digite o motivo da rejeição"
+      required
+    ></textarea>
+  </mat-form-field>
+
+  <div dialog-action class="dialog-shell__action-group">
+    <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+    <button
+      mat-raised-button
+      color="warn"
+      type="button"
+      [disabled]="!rejectionReason.trim()"
+      (click)="onConfirm()"
+    >
+      Confirmar rejeição
+    </button>
+  </div>
+</app-dialog-shell>

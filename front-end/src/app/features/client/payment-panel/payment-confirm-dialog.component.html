@@ -1,0 +1,18 @@
+<app-dialog-shell
+  title="Confirmar pagamento"
+  description="Revise os dados antes de concluir o pagamento."
+  [showWarningIcon]="true"
+>
+  <div class="confirm-details">
+    <p><span class="detail-label">Equipamento:</span> {{ data.equipmentName }}</p>
+    <p><span class="detail-label">Forma de pagamento:</span> {{ data.paymentMethodLabel }}</p>
+    <p><span class="detail-label">Total:</span> R$ {{ data.total | number:'1.2-2' }}</p>
+  </div>
+
+  <div dialog-action class="dialog-shell__action-group">
+    <button mat-button type="button" (click)="onCancel()">Cancelar</button>
+    <button mat-raised-button color="primary" type="button" (click)="onConfirm()">
+      Confirmar pagamento
+    </button>
+  </div>
+</app-dialog-shell>

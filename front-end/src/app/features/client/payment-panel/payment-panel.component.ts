@@ -1,21 +1,31 @@
-import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppSuccessModalComponent } from '../../../shared/components/modal-mensagem/app-success-modal';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+
 import { MaintenanceRequestService } from '../../../core/services/maintenance-request.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { ClientRequestDetailDTO } from '../../../shared/models/maintenance-request.models';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
-
-interface Pagamento {
-  titulo: string;
-  preco: number;
-}
+import { PaymentConfirmDialogComponent } from './payment-confirm-dialog.component';
 
 @Component({
   selector: 'app-payment-panel',
   templateUrl: './payment-panel.component.html',
-  imports: [CommonModule, AppSuccessModalComponent, MatIcon, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    MatIcon,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatDialogModule,
+  ],
   styleUrls: ['./payment-panel.component.css'],
 })
 export class PaymentPanelComponent implements OnInit {
@@ -24,16 +34,15 @@ export class PaymentPanelComponent implements OnInit {
 
   isLoading = true;
   selectedMethod: 'cartao' | 'pix' | null = null;
-  mostrarModal = false;
+  isProcessingPayment = false;
 
-  data = new Date();
-  modalTitulo = 'Pagamento realizado com sucesso!';
-  modalSubtitulo = '';
-  modalDadosAdicionais = '';
-  modalTextoBotao = 'Voltar para Página Inicial';
-  modalRotaDestino = '/client/dashboard/';
-
-  constructor(private requestService: MaintenanceRequestService, private toast: ToastService, private route: ActivatedRoute) {}
+  constructor(
+    private requestService: MaintenanceRequestService,
+    private toast: ToastService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -43,11 +52,19 @@ export class PaymentPanelComponent implements OnInit {
     }
   }
 
+  get canPay(): boolean {
+    return this.requests?.status.nome === 'ARRUMADA';
+  }
+
   loadRequestDetails(id: number): void {
     this.requestService.getRequestByIdForClient(id).subscribe({
       next: (data) => {
         this.requests = data;
         this.isLoading = false;
+
+        if (data.status.nome === 'PAGA') {
+          this.router.navigate(['/client/request-detail', this.currentRequestId]);
+        }
       },
       error: (err) => {
         console.error('Error loading request details:', err);
@@ -57,41 +74,60 @@ export class PaymentPanelComponent implements OnInit {
     });
   }
 
-  selectMethod(method: 'cartao' | 'pix') {
-    this.selectedMethod = method;
-  }
+  openPaymentConfirmDialog(): void {
+    if (!this.canPay) {
+      this.toast.warn('Atenção', 'Esta solicitação não está disponível para pagamento.');
+      return;
+    }
 
-  payRequest(): void {
-    // tirei o alert() que estava aqui
-    // trocado pelo toast pra ficar igual o resto do fluxo do cliente
-    // (o botao fica desabilitado)
     if (!this.selectedMethod) {
       this.toast.warn('Atenção', 'Selecione uma forma de pagamento antes de continuar.');
       return;
     }
+
+    if (!this.requests?.budgets.length) {
+      this.toast.error('Erro', 'Não há orçamento disponível para pagamento.');
+      return;
+    }
+
+    const total = this.requests.budgets[0].total;
+    const paymentMethodLabel = this.selectedMethod === 'cartao' ? 'Cartão' : 'Pix';
+
+    const dialogRef = this.dialog.open(PaymentConfirmDialogComponent, {
+      width: '32rem',
+      maxWidth: '95vw',
+      data: {
+        paymentMethodLabel,
+        total,
+        equipmentName: this.requests.equipmentName,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((confirmed) => {
+      if (confirmed) {
+        this.processPayment();
+      }
+    });
+  }
+
+  private processPayment(): void {
+    if (!this.canPay || this.isProcessingPayment) {
+      return;
+    }
+
+    this.isProcessingPayment = true;
+
     this.requestService.payRequest(this.currentRequestId).subscribe({
       next: () => {
         this.toast.success('Sucesso', 'Solicitação paga com sucesso!');
-        this.loadRequestDetails(this.currentRequestId);
-        this.mostrarModal = true;
+        this.router.navigate(['/client/request-detail', this.currentRequestId]);
       },
       error: (err) => {
         console.error('Error paying request:', err);
-        this.toast.error('Erro', 'Falha ao processar o pagamento da solicitação!');
+        const message = err?.error?.message ?? 'Falha ao processar o pagamento da solicitação!';
+        this.toast.error('Erro', message);
+        this.isProcessingPayment = false;
       },
     });
-    this.atualizarDataConfirmacao();
-    
-  }
-
- 
-
- 
-
-  private atualizarDataConfirmacao(): void {
-    const now = new Date();
-    this.modalDadosAdicionais = `Data: ${now.toLocaleDateString(
-      'pt-BR'
-    )} às ${now.toLocaleTimeString('pt-BR')}`;
   }
 }
