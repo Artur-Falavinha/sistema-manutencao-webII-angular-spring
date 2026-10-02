@@ -15,6 +15,7 @@ import { ToastService } from '../../../core/services/toast.service';
 import {
   BudgetRescueConfirmDialogComponent,
 } from '../request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component';
+import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
 
 
 @Component({
@@ -29,6 +30,7 @@ import {
     MatIcon,
     MatSortModule,
     MatButtonModule,
+    TruncatePipe,
   ],
   templateUrl: './client-dashboard-page.component.html',
   styleUrl: './client-dashboard-page.component.css',

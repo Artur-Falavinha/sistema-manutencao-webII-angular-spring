@@ -19,7 +19,7 @@
 
     <ng-container matColumnDef="equipmentName">
       <th mat-header-cell *matHeaderCellDef> Nome do Equipamento </th>
-      <td mat-cell *matCellDef="let element"> {{ element.equipmentName }} </td>
+      <td mat-cell *matCellDef="let element"> {{ element.equipmentName | truncate:30 }} </td>
     </ng-container>
     <ng-container matColumnDef="categoryId">
       <th mat-header-cell *matHeaderCellDef> Categoria </th>

@@ -6,7 +6,7 @@
   <div class="confirm-details">
     <p><span class="detail-label">Equipamento:</span> {{ data.equipmentName }}</p>
     <p><span class="detail-label">Forma de pagamento:</span> {{ data.paymentMethodLabel }}</p>
-    <p><span class="detail-label">Total:</span> R$ {{ data.total | number:'1.2-2' }}</p>
+    <p><span class="detail-label">Total:</span> {{ data.total | currency:'BRL' }}</p>
   </div>
 
   <div dialog-action class="dialog-shell__action-group">

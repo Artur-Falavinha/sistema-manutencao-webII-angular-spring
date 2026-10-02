@@ -38,7 +38,7 @@
               <p class="field-value field-value--multiline">{{ budget.services }}</p>
               <div class="total-row">
                 <span class="total-label">Total</span>
-                <span class="total-value">R$ {{ budget.total | number:'1.2-2' }}</span>
+                <span class="total-value">{{ budget.total | currency:'BRL' }}</span>
               </div>
             </div>
           }
@@ -67,7 +67,7 @@
               color="primary"
               type="button"
               class="pay-now-btn"
-              [disabled]="isProcessingPayment"
+              [disabled]="isProcessingPayment || !selectedMethod"
               (click)="openPaymentConfirmDialog()"
             >
               Pagar agora
