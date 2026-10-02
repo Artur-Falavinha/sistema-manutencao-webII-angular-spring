@@ -1126,7 +1126,7 @@
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "64c1f22bdc89318d17f551ee10e76d90b744d1cdbfdc0da4a03333cb8338e761",
-      "expectedSha256": "b295781facd9a5e5d95c0f2cc6ff4228689b77bef2c8f493a65dfd339d1becbb",
+      "expectedSha256": "31404b1109bf529f1078e9a1b6f3c653869a33e09a0b86f09def9795670eb046",
       "reason": "Mantém uma única listagem de RF013, preserva busca e filtro por categoria, usa Angular Material e adiciona clique na linha para navegar ao fluxo budget-delivery.",
       "decisionDate": "2026-09-01",
       "requirement": "RF013"
@@ -1141,7 +1141,7 @@
       "path": "src/app/features/employee/pages/view-requets-page/view-requests-page.component.ts",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "f274ebd55bb6b3b3ea03e0600c6dde8e2c6acb16dae35de3e924757da9d29994",
-      "expectedSha256": "e61b22fe218fa1cd022d5f85595ff8265c6e5811d9458846dcef4bddb9cb2cfe",
+      "expectedSha256": "a2f84a21b55b92c4cfe62513e6581924dcfb367ea9cdf6b26904cc8a962926fd",
       "reason": "Mantém somente a listagem de RF013, preserva a busca e o filtro por categoria incorporados à main, usa controles Angular Material e navega para /employee/budget-delivery/:id ao selecionar uma solicitação.",
       "decisionDate": "2026-09-01",
       "requirement": "RF013"
