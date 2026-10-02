@@ -641,8 +641,8 @@
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.html",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "e39ba6059abb94770bb3de39103e83eea00534c574ecc5c22e1b498a59496a0e",
-      "expectedSha256": "31ce6341f76f14f7228c4fd020041920ca6160dd0ae915b6b802aa419fbad493",
-      "reason": "Campo de pesquisa Material outline com icone search, alinhado ao padrao employee-list.",
+      "expectedSha256": "0d3f6c2e960ac7699dc1fcb38962505950af18fe7a2961179ec2104ac8bac526",
+      "reason": "Campo de pesquisa Material outline com icone search, alinhado ao padrao employee-list. Aplica o pipe truncate (30 caracteres) na coluna de equipamento, exigido pelo RF003.",
       "removalBy": "2026-10-08"
     },
     {
@@ -656,8 +656,8 @@
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "57ee945c9524bc1f3b7955fc6281c20e046155f842c4f8253b329da3a54d4f88",
-      "expectedSha256": "27650e25fdfc0d571ffa36f04e61bedd27c8aa81f6e30dbd5f5a1e3e94716ac5",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem coluna acoes, toast de erro e contrato simulado."
+      "expectedSha256": "c97254bd9240dea60a5cfdc1e3d87c7e9634b8d90642fde5967ea5dc87e77c97",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem coluna acoes, toast de erro e contrato simulado. Importa TruncatePipe para o limite de 30 caracteres do RF003."
     },
     {
       "path": "src/app/features/client/client.routes.ts",
@@ -708,8 +708,8 @@
       "path": "src/app/features/client/payment-panel/payment-panel.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571",
-      "expectedSha256": "50cba2e7a94b70dff7cacaff147fcea8b57bc56d7fe096effb1f21d5b4366d94",
-      "reason": "Reorganiza pagamento em mat-card com resumo e checkout, mat-button-toggle para Cartao/Pix e dialogo de confirmacao.",
+      "expectedSha256": "c81345403d1e28862843cb6fc4c3d1f9185244d16efe83c2161b6c9741f9c9c3",
+      "reason": "Reorganiza pagamento em mat-card com resumo e checkout, mat-button-toggle para Cartao/Pix e dialogo de confirmacao. Troca R$ + number:'1.2-2' por currency:'BRL' (consistencia com approve-reject-panel) e desabilita 'Pagar agora' sem forma de pagamento selecionada (cronograma 24/09).",
       "decisionDate": "2026-09-24",
       "requirement": "RF008/RF010"
     },
@@ -738,8 +738,8 @@
     {
       "path": "src/app/features/client/payment-panel/payment-confirm-dialog.component.html",
       "classification": "SCOPE_DECISION",
-      "expectedSha256": "b5a305feed53bc2d9a9e81e8324f15e0f6dc7693d11a660b421961ce3b834258",
-      "reason": "Exibe resumo do pagamento e acoes confirmar/cancelar antes de processar a solicitacao.",
+      "expectedSha256": "ab30e97e2421f9f71f9f55dcdf46a2f9862c0f75d012621efa24d80689fdfbda",
+      "reason": "Exibe resumo do pagamento e acoes confirmar/cancelar antes de processar a solicitacao. Troca R$ + number:'1.2-2' por currency:'BRL' (consistencia com approve-reject-panel).",
       "decisionDate": "2026-09-24",
       "requirement": "N/A"
     },
@@ -771,15 +771,15 @@
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "ff642eece19e864536a5237a17699d9898e47ca0bb50db966062ccf2e5db0388",
-      "expectedSha256": "d95260666d638f02a3a0c13e1d5e3accb349baf25399967392bee4edeb860bd5",
-      "reason": "Adiciona provideHttpClient() e provideToastr() ao TestBed: o componente usa MaintenanceRequestService (HTTP literal) e ToastService/ToastrService; sem esses providers o TestBed não os resolve (NullInjectorError). A suíte da referência não declarava esses providers."
+      "expectedSha256": "74d22afcd7ac5e9aa1df8088471041c1485d7b1eb3523a9a6f0255bae2c6187f",
+      "reason": "Adiciona provideHttpClient(), provideToastr() e provideRouter([]) ao TestBed: o componente usa MaintenanceRequestService (HTTP literal), ToastService/ToastrService e, desde o ajuste do RF006, Router para redirecionar ao dashboard; sem esses providers o TestBed não os resolve (NullInjectorError). A suíte da referência não declarava esses providers."
     },
     {
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "7dc8cc31f469aae59f8953c415043833ac873818a24b7d12fbbbf281c55322c6",
-      "expectedSha256": "2995c79758e710de8cc572e63c8cff8604752f8db77a78139b03eac2020fb093",
-      "reason": "Centraliza aprovacao, rejeicao e resgate de orcamento em dialogos MatDialog com DialogShell."
+      "expectedSha256": "8175d33439003d8976d9bd86a1e4d089e0f51b064ff715db9060ad615b4c90d5",
+      "reason": "Centraliza aprovacao, rejeicao e resgate de orcamento em dialogos MatDialog com DialogShell. Ajusta a mensagem de aprovacao para o literal do RF006 (\"Servico Aprovado no Valor R$ xxxx\") com redirecionamento para o dashboard (RF003), e a de rejeicao para o literal do RF007 (\"Servico Rejeitado\")."
     },
     {
       "path": "src/app/features/client/request-detail-page/components/request-description/request-description.component.css",
@@ -1501,6 +1501,13 @@
       "classification": "IDENTICAL",
       "expectedSha256": "989daf8f6d2d0edde78aba036b2f625eefa281e854376d9a7132b99b5c366912",
       "referenceSha256": "989daf8f6d2d0edde78aba036b2f625eefa281e854376d9a7132b99b5c366912"
+    },
+    {
+      "path": "src/app/shared/pipes/truncate.pipe.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "e2bffc55b20fe6ddcca858ece89dd4ceb1040555924ab7bae816cd907c8e1cb1",
+      "reason": "Pipe de truncamento usado na coluna de equipamento do dashboard do cliente para cumprir o limite literal de 30 caracteres do RF003 (corte puro, sem reticencias, para nao ultrapassar o limite); sem arquivo equivalente na referencia."
     },
     {
       "path": "src/app/shared/providers/material-date.providers.ts",

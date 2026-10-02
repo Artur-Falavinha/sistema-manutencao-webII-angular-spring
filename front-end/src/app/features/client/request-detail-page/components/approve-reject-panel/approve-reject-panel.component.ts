@@ -2,6 +2,7 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 import { ClientRequestDetailDTO } from '../../../../../shared/models/maintenance-request.models';
 import { MaintenanceRequestService } from '../../../../../core/services/maintenance-request.service';
 import { ToastService } from '../../../../../core/services/toast.service';
@@ -22,7 +23,8 @@ export class ApproveRejectPanelComponent {
   constructor(
     private requestService: MaintenanceRequestService,
     private toast: ToastService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   openApproveConfirmDialog(): void {
@@ -94,10 +96,17 @@ export class ApproveRejectPanelComponent {
   }
 
   private processApprove(): void {
+    const budget = this.request.budgets[0];
+
     this.requestService.approveBudget(this.request.id).subscribe({
       next: () => {
-        this.toast.success('Sucesso', 'Orçamento aprovado! O técnico iniciará o serviço em breve.');
-        this.statusChanged.emit(this.request.id);
+        const valor = budget.total.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        });
+
+        this.toast.success('Sucesso', `Serviço Aprovado no Valor ${valor}`);
+        this.router.navigate(['/client/dashboard']);
       },
       error: (err) => {
         console.error(err);
@@ -109,7 +118,7 @@ export class ApproveRejectPanelComponent {
   private processRejection(rejectionReason: string): void {
     this.requestService.rejectBudget(this.request.id, rejectionReason).subscribe({
       next: () => {
-        this.toast.success('Recusado', 'Orçamento recusado com sucesso.');
+        this.toast.success('Recusado', 'Serviço Rejeitado');
         this.statusChanged.emit(this.request.id);
       },
       error: (err) => {
