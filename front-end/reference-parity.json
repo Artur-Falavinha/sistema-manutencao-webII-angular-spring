@@ -189,21 +189,15 @@
       "requirement": "RF019-RF020",
       "decision": "Gerar PDF valido na exportacao de relatorios simulados.",
       "reason": "Substitui Blob textual por createTextPdf() em pdf-text-report.ts para que o navegador abra o arquivo exportado corretamente, preservando dados e filtros existentes.",
-      "affectedReferencePaths": [
-        "src/app/core/services/report.service.ts"
-      ],
-      "createdPaths": [
-        "src/app/shared/utils/pdf-text-report.ts"
-      ]
+      "affectedReferencePaths": ["src/app/core/services/report.service.ts"],
+      "createdPaths": ["src/app/shared/utils/pdf-text-report.ts"]
     },
     {
       "date": "2026-09-17",
       "requirement": "N/A",
       "decision": "Aplicar padding uniforme ao conteudo principal do shell.",
       "reason": "Adiciona padding de 2rem (1rem em mobile) em .content do app-root para afastar paginas das bordas laterais.",
-      "affectedReferencePaths": [
-        "src/app/app.component.css"
-      ]
+      "affectedReferencePaths": ["src/app/app.component.css"]
     },
     {
       "date": "2026-09-17",
@@ -216,9 +210,7 @@
         "src/app/features/employee/components/new-category-modal/new-category-modal.component.html",
         "src/app/features/employee/components/new-category-modal/new-category-modal.component.css"
       ],
-      "createdPaths": [
-        "src/app/shared/constants/category-icon-options.ts"
-      ]
+      "createdPaths": ["src/app/shared/constants/category-icon-options.ts"]
     },
     {
       "date": "2026-09-17",
@@ -1764,6 +1756,13 @@
       "referenceSha256": null,
       "expectedSha256": "6466a0d5a87d9b8144808fef9fb266d1defad72d0ae361e1e6f347d000c0d4ac",
       "reason": "Relatório de testes de formatação, ViaCEP e acessibilidade."
+    },
+    {
+      "path": "src/app/core/services/report.service.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "359926b222facdbc04131be087471ac76e938858259187b9feb074d1fae6edfc",
+      "reason": "Testes unitários de validação de contratos HTTP e DTOs."
     }
   ]
 }
