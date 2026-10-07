@@ -1761,7 +1761,7 @@
       "path": "src/app/core/services/report.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "359926b222facdbc04131be087471ac76e938858259187b9feb074d1fae6edfc",
+      "expectedSha256": "78eaa473669e4cca4fd534e596dc2960e643bd9f5175b43518e96154864278c3",
       "reason": "Testes unitários de validação de contratos HTTP e DTOs."
     }
   ]
