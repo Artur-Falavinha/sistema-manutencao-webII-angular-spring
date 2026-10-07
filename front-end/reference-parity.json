@@ -189,15 +189,21 @@
       "requirement": "RF019-RF020",
       "decision": "Gerar PDF valido na exportacao de relatorios simulados.",
       "reason": "Substitui Blob textual por createTextPdf() em pdf-text-report.ts para que o navegador abra o arquivo exportado corretamente, preservando dados e filtros existentes.",
-      "affectedReferencePaths": ["src/app/core/services/report.service.ts"],
-      "createdPaths": ["src/app/shared/utils/pdf-text-report.ts"]
+      "affectedReferencePaths": [
+        "src/app/core/services/report.service.ts"
+      ],
+      "createdPaths": [
+        "src/app/shared/utils/pdf-text-report.ts"
+      ]
     },
     {
       "date": "2026-09-17",
       "requirement": "N/A",
       "decision": "Aplicar padding uniforme ao conteudo principal do shell.",
       "reason": "Adiciona padding de 2rem (1rem em mobile) em .content do app-root para afastar paginas das bordas laterais.",
-      "affectedReferencePaths": ["src/app/app.component.css"]
+      "affectedReferencePaths": [
+        "src/app/app.component.css"
+      ]
     },
     {
       "date": "2026-09-17",
@@ -210,7 +216,9 @@
         "src/app/features/employee/components/new-category-modal/new-category-modal.component.html",
         "src/app/features/employee/components/new-category-modal/new-category-modal.component.css"
       ],
-      "createdPaths": ["src/app/shared/constants/category-icon-options.ts"]
+      "createdPaths": [
+        "src/app/shared/constants/category-icon-options.ts"
+      ]
     },
     {
       "date": "2026-09-17",
@@ -368,13 +376,13 @@
       "decisionDate": "2026-09-17",
       "requirement": "N/A"
     },
-   {
-  "path": "src/app/core/auth/pages/login-page/login-page.component.spec.ts",
-  "classification": "TECHNICAL_EXCEPTION",
-  "referenceSha256": "e8f9d1320d1754c80a8b19c799533f54a0f1aeb171a9ffc5d10a701bcaf7a66c",
-  "expectedSha256": "7775efba6cfdc874a14cc3c6c8fbaa2a35cac0747b5c8a6f41330b072e7c60dc",
-  "reason": "Adiciona provideRouter e mocks de AuthService/ToastService exigidos para instanciar o LoginPageComponent no TestBed. Amplia a cobertura com casos de formulário inválido, login de cliente/funcionário com redirecionamento por perfil, credenciais incorretas e erro inesperado, todos via toast (loginError foi removido do componente)."
-},
+    {
+      "path": "src/app/core/auth/pages/login-page/login-page.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "e8f9d1320d1754c80a8b19c799533f54a0f1aeb171a9ffc5d10a701bcaf7a66c",
+      "expectedSha256": "7775efba6cfdc874a14cc3c6c8fbaa2a35cac0747b5c8a6f41330b072e7c60dc",
+      "reason": "Adiciona provideRouter e mocks de AuthService/ToastService exigidos para instanciar o LoginPageComponent no TestBed. Amplia a cobertura com casos de formulário inválido, login de cliente/funcionário com redirecionamento por perfil, credenciais incorretas e erro inesperado, todos via toast (loginError foi removido do componente)."
+    },
     {
       "path": "src/app/core/auth/pages/login-page/login-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
@@ -399,12 +407,12 @@
       "requirement": "RF001"
     },
     {
-  "path": "src/app/core/auth/pages/signup-page/signup-page.component.spec.ts",
-  "classification": "TECHNICAL_EXCEPTION",
-  "referenceSha256": "a3238eb745118493c2ba23689ba07a30a7eb4f969847d4ff9de9a49fc2395250",
-  "expectedSha256": "6c77956aa92023d91e40a5cf422c318b61e941f8a93d5092652d16518c94ec17",
-  "reason": "Adiciona provideRouter e mocks de AuthService/ToastService/ViaCepService exigidos para instanciar o SignupPageComponent no TestBed. Amplia a cobertura com casos de formulário inválido, cadastro valido navegando para /login com toast de sucesso, e erro por CPF/email duplicado (showModal foi removido do componente em favor do fluxo com SignupResult e senha gerada)."
-},
+      "path": "src/app/core/auth/pages/signup-page/signup-page.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "a3238eb745118493c2ba23689ba07a30a7eb4f969847d4ff9de9a49fc2395250",
+      "expectedSha256": "6c77956aa92023d91e40a5cf422c318b61e941f8a93d5092652d16518c94ec17",
+      "reason": "Adiciona provideRouter e mocks de AuthService/ToastService/ViaCepService exigidos para instanciar o SignupPageComponent no TestBed. Amplia a cobertura com casos de formulário inválido, cadastro valido navegando para /login com toast de sucesso, e erro por CPF/email duplicado (showModal foi removido do componente em favor do fluxo com SignupResult e senha gerada)."
+    },
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
       "classification": "TEMPORARY_SCAFFOLD",
@@ -1155,15 +1163,15 @@
       "path": "src/app/features/employee/services/employe.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a7d9b26096708e025bf605a12ebeb1dd14b1cbae88b245e2490813339829498c",
-      "expectedSha256": "a7d9b26096708e025bf605a12ebeb1dd14b1cbae88b245e2490813339829498c",
-      "reason": "Adiciona o provider de HttpClient com o interceptor mock exigido para instanciar o EmployeService no TestBed."
+      "expectedSha256": "34c96bad0ebf293b25c3b80f512efabf6ccb6f62e864584eff563b024c268969",
+      "reason": "Adiciona suite de testes automatizados com HttpTestingController para garantir chamadas REST corretas."
     },
     {
       "path": "src/app/features/employee/services/employe.service.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "aaade0f95dc558b3817aac2402e2f81bb6c013ddf395b42eba5ca3547188b63b",
-      "expectedSha256": "03888eee13f65f56a4a83d8a0708eecbfd2514e52edd52c0c0e633fdae033bb9",
-      "reason": "Conecta o CRUD de RF018 ao HttpClient e ao mock-api.interceptor, no mesmo padrao do CategoryService."
+      "expectedSha256": "809706f3b0e3d5b6d05aa22c458c20d63d871d40c2a3c4e74f21cda30ab9eeab",
+      "reason": "Migra o EmployeService mockado localmente para HttpClient, concluindo a meta da semana para integracao REST."
     },
     {
       "path": "src/app/shared/components/dialog-shell/dialog-shell.component.css",
