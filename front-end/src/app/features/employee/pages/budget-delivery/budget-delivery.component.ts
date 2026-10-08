@@ -316,7 +316,7 @@ export class BudgetDeliveryComponent implements OnInit {
 
   permitidoCriarManutencao(): boolean {
     if (this.temOrcamento) return true;
-    return this.request.status.nome === 'APROVADO'  || this.request.status.nome === 'REDIRECIONADA';
+    return this.request.status.nome === 'APROVADA'  || this.request.status.nome === 'REDIRECIONADA';
   }
 
   confirmarManutencao() {

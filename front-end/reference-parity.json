@@ -609,6 +609,13 @@
       "referenceSha256": "567e8aa3295a01fead9d631ec4e0b93f7203a8362428982897b9b5956325b57a"
     },
     {
+      "path": "src/app/core/services/maintenance-request.service.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "fa50f7f0bed2576c2d7751612260f10b445a5091ac2a120c6c09315c631192cf",
+      "reason": "Testes de contrato HTTP com HttpTestingController para as operações do funcionário (RF011-RF016), conferidos contra o MaintenanceRequestController do back-end de referência; preparam a remoção do mock-api.interceptor."
+    },
+    {
       "path": "src/app/core/services/maintenance-request.service.ts",
       "classification": "IDENTICAL",
       "referenceSha256": "d62a139b8e29d2ffd34beee2c498785a8994dce9ed47b891dbd38f3f63b26788",
@@ -621,6 +628,13 @@
       "expectedSha256": "db5075b28cf5544253aab9e80146e3314078060ce18f95cc25c1c723d916fabf",
       "reason": "Implementacao temporaria sobre mocks locais; exporta PDF valido via createTextPdf() com dados reais simulados para RF019-RF020.",
       "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/core/services/service-item.service.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": null,
+      "expectedSha256": "846650d502a053ed0c7e596108fe4643261d91450e0da55bfb55a600c56be362",
+      "reason": "Teste de contrato HTTP com HttpTestingController para GET /services (RF012), conferido contra o ServiceItemController do back-end de referência."
     },
     {
       "path": "src/app/core/services/service-item.service.ts",
@@ -979,15 +993,15 @@
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "82f11aca8506ab25fbd3f3308766feac46bd05071e236fee96f81016758c646c",
-      "expectedSha256": "ebb308484c181e1af27db15b6a570594c83aafb315670e3cf3925e0df467732b",
-      "reason": "Adiciona os providers de roteamento, HTTP simulado e toastr necessários para instanciar o componente que depende de ActivatedRoute e dos services migrados."
+      "expectedSha256": "15e1c98c98b3dc7608551c50f053a48d3ab4dd21333539af8f50b5c6c3ce63c1",
+      "reason": "Adiciona os providers de roteamento, HTTP simulado e toastr necessários para instanciar o componente que depende de ActivatedRoute e dos services migrados. Cobre permitidoCriarManutencao (RF014) para os status APROVADA, REDIRECIONADA e ABERTA."
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "20d81b067718cc656f8ae5d8444304987e9488d153857a208e6ffda4cfefc47b",
-      "expectedSha256": "f23db70e02f6d5316fbcd3716cc2a223f4a0c8a0493b9e937e79a78ede85e732",
-      "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10."
+      "expectedSha256": "a6f3356fca0e6e356e697ba850894d1f2661db9faf0fe7e97b0dfec1f562d10b",
+      "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10. Corrige também permitidoCriarManutencao(), que comparava o status com 'APROVADO' enquanto o StatusEnum do back-end (e o mock) usa 'APROVADA'."
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.css",
