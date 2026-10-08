@@ -9,6 +9,9 @@ import { provideToastr } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 import { routes } from './app.routes';
+import { environment } from '../environments/environment';
+import { API_URL } from './core/configs/api.token';
+import { apiInterceptor } from './core/interceptors/api.interceptor';
 import { mockApiInterceptor, initializeMockApiState } from './core/interceptors/mock-api.interceptor';
 import { syncMockApiWithDevServer } from './core/interceptors/mock-api.persistence';
 import { loadingInterceptor } from './core/interceptors/loading.interceptor';
@@ -31,15 +34,24 @@ export const appConfig: ApplicationConfig = {
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
     ...provideBrazilianMaterialDate(),
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeMockApi,
-      multi: true,
-    },
+    ...(environment.useMock
+      ? [
+          {
+            provide: APP_INITIALIZER,
+            useFactory: initializeMockApi,
+            multi: true,
+          },
+        ]
+      : []),
     provideRouter(routes),
-    // mockApiInterceptor é scaffold temporário — remover junto com o
-    // interceptor quando o backend real for integrado (ver core/interceptors).
-    provideHttpClient(withInterceptors([mockApiInterceptor, loadingInterceptor])),
+    { provide: API_URL, useValue: environment.apiUrl },
+    provideHttpClient(
+      withInterceptors(
+        environment.useMock
+          ? [mockApiInterceptor, loadingInterceptor]
+          : [apiInterceptor, loadingInterceptor],
+      ),
+    ),
     provideNgxMask(),
     provideAnimationsAsync(),
     provideToastr({

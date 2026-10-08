@@ -1,11 +1,12 @@
 import { InjectionToken } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 /**
- * URL base da API. Neutro para o protótipo: nenhuma chamada real sai daqui
- * enquanto o MockApiInterceptor estiver ativo (ver core/interceptors).
- * Valor real de produção entra na migração de 08/10.
+ * URL base da API. O valor vem de environment.apiUrl.
+ * app.config também fornece o token, no mesmo contrato da referência.
+ * Enquanto useMock estiver ativo, o MockApiInterceptor responde no lugar da rede.
  */
 export const API_URL = new InjectionToken<string>('API_URL', {
   providedIn: 'root',
-  factory: () => 'http://localhost:8080/api',
+  factory: () => environment.apiUrl,
 });
