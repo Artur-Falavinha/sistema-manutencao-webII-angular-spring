@@ -189,15 +189,21 @@
       "requirement": "RF019-RF020",
       "decision": "Gerar PDF valido na exportacao de relatorios simulados.",
       "reason": "Substitui Blob textual por createTextPdf() em pdf-text-report.ts para que o navegador abra o arquivo exportado corretamente, preservando dados e filtros existentes.",
-      "affectedReferencePaths": ["src/app/core/services/report.service.ts"],
-      "createdPaths": ["src/app/shared/utils/pdf-text-report.ts"]
+      "affectedReferencePaths": [
+        "src/app/core/services/report.service.ts"
+      ],
+      "createdPaths": [
+        "src/app/shared/utils/pdf-text-report.ts"
+      ]
     },
     {
       "date": "2026-09-17",
       "requirement": "N/A",
       "decision": "Aplicar padding uniforme ao conteudo principal do shell.",
       "reason": "Adiciona padding de 2rem (1rem em mobile) em .content do app-root para afastar paginas das bordas laterais.",
-      "affectedReferencePaths": ["src/app/app.component.css"]
+      "affectedReferencePaths": [
+        "src/app/app.component.css"
+      ]
     },
     {
       "date": "2026-09-17",
@@ -210,7 +216,9 @@
         "src/app/features/employee/components/new-category-modal/new-category-modal.component.html",
         "src/app/features/employee/components/new-category-modal/new-category-modal.component.css"
       ],
-      "createdPaths": ["src/app/shared/constants/category-icon-options.ts"]
+      "createdPaths": [
+        "src/app/shared/constants/category-icon-options.ts"
+      ]
     },
     {
       "date": "2026-09-17",
@@ -248,6 +256,26 @@
         "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component.css",
         "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component.html",
         "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component.ts"
+      ]
+    },
+    {
+      "date": "2026-10-08",
+      "requirement": "N/A",
+      "decision": "Alternar mock e REST com useMock e adiar a remoção do mock para 15/10.",
+      "reason": "A referência só registra apiInterceptor e environment.apiUrl. O protótipo continua demonstrável com mock até a cópia byte a byte do backend. Com useMock false, a cadeia passa a ser apiInterceptor e loadingInterceptor.",
+      "affectedReferencePaths": [
+        "src/environments/environment.ts",
+        "src/app/app.config.ts",
+        "src/app/core/interceptors/api.interceptor.ts"
+      ]
+    },
+    {
+      "date": "2026-10-08",
+      "requirement": "N/A",
+      "decision": "Manter as validações de budget-delivery que não existem na referência.",
+      "reason": "O HTML foi declarado IDENTICAL com o hash da main. As mensagens de responsável, orçamento e manutenção vieram da PR #38 e permanecem como exceção técnica.",
+      "affectedReferencePaths": [
+        "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html"
       ]
     }
   ],
@@ -313,10 +341,10 @@
     {
       "path": "src/app/app.config.ts",
       "classification": "TEMPORARY_SCAFFOLD",
-      "referenceSha256": null,
-      "expectedSha256": "c9116821ffa3fc468114535149cb75afc57fbdbee87d02a059dded36c6203734",
-      "reason": "Combina provideHttpClient, mockApiInterceptor, loadingInterceptor, NgxSpinnerModule, provideToastr, provideNgxMask, provideAnimationsAsync, locale pt-BR e provideBrazilianMaterialDate(). Inicializa mock via APP_INITIALIZER com persistencia em sessionStorage.",
-      "removalBy": "2026-10-08"
+      "referenceSha256": "cd079778bf7a52110866b16e5a3ee20bdeb0d94720c7a57d438335828d4d2ead",
+      "expectedSha256": "c1278ea8dee1760f61af3e10e4f273ab5646dfad69b7ed43f77735abc4c8928e",
+      "reason": "Fornece API_URL com environment.apiUrl e alterna a cadeia HTTP: useMock true usa mockApiInterceptor; false usa apiInterceptor, como a referência. O mock permanece até a cópia do backend.",
+      "removalBy": "2026-10-15"
     },
     {
       "path": "src/app/app.routes.ts",
@@ -425,21 +453,21 @@
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "28f95d7a55443599aebc93d0572a0723e893a8dac0c503d55122ccca201a2b6c",
       "expectedSha256": "b6f5638a7ebc05850c9f5c56f9ecc8824166a6fdc0b9724e440ee5e95b12f606",
-      "reason": "AuthService temporario com login/cadastro simulados, persistencia em sessionStorage, validacao de duplicidade e syncEmployeeSessionFromMock() para alinhar sessao ao mock mutavel.",
-      "removalBy": "2026-10-08"
+      "reason": "AuthService temporario com login/cadastro simulados. Permanece enquanto useMock estiver ativo, até a cópia do backend em 15/10.",
+      "removalBy": "2026-10-15"
     },
     {
       "path": "src/app/core/configs/api.token.ts",
       "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "b6a0adba4e4669db48389c8e1957d70d8149dbdc8d18fc629abdebad7f9aa924",
-      "reason": "Token de injeção exigido pelos services migrados literalmente; sem arquivo equivalente na referência (que injeta a URL de outra forma)."
+      "referenceSha256": "e30a43ceb8b9e36175bfd2b0cd30af7751f43ed737be13733492971cf66ef719",
+      "expectedSha256": "4ca68abfee5a2437f35c466fb6f5e97d2f83df9b4e269dd647b60fca937fa0ef",
+      "reason": "A referência declara o token sem factory. Aqui o factory usa environment.apiUrl e app.config fornece o mesmo valor, para os testes que não declaram o provider."
     },
     {
       "path": "src/app/core/interceptors/loading.interceptor.ts",
       "classification": "IDENTICAL",
-      "referenceSha256": "f29266005e963431b0ca22a9588e3d5d3d6ef60ccfb5326bc8af588bc4287a2e",
-      "expectedSha256": "f29266005e963431b0ca22a9588e3d5d3d6ef60ccfb5326bc8af588bc4287a2e"
+      "referenceSha256": "18c9bc4de1961c5329716f7e88a0eeb3e69dc674ed18036375f1951d1506cebd",
+      "expectedSha256": "18c9bc4de1961c5329716f7e88a0eeb3e69dc674ed18036375f1951d1506cebd"
     },
     {
       "path": "src/app/core/interceptors/mock-api.interceptor.spec.ts",
@@ -453,16 +481,16 @@
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
       "expectedSha256": "4dd07300cf412a872d33ac305e942882438fa2438fd7bea916703bd3d7b5fa3f",
-      "reason": "Intercepta services literais com estado unificado persistido em sessionStorage, incluindo fluxos RF005-RF020 e sincronizacao de sessao de funcionario.",
-      "removalBy": "2026-10-08"
+      "reason": "Intercepta services literais com estado unificado persistido em sessionStorage. Sai da cadeia quando useMock é false e deve ser removido com o backend em 15/10.",
+      "removalBy": "2026-10-15"
     },
     {
       "path": "src/app/core/interceptors/mock-api.persistence.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
       "expectedSha256": "7e8cd1adcc71f821ba61f0ac5c2c482cdb8e2d8557fc79c01ace09f7188dd328",
-      "reason": "Persiste estado mutavel do mock em sessionStorage e reseta ao reiniciar o ng serve via assinatura do bundle.",
-      "removalBy": "2026-10-08"
+      "reason": "Persiste estado mutavel do mock em sessionStorage. Permanece enquanto useMock estiver ativo, até a cópia do backend em 15/10.",
+      "removalBy": "2026-10-15"
     },
     {
       "path": "src/app/core/layout/header/header.component.css",
@@ -942,9 +970,10 @@
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
-      "classification": "IDENTICAL",
-      "referenceSha256": "328cc3036938d41fedc58a5defd91010c1d272cc62269d3439063c3ca358c777",
-      "expectedSha256": "328cc3036938d41fedc58a5defd91010c1d272cc62269d3439063c3ca358c777"
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f",
+      "expectedSha256": "328cc3036938d41fedc58a5defd91010c1d272cc62269d3439063c3ca358c777",
+      "reason": "Mantém as validações de responsável, orçamento e manutenção da PR #38. O hash anterior do manifesto era o da main, não o da referência."
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.spec.ts",
@@ -1763,6 +1792,38 @@
       "referenceSha256": null,
       "expectedSha256": "78eaa473669e4cca4fd534e596dc2960e643bd9f5175b43518e96154864278c3",
       "reason": "Testes unitários de validação de contratos HTTP e DTOs."
+    },
+    {
+      "path": "src/app/core/interceptors/api.interceptor.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "0445530a3c08064d40b8295faea959d75f9cdf656144c3ff21bee20afe9a614e",
+      "expectedSha256": "0445530a3c08064d40b8295faea959d75f9cdf656144c3ff21bee20afe9a614e"
+    },
+    {
+      "path": "src/app/core/services/budget.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee",
+      "expectedSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee"
+    },
+    {
+      "path": "src/app/core/services/request-history.service.ts",
+      "classification": "IDENTICAL",
+      "referenceSha256": "68921356a3b702f4ff78d99d96912abd959edff76c015bed420229f412896bd2",
+      "expectedSha256": "68921356a3b702f4ff78d99d96912abd959edff76c015bed420229f412896bd2"
+    },
+    {
+      "path": "src/environments/environment.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "37525e0a1c1f30c5c075f8ef544a42a8ab19b89620a2fa7c034c0a372fa241cb",
+      "expectedSha256": "8f6bc099abf93230cfd565fff9b3daa0b8a7bdee8dc273866ef97e32ceab99e4",
+      "reason": "Copia production e apiUrl da referência e acrescenta useMock para alternar mock e REST sem backend disponível."
+    },
+    {
+      "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
+      "classification": "TECHNICAL_EXCEPTION",
+      "referenceSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
+      "expectedSha256": "bc8fa880376dd50cb14a8341f4511e210c5957cc5bfb7bf3658697efc44e90d5",
+      "reason": "O spec da referência não declara providers. O TestBed recebe provideToastr e o datepicker pt-BR porque o componente injeta ToastService e usa MatDatepicker."
     }
   ]
 }
