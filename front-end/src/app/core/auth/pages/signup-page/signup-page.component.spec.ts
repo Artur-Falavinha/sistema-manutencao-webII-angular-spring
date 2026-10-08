@@ -91,4 +91,117 @@ describe('SignupPageComponent', () => {
     expect(toastServiceSpy.error).toHaveBeenCalled();
     expect(routerSpy.navigate).not.toHaveBeenCalledWith(['/login']);
   });
+    describe('ViaCEP integration', () => {
+    const cepValido = {
+      logradouro: 'Rua XV de Novembro',
+      bairro: 'Centro',
+      localidade: 'Curitiba',
+      uf: 'PR',
+    };
+
+    it('fills the address fields when a valid CEP is typed', () => {
+      viaCepServiceSpy.buscarCep.and.returnValue(of(cepValido as any));
+
+      component.secondFormGroup.get('cep')?.setValue('80010-000');
+
+      expect(viaCepServiceSpy.buscarCep).toHaveBeenCalledWith('80010000');
+      expect(component.secondFormGroup.getRawValue()).toEqual(
+        jasmine.objectContaining({
+          address: 'Rua XV de Novembro',
+          neighborhood: 'Centro',
+          city: 'Curitiba',
+          state: 'PR',
+        }),
+      );
+    });
+
+    it('does not query ViaCEP while the CEP is incomplete', () => {
+      component.secondFormGroup.get('cep')?.setValue('80010');
+
+      expect(viaCepServiceSpy.buscarCep).not.toHaveBeenCalled();
+    });
+
+    it('does not query ViaCEP twice for the same CEP', () => {
+      const cep = component.secondFormGroup.get('cep');
+
+      cep?.setValue('80010-000');
+      cep?.setValue('80010000');
+
+      expect(viaCepServiceSpy.buscarCep).toHaveBeenCalledTimes(1);
+    });
+
+    it('warns and keeps the fields empty when the CEP does not exist', () => {
+      viaCepServiceSpy.buscarCep.and.returnValue(of({ erro: true } as any));
+
+      component.secondFormGroup.get('cep')?.setValue('99999-999');
+
+      expect(toastServiceSpy.warn).toHaveBeenCalledWith(
+        'CEP não encontrado',
+        'Verifique o CEP informado.',
+      );
+      expect(component.secondFormGroup.get('address')?.value).toBe('');
+    });
+
+    it('shows an error toast and keeps the fields editable when the lookup fails', () => {
+      viaCepServiceSpy.buscarCep.and.returnValue(
+        throwError(() => new Error('offline')),
+      );
+
+      component.secondFormGroup.get('cep')?.setValue('80010-000');
+      component.secondFormGroup.get('address')?.setValue('Rua Manual');
+
+      expect(toastServiceSpy.error).toHaveBeenCalledWith(
+        'Erro',
+        'Não foi possível consultar o CEP. Tente novamente.',
+      );
+      expect(component.secondFormGroup.get('address')?.enabled).toBeTrue();
+      expect(component.secondFormGroup.get('address')?.value).toBe('Rua Manual');
+    });
+
+    it('keeps the typed complement when ViaCEP does not return one', () => {
+      viaCepServiceSpy.buscarCep.and.returnValue(of(cepValido as any));
+      component.secondFormGroup.get('complement')?.setValue('Apto 5');
+
+      component.secondFormGroup.get('cep')?.setValue('80010-000');
+
+      expect(component.secondFormGroup.get('complement')?.value).toBe('Apto 5');
+    });
+
+    it('searchCep warns and skips the lookup when the CEP has fewer than 8 digits', () => {
+      component.secondFormGroup.get('cep')?.setValue('800');
+
+      component.searchCep();
+
+      expect(toastServiceSpy.warn).toHaveBeenCalledWith(
+        'CEP inválido',
+        'Informe um CEP com 8 dígitos.',
+      );
+      expect(viaCepServiceSpy.buscarCep).not.toHaveBeenCalled();
+      expect(component.secondFormGroup.get('cep')?.touched).toBeTrue();
+    });
+
+    it('searchCep does nothing when the CEP is empty', () => {
+      component.searchCep();
+
+      expect(toastServiceSpy.warn).not.toHaveBeenCalled();
+      expect(viaCepServiceSpy.buscarCep).not.toHaveBeenCalled();
+    });
+
+    it('isCepValid is true only with 8 digits', () => {
+      component.secondFormGroup.get('cep')?.setValue('80010');
+      expect(component.isCepValid).toBeFalse();
+
+      component.secondFormGroup.get('cep')?.setValue('80010-000');
+      expect(component.isCepValid).toBeTrue();
+    });
+
+    it('stops looking up CEPs after the component is destroyed', () => {
+      const cep = component.secondFormGroup.get('cep');
+
+      fixture.destroy();
+      cep?.setValue('80010-000');
+
+      expect(viaCepServiceSpy.buscarCep).not.toHaveBeenCalled();
+    });
+  });
 });
