@@ -402,8 +402,8 @@
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a3238eb745118493c2ba23689ba07a30a7eb4f969847d4ff9de9a49fc2395250",
-      "expectedSha256": "6c77956aa92023d91e40a5cf422c318b61e941f8a93d5092652d16518c94ec17",
-      "reason": "Adiciona provideRouter e mocks de AuthService/ToastService/ViaCepService exigidos para instanciar o SignupPageComponent no TestBed. Amplia a cobertura com casos de formulário inválido, cadastro valido navegando para /login com toast de sucesso, e erro por CPF/email duplicado (showModal foi removido do componente em favor do fluxo com SignupResult e senha gerada)."
+      "expectedSha256": "df455c413b92b6c86f54f837bb5e6ee459485e27c4065e04392704e98937168f",
+      "reason": "Adiciona provideRouter e mocks de AuthService/ToastService/ViaCepService exigidos para instanciar o SignupPageComponent no TestBed. Cobre formulário inválido, cadastro válido navegando para /login com toast de sucesso, erro por CPF/e-mail duplicado e a integração com ViaCEP (preenchimento do endereço, CEP inexistente, falha de rede com campos editáveis, busca manual e cancelamento da inscrição)."
     },
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
