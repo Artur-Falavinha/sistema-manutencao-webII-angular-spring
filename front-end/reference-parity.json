@@ -352,7 +352,7 @@
       "referenceSha256": null,
       "expectedSha256": "942794a55dfaa15b4baba1a2c624eda97d1d35c8caed0f4949bf7713f41e78d6",
       "reason": "Scaffold temporário do shell: aplica AuthGuard e RoleGuard literais da referência às rotas de client/employee com base na sessão simulada, usando data.expectedRole conforme o contrato real.",
-      "removalBy": "2026-10-08"
+      "removalBy": "2026-10-09"
     },
     {
       "path": "src/app/core/auth/guards/auth.guard.spec.ts",
@@ -439,7 +439,7 @@
       "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
       "expectedSha256": "8c3dc20e37e57bd4ddadcea71c0cf2bda1ed391e9940fcb4d6f12dfa301510bf",
       "reason": "Scaffold temporario do autocadastro com MatButtonModule, toast e redirecionamento para /login, sem backend ou ViaCEP nesta janela.",
-      "removalBy": "2026-10-08"
+      "removalBy": "2026-10-09"
     },
     {
       "path": "src/app/core/auth/services/auth.service.spec.ts",
@@ -685,7 +685,7 @@
       "referenceSha256": "e39ba6059abb94770bb3de39103e83eea00534c574ecc5c22e1b498a59496a0e",
       "expectedSha256": "0d3f6c2e960ac7699dc1fcb38962505950af18fe7a2961179ec2104ac8bac526",
       "reason": "Campo de pesquisa Material outline com icone search, alinhado ao padrao employee-list. Aplica o pipe truncate (30 caracteres) na coluna de equipamento, exigido pelo RF003.",
-      "removalBy": "2026-10-08"
+      "removalBy": "2026-10-09"
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.spec.ts",
@@ -1354,7 +1354,7 @@
       "referenceSha256": null,
       "expectedSha256": "8b856073739b1c4dff7bb3f6ea18659173e681099a5a8c2ce99798ef26170cc4",
       "reason": "Fixture temporária de orçamentos para o protótipo sem backend; a referência gera esses dados em runtime via localStorage.",
-      "removalBy": "2026-10-08"
+      "removalBy": "2026-10-09"
     },
     {
       "path": "src/app/shared/mocks/category.mock.ts",
@@ -1362,7 +1362,7 @@
       "referenceSha256": null,
       "expectedSha256": "f52ad82d6ff15464cc4e37fed30320da1b2ebe73c7a64497cc835be087d2b379",
       "reason": "Fixture temporária de categorias para compor o protótipo sem backend; sem arquivo equivalente na referência.",
-      "removalBy": "2026-10-08"
+      "removalBy": "2026-10-09"
     },
     {
       "path": "src/app/shared/mocks/client.mock.ts",
@@ -1370,7 +1370,7 @@
       "referenceSha256": null,
       "expectedSha256": "8a364e7d1c305a7bfa1ba90efb4ae2d50352bbb63d382b334c81b7bd7518abd4",
       "reason": "Fixture temporária de clientes para compor o protótipo sem backend; sem arquivo equivalente na referência.",
-      "removalBy": "2026-10-08"
+      "removalBy": "2026-10-09"
     },
     {
       "path": "src/app/shared/mocks/employee.mock.ts",
@@ -1378,7 +1378,7 @@
       "referenceSha256": null,
       "expectedSha256": "41286aa8aed6c97e8d07a2ca8a1d6897a018bf6658e311ad09742c48e81b93b0",
       "reason": "Fixture temporaria de funcionarios para o protótipo sem backend; CPFs validos para o formulario de RF018.",
-      "removalBy": "2026-10-08"
+      "removalBy": "2026-10-09"
     },
     {
       "path": "src/app/shared/mocks/maintenance-request.mock.ts",
@@ -1393,7 +1393,7 @@
       "referenceSha256": null,
       "expectedSha256": "172ca84d82f8970c5e00773f06c25df247518b236d5ed1104ec4748d2beb6046",
       "reason": "Fixture temporária de histórico para o protótipo sem backend; sem arquivo equivalente na referência.",
-      "removalBy": "2026-10-08"
+      "removalBy": "2026-10-09"
     },
     {
       "path": "src/app/shared/mocks/request.mock.ts",
@@ -1401,7 +1401,7 @@
       "referenceSha256": null,
       "expectedSha256": "8ea224e3b850d453564a9ab1ddeb2df9bed5f43b86ed6a544d545834c13ed0b5",
       "reason": "Fixture temporária de solicitações para o protótipo sem backend; a referência gera esses dados em runtime via localStorage.",
-      "removalBy": "2026-10-08"
+      "removalBy": "2026-10-09"
     },
     {
       "path": "src/app/shared/mocks/status.mock.ts",
@@ -1409,7 +1409,7 @@
       "referenceSha256": null,
       "expectedSha256": "e8a1e4fd44ec3b07d4b61e4b93d0866b9c1d61e5e4e9702350575bf5d17cc0f8",
       "reason": "Fixture temporária de estados para o protótipo sem backend; a referência gera esses dados em runtime, sem arquivo dedicado.",
-      "removalBy": "2026-10-08"
+      "removalBy": "2026-10-09"
     },
     {
       "path": "src/app/shared/models/address.ts",
