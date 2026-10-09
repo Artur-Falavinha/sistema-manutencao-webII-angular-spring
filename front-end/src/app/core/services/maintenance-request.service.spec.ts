@@ -5,7 +5,9 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { MaintenanceRequestService } from './maintenance-request.service';
 import { API_URL } from '../configs/api.token';
 import {
+  ClientRequestDetailDTO,
   EmployeeRequestDetailDTO,
+  MaintenanceRequestCreateDTO,
   MaintenanceRequestResponseDTO,
 } from '../../shared/models/maintenance-request.models';
 import { BudgetCreateDTO } from '../../shared/models/budget.model';
@@ -174,6 +176,192 @@ describe('MaintenanceRequestService (contrato HTTP do funcionário)', () => {
 
     httpMock
       .expectOne(`${apiUrl}/requests/employee`)
+      .flush(null, { status: 403, statusText: 'Forbidden' });
+
+    expect(status).toBe(403);
+  });
+});
+
+/**
+ * Contrato HTTP da jornada do cliente (RF003–RF010), conferido contra o
+ * MaintenanceRequestController do back-end de referência (/api/requests e
+ * /api/requests/client/**).
+ */
+describe('MaintenanceRequestService (contrato HTTP do cliente)', () => {
+  const apiUrl = 'http://localhost:8080/api';
+  let service: MaintenanceRequestService;
+  let httpMock: HttpTestingController;
+
+  const responseDTO: MaintenanceRequestResponseDTO = {
+    id: 12,
+    equipmentName: 'Impressora HP',
+    defectDescription: 'Papel enroscando',
+    requestDate: '2026-10-03T14:15:00',
+    statusName: 'ABERTA',
+    statusColor: '#627877',
+    categoryName: 'Impressora',
+    clientName: 'Joana',
+  };
+
+  beforeEach(() => {
+    // Mesmo motivo da suíte do funcionário: tirar o mockApiInterceptor do caminho.
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: API_URL, useValue: apiUrl },
+      ],
+    });
+    service = TestBed.inject(MaintenanceRequestService);
+    httpMock = TestBed.inject(HttpTestingController);
+  });
+
+  afterEach(() => {
+    httpMock.verify();
+  });
+
+  it('RF003: lista as solicitações do cliente via GET /requests/client', () => {
+    let result: MaintenanceRequestResponseDTO[] | undefined;
+    service.getAllClientRequests().subscribe((data) => (result = data));
+
+    const req = httpMock.expectOne(`${apiUrl}/requests/client`);
+    expect(req.request.method).toBe('GET');
+    req.flush([responseDTO]);
+
+    expect(result).toEqual([responseDTO]);
+  });
+
+  it('RF004: abre a solicitação via POST /requests no formato do MaintenanceRequestCreateDTO', () => {
+    const payload: MaintenanceRequestCreateDTO = {
+      equipmentName: 'Impressora HP',
+      defectDescription: 'Papel enroscando',
+      categoryId: 3,
+    };
+    let result: MaintenanceRequestResponseDTO | undefined;
+
+    service.create(payload).subscribe((data) => (result = data));
+
+    const req = httpMock.expectOne(`${apiUrl}/requests`);
+    expect(req.request.method).toBe('POST');
+    // equipmentName e defectDescription são @NotBlank e categoryId é @NotNull no back-end
+    expect(req.request.body).toEqual(payload);
+    req.flush(responseDTO);
+
+    expect(result?.statusName).toBe('ABERTA');
+  });
+
+  it('RF005/RF008: busca o detalhe via GET /requests/client/{id} com orçamentos e histórico', () => {
+    // JSON como o ClientRequestDetailDTO do back-end serializa: status como objeto
+    // {id, nome, cor} (StatusEnum com @JsonFormat OBJECT), budgets como BudgetDTO e
+    // history como RequestHistoryDTO.
+    const backendBody = {
+      id: 12,
+      equipmentName: 'Impressora HP',
+      defectDescription: 'Papel enroscando',
+      requestDate: '2026-10-03T14:15:00',
+      status: { id: 2, nome: 'ORÇADA', cor: '#7C3804' },
+      categoryName: 'Impressora',
+      rejectionReason: null,
+      budgets: [
+        {
+          id: 4,
+          requestId: 12,
+          employeeId: 1,
+          total: 220.9,
+          services: 'Limpeza do rolo, Troca do tracionador',
+          serviceIds: [2, 5],
+          createdAt: '2026-10-04T08:00:00',
+          updatedAt: '2026-10-04T08:00:00',
+        },
+      ],
+      history: [
+        {
+          id: 30,
+          title: 'Solicitação criada',
+          occurrenceDate: '2026-10-03T14:15:00',
+          userName: 'Joana',
+          statusName: 'ABERTA',
+          statusColor: '#627877',
+        },
+        {
+          id: 31,
+          title: 'Orçamento registrado',
+          occurrenceDate: '2026-10-04T08:00:00',
+          userName: 'Maria',
+          statusName: 'ORÇADA',
+          statusColor: '#7C3804',
+        },
+      ],
+    };
+
+    let result: ClientRequestDetailDTO | undefined;
+    service.getRequestByIdForClient(12).subscribe((data) => (result = data));
+
+    const req = httpMock.expectOne(`${apiUrl}/requests/client/12`);
+    expect(req.request.method).toBe('GET');
+    req.flush(backendBody);
+
+    // Campos que request-detail-page, approve-reject-panel e request-history leem
+    expect(result?.status.nome).toBe('ORÇADA');
+    expect(result?.status.cor).toBe('#7C3804');
+    expect(result?.budgets[0].total).toBe(220.9);
+    expect(result?.history.map((entry) => entry.title)).toEqual([
+      'Solicitação criada',
+      'Orçamento registrado',
+    ]);
+    expect(result?.history[1].userName).toBe('Maria');
+  });
+
+  it('RF006: aprova o orçamento via POST /requests/client/{id}/approve sem dados no corpo', () => {
+    service.approveBudget(12).subscribe();
+
+    const req = httpMock.expectOne(`${apiUrl}/requests/client/12/approve`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({});
+    req.flush({ ...responseDTO, statusName: 'APROVADA' });
+  });
+
+  it('RF007: rejeita o orçamento via POST /requests/client/{id}/reject com o motivo no RejectionDTO', () => {
+    service.rejectBudget(12, 'Valor acima do esperado').subscribe();
+
+    const req = httpMock.expectOne(`${apiUrl}/requests/client/12/reject`);
+    expect(req.request.method).toBe('POST');
+    // O back-end lê @Valid @RequestBody RejectionDTO, com rejectionReason @NotBlank
+    expect(req.request.body).toEqual({ rejectionReason: 'Valor acima do esperado' });
+    req.flush({ ...responseDTO, statusName: 'REJEITADA' });
+  });
+
+  it('RF009: resgata a solicitação via POST /requests/client/{id}/rescue', () => {
+    let result: MaintenanceRequestResponseDTO | undefined;
+    service.rescueRequest(12).subscribe((data) => (result = data));
+
+    const req = httpMock.expectOne(`${apiUrl}/requests/client/12/rescue`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({});
+    req.flush({ ...responseDTO, statusName: 'APROVADA' });
+
+    expect(result?.statusName).toBe('APROVADA');
+  });
+
+  it('RF010: confirma o pagamento via POST /requests/client/{id}/pay', () => {
+    let result: MaintenanceRequestResponseDTO | undefined;
+    service.payRequest(12).subscribe((data) => (result = data));
+
+    const req = httpMock.expectOne(`${apiUrl}/requests/client/12/pay`);
+    expect(req.request.method).toBe('POST');
+    expect(req.request.body).toEqual({});
+    req.flush({ ...responseDTO, statusName: 'PAGA' });
+
+    expect(result?.statusName).toBe('PAGA');
+  });
+
+  it('propaga o erro do back-end (ex.: 403 do @PreAuthorize sem papel CLIENT)', () => {
+    let status: number | undefined;
+    service.getAllClientRequests().subscribe({ error: (err) => (status = err.status) });
+
+    httpMock
+      .expectOne(`${apiUrl}/requests/client`)
       .flush(null, { status: 403, statusText: 'Forbidden' });
 
     expect(status).toBe(403);
