@@ -612,8 +612,8 @@
       "path": "src/app/core/services/maintenance-request.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "fa50f7f0bed2576c2d7751612260f10b445a5091ac2a120c6c09315c631192cf",
-      "reason": "Testes de contrato HTTP com HttpTestingController para as operações do funcionário (RF011-RF016), conferidos contra o MaintenanceRequestController do back-end de referência; preparam a remoção do mock-api.interceptor."
+      "expectedSha256": "fe8ef56e3bb3107215474d1042490acf964ba1c7dff6a572cd320db09a64a95c",
+      "reason": "Testes de contrato HTTP com HttpTestingController para as operações do funcionário (RF011-RF016) e do cliente (RF003-RF010), conferidos contra o MaintenanceRequestController do back-end de referência; preparam a remoção do mock-api.interceptor."
     },
     {
       "path": "src/app/core/services/maintenance-request.service.ts",
