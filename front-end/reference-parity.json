@@ -480,7 +480,7 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "8e8757e45420d2a7ee183d40a37b8b8c7c830621c1d8e6788f601d1b76fc9753",
+      "expectedSha256": "57d7ac7fff3a3b6e20b450560ddcecc79a15dcf5433d3e117d9864f3fb63ff26",
       "reason": "Intercepta services literais com estado unificado persistido em sessionStorage. Sai da cadeia quando useMock é false e deve ser removido com o backend em 15/10. Delega /auth/login e /auth/register a mock-auth.handlers.ts.",
       "removalBy": "2026-10-29"
     },
