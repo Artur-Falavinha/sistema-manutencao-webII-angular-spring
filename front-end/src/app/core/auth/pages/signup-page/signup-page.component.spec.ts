@@ -66,7 +66,7 @@ describe('SignupPageComponent', () => {
   });
 
   it('calls authService.signup and navigates to /login on valid data', () => {
-    authServiceSpy.signup.and.returnValue(of({ generatedPassword: '1234' }));
+    authServiceSpy.signup.and.returnValue(of(undefined));
     component.firstFormGroup.patchValue(validFirstStep);
     component.secondFormGroup.patchValue(validSecondStep);
 

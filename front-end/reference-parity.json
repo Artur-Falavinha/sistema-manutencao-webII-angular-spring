@@ -430,7 +430,7 @@
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a3238eb745118493c2ba23689ba07a30a7eb4f969847d4ff9de9a49fc2395250",
-      "expectedSha256": "df455c413b92b6c86f54f837bb5e6ee459485e27c4065e04392704e98937168f",
+      "expectedSha256": "479407b547e658faab9873f23053af7629a1a46ff2c4476b61bfdee2232f20a4",
       "reason": "Adiciona provideRouter e mocks de AuthService/ToastService/ViaCepService exigidos para instanciar o SignupPageComponent no TestBed. Cobre formulário inválido, cadastro válido navegando para /login com toast de sucesso, erro por CPF/e-mail duplicado e a integração com ViaCEP (preenchimento do endereço, CEP inexistente, falha de rede com campos editáveis, busca manual e cancelamento da inscrição)."
     },
     {
@@ -445,15 +445,15 @@
       "path": "src/app/core/auth/services/auth.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "4aad6ea2c4356e907f6268e6e6343f2f21a5fe175f166f2dcfa6bd521448b4f5",
-      "reason": "Testes de comportamento da autenticação simulada com os usuários mock do protótipo, incluindo signup (CPF/e-mail duplicado e caso válido) e logout navegando para /login."
+      "expectedSha256": "a28525cdd6412976a990329beaf207d34621734159590f8ec483d62c19728f08",
+      "reason": "Testa o contrato HTTP literal com HttpTestingController e a ponte temporária com a API simulada; a referência não tem spec equivalente para este serviço."
     },
     {
       "path": "src/app/core/auth/services/auth.service.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "28f95d7a55443599aebc93d0572a0723e893a8dac0c503d55122ccca201a2b6c",
-      "expectedSha256": "b6f5638a7ebc05850c9f5c56f9ecc8824166a6fdc0b9724e440ee5e95b12f606",
-      "reason": "AuthService temporario com login/cadastro simulados. Permanece enquanto useMock estiver ativo, até a cópia do backend em 15/10.",
+      "expectedSha256": "38e7cdd07c3811ab8c02597719e2189dbd6e503e9278bd980736d1d2261db5b2",
+      "reason": "Contrato HTTP literal da referência (POST /auth/login e /auth/register, sessão em localStorage) com ponte temporária para a API simulada: espelha a sessão em sessionStorage e mantém updateCurrentUser e syncEmployeeSessionFromMock para app.config.ts e employee-form. Sai com o backend.",
       "removalBy": "2026-10-29"
     },
     {
@@ -480,8 +480,8 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "4dd07300cf412a872d33ac305e942882438fa2438fd7bea916703bd3d7b5fa3f",
-      "reason": "Intercepta services literais com estado unificado persistido em sessionStorage. Sai da cadeia quando useMock é false e deve ser removido com o backend em 15/10.",
+      "expectedSha256": "8e8757e45420d2a7ee183d40a37b8b8c7c830621c1d8e6788f601d1b76fc9753",
+      "reason": "Intercepta services literais com estado unificado persistido em sessionStorage. Sai da cadeia quando useMock é false e deve ser removido com o backend em 15/10. Delega /auth/login e /auth/register a mock-auth.handlers.ts.",
       "removalBy": "2026-10-29"
     },
     {
@@ -490,6 +490,14 @@
       "referenceSha256": null,
       "expectedSha256": "7e8cd1adcc71f821ba61f0ac5c2c482cdb8e2d8557fc79c01ace09f7188dd328",
       "reason": "Persiste estado mutavel do mock em sessionStorage. Permanece enquanto useMock estiver ativo, até a cópia do backend em 15/10.",
+      "removalBy": "2026-10-29"
+    },
+    {
+      "path": "src/app/core/interceptors/mock-auth.handlers.ts",
+      "classification": "TEMPORARY_SCAFFOLD",
+      "referenceSha256": null,
+      "expectedSha256": "43c3fb41b0ca6682699832759f409c772f74b517783c3e3a1729c2c635084f99",
+      "reason": "Responde POST /auth/login e /auth/register na API simulada, com os mesmos status e corpos da referência (200, 401 vazio, 201 ClientDTO, 400 de duplicidade). Sai com o backend.",
       "removalBy": "2026-10-29"
     },
     {

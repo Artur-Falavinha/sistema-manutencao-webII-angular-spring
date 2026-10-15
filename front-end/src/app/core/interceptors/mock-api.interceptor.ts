@@ -1,3 +1,4 @@
+import { handleMockAuthRequest } from './mock-auth.handlers';
 import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
@@ -333,6 +334,10 @@ function updateRequestStatus(id: number, statusName: string, rejectionReason?: s
 
 export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
   ensureMockApiStateInitialized();
+  const authResponse = handleMockAuthRequest(req);
+  if (authResponse) {
+    return authResponse;
+  }
 
   const clientDetailMatch = req.url.match(/\/requests\/client\/(\d+)$/);
   const approveMatch = req.url.match(/\/requests\/client\/(\d+)\/approve$/);
