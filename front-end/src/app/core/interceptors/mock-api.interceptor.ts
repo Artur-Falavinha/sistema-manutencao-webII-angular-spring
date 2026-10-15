@@ -7,16 +7,15 @@ import { MOCK_CATEGORIES } from '../../shared/mocks/category.mock';
 import { MOCK_REQUESTS } from '../../shared/mocks/request.mock';
 import { MOCK_CLIENTS } from '../../shared/mocks/client.mock';
 import { MOCK_EMPLOYEES } from '../../shared/mocks/employee.mock';
-import { MOCK_BUDGETS, MOCK_SERVICE_ITEMS } from '../../shared/mocks/budget.mock';
+import { MOCK_BUDGETS } from '../../shared/mocks/budget.mock';
 import { MOCK_REQUEST_HISTORY } from '../../shared/mocks/request-history.mock';
 import { Category } from '../../shared/models/category';
 import { Employee } from '../../shared/models/employee';
 import { Request } from '../../shared/models/request';
-import { Budget, BudgetCreateDTO } from '../../shared/models/budget.model';
+import { Budget } from '../../shared/models/budget.model';
 import { MaintenanceRecordDTO } from '../../shared/models/maintenance-record.model';
 import {
   ClientRequestDetailDTO,
-  EmployeeRequestDetailDTO,
   MaintenanceRequestCreateDTO,
   MaintenanceRequestResponseDTO,
   RejectionDTO,
@@ -45,14 +44,10 @@ import {
  * usava um array estático separado (MOCK_EMPLOYEE_REQUESTS), aposentado
  * nesta janela.
  *
- * Rotas cobertas hoje (RF001, RF003-RF010 visão cliente; RF011-RF016 visão
+ * Rotas cobertas hoje (RF001, RF003-RF010 visão cliente; RF013-RF016 visão
  * funcionário; RF017/RF018 CRUD simulado de categorias e funcionários):
  *   GET  /status-enum                          -> MOCK_STATUSES
- *   GET  /services                             -> MOCK_SERVICE_ITEMS
- *   GET  /requests/employee                    -> lista (deriva de mockRequests)
- *   GET  /requests/employee/{id}               -> detalhe completo do funcionário
  *   POST /requests/employee/{id}/redirect      -> RF015 redireciona manutenção (APROVADA/REDIRECIONADA → REDIRECIONADA)
- *   POST /requests/employee/{id}/budget        -> registra orçamento, muda para ORÇADA
  *   POST /requests/employee/{id}/maintenance   -> registra manutenção
  *   POST /requests/employee/{id}/finalize      -> muda o estado para FINALIZADA
  *   GET  /requests/client                      -> MOCK_REQUESTS do cliente logado
@@ -65,6 +60,10 @@ import {
  *   GET  /categories                           -> lista simulada de categorias
  *   POST/PUT/DELETE /categories                -> CRUD simulado de categorias
  *   GET/POST/PUT/DELETE /employees              -> CRUD simulado de funcionários
+ *
+ * RF011 e RF012 não passam mais por aqui: GET /services, GET /requests/employee,
+ * GET /requests/employee/{id} e POST /requests/employee/{id}/budget seguem
+ * para a API REST via next(req).
  *
  * Remover este arquivo e a linha correspondente em app.config.ts quando os
  * services HTTP reais forem integrados (marco 08/10 para requests,
@@ -92,20 +91,6 @@ function getLoggedInEmployeeId(): number | null {
 
 function getRequestStatusName(request: Request): string {
   return request.status ?? MOCK_STATUSES.find((s) => s.id === request.statusId)?.nome ?? '';
-}
-
-function filterRequestsForLoggedEmployee(requests: Request[]): Request[] {
-  const loggedEmployeeId = getLoggedInEmployeeId();
-
-  return requests.filter((request) => {
-    const statusName = getRequestStatusName(request);
-
-    if (statusName === 'REDIRECIONADA') {
-      return loggedEmployeeId !== null && request.employeeId === loggedEmployeeId;
-    }
-
-    return true;
-  });
 }
 
 let mockRequests: Request[];
@@ -302,26 +287,6 @@ function toDetailDTO(request: Request): ClientRequestDetailDTO {
   };
 }
 
-function toEmployeeDetailDTO(request: Request): EmployeeRequestDetailDTO {
-  const status = MOCK_STATUSES.find((s) => s.id === request.statusId);
-  const category = MOCK_CATEGORIES.find((c) => c.id === request.categoryId);
-  const client = getClientsForAuth().find((c) => c.id === request.clientId);
-  const assignedEmployee = mockEmployees.find((e) => e.id === request.employeeId);
-
-  return {
-    id: request.id,
-    equipmentName: request.equipmentName,
-    defectDescription: request.equipmentDescription,
-    requestDate: request.requestDate.toISOString(),
-    status: status ?? { id: request.statusId, nome: request.status ?? '', cor: '' },
-    categoryName: category?.name ?? '',
-    client: client!,
-    assignedEmployeeName: request.employeeId ? assignedEmployee?.name : undefined,
-    budgets: mockBudgets.filter((budget) => budget.requestId === request.id),
-    maintenanceRecord: mockMaintenanceRecords[request.id],
-  };
-}
-
 function updateRequestStatus(id: number, statusName: string, rejectionReason?: string): void {
   const status = MOCK_STATUSES.find((s) => s.nome === statusName);
 
@@ -345,32 +310,13 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
   const rescueMatch = req.url.match(/\/requests\/client\/(\d+)\/rescue$/);
   const payMatch = req.url.match(/\/requests\/client\/(\d+)\/pay$/);
 
-  const employeeDetailMatch = req.url.match(/\/requests\/employee\/(\d+)$/);
   const redirectMatch = req.url.match(/\/requests\/employee\/(\d+)\/redirect$/);
-  const budgetMatch = req.url.match(/\/requests\/employee\/(\d+)\/budget$/);
   const maintenanceMatch = req.url.match(/\/requests\/employee\/(\d+)\/maintenance$/);
   const finalizeMatch = req.url.match(/\/requests\/employee\/(\d+)\/finalize$/);
 
   if (req.method === 'GET') {
     if (req.url.endsWith('/status-enum')) {
       return of(new HttpResponse({ status: 200, body: MOCK_STATUSES })).pipe(delay(150));
-    }
-
-    if (req.url.endsWith('/services')) {
-      return of(new HttpResponse({ status: 200, body: MOCK_SERVICE_ITEMS })).pipe(delay(150));
-    }
-
-    if (employeeDetailMatch) {
-      const request = mockRequests.find((r) => r.id === Number(employeeDetailMatch[1]));
-
-      return request
-        ? of(new HttpResponse({ status: 200, body: toEmployeeDetailDTO(request) })).pipe(delay(150))
-        : of(new HttpResponse({ status: 404, body: null })).pipe(delay(150));
-    }
-
-    if (req.url.endsWith('/requests/employee')) {
-      const employeeResponses = filterRequestsForLoggedEmployee(mockRequests).map(toResponseDTO);
-      return of(new HttpResponse({ status: 200, body: employeeResponses })).pipe(delay(150));
     }
 
     if (clientDetailMatch) {
@@ -576,60 +522,6 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
 
       const updated = mockRequests.find((r) => r.id === requestId);
       return of(new HttpResponse({ status: 200, body: updated ? toResponseDTO(updated) : null })).pipe(delay(150));
-    }
-
-    if (budgetMatch) {
-      const requestId = Number(budgetMatch[1]);
-      const payload = req.body as BudgetCreateDTO;
-      const requestBeingBudgeted = mockRequests.find((r) => r.id === requestId);
-      const loggedEmployeeId = getLoggedInEmployeeId();
-
-      if (!requestBeingBudgeted) {
-        return of(new HttpResponse({ status: 404, body: { message: 'Solicitação não encontrada.' } })).pipe(delay(150));
-      }
-
-      if (getRequestStatusName(requestBeingBudgeted) !== 'ABERTA') {
-        return of(
-          new HttpResponse({ status: 403, body: { message: 'Orçamento só pode ser registrado em solicitações ABERTAS.' } })
-        ).pipe(delay(150));
-      }
-
-      if (mockBudgets.some((budget) => budget.requestId === requestId)) {
-        return of(
-          new HttpResponse({ status: 403, body: { message: 'Esta solicitação já possui orçamento.' } })
-        ).pipe(delay(150));
-      }
-
-      const chosenServices = MOCK_SERVICE_ITEMS.filter((s) => payload.serviceIds.includes(s.id));
-      const total = payload.total ?? chosenServices.reduce((acc, s) => acc + s.valorServico, 0);
-
-      const budget: Budget = {
-        id: nextId(mockBudgets),
-        requestId,
-        employeeId: loggedEmployeeId ?? 0,
-        total,
-        services: chosenServices.map((s) => s.nome).join(', '),
-        serviceIds: payload.serviceIds,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
-
-      mockBudgets = [...mockBudgets, budget];
-      mockRequests = mockRequests.map((request) =>
-        request.id === requestId
-          ? { ...request, employeeId: loggedEmployeeId ?? request.employeeId }
-          : request
-      );
-      updateRequestStatus(requestId, 'ORÇADA');
-      addHistoryEntry(
-        requestId,
-        'Orçamento efetuado',
-        getLoggedInUserName(),
-        'ORÇADA'
-      );
-
-      const updated = mockRequests.find((r) => r.id === requestId);
-      return of(new HttpResponse({ status: 201, body: updated ? toResponseDTO(updated) : null })).pipe(delay(150));
     }
 
     if (maintenanceMatch) {
