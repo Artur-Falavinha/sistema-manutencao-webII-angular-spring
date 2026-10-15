@@ -1,16 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable, tap, map } from 'rxjs';
 import { Router } from '@angular/router';
-import { BehaviorSubject, map, Observable, of, tap, throwError } from 'rxjs';
-import { Estado } from '../../../shared/models/address';
-import { Client } from '../../../shared/models/client';
-import {
-  getClientsForAuth,
-  getEmployeesForAuth,
-  loadRegisteredClients,
-  MOCK_AUTH_SESSION_KEY,
-  saveRegisteredClient,
-} from '../../interceptors/mock-api.persistence';
+import { API_URL } from '../../configs/api.token';
 import { RegisterRequest } from '../../../shared/models/register-request';
+import {
+  getEmployeesForAuth,
+  MOCK_AUTH_SESSION_KEY,
+} from '../../interceptors/mock-api.persistence';
+
+interface LoginResponseApi {
+  token: string;
+  userName: string;
+  userRole: string;
+  userId?: number;
+  userEmail?: string;
+}
 
 export type UserState = {
   id?: number;
@@ -20,96 +25,83 @@ export type UserState = {
   token: string;
 } | null;
 
-export interface SignupResult {
-  generatedPassword: string;
-}
-
-const SESSION_STORAGE_KEY = MOCK_AUTH_SESSION_KEY;
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly currentUserSubject = new BehaviorSubject<UserState>(
-    this.readFromStorage(),
+  private http = inject(HttpClient);
+  private apiBaseUrl = inject(API_URL);
+  private router = inject(Router);
+
+  private currentUserSubject = new BehaviorSubject<UserState>(null);
+  public currentUser$ = this.currentUserSubject.asObservable();
+
+  public isEmployee$: Observable<boolean> = this.currentUser$.pipe(
+    map(user => user?.userAccess === 'employee')
   );
 
-  readonly currentUser$ = this.currentUserSubject.asObservable();
-
-  readonly isEmployee$: Observable<boolean> = this.currentUser$.pipe(
-    map((user) => user?.userAccess === 'employee'),
+  public isLoggedIn$: Observable<boolean> = this.currentUser$.pipe(
+    map(user => user !== null)
   );
 
-  readonly isLoggedIn$: Observable<boolean> = this.currentUser$.pipe(
-    map((user) => user !== null),
-  );
+  constructor() {
+    this.loadInitialUser();
+  }
 
-  get currentUserValue(): UserState {
+  public get currentUserValue(): UserState {
     return this.currentUserSubject.value;
   }
 
-  constructor(private router: Router) {}
+  private loadInitialUser(): void {
+    const userJson = localStorage.getItem('currentUser');
+    if (userJson) {
+      try {
+        const user = JSON.parse(userJson);
+        this.currentUserSubject.next(user);
+      } catch (e) {
+        console.error('Erro ao carregar usuário', e);
+        this.logout();
+      }
+    }
+  }
 
-  login(email: string, password: string): Observable<UserState> {
-    const user = this.findMockUser(email, password);
+  public login(email: string, password: string): Observable<UserState> {
+    return this.http.post<LoginResponseApi>(`${this.apiBaseUrl}/auth/login`, {
+      email,
+      password
+    }).pipe(
+      map(response => {
+        const accessType = this.mapRoleToUserAccess(response.userRole);
 
-    return of(user).pipe(
-      tap((loggedUser) => {
-        this.currentUserSubject.next(loggedUser);
-        this.persistToStorage(loggedUser);
-        if (loggedUser?.userAccess === 'employee') {
-          this.syncEmployeeSessionFromMock();
-        }
+        const user: UserState = {
+          id: response.userId,
+          name: response.userName,
+          email: response.userEmail,
+          userAccess: accessType,
+          token: response.token,
+        };
+
+        return user;
       }),
+      tap((user) => {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        localStorage.setItem('token', user!.token);
+        this.currentUserSubject.next(user);
+        this.persistMockSession(user);
+      })
     );
   }
 
-  signup(data: RegisterRequest): Observable<SignupResult> {
-    const normalizedCpf = this.onlyDigits(data.cpf);
-    const normalizedEmail = data.email.trim().toLowerCase();
-    const clients = getClientsForAuth();
-
-    const cpfExists =
-      clients.some(
-        (client) => this.onlyDigits(client.cpf) === normalizedCpf,
-      ) ||
-      getEmployeesForAuth().some(
-        (employee) => this.onlyDigits(employee.cpf) === normalizedCpf,
-      );
-
-    if (cpfExists) {
-      return throwError(() => new Error('CPF já cadastrado.'));
-    }
-
-    const emailExists =
-      clients.some(
-        (client) => client.email.toLowerCase() === normalizedEmail,
-      ) ||
-      getEmployeesForAuth().some(
-        (employee) => employee.email.toLowerCase() === normalizedEmail,
-      );
-
-    if (emailExists) {
-      return throwError(() => new Error('E-mail já cadastrado.'));
-    }
-
-    const generatedPassword = this.generateRandomPassword();
-    const newClient = this.buildClientFromRegisterRequest(
-      data,
-      normalizedEmail,
-      normalizedCpf,
-      generatedPassword,
-    );
-
-    saveRegisteredClient(newClient);
-
-    return of({ generatedPassword });
-  }
-
-  logout(): void {
+  public logout(): void {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
     this.currentUserSubject.next(null);
-    this.persistToStorage(null);
+    this.persistMockSession(null);
     this.router.navigate(['/login']);
+  }
+
+  public signup(data: RegisterRequest): Observable<void> {
+    return this.http.post<void>(`${this.apiBaseUrl}/auth/register`, data);
   }
 
   updateCurrentUser(
@@ -122,13 +114,19 @@ export class AuthService {
 
     const updatedUser = { ...user, ...updates };
     this.currentUserSubject.next(updatedUser);
-    this.persistToStorage(updatedUser);
+    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+    this.persistMockSession(updatedUser);
   }
 
-  /** Atualiza nome/e-mail da sessão a partir do mock persistido (ex.: após editar funcionário). */
   syncEmployeeSessionFromMock(): void {
     const user = this.currentUserSubject.value;
-    if (!user || user.userAccess !== 'employee' || user.id == null) {
+    if (!user) {
+      return;
+    }
+
+    this.persistMockSession(user);
+
+    if (user.userAccess !== 'employee' || user.id == null) {
       return;
     }
 
@@ -146,134 +144,17 @@ export class AuthService {
     this.updateCurrentUser({ name: employee.name, email: employee.email });
   }
 
-  private findMockUser(email: string, password: string): UserState {
-    const normalizedEmail = email.trim().toLowerCase();
-
-    const client = getClientsForAuth().find(
-      (candidate) =>
-        candidate.email.toLowerCase() === normalizedEmail &&
-        candidate.password === password,
-    );
-
-    if (client) {
-      return {
-        id: client.id,
-        name: client.name,
-        email: client.email,
-        userAccess: 'client',
-        token: `mock-client-${client.id}`,
-      };
-    }
-
-    const employee = getEmployeesForAuth().find(
-      (candidate) =>
-        candidate.email.toLowerCase() === normalizedEmail &&
-        candidate.password === password,
-    );
-
-    if (employee) {
-      return {
-        id: employee.id,
-        name: employee.name,
-        email: employee.email,
-        userAccess: 'employee',
-        token: `mock-employee-${employee.id}`,
-      };
-    }
-
-    return null;
-  }
-
-  private buildClientFromRegisterRequest(
-    data: RegisterRequest,
-    normalizedEmail: string,
-    normalizedCpf: string,
-    generatedPassword: string,
-  ): Client {
-    const existingClients = getClientsForAuth();
-    const registeredClients = loadRegisteredClients();
-    const nextId = Math.max(0, ...existingClients.map((client) => client.id)) + 1;
-    const nextAddressId =
-      Math.max(
-        0,
-        ...existingClients.map((client) => client.address?.id ?? 0),
-        ...registeredClients.map((client) => client.address?.id ?? 0),
-      ) + 1;
-
-    return {
-      id: nextId,
-      name: data.name.trim(),
-      email: normalizedEmail,
-      cpf: this.formatCpf(normalizedCpf),
-      phoneNumber: this.formatPhone(data.phoneNumber),
-      password: generatedPassword,
-      userAccess: 'client',
-      address: {
-        id: nextAddressId,
-        cep: this.formatCep(data.zipCode),
-        logradouro: data.street.trim(),
-        complemento: data.complement?.trim() || undefined,
-        bairro: data.neighborhood.trim(),
-        cidade: data.city.trim(),
-        estado: this.toEstado(data.state),
-      },
-    };
-  }
-
-  private generateRandomPassword(): string {
-    return String(Math.floor(1000 + Math.random() * 9000));
-  }
-
-  private formatCpf(digits: string): string {
-    const value = digits.padStart(11, '0').slice(-11);
-    return `${value.slice(0, 3)}.${value.slice(3, 6)}.${value.slice(6, 9)}-${value.slice(9)}`;
-  }
-
-  private formatPhone(digits: string): string {
-    const value = digits.replace(/\D/g, '').slice(-11);
-    if (value.length !== 11) {
-      return digits;
-    }
-
-    return `(${value.slice(0, 2)}) ${value.slice(2, 3)} ${value.slice(3, 7)}-${value.slice(7)}`;
-  }
-
-  private formatCep(digits: string): string {
-    const value = digits.replace(/\D/g, '').slice(-8);
-    if (value.length !== 8) {
-      return digits;
-    }
-
-    return `${value.slice(0, 5)}-${value.slice(5)}`;
-  }
-
-  private toEstado(value: string): Estado {
-    const normalized = value.trim().toUpperCase();
-    return Object.values(Estado).includes(normalized as Estado)
-      ? (normalized as Estado)
-      : Estado.PR;
-  }
-
-  private persistToStorage(user: UserState): void {
+  private persistMockSession(user: UserState): void {
     if (user) {
-      sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(user));
+      sessionStorage.setItem(MOCK_AUTH_SESSION_KEY, JSON.stringify(user));
     } else {
-      sessionStorage.removeItem(SESSION_STORAGE_KEY);
+      sessionStorage.removeItem(MOCK_AUTH_SESSION_KEY);
     }
   }
 
-  private readFromStorage(): UserState {
-    const raw = sessionStorage.getItem(SESSION_STORAGE_KEY);
-    if (!raw) return null;
-
-    try {
-      return JSON.parse(raw) as UserState;
-    } catch {
-      return null;
-    }
-  }
-
-  private onlyDigits(value: string | null | undefined): string {
-    return (value ?? '').replace(/\D/g, '');
+  private mapRoleToUserAccess(role: string): 'employee' | 'client' {
+    if (role === 'ROLE_EMPLOYEE') return 'employee';
+    if (role === 'ROLE_CLIENT') return 'client';
+    return 'client';
   }
 }
