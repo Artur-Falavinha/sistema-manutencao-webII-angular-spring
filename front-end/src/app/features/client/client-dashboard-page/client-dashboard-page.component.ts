@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { ToastService } from '../../../core/services/toast.service';
+import { clientHttpErrorMessage } from '../client-http-error';
 import {
   BudgetRescueConfirmDialogComponent,
 } from '../request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component';
@@ -69,7 +70,7 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
       },
       error: (err) => {
         console.error('Erro ao buscar solicitações', err);
-        this.toast.error('Erro', 'Falha ao carregar solicitações.');
+        this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao carregar solicitações.'));
       },
     });
   }
@@ -132,8 +133,7 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
         },
         error: (err) => {
           console.error(err);
-          const message = err?.error?.message ?? 'Falha ao resgatar serviço.';
-          this.toast.error('Erro', message);
+          this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao resgatar serviço.'));
         },
       });
     });

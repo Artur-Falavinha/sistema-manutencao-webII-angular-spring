@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ApproveRejectPanelComponent } from './components/approve-reject-panel/approve-reject-panel.component';
 import { ToastService } from '../../../core/services/toast.service';
+import { clientHttpErrorMessage } from '../client-http-error';
 
 @Component({
   selector: 'app-request-detail-page',
@@ -53,7 +54,7 @@ export class RequestDetailPageComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error loading request details:', err);
-        this.toast.error('Erro', 'Falha ao carregar detalhes da solicitação!');
+        this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao carregar detalhes da solicitação!'));
         this.isLoading = false;
       },
     });
