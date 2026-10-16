@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ClientRequestDetailDTO } from '../../../../../shared/models/maintenance-request.models';
 import { MaintenanceRequestService } from '../../../../../core/services/maintenance-request.service';
 import { ToastService } from '../../../../../core/services/toast.service';
+import { clientHttpErrorMessage } from '../../../client-http-error';
 import { BudgetApproveConfirmDialogComponent } from './budget-approve-confirm-dialog.component';
 import { BudgetRejectDialogComponent } from './budget-reject-dialog.component';
 import { BudgetRescueConfirmDialogComponent } from './budget-rescue-confirm-dialog.component';
@@ -110,7 +111,7 @@ export class ApproveRejectPanelComponent {
       },
       error: (err) => {
         console.error(err);
-        this.toast.error('Erro', 'Não foi possível aprovar o orçamento.');
+        this.toast.error('Erro', clientHttpErrorMessage(err, 'Não foi possível aprovar o orçamento.'));
       },
     });
   }
@@ -123,7 +124,7 @@ export class ApproveRejectPanelComponent {
       },
       error: (err) => {
         console.error(err);
-        this.toast.error('Erro', 'Falha ao recusar orçamento.');
+        this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao recusar orçamento.'));
       },
     });
   }
@@ -136,8 +137,7 @@ export class ApproveRejectPanelComponent {
       },
       error: (err) => {
         console.error(err);
-        const message = err?.error?.message ?? 'Falha ao resgatar serviço.';
-        this.toast.error('Erro', message);
+        this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao resgatar serviço.'));
       },
     });
   }
