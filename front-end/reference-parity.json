@@ -480,7 +480,7 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "57d7ac7fff3a3b6e20b450560ddcecc79a15dcf5433d3e117d9864f3fb63ff26",
+      "expectedSha256": "f8420b55d1268b3b5dac8ed86d022f7c7c3d19936e5a62556cb648575bcbd38a",
       "reason": "Intercepta services literais com estado unificado persistido em sessionStorage. Sai da cadeia quando useMock é false e deve ser removido com o backend em 15/10. Delega /auth/login e /auth/register a mock-auth.handlers.ts.",
       "removalBy": "2026-10-29"
     },
@@ -706,8 +706,16 @@
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "57ee945c9524bc1f3b7955fc6281c20e046155f842c4f8253b329da3a54d4f88",
-      "expectedSha256": "c97254bd9240dea60a5cfdc1e3d87c7e9634b8d90642fde5967ea5dc87e77c97",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem coluna acoes, toast de erro e contrato simulado. Importa TruncatePipe para o limite de 30 caracteres do RF003."
+      "expectedSha256": "ffb4e40d87d25c34513f1d57d6b6b5735f140d7031344381f674ab7ad4c0b4b7",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem coluna acoes, toast de erro e contrato simulado. Importa TruncatePipe para o limite de 30 caracteres do RF003. Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage."
+    },
+    {
+      "path": "src/app/features/client/client-http-error.ts",
+      "classification": "SCOPE_DECISION",
+      "expectedSha256": "382d7593e6ba5d1841e5699fe0caf6b09d590dd1a250b6c979376e77fb38860e",
+      "reason": "Converte HttpErrorResponse da API REST do cliente (RF003-RF010) em mensagens pt-BR: usa a mensagem do backend quando presente e traduz 0/400/401/403/404/409 enquanto nao ha tratamento global de erros.",
+      "decisionDate": "2026-10-15",
+      "requirement": "RF003-RF010"
     },
     {
       "path": "src/app/features/client/client.routes.ts",
@@ -744,8 +752,8 @@
       "path": "src/app/features/client/new-request-page/new-request-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "3603f9ac164da29a793b30cb4e576a9cbc99a261a79129c9d4db166eea293e8c",
-      "expectedSha256": "4633e591b5ed85c1427a3f05e8014be938dafebd335cb02dbec1a7e136068a60",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar create() nem validacao do formulario."
+      "expectedSha256": "8cf6098f4ff0681f5fccad183e4c242c87b7064fb7926feee370225d100416e6",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar create() nem validacao do formulario. Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage."
     },
     {
       "path": "src/app/features/client/payment-panel/payment-panel.component.css",
@@ -774,8 +782,8 @@
       "path": "src/app/features/client/payment-panel/payment-panel.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb",
-      "expectedSha256": "93531e309899ceb51e089574025cd274c5f1eaf658a074f092bcdb497e8f5479",
-      "reason": "Substitui app-success-modal por MatDialog de confirmacao, valida status ARRUMADA/PAGA e bloqueia pagamento sem metodo selecionado com toast."
+      "expectedSha256": "ced80dcf0fa39b721bdcb71c4680b7fabd10a25a7bbe53ab444f27ee12565b4d",
+      "reason": "Substitui app-success-modal por MatDialog de confirmacao, valida status ARRUMADA/PAGA e bloqueia pagamento sem metodo selecionado com toast. Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage."
     },
     {
       "path": "src/app/features/client/payment-panel/payment-confirm-dialog.component.css",
@@ -828,8 +836,8 @@
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "7dc8cc31f469aae59f8953c415043833ac873818a24b7d12fbbbf281c55322c6",
-      "expectedSha256": "8175d33439003d8976d9bd86a1e4d089e0f51b064ff715db9060ad615b4c90d5",
-      "reason": "Centraliza aprovacao, rejeicao e resgate de orcamento em dialogos MatDialog com DialogShell. Ajusta a mensagem de aprovacao para o literal do RF006 (\"Servico Aprovado no Valor R$ xxxx\") com redirecionamento para o dashboard (RF003), e a de rejeicao para o literal do RF007 (\"Servico Rejeitado\")."
+      "expectedSha256": "7998a1e34feafcf53926a1f350b5ba4170f15bbeb870ac7864ba6b2f42ca4a72",
+      "reason": "Centraliza aprovacao, rejeicao e resgate de orcamento em dialogos MatDialog com DialogShell. Ajusta a mensagem de aprovacao para o literal do RF006 (\"Servico Aprovado no Valor R$ xxxx\") com redirecionamento para o dashboard (RF003), e a de rejeicao para o literal do RF007 (\"Servico Rejeitado\"). Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage."
     },
     {
       "path": "src/app/features/client/request-detail-page/components/request-description/request-description.component.css",
@@ -908,8 +916,8 @@
       "path": "src/app/features/client/request-detail-page/request-detail-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a263329f269fd6b28c9a2d214da29c02dcadc37c648f585d5e071f5a3e6053da",
-      "expectedSha256": "4fb3fc9e26ffd85ec9a05c82f856f2782bfa6626a8bc4cff641ebaf2ff52428f",
-      "reason": "Remove import de HeaderComponent apos centralizar header no app-root para rotas de cliente."
+      "expectedSha256": "6b9b4d49778faf1cc692785df992edfac6043bc8c9681228cd588cee8c5b9877",
+      "reason": "Remove import de HeaderComponent apos centralizar header no app-root para rotas de cliente. Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage."
     },
     {
       "path": "src/app/features/employee/components/employee-form/employee-form.component.css",

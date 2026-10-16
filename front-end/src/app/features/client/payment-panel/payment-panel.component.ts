@@ -10,6 +10,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { MaintenanceRequestService } from '../../../core/services/maintenance-request.service';
 import { ToastService } from '../../../core/services/toast.service';
+import { clientHttpErrorMessage } from '../client-http-error';
 import { ClientRequestDetailDTO } from '../../../shared/models/maintenance-request.models';
 import { PaymentConfirmDialogComponent } from './payment-confirm-dialog.component';
 
@@ -68,7 +69,7 @@ export class PaymentPanelComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error loading request details:', err);
-        this.toast.error('Erro', 'Falha ao carregar detalhes da solicitação!');
+        this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao carregar detalhes da solicitação!'));
         this.isLoading = false;
       },
     });
@@ -124,8 +125,7 @@ export class PaymentPanelComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error paying request:', err);
-        const message = err?.error?.message ?? 'Falha ao processar o pagamento da solicitação!';
-        this.toast.error('Erro', message);
+        this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao processar o pagamento da solicitação!'));
         this.isProcessingPayment = false;
       },
     });

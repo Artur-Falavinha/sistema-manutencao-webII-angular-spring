@@ -9,6 +9,7 @@ import { Category } from '../../../shared/models/category';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ToastService } from '../../../core/services/toast.service';
+import { clientHttpErrorMessage } from '../client-http-error';
 
 @Component({
   selector: 'app-new-request-page',
@@ -39,7 +40,7 @@ export class NewRequestPageComponent implements OnInit {
   ngOnInit(): void {
     this.categoryService.getAllCategories().subscribe({
       next: (cats) => this.categories = cats,
-      error: (err) => this.toast.error('Erro', 'Falha ao carregar categorias: ' + err)
+      error: (err) => this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao carregar categorias.'))
     });
   }
 
@@ -66,7 +67,7 @@ export class NewRequestPageComponent implements OnInit {
         this.dialogRef.close(true);
       },
       error: (err) => {
-        this.toast.error('Erro', 'Falha ao criar solicitação' + err);
+        this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao criar solicitação.'));
         console.error('Erro ao criar solicitação:', err);}
     });
   }
