@@ -44,14 +44,25 @@ function extractBackendMessage(body: unknown): string | null {
     return null;
   }
 
-  const { message, errors } = body as { message?: unknown; errors?: SpringValidationError[] };
+  const { message, error, errors } = body as {
+    message?: unknown;
+    error?: unknown;
+    errors?: SpringValidationError[];
+  };
 
   if (Array.isArray(errors)) {
-    const firstValidation = errors.find((error) => error?.defaultMessage)?.defaultMessage;
+    const firstValidation = errors.find((item) => item?.defaultMessage)?.defaultMessage;
     if (firstValidation) {
       return firstValidation;
     }
   }
 
-  return typeof message === 'string' && message.trim() ? message.trim() : null;
+  if (typeof message !== 'string' || !message.trim()) {
+    return null;
+  }
+
+  // O corpo padrão do Spring repete a frase HTTP em inglês ("Forbidden", "Not Found")
+  // quando a exceção não traz mensagem própria; nesse caso vale a tradução por status.
+  const text = message.trim();
+  return text === error || text === 'No message available' ? null : text;
 }

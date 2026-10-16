@@ -712,7 +712,7 @@
     {
       "path": "src/app/features/client/client-http-error.ts",
       "classification": "SCOPE_DECISION",
-      "expectedSha256": "6054bc3428db2b2ac9507730ea9b8037e1f0797fbfe67bf5064ec4a6490466bf",
+      "expectedSha256": "382d7593e6ba5d1841e5699fe0caf6b09d590dd1a250b6c979376e77fb38860e",
       "reason": "Converte HttpErrorResponse da API REST do cliente (RF003-RF010) em mensagens pt-BR: usa a mensagem do backend quando presente e traduz 0/400/401/403/404/409 enquanto nao ha tratamento global de erros.",
       "decisionDate": "2026-10-15",
       "requirement": "RF003-RF010"
