@@ -189,21 +189,15 @@
       "requirement": "RF019-RF020",
       "decision": "Gerar PDF valido na exportacao de relatorios simulados.",
       "reason": "Substitui Blob textual por createTextPdf() em pdf-text-report.ts para que o navegador abra o arquivo exportado corretamente, preservando dados e filtros existentes.",
-      "affectedReferencePaths": [
-        "src/app/core/services/report.service.ts"
-      ],
-      "createdPaths": [
-        "src/app/shared/utils/pdf-text-report.ts"
-      ]
+      "affectedReferencePaths": ["src/app/core/services/report.service.ts"],
+      "createdPaths": ["src/app/shared/utils/pdf-text-report.ts"]
     },
     {
       "date": "2026-09-17",
       "requirement": "N/A",
       "decision": "Aplicar padding uniforme ao conteudo principal do shell.",
       "reason": "Adiciona padding de 2rem (1rem em mobile) em .content do app-root para afastar paginas das bordas laterais.",
-      "affectedReferencePaths": [
-        "src/app/app.component.css"
-      ]
+      "affectedReferencePaths": ["src/app/app.component.css"]
     },
     {
       "date": "2026-09-17",
@@ -216,9 +210,7 @@
         "src/app/features/employee/components/new-category-modal/new-category-modal.component.html",
         "src/app/features/employee/components/new-category-modal/new-category-modal.component.css"
       ],
-      "createdPaths": [
-        "src/app/shared/constants/category-icon-options.ts"
-      ]
+      "createdPaths": ["src/app/shared/constants/category-icon-options.ts"]
     },
     {
       "date": "2026-09-17",
@@ -480,7 +472,7 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "f8420b55d1268b3b5dac8ed86d022f7c7c3d19936e5a62556cb648575bcbd38a",
+      "expectedSha256": "3229781e7b2039a8e664dc9eaedab75534c0d0de4716dacca1a2d30ed725b4e1",
       "reason": "Intercepta services literais com estado unificado persistido em sessionStorage. Sai da cadeia quando useMock é false e deve ser removido com o backend em 15/10. Delega /auth/login e /auth/register a mock-auth.handlers.ts.",
       "removalBy": "2026-10-29"
     },
@@ -633,7 +625,7 @@
       "path": "src/app/core/services/report.service.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "9d1a7bc2c06925d7afea96bdfb0822c1399c978682b4edadd82c9350b87b5ee3",
-      "expectedSha256": "db5075b28cf5544253aab9e80146e3314078060ce18f95cc25c1c723d916fabf",
+      "expectedSha256": "80df7bd9ab53d889654b34a21472d1deed59c83c85ab3822cabac095fa880b9c",
       "reason": "Implementacao temporaria sobre mocks locais; exporta PDF valido via createTextPdf() com dados reais simulados para RF019-RF020.",
       "removalBy": "2026-10-29"
     },
@@ -1820,7 +1812,7 @@
       "path": "src/app/core/services/report.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "78eaa473669e4cca4fd534e596dc2960e643bd9f5175b43518e96154864278c3",
+      "expectedSha256": "44ebce7ec514d0b10fc29ac6b2e087ffeaceab143f233f2dbf2e28c0b0b02e3f",
       "reason": "Testes unitários de validação de contratos HTTP e DTOs."
     },
     {
@@ -1852,7 +1844,7 @@
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
-      "expectedSha256": "bc8fa880376dd50cb14a8341f4511e210c5957cc5bfb7bf3658697efc44e90d5",
+      "expectedSha256": "01f3e076f33fa656e6863bd5143a56f294e9a9ff5794f0f898a2b2735bbbc290",
       "reason": "O spec da referência não declara providers. O TestBed recebe provideToastr e o datepicker pt-BR porque o componente injeta ToastService e usa MatDatepicker."
     }
   ]
