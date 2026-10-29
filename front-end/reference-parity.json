@@ -1812,7 +1812,7 @@
       "path": "src/app/core/services/report.service.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": null,
-      "expectedSha256": "78eaa473669e4cca4fd534e596dc2960e643bd9f5175b43518e96154864278c3",
+      "expectedSha256": "e0d2b90965d366822a85b0edb28a6f60eb3f697589d875ed264caef9f19f37af",
       "reason": "Testes unitários de validação de contratos HTTP e DTOs."
     },
     {
@@ -1844,7 +1844,7 @@
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "77546bb8a02292723752e72bec66cb0bbcc0b1aef7640844b4303aac4535794a",
-      "expectedSha256": "bc8fa880376dd50cb14a8341f4511e210c5957cc5bfb7bf3658697efc44e90d5",
+      "expectedSha256": "79dda0111f91d326b5ae768d55761607bf74aa7fd51cb8e6ac6e57118cef43b7",
       "reason": "O spec da referência não declara providers. O TestBed recebe provideToastr e o datepicker pt-BR porque o componente injeta ToastService e usa MatDatepicker."
     }
   ]
