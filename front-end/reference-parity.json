@@ -189,21 +189,15 @@
       "requirement": "RF019-RF020",
       "decision": "Gerar PDF valido na exportacao de relatorios simulados.",
       "reason": "Substitui Blob textual por createTextPdf() em pdf-text-report.ts para que o navegador abra o arquivo exportado corretamente, preservando dados e filtros existentes.",
-      "affectedReferencePaths": [
-        "src/app/core/services/report.service.ts"
-      ],
-      "createdPaths": [
-        "src/app/shared/utils/pdf-text-report.ts"
-      ]
+      "affectedReferencePaths": ["src/app/core/services/report.service.ts"],
+      "createdPaths": ["src/app/shared/utils/pdf-text-report.ts"]
     },
     {
       "date": "2026-09-17",
       "requirement": "N/A",
       "decision": "Aplicar padding uniforme ao conteudo principal do shell.",
       "reason": "Adiciona padding de 2rem (1rem em mobile) em .content do app-root para afastar paginas das bordas laterais.",
-      "affectedReferencePaths": [
-        "src/app/app.component.css"
-      ]
+      "affectedReferencePaths": ["src/app/app.component.css"]
     },
     {
       "date": "2026-09-17",
@@ -216,9 +210,7 @@
         "src/app/features/employee/components/new-category-modal/new-category-modal.component.html",
         "src/app/features/employee/components/new-category-modal/new-category-modal.component.css"
       ],
-      "createdPaths": [
-        "src/app/shared/constants/category-icon-options.ts"
-      ]
+      "createdPaths": ["src/app/shared/constants/category-icon-options.ts"]
     },
     {
       "date": "2026-09-17",
@@ -480,7 +472,7 @@
       "path": "src/app/core/interceptors/mock-api.interceptor.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": null,
-      "expectedSha256": "f8420b55d1268b3b5dac8ed86d022f7c7c3d19936e5a62556cb648575bcbd38a",
+      "expectedSha256": "3229781e7b2039a8e664dc9eaedab75534c0d0de4716dacca1a2d30ed725b4e1",
       "reason": "Intercepta services literais com estado unificado persistido em sessionStorage. Sai da cadeia quando useMock é false e deve ser removido com o backend em 15/10. Delega /auth/login e /auth/register a mock-auth.handlers.ts.",
       "removalBy": "2026-10-29"
     },
@@ -633,7 +625,7 @@
       "path": "src/app/core/services/report.service.ts",
       "classification": "TEMPORARY_SCAFFOLD",
       "referenceSha256": "9d1a7bc2c06925d7afea96bdfb0822c1399c978682b4edadd82c9350b87b5ee3",
-      "expectedSha256": "db5075b28cf5544253aab9e80146e3314078060ce18f95cc25c1c723d916fabf",
+      "expectedSha256": "80df7bd9ab53d889654b34a21472d1deed59c83c85ab3822cabac095fa880b9c",
       "reason": "Implementacao temporaria sobre mocks locais; exporta PDF valido via createTextPdf() com dados reais simulados para RF019-RF020.",
       "removalBy": "2026-10-29"
     },
