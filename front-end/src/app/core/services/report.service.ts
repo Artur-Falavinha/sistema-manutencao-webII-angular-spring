@@ -1,146 +1,61 @@
-import { Injectable } from "@angular/core";
-import { map, Observable, of } from "rxjs";
-import { MOCK_BUDGETS } from "../../shared/mocks/budget.mock";
-import { MOCK_CATEGORIES } from "../../shared/mocks/category.mock";
-import { MOCK_REQUESTS } from "../../shared/mocks/request.mock";
+import { Injectable, Inject } from "@angular/core";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { API_URL } from "../configs/api.token";
 import {
-  RevenueByCategory,
   RevenueByDate,
+  RevenueByCategory,
 } from "../../shared/models/reports.model";
-import {
-  createTextPdf,
-  formatReportCurrency,
-  formatReportDate,
-} from "../../shared/utils/pdf-text-report";
 
 @Injectable({
   providedIn: "root",
 })
 export class ReportService {
+  constructor(
+    private http: HttpClient,
+    @Inject(API_URL) private apiUrl: string,
+  ) {}
+
+  // RF019 - Receitas por Data (Dados Reais do Banco)
   getRevenueByDateData(
-    startDate: string,
-    endDate: string,
+    startDate?: string,
+    endDate?: string,
   ): Observable<RevenueByDate[]> {
-    const start = startDate ? new Date(`${startDate}T00:00:00`) : null;
+    let params = new HttpParams();
+    if (startDate) params = params.set("start", startDate);
+    if (endDate) params = params.set("end", endDate);
 
-    const end = endDate ? new Date(`${endDate}T23:59:59`) : null;
-
-    const dateMap = new Map<string, number>();
-
-    MOCK_BUDGETS.forEach((budget) => {
-      const budgetDate = new Date(budget.createdAt);
-
-      if (start && budgetDate < start) {
-        return;
-      }
-
-      if (end && budgetDate > end) {
-        return;
-      }
-
-      const dateStr = budget.createdAt.split("T")[0];
-      const current = dateMap.get(dateStr) || 0;
-
-      dateMap.set(dateStr, current + budget.total);
+    return this.http.get<RevenueByDate[]>(`${this.apiUrl}/reports/date`, {
+      params,
     });
-
-    const data = Array.from(dateMap.entries())
-      .map(([dateStr, total]) => ({
-        date: dateStr,
-        totalRevenue: total,
-      }))
-      .sort((first, second) => first.date.localeCompare(second.date));
-
-    return of(data);
   }
 
+  // RF020 - Receitas por Categoria (Dados Reais do Banco)
   getRevenueByCategoryData(): Observable<RevenueByCategory[]> {
-    const categoryMap = new Map<number, { name: string; total: number }>();
-
-    MOCK_CATEGORIES.forEach((category) => {
-      categoryMap.set(category.id, {
-        name: category.name,
-        total: 0,
-      });
-    });
-
-    MOCK_BUDGETS.forEach((budget) => {
-      const request = MOCK_REQUESTS.find(
-        (mockRequest) => mockRequest.id === budget.requestId,
-      );
-
-      if (request) {
-        const category = categoryMap.get(request.categoryId);
-
-        if (category) {
-          category.total += budget.total;
-        }
-      }
-    });
-
-    const data = Array.from(categoryMap.values())
-      .map((category) => ({
-        categoryName: category.name,
-        totalRevenue: category.total,
-      }))
-      .sort((first, second) => second.totalRevenue - first.totalRevenue);
-
-    return of(data);
+    return this.http.get<RevenueByCategory[]>(
+      `${this.apiUrl}/reports/category`,
+    );
   }
 
+  // Geração de PDF nativo via OpenPDF (Backend)
   generateRevenueByDateReport(
-    startDate: string,
-    endDate: string,
+    startDate?: string,
+    endDate?: string,
   ): Observable<Blob> {
-    return this.getRevenueByDateData(startDate, endDate).pipe(
-      map((data) => {
-        const periodLabel =
-          startDate && endDate
-            ? `${formatReportDate(startDate)} ate ${formatReportDate(endDate)}`
-            : "Periodo completo";
+    let params = new HttpParams();
+    if (startDate) params = params.set("start", startDate);
+    if (endDate) params = params.set("end", endDate);
 
-        const totalRevenue = data.reduce(
-          (total, item) => total + item.totalRevenue,
-          0,
-        );
-
-        const lines = [
-          `Periodo: ${periodLabel}`,
-          "",
-          "Data              Receita",
-          ...data.map(
-            (item) =>
-              `${formatReportDate(item.date).padEnd(16)} ${formatReportCurrency(item.totalRevenue)}`,
-          ),
-          "",
-          `Receita total: ${formatReportCurrency(totalRevenue)}`,
-        ];
-
-        return createTextPdf("Relatorio de Receitas por Data", lines);
-      }),
-    );
+    return this.http.get(`${this.apiUrl}/reports/date/pdf`, {
+      params,
+      responseType: "blob",
+    });
   }
 
+  // Geração de PDF nativo via OpenPDF (Backend)
   generateCategoriesReport(): Observable<Blob> {
-    return this.getRevenueByCategoryData().pipe(
-      map((data) => {
-        const totalRevenue = data.reduce(
-          (total, item) => total + item.totalRevenue,
-          0,
-        );
-
-        const lines = [
-          "Categoria                    Receita",
-          ...data.map(
-            (item) =>
-              `${item.categoryName.padEnd(24)} ${formatReportCurrency(item.totalRevenue)}`,
-          ),
-          "",
-          `Receita total: ${formatReportCurrency(totalRevenue)}`,
-        ];
-
-        return createTextPdf("Relatorio de Receitas por Categoria", lines);
-      }),
-    );
+    return this.http.get(`${this.apiUrl}/reports/category/pdf`, {
+      responseType: "blob",
+    });
   }
 }
