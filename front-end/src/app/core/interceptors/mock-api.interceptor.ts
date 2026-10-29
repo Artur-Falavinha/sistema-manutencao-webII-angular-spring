@@ -1,21 +1,21 @@
-import { handleMockAuthRequest } from './mock-auth.handlers';
-import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
-import { of, throwError } from 'rxjs';
-import { delay } from 'rxjs/operators';
-import { MOCK_STATUSES } from '../../shared/mocks/status.mock';
-import { MOCK_CATEGORIES } from '../../shared/mocks/category.mock';
-import { MOCK_REQUESTS } from '../../shared/mocks/request.mock';
-import { MOCK_CLIENTS } from '../../shared/mocks/client.mock';
-import { MOCK_EMPLOYEES } from '../../shared/mocks/employee.mock';
-import { MOCK_BUDGETS } from '../../shared/mocks/budget.mock';
-import { MOCK_REQUEST_HISTORY } from '../../shared/mocks/request-history.mock';
-import { Category } from '../../shared/models/category';
-import { Employee } from '../../shared/models/employee';
-import { Request } from '../../shared/models/request';
-import { Budget } from '../../shared/models/budget.model';
-import { MaintenanceRecordDTO } from '../../shared/models/maintenance-record.model';
-import { MaintenanceRequestResponseDTO } from '../../shared/models/maintenance-request.models';
-import { RequestHistory } from '../../shared/models/request-history';
+import { handleMockAuthRequest } from "./mock-auth.handlers";
+import { HttpInterceptorFn, HttpResponse } from "@angular/common/http";
+import { of, throwError } from "rxjs";
+import { delay } from "rxjs/operators";
+import { MOCK_STATUSES } from "../../shared/mocks/status.mock";
+import { MOCK_CATEGORIES } from "../../shared/mocks/category.mock";
+import { MOCK_REQUESTS } from "../../shared/mocks/request.mock";
+import { MOCK_CLIENTS } from "../../shared/mocks/client.mock";
+import { MOCK_EMPLOYEES } from "../../shared/mocks/employee.mock";
+import { MOCK_BUDGETS } from "../../shared/mocks/budget.mock";
+import { MOCK_REQUEST_HISTORY } from "../../shared/mocks/request-history.mock";
+import { Category } from "../../shared/models/category";
+import { Employee } from "../../shared/models/employee";
+import { Request } from "../../shared/models/request";
+import { Budget } from "../../shared/models/budget.model";
+import { MaintenanceRecordDTO } from "../../shared/models/maintenance-record.model";
+import { MaintenanceRequestResponseDTO } from "../../shared/models/maintenance-request.models";
+import { RequestHistory } from "../../shared/models/request-history";
 import {
   getClientsForAuth,
   getLoggedInClientId,
@@ -23,7 +23,7 @@ import {
   MockApiPersistedState,
   resetAllMockDataToSeed,
   saveMockApiState,
-} from './mock-api.persistence';
+} from "./mock-api.persistence";
 
 /**
  * SCAFFOLD TEMPORÁRIO — declarado no plano do semestre.
@@ -61,7 +61,7 @@ import {
  * services HTTP reais forem integrados (marco 08/10 para requests,
  * 15/10 para o restante do backend).
  */
-const MOCK_AUTH_SESSION_KEY = 'mock-auth-session';
+const MOCK_AUTH_SESSION_KEY = "mock-auth-session";
 
 function resolveLoggedInClientId(): number {
   return getLoggedInClientId() ?? 1;
@@ -75,14 +75,18 @@ function getLoggedInEmployeeId(): number | null {
 
   try {
     const user = JSON.parse(raw) as { userAccess?: string; id?: number };
-    return user.userAccess === 'employee' && user.id ? user.id : null;
+    return user.userAccess === "employee" && user.id ? user.id : null;
   } catch {
     return null;
   }
 }
 
 function getRequestStatusName(request: Request): string {
-  return request.status ?? MOCK_STATUSES.find((s) => s.id === request.statusId)?.nome ?? '';
+  return (
+    request.status ??
+    MOCK_STATUSES.find((s) => s.id === request.statusId)?.nome ??
+    ""
+  );
 }
 
 let mockRequests: Request[];
@@ -103,7 +107,7 @@ function seedMockApiStateFromFixtures(): void {
     Object.entries(MOCK_REQUEST_HISTORY).map(([requestId, entries]) => [
       Number(requestId),
       entries.map((entry) => ({ ...entry })),
-    ])
+    ]),
   );
 }
 
@@ -131,10 +135,12 @@ function applyMockApiSnapshot(state: MockApiPersistedState): void {
   mockBudgets = state.mockBudgets.map((budget) => ({ ...budget }));
   mockMaintenanceRecords = { ...state.mockMaintenanceRecords };
   mockRequestHistory = Object.fromEntries(
-    Object.entries(state.mockRequestHistory ?? {}).map(([requestId, entries]) => [
-      Number(requestId),
-      entries.map((entry) => ({ ...entry })),
-    ])
+    Object.entries(state.mockRequestHistory ?? {}).map(
+      ([requestId, entries]) => [
+        Number(requestId),
+        entries.map((entry) => ({ ...entry })),
+      ],
+    ),
   );
 }
 
@@ -168,7 +174,7 @@ export function resetMockApiState(): void {
 /** Limpa persistência mock + sessão e recarrega a aplicação na seed inicial. */
 export function resetMockDataToSeed(): void {
   resetAllMockDataToSeed();
-  window.location.href = '/login';
+  window.location.href = "/login";
   window.location.reload();
 }
 
@@ -179,15 +185,21 @@ function ensureMockApiStateInitialized(): void {
 }
 
 function getClientName(clientId: number): string {
-  return getClientsForAuth().find((client) => client.id === clientId)?.name ?? 'Cliente';
+  return (
+    getClientsForAuth().find((client) => client.id === clientId)?.name ??
+    "Cliente"
+  );
 }
 
 function getEmployeeName(employeeId: number | null | undefined): string {
   if (!employeeId) {
-    return 'Funcionário';
+    return "Funcionário";
   }
 
-  return mockEmployees.find((employee) => employee.id === employeeId)?.name ?? 'Funcionário';
+  return (
+    mockEmployees.find((employee) => employee.id === employeeId)?.name ??
+    "Funcionário"
+  );
 }
 
 function getLoggedInUserName(): string {
@@ -197,16 +209,20 @@ function getLoggedInUserName(): string {
   }
 
   try {
-    const user = JSON.parse(raw) as { userAccess?: string; id?: number; name?: string };
+    const user = JSON.parse(raw) as {
+      userAccess?: string;
+      id?: number;
+      name?: string;
+    };
     if (user.name) {
       return user.name;
     }
 
-    if (user.userAccess === 'employee' && user.id) {
+    if (user.userAccess === "employee" && user.id) {
       return getEmployeeName(user.id);
     }
 
-    if (user.userAccess === 'client' && user.id) {
+    if (user.userAccess === "client" && user.id) {
       return getClientName(user.id);
     }
   } catch {
@@ -217,7 +233,9 @@ function getLoggedInUserName(): string {
 }
 
 function nextHistoryId(): number {
-  const allIds = Object.values(mockRequestHistory).flat().map((entry) => entry.id);
+  const allIds = Object.values(mockRequestHistory)
+    .flat()
+    .map((entry) => entry.id);
   return Math.max(0, ...allIds) + 1;
 }
 
@@ -225,7 +243,7 @@ function addHistoryEntry(
   requestId: number,
   title: string,
   userName: string,
-  statusName: string
+  statusName: string,
 ): void {
   const status = MOCK_STATUSES.find((current) => current.nome === statusName);
   const entry: RequestHistory = {
@@ -234,7 +252,7 @@ function addHistoryEntry(
     occurrenceDate: new Date().toISOString(),
     userName,
     statusName,
-    statusColor: status?.cor ?? '',
+    statusColor: status?.cor ?? "",
   };
 
   mockRequestHistory = {
@@ -255,20 +273,29 @@ function toResponseDTO(request: Request): MaintenanceRequestResponseDTO {
     equipmentName: request.equipmentName,
     defectDescription: request.equipmentDescription,
     requestDate: request.requestDate.toISOString(),
-    statusName: status?.nome ?? '',
-    statusColor: status?.cor ?? '',
-    categoryName: category?.name ?? '',
-    clientName: client?.name ?? '',
+    statusName: status?.nome ?? "",
+    statusColor: status?.cor ?? "",
+    categoryName: category?.name ?? "",
+    clientName: client?.name ?? "",
   };
 }
 
-function updateRequestStatus(id: number, statusName: string, rejectionReason?: string): void {
+function updateRequestStatus(
+  id: number,
+  statusName: string,
+  rejectionReason?: string,
+): void {
   const status = MOCK_STATUSES.find((s) => s.nome === statusName);
 
   mockRequests = mockRequests.map((request) =>
     request.id === id
-      ? { ...request, statusId: status?.id ?? request.statusId, status: statusName, rejectionReason }
-      : request
+      ? {
+          ...request,
+          statusId: status?.id ?? request.statusId,
+          status: statusName,
+          rejectionReason,
+        }
+      : request,
   );
 }
 
@@ -278,63 +305,99 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
   if (authResponse) {
     return authResponse;
   }
-
+  if (req.url.includes("/api/reports")) {
+    return next(req);
+  }
   const redirectMatch = req.url.match(/\/requests\/employee\/(\d+)\/redirect$/);
-  const maintenanceMatch = req.url.match(/\/requests\/employee\/(\d+)\/maintenance$/);
+  const maintenanceMatch = req.url.match(
+    /\/requests\/employee\/(\d+)\/maintenance$/,
+  );
   const finalizeMatch = req.url.match(/\/requests\/employee\/(\d+)\/finalize$/);
 
-  if (req.method === 'GET') {
-    if (req.url.endsWith('/status-enum')) {
-      return of(new HttpResponse({ status: 200, body: MOCK_STATUSES })).pipe(delay(150));
+  if (req.method === "GET") {
+    if (req.url.endsWith("/status-enum")) {
+      return of(new HttpResponse({ status: 200, body: MOCK_STATUSES })).pipe(
+        delay(150),
+      );
     }
 
-    if (req.url.endsWith('/categories')) {
-      return of(new HttpResponse({ status: 200, body: mockCategories })).pipe(delay(150));
+    if (req.url.endsWith("/categories")) {
+      return of(new HttpResponse({ status: 200, body: mockCategories })).pipe(
+        delay(150),
+      );
     }
 
-    if (req.url.endsWith('/employees')) {
-      return of(new HttpResponse({ status: 200, body: mockEmployees })).pipe(delay(150));
+    if (req.url.endsWith("/employees")) {
+      return of(new HttpResponse({ status: 200, body: mockEmployees })).pipe(
+        delay(150),
+      );
     }
 
-    const employeeId = getResourceId(req.url, '/employees/');
+    const employeeId = getResourceId(req.url, "/employees/");
     if (employeeId !== null) {
-      return of(new HttpResponse({ status: 200, body: mockEmployees.find((employee) => employee.id === employeeId) })).pipe(delay(150));
+      return of(
+        new HttpResponse({
+          status: 200,
+          body: mockEmployees.find((employee) => employee.id === employeeId),
+        }),
+      ).pipe(delay(150));
     }
   }
 
-  if (req.method === 'POST') {
+  if (req.method === "POST") {
     if (redirectMatch) {
       const requestId = Number(redirectMatch[1]);
-      const targetEmployeeId = Number(req.params.get('targetEmployeeId'));
+      const targetEmployeeId = Number(req.params.get("targetEmployeeId"));
       const loggedEmployeeId = getLoggedInEmployeeId();
       const request = mockRequests.find((r) => r.id === requestId);
 
       if (!request) {
-        return of(new HttpResponse({ status: 404, body: { message: 'Solicitação não encontrada.' } })).pipe(delay(150));
+        return of(
+          new HttpResponse({
+            status: 404,
+            body: { message: "Solicitação não encontrada." },
+          }),
+        ).pipe(delay(150));
       }
 
       if (!loggedEmployeeId) {
-        return of(new HttpResponse({ status: 403, body: { message: 'Funcionário não autenticado.' } })).pipe(delay(150));
+        return of(
+          new HttpResponse({
+            status: 403,
+            body: { message: "Funcionário não autenticado." },
+          }),
+        ).pipe(delay(150));
       }
 
       if (targetEmployeeId === loggedEmployeeId) {
         return of(
-          new HttpResponse({ status: 403, body: { message: 'Não é permitido redirecionar para si mesmo.' } })
+          new HttpResponse({
+            status: 403,
+            body: { message: "Não é permitido redirecionar para si mesmo." },
+          }),
         ).pipe(delay(150));
       }
 
       if (!mockEmployees.some((employee) => employee.id === targetEmployeeId)) {
-        return of(new HttpResponse({ status: 404, body: { message: 'Funcionário destino não encontrado.' } })).pipe(delay(150));
+        return of(
+          new HttpResponse({
+            status: 404,
+            body: { message: "Funcionário destino não encontrado." },
+          }),
+        ).pipe(delay(150));
       }
 
       const statusName = getRequestStatusName(request);
 
-      if (statusName !== 'APROVADA' && statusName !== 'REDIRECIONADA') {
+      if (statusName !== "APROVADA" && statusName !== "REDIRECIONADA") {
         return of(
           new HttpResponse({
             status: 403,
-            body: { message: 'Redirecionamento só é permitido após aprovação do orçamento.' },
-          })
+            body: {
+              message:
+                "Redirecionamento só é permitido após aprovação do orçamento.",
+            },
+          }),
         ).pipe(delay(150));
       }
 
@@ -342,33 +405,47 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
         return of(
           new HttpResponse({
             status: 403,
-            body: { message: 'Não é possível redirecionar após registrar a manutenção.' },
-          })
+            body: {
+              message:
+                "Não é possível redirecionar após registrar a manutenção.",
+            },
+          }),
         ).pipe(delay(150));
       }
 
-      if (statusName === 'REDIRECIONADA' && request.employeeId !== loggedEmployeeId) {
+      if (
+        statusName === "REDIRECIONADA" &&
+        request.employeeId !== loggedEmployeeId
+      ) {
         return of(
           new HttpResponse({
             status: 403,
-            body: { message: 'Somente o funcionário destino pode redirecionar esta solicitação.' },
-          })
+            body: {
+              message:
+                "Somente o funcionário destino pode redirecionar esta solicitação.",
+            },
+          }),
         ).pipe(delay(150));
       }
 
       mockRequests = mockRequests.map((r) =>
-        r.id === requestId ? { ...r, employeeId: targetEmployeeId } : r
+        r.id === requestId ? { ...r, employeeId: targetEmployeeId } : r,
       );
-      updateRequestStatus(requestId, 'REDIRECIONADA');
+      updateRequestStatus(requestId, "REDIRECIONADA");
       addHistoryEntry(
         requestId,
-        'Solicitação redirecionada',
+        "Solicitação redirecionada",
         getLoggedInUserName(),
-        'REDIRECIONADA'
+        "REDIRECIONADA",
       );
 
       const updated = mockRequests.find((r) => r.id === requestId);
-      return of(new HttpResponse({ status: 200, body: updated ? toResponseDTO(updated) : null })).pipe(delay(150));
+      return of(
+        new HttpResponse({
+          status: 200,
+          body: updated ? toResponseDTO(updated) : null,
+        }),
+      ).pipe(delay(150));
     }
 
     if (maintenanceMatch) {
@@ -377,21 +454,34 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
       const request = mockRequests.find((r) => r.id === requestId);
 
       if (!request) {
-        return of(new HttpResponse({ status: 404, body: { message: 'Solicitação não encontrada.' } })).pipe(delay(150));
+        return of(
+          new HttpResponse({
+            status: 404,
+            body: { message: "Solicitação não encontrada." },
+          }),
+        ).pipe(delay(150));
       }
 
       const statusName = getRequestStatusName(request);
       const loggedEmployeeId = getLoggedInEmployeeId();
       const existing = mockMaintenanceRecords[requestId];
-      const allowedForCreate = statusName === 'APROVADA' || statusName === 'REDIRECIONADA';
-      const allowedForUpdate = statusName === 'APROVADA' || statusName === 'ARRUMADA';
+      const allowedForCreate =
+        statusName === "APROVADA" || statusName === "REDIRECIONADA";
+      const allowedForUpdate =
+        statusName === "APROVADA" || statusName === "ARRUMADA";
 
-      if (statusName === 'REDIRECIONADA' && request.employeeId !== loggedEmployeeId) {
+      if (
+        statusName === "REDIRECIONADA" &&
+        request.employeeId !== loggedEmployeeId
+      ) {
         return of(
           new HttpResponse({
             status: 403,
-            body: { message: 'Somente o funcionário destino pode registrar a manutenção.' },
-          })
+            body: {
+              message:
+                "Somente o funcionário destino pode registrar a manutenção.",
+            },
+          }),
         ).pipe(delay(150));
       }
 
@@ -399,8 +489,11 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
         return of(
           new HttpResponse({
             status: 403,
-            body: { message: 'Manutenção só pode ser registrada após aprovação do orçamento.' },
-          })
+            body: {
+              message:
+                "Manutenção só pode ser registrada após aprovação do orçamento.",
+            },
+          }),
         ).pipe(delay(150));
       }
 
@@ -408,8 +501,10 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
         return of(
           new HttpResponse({
             status: 403,
-            body: { message: 'Não é permitido alterar a manutenção neste status.' },
-          })
+            body: {
+              message: "Não é permitido alterar a manutenção neste status.",
+            },
+          }),
         ).pipe(delay(150));
       }
 
@@ -424,17 +519,19 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
       };
 
       if (!existing) {
-        updateRequestStatus(requestId, 'ARRUMADA');
+        updateRequestStatus(requestId, "ARRUMADA");
         addHistoryEntry(
           requestId,
-          'Manutenção efetuada',
+          "Manutenção efetuada",
           getLoggedInUserName(),
-          'ARRUMADA'
+          "ARRUMADA",
         );
 
         if (loggedEmployeeId) {
           mockRequests = mockRequests.map((current) =>
-            current.id === requestId ? { ...current, employeeId: loggedEmployeeId } : current
+            current.id === requestId
+              ? { ...current, employeeId: loggedEmployeeId }
+              : current,
           );
         }
       } else {
@@ -442,71 +539,103 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
       }
 
       const updated = mockRequests.find((r) => r.id === requestId);
-      return of(new HttpResponse({ status: 200, body: updated ? toResponseDTO(updated) : null })).pipe(delay(150));
+      return of(
+        new HttpResponse({
+          status: 200,
+          body: updated ? toResponseDTO(updated) : null,
+        }),
+      ).pipe(delay(150));
     }
 
     if (finalizeMatch) {
       const requestId = Number(finalizeMatch[1]);
-      updateRequestStatus(requestId, 'FINALIZADA');
+      updateRequestStatus(requestId, "FINALIZADA");
       addHistoryEntry(
         requestId,
-        'Solicitação Finalizada',
+        "Solicitação Finalizada",
         getLoggedInUserName(),
-        'FINALIZADA'
+        "FINALIZADA",
       );
 
       const updated = mockRequests.find((r) => r.id === requestId);
-      return of(new HttpResponse({ status: 200, body: updated ? toResponseDTO(updated) : null })).pipe(delay(150));
+      return of(
+        new HttpResponse({
+          status: 200,
+          body: updated ? toResponseDTO(updated) : null,
+        }),
+      ).pipe(delay(150));
     }
   }
 
-  if (req.url.includes('/categories')) {
-    if (req.method === 'POST') {
-      const category = { ...(req.body as Category), id: nextId(mockCategories) };
+  if (req.url.includes("/categories")) {
+    if (req.method === "POST") {
+      const category = {
+        ...(req.body as Category),
+        id: nextId(mockCategories),
+      };
       mockCategories = [...mockCategories, category];
       persistMockApiState();
-      return of(new HttpResponse({ status: 201, body: category })).pipe(delay(150));
+      return of(new HttpResponse({ status: 201, body: category })).pipe(
+        delay(150),
+      );
     }
 
-    if (req.method === 'PUT') {
+    if (req.method === "PUT") {
       const category = req.body as Category;
-      mockCategories = mockCategories.map((current) => current.id === category.id ? category : current);
+      mockCategories = mockCategories.map((current) =>
+        current.id === category.id ? category : current,
+      );
       persistMockApiState();
-      return of(new HttpResponse({ status: 200, body: category })).pipe(delay(150));
+      return of(new HttpResponse({ status: 200, body: category })).pipe(
+        delay(150),
+      );
     }
 
-    if (req.method === 'DELETE') {
-      const categoryId = getResourceId(req.url, '/categories/');
-      mockCategories = mockCategories.filter((category) => category.id !== categoryId);
+    if (req.method === "DELETE") {
+      const categoryId = getResourceId(req.url, "/categories/");
+      mockCategories = mockCategories.filter(
+        (category) => category.id !== categoryId,
+      );
       persistMockApiState();
       return of(new HttpResponse({ status: 204, body: null })).pipe(delay(150));
     }
   }
 
-  if (req.url.includes('/employees')) {
-    if (req.method === 'POST') {
+  if (req.url.includes("/employees")) {
+    if (req.method === "POST") {
       const employee = { ...(req.body as Employee), id: nextId(mockEmployees) };
       mockEmployees = [...mockEmployees, employee];
       persistMockApiState();
-      return of(new HttpResponse({ status: 201, body: employee })).pipe(delay(150));
+      return of(new HttpResponse({ status: 201, body: employee })).pipe(
+        delay(150),
+      );
     }
 
-    if (req.method === 'PUT') {
+    if (req.method === "PUT") {
       const employee = req.body as Employee;
-      mockEmployees = mockEmployees.map((current) => current.id === employee.id ? employee : current);
+      mockEmployees = mockEmployees.map((current) =>
+        current.id === employee.id ? employee : current,
+      );
       persistMockApiState();
-      return of(new HttpResponse({ status: 200, body: employee })).pipe(delay(150));
+      return of(new HttpResponse({ status: 200, body: employee })).pipe(
+        delay(150),
+      );
     }
 
-    if (req.method === 'DELETE') {
-      const employeeId = getResourceId(req.url, '/employees/');
+    if (req.method === "DELETE") {
+      const employeeId = getResourceId(req.url, "/employees/");
       const loggedEmployeeId = getLoggedInEmployeeId();
 
       if (loggedEmployeeId && employeeId === loggedEmployeeId) {
-        return throwError(() => ({ status: 400, error: 'Não é permitido remover o funcionário autenticado.' }));
+        return throwError(() => ({
+          status: 400,
+          error: "Não é permitido remover o funcionário autenticado.",
+        }));
       }
 
-      mockEmployees = mockEmployees.filter((employee) => employee.id !== employeeId);
+      mockEmployees = mockEmployees.filter(
+        (employee) => employee.id !== employeeId,
+      );
       persistMockApiState();
       return of(new HttpResponse({ status: 204, body: null })).pipe(delay(150));
     }
@@ -517,7 +646,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
 
 function getResourceId(url: string, resourcePath: string): number | null {
   const value = url.split(resourcePath)[1];
-  if (!value || value.includes('/')) {
+  if (!value || value.includes("/")) {
     return null;
   }
 
