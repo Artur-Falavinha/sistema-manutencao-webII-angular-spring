@@ -3,6 +3,7 @@ import { ReportsPageComponent } from "./reports-page.component";
 import { ReportService } from "../../../../core/services/report.service";
 import { ToastService } from "../../../../core/services/toast.service";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { provideNativeDateAdapter } from "@angular/material/core";
 import { of } from "rxjs";
 
 describe("ReportsPageComponent", () => {
@@ -10,7 +11,7 @@ describe("ReportsPageComponent", () => {
   let fixture: ComponentFixture<ReportsPageComponent>;
 
   beforeEach(async () => {
-    // Mock do serviço de relatórios para evitar chamadas HTTP reais no ngOnInit
+    // Mock do serviço de relatórios para evitar chamadas HTTP reais no ngOnInit.
     const reportServiceMock = {
       getRevenueByDateData: jasmine
         .createSpy("getRevenueByDateData")
@@ -35,6 +36,7 @@ describe("ReportsPageComponent", () => {
     await TestBed.configureTestingModule({
       imports: [ReportsPageComponent, BrowserAnimationsModule],
       providers: [
+        provideNativeDateAdapter(),
         { provide: ReportService, useValue: reportServiceMock },
         { provide: ToastService, useValue: toastServiceMock },
       ],
@@ -42,7 +44,7 @@ describe("ReportsPageComponent", () => {
 
     fixture = TestBed.createComponent(ReportsPageComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // Aciona o ngOnInit
+    fixture.detectChanges();
   });
 
   it("deve ser instanciado corretamente", () => {
