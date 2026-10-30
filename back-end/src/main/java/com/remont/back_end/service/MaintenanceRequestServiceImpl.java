@@ -15,8 +15,10 @@ import com.remont.back_end.repository.ClientRepository;
 import com.remont.back_end.repository.EmployeeRepository;
 import com.remont.back_end.repository.MaintenanceRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -103,7 +105,7 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
         MaintenanceRequest request = findRequestById(requestId);
 
         if (!request.getClient().getId().equals(clientId)) {
-            throw new SecurityException("Acesso negado a esta solicitação.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso negado a esta solicitação.");
         }
         
         List<RequestHistoryDTO> historyList = historyService.getHistoryByRequestId(requestId);
@@ -163,11 +165,11 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
         
 
         if (!request.getClient().getId().equals(clientId)) {
-            throw new SecurityException("Você não tem permissão para aprovar esta solicitação.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não tem permissão para aprovar esta solicitação.");
         }
         
         if (request.getStatus() != StatusEnum.ORCADA) {
-            throw new IllegalStateException("A solicitação não está em fase de aprovação.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "A solicitação não está em fase de aprovação.");
         }
 
         request.setStatus(StatusEnum.APROVADA);
@@ -187,11 +189,11 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
 
 
         if (!request.getClient().getId().equals(clientId)) {
-            throw new SecurityException("Você não tem permissão para rejeitar esta solicitação.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não tem permissão para rejeitar esta solicitação.");
         }
 
         if (request.getStatus() != StatusEnum.ORCADA) {
-            throw new IllegalStateException("A solicitação não está em fase de aprovação.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "A solicitação não está em fase de aprovação.");
         }
 
         request.setStatus(StatusEnum.REJEITADA);
@@ -212,11 +214,11 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
 
 
         if (!request.getClient().getId().equals(clientId)) {
-            throw new SecurityException("Você não tem permissão para resgatar esta solicitação.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não tem permissão para resgatar esta solicitação.");
         }
 
         if (request.getStatus() != StatusEnum.REJEITADA) {
-            throw new IllegalStateException("Apenas solicitações rejeitadas podem ser resgatadas.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Apenas solicitações rejeitadas podem ser resgatadas.");
         }
 
         request.setStatus(StatusEnum.APROVADA);
@@ -312,11 +314,11 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
         MaintenanceRequest request = findRequestById(requestId);
 
         if (!request.getClient().getId().equals(clientId)) {
-            throw new SecurityException("Você não tem permissão para pagar esta solicitação.");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não tem permissão para pagar esta solicitação.");
         }
 
         if (request.getStatus() != StatusEnum.ARRUMADA) {
-            throw new IllegalStateException("O serviço precisa estar ARRUMADO para ser pago.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "O serviço precisa estar ARRUMADO para ser pago.");
         }
 
         request.setStatus(StatusEnum.PAGA);
