@@ -8,10 +8,13 @@ import com.remont.back_end.repository.CategoryEquipmentRepository;
 import com.remont.back_end.repository.ClientRepository;
 import com.remont.back_end.repository.MaintenanceRequestRepository;
 import com.remont.back_end.repository.RequestHistoryRepository;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -88,10 +91,8 @@ class ClientTransitionRulesTest {
         for (StatusEnum status : List.of(StatusEnum.ABERTA, StatusEnum.APROVADA, StatusEnum.REJEITADA, StatusEnum.PAGA)) {
             Long id = requestWithStatus(status);
 
-            assertThatThrownBy(() -> maintenanceRequestService.approveBudget(id, CLIENT_ID))
-                    .isInstanceOf(IllegalStateException.class);
-            assertThatThrownBy(() -> maintenanceRequestService.rejectBudget(id, rejection("Motivo"), CLIENT_ID))
-                    .isInstanceOf(IllegalStateException.class);
+            assertRejected(HttpStatus.CONFLICT, () -> maintenanceRequestService.approveBudget(id, CLIENT_ID));
+            assertRejected(HttpStatus.CONFLICT, () -> maintenanceRequestService.rejectBudget(id, rejection("Motivo"), CLIENT_ID));
             assertThat(requestRepository.findById(id).orElseThrow().getStatus()).isEqualTo(status);
         }
     }
@@ -101,8 +102,7 @@ class ClientTransitionRulesTest {
         for (StatusEnum status : List.of(StatusEnum.ORCADA, StatusEnum.APROVADA, StatusEnum.ARRUMADA)) {
             Long id = requestWithStatus(status);
 
-            assertThatThrownBy(() -> maintenanceRequestService.rescueRequest(id, CLIENT_ID))
-                    .isInstanceOf(IllegalStateException.class);
+            assertRejected(HttpStatus.CONFLICT, () -> maintenanceRequestService.rescueRequest(id, CLIENT_ID));
             assertThat(requestRepository.findById(id).orElseThrow().getStatus()).isEqualTo(status);
         }
     }
@@ -112,8 +112,7 @@ class ClientTransitionRulesTest {
         for (StatusEnum status : List.of(StatusEnum.ORCADA, StatusEnum.APROVADA, StatusEnum.PAGA, StatusEnum.FINALIZADA)) {
             Long id = requestWithStatus(status);
 
-            assertThatThrownBy(() -> maintenanceRequestService.payRequest(id, CLIENT_ID))
-                    .isInstanceOf(IllegalStateException.class);
+            assertRejected(HttpStatus.CONFLICT, () -> maintenanceRequestService.payRequest(id, CLIENT_ID));
             assertThat(requestRepository.findById(id).orElseThrow().getStatus()).isEqualTo(status);
         }
     }
@@ -124,14 +123,10 @@ class ClientTransitionRulesTest {
         Long rejected = requestWithStatus(StatusEnum.REJEITADA);
         Long fixed = requestWithStatus(StatusEnum.ARRUMADA);
 
-        assertThatThrownBy(() -> maintenanceRequestService.approveBudget(budgeted, OTHER_CLIENT_ID))
-                .isInstanceOf(SecurityException.class);
-        assertThatThrownBy(() -> maintenanceRequestService.rejectBudget(budgeted, rejection("Motivo"), OTHER_CLIENT_ID))
-                .isInstanceOf(SecurityException.class);
-        assertThatThrownBy(() -> maintenanceRequestService.rescueRequest(rejected, OTHER_CLIENT_ID))
-                .isInstanceOf(SecurityException.class);
-        assertThatThrownBy(() -> maintenanceRequestService.payRequest(fixed, OTHER_CLIENT_ID))
-                .isInstanceOf(SecurityException.class);
+        assertRejected(HttpStatus.FORBIDDEN, () -> maintenanceRequestService.approveBudget(budgeted, OTHER_CLIENT_ID));
+        assertRejected(HttpStatus.FORBIDDEN, () -> maintenanceRequestService.rejectBudget(budgeted, rejection("Motivo"), OTHER_CLIENT_ID));
+        assertRejected(HttpStatus.FORBIDDEN, () -> maintenanceRequestService.rescueRequest(rejected, OTHER_CLIENT_ID));
+        assertRejected(HttpStatus.FORBIDDEN, () -> maintenanceRequestService.payRequest(fixed, OTHER_CLIENT_ID));
     }
 
     private Long requestWithStatus(StatusEnum status) {
@@ -160,5 +155,10 @@ class ClientTransitionRulesTest {
         assertThat(last.getStatus()).isEqualTo(expected);
         assertThat(last.getOccurrenceDate()).isNotNull();
         assertThat(last.getUser().getId()).isEqualTo(CLIENT_ID);
+    }
+
+    private static void assertRejected(HttpStatus expected, ThrowingCallable call) {
+        assertThatThrownBy(call).isInstanceOfSatisfying(ResponseStatusException.class,
+                exception -> assertThat(exception.getStatusCode()).isEqualTo(expected));
     }
 }
