@@ -147,7 +147,7 @@ public class MaintenanceRequestController {
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<MaintenanceRequestResponseDTO> executeMaintenance(
             @PathVariable Long id, 
-            @RequestBody MaintenanceRecordDTO dto, 
+            @Valid @RequestBody MaintenanceRecordDTO dto, 
             Authentication authentication) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         return ResponseEntity.ok(maintenanceRequestService.executeMaintenance(id, dto, userPrincipal.getId()));
