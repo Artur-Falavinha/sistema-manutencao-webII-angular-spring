@@ -131,17 +131,18 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
     @Transactional
     public MaintenanceRequestResponseDTO createBudget(Long requestId, BudgetDTO budgetDto, Long employeeId) {
         MaintenanceRequest request = findRequestById(requestId);
-        Employee employee = employeeRepository.findById(Objects.requireNonNull(employeeId))
-                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado"));
+        Employee employee = findEmployeeById(employeeId, "Funcionário não encontrado");
 
-        if (request.getStatus() != StatusEnum.ABERTA) {
-            throw new IllegalStateException("A solicitação não está aberta para orçamento.");
+        requireStatus(request, "A solicitação não está aberta para orçamento.", StatusEnum.ABERTA);
+
+        if (budgetDto.getServiceIds() == null || budgetDto.getServiceIds().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Selecione ao menos um serviço para o orçamento.");
         }
 
         if (request.getAssignedEmployee() == null) {
             request.setAssignedEmployee(employee);
-        } else if (!request.getAssignedEmployee().getId().equals(employee.getId())) {
-            throw new SecurityException("Você não é o funcionário designado para esta solicitação.");
+        } else {
+            requireAssignedEmployee(request, employee);
         }
 
         budgetDto.setRequestId(requestId);
@@ -237,17 +238,12 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
     @Transactional
     public MaintenanceRequestResponseDTO executeMaintenance(Long requestId, MaintenanceRecordDTO dto, Long employeeId) {
         MaintenanceRequest request = findRequestById(requestId);
-        Employee employee = employeeRepository.findById(Objects.requireNonNull(employeeId))
-                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado"));
+        Employee employee = findEmployeeById(employeeId, "Funcionário não encontrado");
 
-
-        if (request.getStatus() != StatusEnum.APROVADA) {
-            throw new IllegalStateException("Solicitação não está aprovada para efetuar manutenção.");
-        }
-
-        if (request.getAssignedEmployee() == null || !request.getAssignedEmployee().getId().equals(employee.getId())) {
-            throw new SecurityException("Você não é o funcionário designado para esta solicitação.");
-        }
+        // REDIRECIONADA também libera a manutenção: é o estado em que o novo responsável recebe a solicitação.
+        requireStatus(request, "Solicitação não está aprovada para efetuar manutenção.",
+                StatusEnum.APROVADA, StatusEnum.REDIRECIONADA);
+        requireAssignedEmployee(request, employee);
 
         MaintenanceRecord record = new MaintenanceRecord();
         
@@ -278,22 +274,25 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
     public MaintenanceRequestResponseDTO redirectMaintenance(Long requestId, Long targetEmployeeId, Long employeeId) {
         
         MaintenanceRequest request = findRequestById(requestId);
-        Employee redirectorEmployee = employeeRepository.findById(Objects.requireNonNull(employeeId))
-                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado"));
-        
-        Employee targetEmployee = employeeRepository.findById(Objects.requireNonNull(targetEmployeeId))
-                .orElseThrow(() -> new ResourceNotFoundException("Funcionário destino não encontrado"));
+        Employee redirectorEmployee = findEmployeeById(employeeId, "Funcionário não encontrado");
+        Employee targetEmployee = findEmployeeById(targetEmployeeId, "Funcionário destino não encontrado");
+
+        if (!targetEmployee.isActive()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "O funcionário destino está inativo.");
+        }
 
         Employee currentEmployee = request.getAssignedEmployee();
 
         if (currentEmployee != null) {
 
-            if (!currentEmployee.getId().equals(redirectorEmployee.getId())) {
-                throw new SecurityException("Você não é o funcionário designado para esta solicitação.");
-            }
-            
+            requireAssignedEmployee(request, redirectorEmployee);
+
+            // Depois da manutenção o redirecionamento apagaria a etapa real (ARRUMADA, PAGA, FINALIZADA).
+            requireStatus(request, "A solicitação só pode ser redirecionada antes da manutenção.",
+                    StatusEnum.APROVADA, StatusEnum.REDIRECIONADA);
+
             if (currentEmployee.getId().equals(targetEmployee.getId())) {
-                throw new IllegalArgumentException("O funcionário já é o responsável por esta solicitação.");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "O funcionário já é o responsável por esta solicitação.");
             }
             
             request.setStatus(StatusEnum.REDIRECIONADA);
@@ -332,12 +331,9 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
     @Transactional
     public MaintenanceRequestResponseDTO finalizeRequest(Long requestId, Long employeeId) {
         MaintenanceRequest request = findRequestById(requestId);
-        Employee employee = employeeRepository.findById(Objects.requireNonNull(employeeId))
-                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado"));
+        Employee employee = findEmployeeById(employeeId, "Funcionário não encontrado");
 
-        if (request.getStatus() != StatusEnum.PAGA) {
-            throw new IllegalStateException("O serviço precisa estar PAGO para ser finalizado.");
-        }
+        requireStatus(request, "O serviço precisa estar PAGO para ser finalizado.", StatusEnum.PAGA);
 
         request.setStatus(StatusEnum.FINALIZADA);
 
@@ -352,6 +348,30 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
     private MaintenanceRequest findRequestById(Long id) {
         return maintenanceRequestRepository.findById(Objects.requireNonNull(id))
                 .orElseThrow(() -> new ResourceNotFoundException("Solicitação não encontrada id=" + id));
+    }
+
+    private Employee findEmployeeById(Long id, String notFoundMessage) {
+        return employeeRepository.findById(Objects.requireNonNull(id))
+                .orElseThrow(() -> new ResourceNotFoundException(notFoundMessage));
+    }
+
+    /**
+     * Recusa com 409 quando o estado atual não está entre os permitidos para a ação.
+     */
+    private void requireStatus(MaintenanceRequest request, String message, StatusEnum... allowed) {
+        if (!List.of(allowed).contains(request.getStatus())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, message);
+        }
+    }
+
+    /**
+     * Recusa com 403 quando quem pede não é o funcionário designado para a solicitação.
+     */
+    private void requireAssignedEmployee(MaintenanceRequest request, Employee employee) {
+        Employee assigned = request.getAssignedEmployee();
+        if (assigned == null || !assigned.getId().equals(employee.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você não é o funcionário designado para esta solicitação.");
+        }
     }
 
 
