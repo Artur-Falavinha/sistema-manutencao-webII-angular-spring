@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, TemplateRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -47,7 +47,6 @@ export class BudgetDeliveryComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private dialog = inject(MatDialog);
-  private cdr = inject(ChangeDetectorRef);
   private toast = inject(ToastService);
   private authService = inject(AuthService);
   private requestService = inject(MaintenanceRequestService);
@@ -57,39 +56,34 @@ export class BudgetDeliveryComponent implements OnInit {
   readonly MANUTENCAO_MIN_LENGTH = 10;
   readonly MANUTENCAO_MAX_LENGTH = 500;
 
-  // Estado da tela
-  request!: EmployeeRequestDetailDTO;
-  isLoading = true;
+  // Estado da tela: dado que chega do back e aparece na tela fica em signal
+  request = signal<EmployeeRequestDetailDTO | null>(null);
+  isLoading = signal(true);
+  funcionariosDisponiveis = signal<Employee[]>([]);
+  servicosDisponiveis = signal<ServiceItemDTO[]>([]);
+  responsavel = signal<Employee | null>(null);
+  dataAtribuicao = signal('');
   selectedTab = 0;
-  funcionariosDisponiveis: Employee[] = [];
-  servicosDisponiveis: ServiceItemDTO[] = [];
 
-  responsavel: Employee | null = null;
-  dataAtribuicao = '';
-  temOrcamento = false;
-  valorOrcamento = 0;
-  servicosInclusos = '';
-  temManutencao = false;
-  descricaoManutencao = '';
-  orientacaoCliente = 'N/A';
+  // Valores derivados da solicitação: recalculam sozinhos a cada request.set()
+  temOrcamento = computed(() => !!this.request()?.budgets?.length);
+  valorOrcamento = computed(() => this.request()?.budgets?.[0]?.total ?? 0);
+  servicosInclusos = computed(() => this.request()?.budgets?.[0]?.services ?? '');
+  temManutencao = computed(() => !!this.request()?.maintenanceRecord);
+  descricaoManutencao = computed(() => this.request()?.maintenanceRecord?.maintenanceDescription ?? '');
+  orientacaoCliente = computed(() => this.request()?.maintenanceRecord?.clientGuidelines ?? 'N/A');
 
   // Campos dos diálogos
   selectedFuncionario: Employee | null | undefined = undefined;
   servicosSelecionados: ServiceItemDTO[] = [];
-  valorTotal = 0;
+  valorTotal = signal(0);
   manutencaoDescricaoInput = '';
   manutencaoOrientacaoInput = '';
   private dialogRef?: MatDialogRef<unknown>;
 
   ngOnInit(): void {
-    this.employeeService.getEmployees().subscribe(emps => {
-      this.funcionariosDisponiveis = emps;
-      this.cdr.markForCheck();
-    });
-    this.serviceItemService.getAllServices().subscribe(servs => {
-      this.servicosDisponiveis = servs;
-      this.cdr.markForCheck();
-    });
+    this.employeeService.getEmployees().subscribe(emps => this.funcionariosDisponiveis.set(emps));
+    this.serviceItemService.getAllServices().subscribe(servs => this.servicosDisponiveis.set(servs));
 
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -97,33 +91,20 @@ export class BudgetDeliveryComponent implements OnInit {
     }
   }
 
-  // Carrega a solicitação do back e preenche os cards de responsável, orçamento e manutenção
+  // Carrega a solicitação do back; os cards de orçamento e manutenção se atualizam pelos computed
   loadRequestDetails(id: number): void {
     this.requestService.getRequestByIdForEmployee(id).subscribe({
       next: (data) => {
-        this.request = data;
-        this.isLoading = false;
-
+        this.request.set(data);
+        this.isLoading.set(false);
         if (data.assignedEmployeeName) {
-          this.responsavel = { name: data.assignedEmployeeName } as Employee;
+          this.responsavel.set({ name: data.assignedEmployeeName } as Employee);
         }
-        if (data.budgets && data.budgets.length > 0) {
-          this.temOrcamento = true;
-          this.valorOrcamento = data.budgets[0].total;
-          this.servicosInclusos = data.budgets[0].services;
-        }
-        if (data.maintenanceRecord) {
-          this.temManutencao = true;
-          this.descricaoManutencao = data.maintenanceRecord.maintenanceDescription;
-          this.orientacaoCliente = data.maintenanceRecord.clientGuidelines;
-        }
-        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error('Error loading request details:', err);
         this.toast.error('Erro', 'Falha ao carregar detalhes da solicitação!');
-        this.isLoading = false;
-        this.cdr.markForCheck();
+        this.isLoading.set(false);
       },
     });
   }
@@ -142,7 +123,7 @@ export class BudgetDeliveryComponent implements OnInit {
 
   // RF015 · Atribuir / redirecionar responsável
   abrirDialog(template: TemplateRef<unknown>) {
-    this.selectedFuncionario = this.responsavel ?? undefined;
+    this.selectedFuncionario = this.responsavel() ?? undefined;
     this.abrirModal(template);
   }
 
@@ -151,27 +132,27 @@ export class BudgetDeliveryComponent implements OnInit {
   }
 
   mesmoResponsavelSelecionado(): boolean {
-    return !!this.selectedFuncionario && !!this.responsavel
-      && this.selectedFuncionario.id === this.responsavel.id;
+    const atual = this.responsavel();
+    return !!this.selectedFuncionario && !!atual && this.selectedFuncionario.id === atual.id;
   }
 
   atribuirResponsavel() {
-    if (!this.selectedFuncionario || !this.request) return;
+    const request = this.request();
+    if (!this.selectedFuncionario || !request) return;
 
     if (this.mesmoResponsavelSelecionado()) {
       this.toast.warn('Atenção', 'Esse já é o responsável atual pela solicitação.');
       return;
     }
 
-    this.requestService.redirectMaintenance(this.request.id, this.selectedFuncionario.id).subscribe({
+    this.requestService.redirectMaintenance(request.id, this.selectedFuncionario.id).subscribe({
       next: () => {
         this.toast.success('Sucesso', 'Responsável atribuído com sucesso!');
-        this.loadRequestDetails(this.request.id);
-        this.responsavel = this.selectedFuncionario || null;
+        this.loadRequestDetails(request.id);
+        this.responsavel.set(this.selectedFuncionario || null);
         // A data de atribuição não vem do back: é mostrada só logo depois de atribuir.
-        this.dataAtribuicao = new Date().toLocaleString('pt-BR');
+        this.dataAtribuicao.set(new Date().toLocaleString('pt-BR'));
         this.fecharModal();
-        this.cdr.markForCheck();
       },
       error: (err) => {
         console.error(err);
@@ -183,7 +164,7 @@ export class BudgetDeliveryComponent implements OnInit {
   // RF012 · Orçamento
   abrirDialogOrcamento(template: TemplateRef<unknown>) {
     this.servicosSelecionados = [];
-    this.valorTotal = 0;
+    this.valorTotal.set(0);
     this.abrirModal(template);
   }
 
@@ -192,28 +173,28 @@ export class BudgetDeliveryComponent implements OnInit {
   }
 
   atualizarTotal() {
-    this.valorTotal = this.servicosSelecionados.reduce((acc, s) => acc + s.valorServico, 0);
-    this.cdr.markForCheck();
+    this.valorTotal.set(this.servicosSelecionados.reduce((acc, s) => acc + s.valorServico, 0));
   }
 
   orcamentoValido(): boolean {
-    return this.servicosSelecionados.length > 0 && this.valorTotal > 0;
+    return this.servicosSelecionados.length > 0 && this.valorTotal() > 0;
   }
 
   confirmarOrcamento() {
-    if (!this.request) return;
+    const request = this.request();
+    if (!request) return;
 
     if (!this.orcamentoValido()) {
       this.toast.warn('Atenção', 'Selecione ao menos um serviço com valor válido antes de confirmar.');
       return;
     }
 
-    const payload = { serviceIds: this.servicosSelecionados.map(s => s.id), total: this.valorTotal };
+    const payload = { serviceIds: this.servicosSelecionados.map(s => s.id), total: this.valorTotal() };
 
-    this.requestService.createBudget(this.request.id, payload).subscribe({
+    this.requestService.createBudget(request.id, payload).subscribe({
       next: () => {
         this.toast.success('Sucesso', 'Orçamento registrado!');
-        this.loadRequestDetails(this.request.id);
+        this.loadRequestDetails(request.id);
         this.fecharModal();
       },
       error: (err) => {
@@ -225,8 +206,9 @@ export class BudgetDeliveryComponent implements OnInit {
 
   // RF014 · Manutenção
   permitidoCriarManutencao(): boolean {
-    if (this.temOrcamento) return true;
-    return this.request.status.nome === 'APROVADA' || this.request.status.nome === 'REDIRECIONADA';
+    if (this.temOrcamento()) return true;
+    const status = this.request()?.status.nome;
+    return status === 'APROVADA' || status === 'REDIRECIONADA';
   }
 
   abrirDialogManutencao(template: TemplateRef<unknown>) {
@@ -234,8 +216,8 @@ export class BudgetDeliveryComponent implements OnInit {
       this.toast.warn('Atenção', 'Não é permitido registrar manutenção neste momento.');
       return;
     }
-    this.manutencaoDescricaoInput = this.temManutencao ? this.descricaoManutencao : '';
-    this.manutencaoOrientacaoInput = this.temManutencao ? this.orientacaoCliente : '';
+    this.manutencaoDescricaoInput = this.temManutencao() ? this.descricaoManutencao() : '';
+    this.manutencaoOrientacaoInput = this.temManutencao() ? this.orientacaoCliente() : '';
     this.abrirModal(template);
   }
 
@@ -266,28 +248,29 @@ export class BudgetDeliveryComponent implements OnInit {
   }
 
   confirmarManutencao() {
-    if (!this.request) return;
+    const request = this.request();
+    if (!request) return;
 
     if (!this.isManutencaoFormValid()) {
       this.toast.warn('Atenção', `Preencha os dois campos com pelo menos ${this.MANUTENCAO_MIN_LENGTH} caracteres.`);
       return;
     }
 
-    if (this.responsavel?.name !== this.authService.currentUserValue?.name) {
+    if (this.responsavel()?.name !== this.authService.currentUserValue?.name) {
       this.toast.error('Erro ao Efetuar Manutenção', 'Você não é o funcionário designado para essa soliciação');
       return;
     }
 
     const payload: MaintenanceRecordDTO = {
-      id: this.request.maintenanceRecord ? this.request.maintenanceRecord.id : 0,
+      id: request.maintenanceRecord ? request.maintenanceRecord.id : 0,
       maintenanceDescription: this.manutencaoDescricaoInput.trim(),
       clientGuidelines: this.manutencaoOrientacaoInput.trim()
     };
 
-    this.requestService.executeMaintenance(this.request.id, payload).subscribe({
+    this.requestService.executeMaintenance(request.id, payload).subscribe({
       next: () => {
         this.toast.success('Sucesso', 'Manutenção registrada!');
-        this.loadRequestDetails(this.request.id);
+        this.loadRequestDetails(request.id);
         this.fecharModal();
       },
       error: (err) => {
@@ -299,14 +282,17 @@ export class BudgetDeliveryComponent implements OnInit {
 
   // RF016 · Finalizar
   canFinalizarSolicitacao(): boolean {
-    return this.request.status.nome === 'PAGA';
+    return this.request()?.status.nome === 'PAGA';
   }
 
   finalizarSolicitacao(template: TemplateRef<unknown>) {
-    this.requestService.finalizeRequest(this.request.id).subscribe({
+    const request = this.request();
+    if (!request) return;
+
+    this.requestService.finalizeRequest(request.id).subscribe({
       next: () => {
         this.toast.success('Sucesso', 'Solicitação finalizada com sucesso!');
-        this.loadRequestDetails(this.request.id);
+        this.loadRequestDetails(request.id);
         this.dialog.open(template, { disableClose: false, panelClass: 'custom-dialog' });
       },
       error: (err) => {

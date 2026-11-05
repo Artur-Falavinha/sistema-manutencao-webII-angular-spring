@@ -1000,22 +1000,24 @@
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f",
-      "expectedSha256": "328cc3036938d41fedc58a5defd91010c1d272cc62269d3439063c3ca358c777",
-      "reason": "Mantém as validações de responsável, orçamento e manutenção da PR #38. O hash anterior do manifesto era o da main, não o da referência."
+      "expectedSha256": "e7dae05affe2bbf814d4c5bd76692ca3f8018d5d93694ee00ea9e5b19ffcf000",
+      "reason": "Mantém as validações de responsável, orçamento e manutenção da PR #38. O hash anterior do manifesto era o da main, não o da referência. Lê o estado da tela como signals (request(), temOrcamento() etc.), acompanhando o componente.",
+      "decisionDate": "2026-11-04"
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "82f11aca8506ab25fbd3f3308766feac46bd05071e236fee96f81016758c646c",
-      "expectedSha256": "15e1c98c98b3dc7608551c50f053a48d3ab4dd21333539af8f50b5c6c3ce63c1",
-      "reason": "Adiciona os providers de roteamento, HTTP simulado e toastr necessários para instanciar o componente que depende de ActivatedRoute e dos services migrados. Cobre permitidoCriarManutencao (RF014) para os status APROVADA, REDIRECIONADA e ABERTA."
+      "expectedSha256": "1d538c5711cac55c989dddb7fcb1551539d99a75304bd4487cd8c9fc9653e3b4",
+      "reason": "Adiciona os providers de roteamento, HTTP simulado e toastr necessários para instanciar o componente que depende de ActivatedRoute e dos services migrados. Cobre permitidoCriarManutencao (RF014) para os status APROVADA, REDIRECIONADA e ABERTA. Preenche a solicitação com request.set(), porque o componente passou a usar signals.",
+      "decisionDate": "2026-11-04"
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "20d81b067718cc656f8ae5d8444304987e9488d153857a208e6ffda4cfefc47b",
-      "expectedSha256": "2909d1d002b7a116be40d189b45adbe35306357cc47b95c08fcccc5e51f8d160",
-      "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10. Corrige também permitidoCriarManutencao(), que comparava o status com 'APROVADO' enquanto o StatusEnum do back-end (e o mock) usa 'APROVADA'. Simplificação didática (RF012, RF014-RF016): dependências com inject(), um helper só para abrir e fechar diálogos e remoção de estado e da busca de status não usados. Depois de orçar ou registrar manutenção, a tela é preenchida só pelo recarregamento do back; o caminho antigo lia budgets[0] desatualizado e deixava o diálogo de orçamento aberto.",
+      "expectedSha256": "a37333d8cc8b0caf377e9830dcb38aeb0ef104eff8ceefd28ebd16fc31fafae3",
+      "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10. Corrige também permitidoCriarManutencao(), que comparava o status com 'APROVADO' enquanto o StatusEnum do back-end (e o mock) usa 'APROVADA'. Simplificação didática (RF012, RF014-RF016): dependências com inject(), um helper só para abrir e fechar diálogos e remoção de estado e da busca de status não usados. Depois de orçar ou registrar manutenção, a tela é preenchida só pelo recarregamento do back; o caminho antigo lia budgets[0] desatualizado e deixava o diálogo de orçamento aberto. O estado da tela fica em signal e computed, atualizado com .set(), seguindo a regra da disciplina para dado assíncrono exibido na tela.",
       "decisionDate": "2026-11-04",
       "requirement": "RF012"
     },
@@ -1045,8 +1047,8 @@
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a43cbb6884eb0c68b51f5a11c6fd4b3040b64329444092a06b4bd97210e89aad",
-      "expectedSha256": "e734497dcba67acfa45ef405b9dae77d4af30ecfff04badf4bcbca0beafab59e",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem makeQuote() navegando para budget-delivery. Simplificação didática sem mudança de comportamento: remove estado, imports e a busca de status não usados.",
+      "expectedSha256": "35973ac2f2d6f6b3fd958ffb69630d888452fc2338fdbdaa451eef3145a2f043",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem makeQuote() navegando para budget-delivery. Simplificação didática sem mudança de comportamento: remove estado, imports e a busca de status não usados. A lista fica em signal preenchida com .set() no ngOnInit.",
       "decisionDate": "2026-11-04",
       "requirement": "RF011"
     },
