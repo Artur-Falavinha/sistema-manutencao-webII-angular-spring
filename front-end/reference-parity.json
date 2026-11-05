@@ -1843,8 +1843,8 @@
       "path": "src/environments/environment.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "37525e0a1c1f30c5c075f8ef544a42a8ab19b89620a2fa7c034c0a372fa241cb",
-      "expectedSha256": "8f6bc099abf93230cfd565fff9b3daa0b8a7bdee8dc273866ef97e32ceab99e4",
-      "reason": "Copia production e apiUrl da referência e acrescenta useMock para alternar mock e REST sem backend disponível."
+      "expectedSha256": "e04a344b7a5a5f9758c953c912a42bedc5dacb68fd292c4a5f7a1644c18320bd",
+      "reason": "05/11/2026: apiUrl passa a http://localhost:8080/api. A referência usa https, mas o servidor não publica TLS, e as rotas que já saem do mock não chegavam ao backend. useMock continua true."
     },
     {
       "path": "src/app/features/employee/pages/reports-page/reports-page.component.spec.ts",
