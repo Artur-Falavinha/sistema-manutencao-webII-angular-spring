@@ -1,61 +1,37 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { RequestCardComponent } from '../view-requets-page/components/request-card/request-card.component';
-import { MaintenanceRequestResponseDTO as Request } from '../../../../shared/models/maintenance-request.models';
-import { StatusService } from '../../../../core/services/status.service';
-import { Status } from '../../../../shared/models/status';
-import { MaintenanceRequestService } from '../../../../core/services/maintenance-request.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { RequestCardComponent } from '../view-requets-page/components/request-card/request-card.component';
+import { MaintenanceRequestResponseDTO as Request } from '../../../../shared/models/maintenance-request.models';
+import { MaintenanceRequestService } from '../../../../core/services/maintenance-request.service';
 
-interface GroupedRequests {
-  status: Status;
-  requests: Request[];
-}
 @Component({
   selector: 'app-employee-dashboard-page',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatGridListModule,
-    RequestCardComponent,
-    MatIconModule,
-    MatButtonModule,
-  ],
+  imports: [CommonModule, RequestCardComponent, MatIconModule, MatButtonModule],
   templateUrl: './employee-dashboard-page.component.html',
   styleUrl: './employee-dashboard-page.component.css',
 })
-export class EmployeeDashboardPageComponent {
-  private statusService = inject(StatusService);
-  private requestService = inject(MaintenanceRequestService);
+export class EmployeeDashboardPageComponent implements OnInit {
   private router = inject(Router);
+  private requestService = inject(MaintenanceRequestService);
 
-  statuses = toSignal(this.statusService.getAll(), { initialValue: [] });
-  requests = toSignal(this.requestService.getAllEmployeeRequests(), { initialValue: [] });
+  requests = signal<Request[]>([]);
+  getOpenRequestCount = computed(() => this.requests().filter(req => req.statusName === 'ABERTA').length);
 
-  groupedRequests = computed<GroupedRequests[]>(() => {
-    const statuses = this.statuses();   
-    const requests = this.requests();   
-
-    return statuses.map(status => ({
-      status,
-      requests: requests.filter(req => req.statusName === status.nome),
-    }));
-  });
-
-  
+  // Cards ainda sem cálculo: a tela mostra 0 fixo.
   overdueRequests = 0;
   noResponsible = 0;
   createdToday = 0;
 
+  ngOnInit(): void {
+    this.requestService.getAllEmployeeRequests().subscribe(data => this.requests.set(data));
+  }
+
   makeQuote(request: Request) {
     this.router.navigate(['/employee/budget-delivery', request.id]);
   }
-  getOpenRequestCount(): number {
-    const requests = this.requests;
-    return requests().filter(req => req.statusName === 'ABERTA').length;
-  }
+
 }
