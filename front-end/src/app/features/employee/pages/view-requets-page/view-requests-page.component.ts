@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, inject, signal, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,7 +31,7 @@ type DateFilterMode = 'todos' | 'hoje' | 'periodo';
   templateUrl: './view-requests-page.component.html',
   styleUrl: './view-requests-page.component.css',
 })
-export class ViewRequestsPageComponent {
+export class ViewRequestsPageComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   private requestService = inject(MaintenanceRequestService);

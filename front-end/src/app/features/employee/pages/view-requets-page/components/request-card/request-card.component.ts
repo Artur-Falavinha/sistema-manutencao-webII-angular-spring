@@ -1,9 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MaintenanceRequestResponseDTO as Request } from '../../../../../../shared/models/maintenance-request.models';
+import { Component, Input, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
-import { CategoryService } from '../../../../services/category.service';
 import { Router } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
+import { MaintenanceRequestResponseDTO as Request } from '../../../../../../shared/models/maintenance-request.models';
 
 @Component({
   selector: 'app-request-card',
@@ -11,28 +10,12 @@ import { Router } from '@angular/router';
   templateUrl: './request-card.component.html',
   styleUrl: './request-card.component.css',
 })
-export class RequestCardComponent implements OnInit {
+export class RequestCardComponent {
   @Input({ required: true }) request!: Request;
-  categoryMap: Record<number, string> = {};
-  clientMap: Record<number, string> = {};
 
-  constructor(
-    private categoryService: CategoryService,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.categoryService.getAllCategories().subscribe(categories => {
-      this.categoryMap = categories.reduce<Record<number, string>>((acc, c) => {
-        acc[c.id] = c.name;
-        return acc;
-      }, {});
-  });
-
-  }
+  private router = inject(Router);
 
   verServico(id: number) {
-
     this.router.navigate(['/employee/budget-delivery', id]);
   }
 }
