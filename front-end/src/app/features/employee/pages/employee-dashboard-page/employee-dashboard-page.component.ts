@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { RequestCardComponent } from '../view-requets-page/components/request-card/request-card.component';
+import { RequestCardComponent } from './components/request-card/request-card.component';
 import { MaintenanceRequestResponseDTO as Request } from '../../../../shared/models/maintenance-request.models';
 import { MaintenanceRequestService } from '../../../../core/services/maintenance-request.service';
 
