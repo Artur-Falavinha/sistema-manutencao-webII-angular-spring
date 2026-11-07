@@ -28,7 +28,8 @@
   inset-inline-end: 0;
   z-index: 10;
   display: grid;
-  inline-size: min(100%, 24ch);
+  inline-size: max-content;
+  min-inline-size: 24ch;
   gap: 0.75rem;
   margin-block-start: 0.5rem;
   padding: 1rem;
@@ -39,6 +40,15 @@
 }
 
 .category-filter-field { inline-size: 100%; }
+
+/* Cor de fundo vem do status; texto branco para dar contraste em qualquer cor */
+.status-badge {
+  display: inline-block;
+  padding: 0.125rem 0.75rem;
+  border-radius: 62.5rem;
+  color: #fff;
+  white-space: nowrap;
+}
 
 .list-section {
   width: min(100%, 90rem);
@@ -54,6 +64,6 @@
   .search-field,
   .filter-button,
   .filter-panel { inline-size: 100%; }
-  .search-field { max-inline-size: 100%; }
+  .search-field { flex: none; max-inline-size: 100%; }
   .filter-panel { position: static; }
 }

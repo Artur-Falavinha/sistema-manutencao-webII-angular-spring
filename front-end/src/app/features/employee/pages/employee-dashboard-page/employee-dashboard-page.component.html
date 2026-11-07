@@ -54,14 +54,12 @@
 </div>
 
 <div class="request-list">
-    @for (req of requests(); track req.id) {
-    @if (req.statusName == 'ABERTA') {
+    @for (req of openRequests(); track req.id) {
       <app-request-card class="request-card" [request]="req">
         <button (click)="makeQuote(req)" mat-flat-button color="primary" type="button">Efetuar Orçamento</button>
       </app-request-card>
-    }
   } @empty {
-    <p class="empty-state">Nenhuma solicitação neste status.</p>
+    <p class="empty-state">Nenhuma solicitação aberta no momento.</p>
   }
 </div>
 

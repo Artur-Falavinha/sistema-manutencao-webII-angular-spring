@@ -19,7 +19,8 @@ export class EmployeeDashboardPageComponent implements OnInit {
   private requestService = inject(MaintenanceRequestService);
 
   requests = signal<Request[]>([]);
-  getOpenRequestCount = computed(() => this.requests().filter(req => req.statusName === 'ABERTA').length);
+  openRequests = computed(() => this.requests().filter(req => req.statusName === 'ABERTA'));
+  getOpenRequestCount = computed(() => this.openRequests().length);
 
   // Cards ainda sem cálculo: a tela mostra 0 fixo.
   overdueRequests = 0;

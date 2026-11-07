@@ -137,6 +137,10 @@ body, .main-content {
 
 @media (max-width: 900px) {
   .cards-row { flex-direction: column; }
+  .detalhes-header, .detalhes-info-row { flex-wrap: wrap; }
+  .detalhes-card, .tecnico-card { padding: 20px; }
+  .orcamento-dialog, .manutencao-dialog { width: auto; max-width: 100%; }
+  .orcamento-dialog-actions, .manutencao-dialog-actions { flex-direction: column; align-items: stretch; gap: 12px; }
 }
   
 /* Voltar (link no topo à esquerda) */
@@ -160,6 +164,8 @@ body, .main-content {
 .dialog-field { margin-bottom: 24px; }
 .dialog-btn { width: 100%; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; background: var(--color-primary-default) !important; color: #fff !important; }
 .custom-dialog .mat-dialog-container { border-radius: 16px; padding: 0; }
+.dialog-btn.mat-mdc-outlined-button { background: transparent !important; color: var(--color-primary-default) !important; border: 2px solid var(--color-primary-default); }
+.orcamento-dialog-confirm, .manutencao-dialog-confirm { white-space: nowrap; }
   
 /* Dialog Efetuar Orçamento */
 .orcamento-dialog { width: 560px; padding: 24px; background: var(--color-background-card, #FAFAFA); border-radius: 16px; display: flex; flex-direction: column; gap: 24px; }
