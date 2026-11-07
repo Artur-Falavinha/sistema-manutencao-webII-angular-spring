@@ -269,6 +269,30 @@
       "affectedReferencePaths": [
         "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html"
       ]
+    },
+    {
+      "date": "2026-11-07",
+      "requirement": "N/A",
+      "decision": "Remover código sem uso: serviços que guardavam dados no localStorage, modais e pipes que nenhuma tela importa e o mock de solicitações sem consumidor.",
+      "reason": "Nenhum componente, rota ou serviço do front importa esses arquivos; os dados do sistema vêm da API Spring. Manter o código sugeria persistência no navegador e aumentava o conteúdo de defesa sem efeito na aplicação.",
+      "removedReferencePaths": [
+        "src/app/core/services/budget.service.ts",
+        "src/app/core/services/request-history.service.ts",
+        "src/app/core/services/storage.service.ts",
+        "src/app/shared/components/modal-mensagem/app-success-modal.css",
+        "src/app/shared/components/modal-mensagem/app-success-modal.html",
+        "src/app/shared/components/modal-mensagem/app-success-modal.ts",
+        "src/app/shared/components/modal-mensagem/modal-mensagem.component.spec.ts",
+        "src/app/shared/components/reject-modal/reject-modal.component.css",
+        "src/app/shared/components/reject-modal/reject-modal.component.html",
+        "src/app/shared/components/reject-modal/reject-modal.component.spec.ts",
+        "src/app/shared/components/reject-modal/reject-modal.component.ts",
+        "src/app/shared/models/request-data.ts",
+        "src/app/shared/pipes/cep.pipes.pipe.ts",
+        "src/app/shared/pipes/cep.pipes.pipe.spec.ts",
+        "src/app/shared/pipes/test-pipe.pipe.ts",
+        "src/app/shared/pipes/test-pipe.pipe.spec.ts"
+      ]
     }
   ],
   "files": [
@@ -659,12 +683,6 @@
       "classification": "IDENTICAL",
       "referenceSha256": "f575f7bf5f91627dff67a28fe60a98e5c93d0285b7b48d30d02752681693a25f",
       "expectedSha256": "f575f7bf5f91627dff67a28fe60a98e5c93d0285b7b48d30d02752681693a25f"
-    },
-    {
-      "path": "src/app/core/services/storage.service.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "6aa47ba9ff664485b92fa596185ddbc2f095e5e70c7f461a30139173d888448e",
-      "referenceSha256": "6aa47ba9ff664485b92fa596185ddbc2f095e5e70c7f461a30139173d888448e"
     },
     {
       "path": "src/app/core/services/toast.service.ts",
@@ -1279,64 +1297,6 @@
       "expectedSha256": "6e87f15fa8b322f90272b14bf3a70a8e02e0c8092939999c89966872e6c6df9e"
     },
     {
-      "path": "src/app/shared/components/modal-mensagem/app-success-modal.css",
-      "classification": "VISUAL_ONLY",
-      "referenceSha256": "8128dc03e2903e62a63c94c607856df412b13f4df3ed95e3b67e45e8b1462b0c",
-      "expectedSha256": "a3a6fa6e3af0d0672e028dfda6ea14fb0a74ea9527cf4fbeb84e774008940fad",
-      "reason": "Alinha o modal de sucesso à identidade Oficina técnica sem alterar seu contrato."
-    },
-    {
-      "path": "src/app/shared/components/modal-mensagem/app-success-modal.html",
-      "classification": "SCOPE_DECISION",
-      "referenceSha256": "2f4a79ca4fd7c58babf7bf77dbe06eb316d69844e35b54fdd94739c9333342f4",
-      "expectedSha256": "6c4cc4cdffdb6dbcb7199a4e0c070a719f32a55dfc5f5bc100c234808f962078",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
-      "decisionDate": "2026-09-17",
-      "requirement": "N/A"
-    },
-    {
-      "path": "src/app/shared/components/modal-mensagem/app-success-modal.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": "029e01a57d4197e06f668e46d69ecb1ea961165a76457faedf4afaadaeac69ce",
-      "expectedSha256": "9355a4f98fd6f6bce6bc8d18f09fba55684f82fc62522718bb44fbd58bfea630",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar fecharModal() nem rotaDestino."
-    },
-    {
-      "path": "src/app/shared/components/modal-mensagem/modal-mensagem.component.spec.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "832ed24432da4aaf43b3a64840f380b6d44254d7e69dfaa711c0d7a67abec9a9",
-      "expectedSha256": "832ed24432da4aaf43b3a64840f380b6d44254d7e69dfaa711c0d7a67abec9a9"
-    },
-    {
-      "path": "src/app/shared/components/reject-modal/reject-modal.component.css",
-      "classification": "VISUAL_ONLY",
-      "referenceSha256": "080e0f5577a0fd4ecbf3985fa26d6b4ebf70bd6a4dc01ea53002df406d131aa9",
-      "expectedSha256": "62bfd5bb144f5dddd8688d5fbaf3c29212e3c823d3a3dd14e39a8a8649de1604",
-      "reason": "Remapeia cores e espaçamentos fixos para os tokens atuais da identidade Mant (variables.css consolidado), preservando seletores e estrutura."
-    },
-    {
-      "path": "src/app/shared/components/reject-modal/reject-modal.component.html",
-      "classification": "SCOPE_DECISION",
-      "referenceSha256": "a9c24d40f51823405ee15d645439b2b3d3cc5d8dd5ddf5aa56096d9fc1eeb678",
-      "expectedSha256": "dd1ce5907305c592edcd7972a788287d634518974173778723d27af160a8fb77",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
-      "decisionDate": "2026-09-17",
-      "requirement": "N/A"
-    },
-    {
-      "path": "src/app/shared/components/reject-modal/reject-modal.component.spec.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "6cf65748fb62396d39886bd71d7b78552c4689472d6835251fb1874678f02460",
-      "expectedSha256": "6cf65748fb62396d39886bd71d7b78552c4689472d6835251fb1874678f02460"
-    },
-    {
-      "path": "src/app/shared/components/reject-modal/reject-modal.component.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": "27636d420d4d0f45ab0e66bdd85f743e2d98ff3420cb3b94e8b08d6d48da3f11",
-      "expectedSha256": "53d6e68cfb640abfb74a62f0bd6a98c11d8cf2022904b0f48a719f92c9620c10",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar confirm.emit() nem validacao do motivo."
-    },
-    {
       "path": "src/app/shared/components/warning-dialog/warning-dialog.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "b71c8418758d6662b17c179c00d917f8c1ed808901549e0d766974aecf66ad76",
@@ -1400,13 +1360,6 @@
       "expectedSha256": "41286aa8aed6c97e8d07a2ca8a1d6897a018bf6658e311ad09742c48e81b93b0",
       "reason": "Fixture temporaria de funcionarios para o protótipo sem backend; CPFs validos para o formulario de RF018.",
       "removalBy": "2026-11-11"
-    },
-    {
-      "path": "src/app/shared/mocks/maintenance-request.mock.ts",
-      "classification": "TECHNICAL_EXCEPTION",
-      "referenceSha256": null,
-      "expectedSha256": "978e93fc9fff23f0d56aa2de78359bb2d8a36a96ce3a30dc888d6d8aede25ce2",
-      "reason": "Fixture de solicitações simuladas no shape de MaintenanceRequestResponseDTO, consumida pelo mock-api.interceptor."
     },
     {
       "path": "src/app/shared/mocks/request-history.mock.ts",
@@ -1488,12 +1441,6 @@
       "expectedSha256": "9cd7688f8f65e416ee4b46bb2d490964ee51ab5602ab2f4296dd4df900ea7469"
     },
     {
-      "path": "src/app/shared/models/request-data.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "d654cc1113585b8a195363d03a4ab66213372dc288657093c52c89dd59fef5ee",
-      "referenceSha256": "d654cc1113585b8a195363d03a4ab66213372dc288657093c52c89dd59fef5ee"
-    },
-    {
       "path": "src/app/shared/models/request-history.ts",
       "classification": "IDENTICAL",
       "referenceSha256": "69ee9db2d8d6cf5b34a82fd00cc87238d450f9453f072dc8e440b133e4069230",
@@ -1524,18 +1471,6 @@
       "expectedSha256": "c7bd9e2da4a4fb73dee1ad67932ecfbe710b0e202d8c9d0e16e97f52bd4c8dfd"
     },
     {
-      "path": "src/app/shared/pipes/cep.pipes.pipe.spec.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "0e0bf41bfe49a6c12f24614f132a012cbfa8e4850446c4a3d927946a08414782",
-      "referenceSha256": "0e0bf41bfe49a6c12f24614f132a012cbfa8e4850446c4a3d927946a08414782"
-    },
-    {
-      "path": "src/app/shared/pipes/cep.pipes.pipe.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "e38f7cbbb6115ebc4c9ebbb5374bec4e2eb1719f1a109e449adc94df8d053545",
-      "referenceSha256": "e38f7cbbb6115ebc4c9ebbb5374bec4e2eb1719f1a109e449adc94df8d053545"
-    },
-    {
       "path": "src/app/shared/pipes/cpf.pipes.pipe.spec.ts",
       "classification": "IDENTICAL",
       "expectedSha256": "71710c2112b80bafce39689b2ba6eb5335085707c5b37e58147bbdc1da02bb59",
@@ -1553,18 +1488,6 @@
       "referenceSha256": null,
       "expectedSha256": "e3b7fad89d9d485d67e66cbac8cc6986270cbdfd8071dff00e927094b3d60748",
       "reason": "Pipe de formatacao telefonica usado no formulario de funcionario com ngx-mask; sem arquivo equivalente na referencia."
-    },
-    {
-      "path": "src/app/shared/pipes/test-pipe.pipe.spec.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "0ac39949189d4dc6feb291764ae26dec0c3b5fce8765c060d417fd4c4b4137fc",
-      "referenceSha256": "0ac39949189d4dc6feb291764ae26dec0c3b5fce8765c060d417fd4c4b4137fc"
-    },
-    {
-      "path": "src/app/shared/pipes/test-pipe.pipe.ts",
-      "classification": "IDENTICAL",
-      "expectedSha256": "989daf8f6d2d0edde78aba036b2f625eefa281e854376d9a7132b99b5c366912",
-      "referenceSha256": "989daf8f6d2d0edde78aba036b2f625eefa281e854376d9a7132b99b5c366912"
     },
     {
       "path": "src/app/shared/pipes/truncate.pipe.ts",
@@ -1833,18 +1756,6 @@
       "classification": "IDENTICAL",
       "referenceSha256": "0445530a3c08064d40b8295faea959d75f9cdf656144c3ff21bee20afe9a614e",
       "expectedSha256": "0445530a3c08064d40b8295faea959d75f9cdf656144c3ff21bee20afe9a614e"
-    },
-    {
-      "path": "src/app/core/services/budget.service.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee",
-      "expectedSha256": "0931d7942a58fbf86a46ddd4aaa7e7a7c4244910e764ee65cc3f7577780128ee"
-    },
-    {
-      "path": "src/app/core/services/request-history.service.ts",
-      "classification": "IDENTICAL",
-      "referenceSha256": "68921356a3b702f4ff78d99d96912abd959edff76c015bed420229f412896bd2",
-      "expectedSha256": "68921356a3b702f4ff78d99d96912abd959edff76c015bed420229f412896bd2"
     },
     {
       "path": "src/environments/environment.ts",
