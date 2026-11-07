@@ -19,12 +19,8 @@ export class EmployeeDashboardPageComponent implements OnInit {
   private requestService = inject(MaintenanceRequestService);
 
   requests = signal<Request[]>([]);
-  getOpenRequestCount = computed(() => this.requests().filter(req => req.statusName === 'ABERTA').length);
-
-  // Cards ainda sem cálculo: a tela mostra 0 fixo.
-  overdueRequests = 0;
-  noResponsible = 0;
-  createdToday = 0;
+  // RF011: a página inicial mostra só as solicitações ABERTA, na ordem crescente que vem do back.
+  openRequests = computed(() => this.requests().filter(req => req.statusName === 'ABERTA'));
 
   ngOnInit(): void {
     this.requestService.getAllEmployeeRequests().subscribe(data => this.requests.set(data));
@@ -33,5 +29,4 @@ export class EmployeeDashboardPageComponent implements OnInit {
   makeQuote(request: Request) {
     this.router.navigate(['/employee/budget-delivery', request.id]);
   }
-
 }

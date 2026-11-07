@@ -57,3 +57,7 @@
   .search-field { max-inline-size: 100%; }
   .filter-panel { position: static; }
 }
+
+.action-button {
+  white-space: nowrap;
+}

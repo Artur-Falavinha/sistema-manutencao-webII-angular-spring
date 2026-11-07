@@ -19,3 +19,4 @@
 }
 
 .info-label mat-icon { font-size: 1.125rem; }
+.card-actions:empty { display: none; }

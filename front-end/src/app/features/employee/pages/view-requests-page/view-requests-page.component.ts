@@ -64,6 +64,7 @@ export class ViewRequestsPageComponent implements AfterViewInit {
     'clientName',
     'requestDate',
     'status',
+    'actions',
   ];
 
   constructor() {
@@ -123,6 +124,26 @@ export class ViewRequestsPageComponent implements AfterViewInit {
 
   openRequest(request: Request): void {
     this.router.navigate(['/employee/budget-delivery', request.id]);
+  }
+
+  // RF013: ação disponível para cada estado; os demais estados não têm botão.
+  actionLabel(request: Request): string | null {
+    switch (request.statusName) {
+      case 'ABERTA':
+        return 'Efetuar Orçamento';
+      case 'APROVADA':
+      case 'REDIRECIONADA':
+        return 'Efetuar Manutenção';
+      case 'PAGA':
+        return 'Finalizar Solicitação';
+      default:
+        return null;
+    }
+  }
+
+  onAction(event: Event, request: Request): void {
+    event.stopPropagation();
+    this.openRequest(request);
   }
 
   ngAfterViewInit(): void {

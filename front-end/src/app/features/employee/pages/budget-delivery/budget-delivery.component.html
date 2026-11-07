@@ -70,6 +70,33 @@
           {{ request.defectDescription }}
         </span>
       </div>
+
+      <!-- RF012/RF014: dados completos do cliente -->
+      <div class="detalhes-cliente">
+        <span class="detalhes-defeito-label">Dados do Cliente</span>
+        <div class="detalhes-cliente-grid">
+          <div class="detalhes-info">
+            <span class="detalhes-info-label">E-mail</span>
+            <span class="detalhes-info-value">{{ request.client.email }}</span>
+          </div>
+          <div class="detalhes-info">
+            <span class="detalhes-info-label">CPF</span>
+            <span class="detalhes-info-value">{{ request.client.cpf | cpfPipes }}</span>
+          </div>
+          <div class="detalhes-info">
+            <span class="detalhes-info-label">Telefone</span>
+            <span class="detalhes-info-value">{{ request.client.phoneNumber | phonePipes }}</span>
+          </div>
+          <div class="detalhes-info detalhes-cliente-endereco">
+            <span class="detalhes-info-label">Endereço</span>
+            <span class="detalhes-info-value">
+              {{ request.client.street }}, {{ request.client.number }}<ng-container *ngIf="request.client.complement"> - {{ request.client.complement }}</ng-container>
+              · {{ request.client.neighborhood }} · {{ request.client.city }}/{{ request.client.state }}
+              · CEP {{ formatarCep(request.client.zipCode) }}
+            </span>
+          </div>
+        </div>
+      </div>
     </mat-card>
 
     <div class="cards-row">
@@ -82,20 +109,16 @@
 
         <ng-container *ngIf="!responsavel(); else responsavelPreenchido">
           <div class="tecnico-content">Nenhum Técnico Atribuído</div>
-          <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
-            Atribuir Responsável
-          </button>
         </ng-container>
 
         <ng-template #responsavelPreenchido>
           <div class="tecnico-content">
             <div><b>Nome:</b> {{ responsavel()!.name }}</div>
-            <!-- Exibe cargo se existir na model, senão omite -->
-            <div *ngIf="dataAtribuicao()"><b>Atribuído em:</b> {{ dataAtribuicao() }}</div>
           </div>
-          <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
+          <!-- RF015: só o responsável atual redireciona, antes da manutenção -->
+          <button *ngIf="podeRedirecionar()" mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
             <mat-icon>sync_alt</mat-icon>
-            Trocar Responsável
+            Redirecionar Manutenção
           </button>
         </ng-template>
       </mat-card>
@@ -147,15 +170,6 @@
                   <b>Orientações para o Cliente:</b>
                   <span>{{ orientacaoCliente() }}</span>
                 </div>
-
-                <button
-                  color="primary"
-                  class="button-primary label_large manutencao-btn"
-                  (click)="abrirDialogManutencao(manutencaoDialogTemplate)"
-                >
-                  <mat-icon>edit</mat-icon>
-                  Editar Manutenção
-                </button>
               </ng-container>
 
               <ng-template #manutencaoVazio>
@@ -164,7 +178,7 @@
                   color="primary"
                   [style.cursor]="permitidoCriarManutencao() ? 'pointer' : 'not-allowed'"
                   class="button-primary label_large manutencao-btn"
-                  [disabled]="false"
+                  [disabled]="!permitidoCriarManutencao()"
                   (click)="abrirDialogManutencao(manutencaoDialogTemplate)"
                 >
                   <mat-icon>build</mat-icon>
@@ -182,20 +196,15 @@
 <!-- Dialog: Atribuir Responsável -->
 <ng-template #dialogTemplate>
   <div class="dialog-container">
-    <h2 class="dialog-title">Atribuição de Responsável</h2>
+    <h2 class="dialog-title">Redirecionar Manutenção</h2>
 
     <mat-form-field appearance="outline" class="dialog-field">
-      <mat-label>Atribuir Solicitação Para:</mat-label>
-      <!-- INTEGRAÇÃO: Iterando sobre a lista de funcionários da API -->
-      <mat-select [(ngModel)]="selectedFuncionario" placeholder="Pesquise/Selecione um Funcionário">
-        <mat-option [value]="null">Nenhum</mat-option>
-        <mat-option *ngFor="let func of funcionariosDisponiveis()" [value]="func">
+      <mat-label>Redirecionar Para:</mat-label>
+      <mat-select [(ngModel)]="selectedFuncionario" placeholder="Selecione um Funcionário">
+        <mat-option *ngFor="let func of funcionariosParaRedirecionar()" [value]="func">
           {{ func.name }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="mesmoResponsavelSelecionado()">
-        Esse já é o responsável atual.
-      </mat-error>
     </mat-form-field>
 
     <div style="display: flex; gap: 8px;">
@@ -203,9 +212,9 @@
         Cancelar
       </button>
       <button mat-flat-button color="primary" class="dialog-btn"
-              [disabled]="selectedFuncionario === undefined || mesmoResponsavelSelecionado()"
-              (click)="atribuirResponsavel()">
-        Atribuir
+              [disabled]="!selectedFuncionario"
+              (click)="redirecionarManutencao()">
+        Redirecionar
       </button>
     </div>
   </div>

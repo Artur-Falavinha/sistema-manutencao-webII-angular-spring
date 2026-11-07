@@ -1,6 +1,6 @@
 <div class="card-container" (click)="verServico(request.id)">
   <div class="card-content">
-    <h6 class="heading_6 equipment-name">{{ request.equipmentName }}</h6>
+    <h6 class="heading_6 equipment-name" [title]="request.equipmentName">{{ request.equipmentName | truncate:30 }}</h6>
     <div class="card-infos">
       <div class="info-container">
         <div class="info-label">
@@ -27,6 +27,10 @@
         </div>
         <span class="info-value">{{ request.requestDate | date:'dd/MM/yyyy HH:mm' }}</span>
       </div>
+    </div>
+    <!-- Ações projetadas pela tela (ex.: Efetuar Orçamento no RF011); o clique não abre o detalhe do card. -->
+    <div class="card-actions" (click)="$event.stopPropagation()">
+      <ng-content></ng-content>
     </div>
   </div>
 </div>

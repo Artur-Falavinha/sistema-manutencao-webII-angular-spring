@@ -22,6 +22,8 @@ import { EmployeeRequestDetailDTO } from '../../../../shared/models/maintenance-
 import { MaintenanceRecordDTO } from '../../../../shared/models/maintenance-record.model';
 import { ServiceItemDTO } from '../../../../shared/models/service-item.model';
 import { Employee } from '../../../../shared/models/employee';
+import { CpfPipesPipe } from '../../../../shared/pipes/cpf.pipes.pipe';
+import { PhonePipesPipe } from '../../../../shared/pipes/phone.pipes.pipe';
 
 @Component({
   selector: 'app-budget-delivery',
@@ -40,7 +42,9 @@ import { Employee } from '../../../../shared/models/employee';
     MatSelectModule,
     MatOptionModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    CpfPipesPipe,
+    PhonePipesPipe
   ]
 })
 export class BudgetDeliveryComponent implements OnInit {
@@ -61,8 +65,7 @@ export class BudgetDeliveryComponent implements OnInit {
   isLoading = signal(true);
   funcionariosDisponiveis = signal<Employee[]>([]);
   servicosDisponiveis = signal<ServiceItemDTO[]>([]);
-  responsavel = signal<Employee | null>(null);
-  dataAtribuicao = signal('');
+  responsavel = signal<Pick<Employee, 'id' | 'name'> | null>(null);
   selectedTab = 0;
 
   // Valores derivados da solicitação: recalculam sozinhos a cada request.set()
@@ -72,9 +75,13 @@ export class BudgetDeliveryComponent implements OnInit {
   temManutencao = computed(() => !!this.request()?.maintenanceRecord);
   descricaoManutencao = computed(() => this.request()?.maintenanceRecord?.maintenanceDescription ?? '');
   orientacaoCliente = computed(() => this.request()?.maintenanceRecord?.clientGuidelines ?? 'N/A');
+  // RF015: o funcionário logado nunca aparece como destino do redirecionamento.
+  funcionariosParaRedirecionar = computed(() =>
+    this.funcionariosDisponiveis().filter(f => f.active !== false && f.id !== this.idUsuarioLogado())
+  );
 
   // Campos dos diálogos
-  selectedFuncionario: Employee | null | undefined = undefined;
+  selectedFuncionario: Employee | null = null;
   servicosSelecionados: ServiceItemDTO[] = [];
   valorTotal = signal(0);
   manutencaoDescricaoInput = '';
@@ -97,9 +104,9 @@ export class BudgetDeliveryComponent implements OnInit {
       next: (data) => {
         this.request.set(data);
         this.isLoading.set(false);
-        if (data.assignedEmployeeName) {
-          this.responsavel.set({ name: data.assignedEmployeeName } as Employee);
-        }
+        this.responsavel.set(
+          data.assignedEmployeeId ? { id: data.assignedEmployeeId, name: data.assignedEmployeeName ?? '' } : null
+        );
       },
       error: (err) => {
         console.error('Error loading request details:', err);
@@ -113,6 +120,20 @@ export class BudgetDeliveryComponent implements OnInit {
     this.router.navigate(['/employee/dashboard']);
   }
 
+  private idUsuarioLogado(): number | undefined {
+    return this.authService.currentUserValue?.id;
+  }
+
+  souResponsavel(): boolean {
+    const atual = this.responsavel();
+    return !!atual && atual.id === this.idUsuarioLogado();
+  }
+
+  formatarCep(cep: string | null | undefined): string {
+    const digitos = (cep ?? '').replace(/\D/g, '');
+    return digitos.length === 8 ? `${digitos.slice(0, 5)}-${digitos.slice(5)}` : digitos;
+  }
+
   private abrirModal(template: TemplateRef<unknown>) {
     this.dialogRef = this.dialog.open(template, { disableClose: true, panelClass: 'custom-dialog' });
   }
@@ -121,9 +142,13 @@ export class BudgetDeliveryComponent implements OnInit {
     this.dialogRef?.close();
   }
 
-  // RF015 · Atribuir / redirecionar responsável
+  // RF015 · Redirecionar manutenção (só o responsável atual, antes da manutenção)
+  podeRedirecionar(): boolean {
+    return this.permitidoCriarManutencao() && this.souResponsavel();
+  }
+
   abrirDialog(template: TemplateRef<unknown>) {
-    this.selectedFuncionario = this.responsavel() ?? undefined;
+    this.selectedFuncionario = null;
     this.abrirModal(template);
   }
 
@@ -131,32 +156,20 @@ export class BudgetDeliveryComponent implements OnInit {
     this.fecharModal();
   }
 
-  mesmoResponsavelSelecionado(): boolean {
-    const atual = this.responsavel();
-    return !!this.selectedFuncionario && !!atual && this.selectedFuncionario.id === atual.id;
-  }
-
-  atribuirResponsavel() {
+  redirecionarManutencao() {
     const request = this.request();
-    if (!this.selectedFuncionario || !request) return;
+    const destino = this.selectedFuncionario;
+    if (!destino || !request) return;
 
-    if (this.mesmoResponsavelSelecionado()) {
-      this.toast.warn('Atenção', 'Esse já é o responsável atual pela solicitação.');
-      return;
-    }
-
-    this.requestService.redirectMaintenance(request.id, this.selectedFuncionario.id).subscribe({
+    this.requestService.redirectMaintenance(request.id, destino.id).subscribe({
       next: () => {
-        this.toast.success('Sucesso', 'Responsável atribuído com sucesso!');
+        this.toast.success('Sucesso', `Manutenção redirecionada para ${destino.name}.`);
         this.loadRequestDetails(request.id);
-        this.responsavel.set(this.selectedFuncionario || null);
-        // A data de atribuição não vem do back: é mostrada só logo depois de atribuir.
-        this.dataAtribuicao.set(new Date().toLocaleString('pt-BR'));
         this.fecharModal();
       },
       error: (err) => {
         console.error(err);
-        this.toast.error('Erro', 'Não foi possível atribuir o responsável.');
+        this.toast.error('Erro', 'Não foi possível redirecionar a manutenção.');
       }
     });
   }
@@ -206,7 +219,6 @@ export class BudgetDeliveryComponent implements OnInit {
 
   // RF014 · Manutenção
   permitidoCriarManutencao(): boolean {
-    if (this.temOrcamento()) return true;
     const status = this.request()?.status.nome;
     return status === 'APROVADA' || status === 'REDIRECIONADA';
   }
@@ -216,8 +228,8 @@ export class BudgetDeliveryComponent implements OnInit {
       this.toast.warn('Atenção', 'Não é permitido registrar manutenção neste momento.');
       return;
     }
-    this.manutencaoDescricaoInput = this.temManutencao() ? this.descricaoManutencao() : '';
-    this.manutencaoOrientacaoInput = this.temManutencao() ? this.orientacaoCliente() : '';
+    this.manutencaoDescricaoInput = '';
+    this.manutencaoOrientacaoInput = '';
     this.abrirModal(template);
   }
 
@@ -256,13 +268,13 @@ export class BudgetDeliveryComponent implements OnInit {
       return;
     }
 
-    if (this.responsavel()?.name !== this.authService.currentUserValue?.name) {
+    if (!this.souResponsavel()) {
       this.toast.error('Erro ao Efetuar Manutenção', 'Você não é o funcionário designado para essa soliciação');
       return;
     }
 
     const payload: MaintenanceRecordDTO = {
-      id: request.maintenanceRecord ? request.maintenanceRecord.id : 0,
+      id: 0,
       maintenanceDescription: this.manutencaoDescricaoInput.trim(),
       clientGuidelines: this.manutencaoOrientacaoInput.trim()
     };

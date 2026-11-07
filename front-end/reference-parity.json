@@ -1011,31 +1011,31 @@
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95",
-      "expectedSha256": "196063c5dc96ca12ec0e849da32d7675325ecef902cf25e7e8dd9f259c4a7f73",
-      "reason": "Ajustes visuais nos botoes Material de budget-delivery sem sobrescrever tema; mantem layout RF011-RF016."
+      "expectedSha256": "7a2c87c80ddc9ed86008c443e75f74b834715f68db141313faed8dbb6a481a36",
+      "reason": "Ajustes visuais nos botoes Material de budget-delivery sem sobrescrever tema; mantem layout RF011-RF016. Adiciona o layout em grade dos dados completos do cliente (RF012/RF014)."
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f",
-      "expectedSha256": "e7dae05affe2bbf814d4c5bd76692ca3f8018d5d93694ee00ea9e5b19ffcf000",
-      "reason": "Mantém as validações de responsável, orçamento e manutenção da PR #38. O hash anterior do manifesto era o da main, não o da referência. Lê o estado da tela como signals (request(), temOrcamento() etc.), acompanhando o componente.",
+      "expectedSha256": "9dbea7ddde5d8fd79d0c9bd6703f5796700d9cef164f6dd38c776a1b17ad8b5f",
+      "reason": "Mantém as validações de responsável, orçamento e manutenção da PR #38. O hash anterior do manifesto era o da main, não o da referência. Lê o estado da tela como signals (request(), temOrcamento() etc.), acompanhando o componente. Mostra os dados completos do cliente (RF012/RF014), troca o diálogo de atribuição pelo de Redirecionar Manutenção visível só ao responsável antes da manutenção (RF015), sem a opção Nenhum, remove o botão Editar Manutenção (fora do enunciado) e desabilita Efetuar Manutenção fora de APROVADA/REDIRECIONADA.",
       "decisionDate": "2026-11-04"
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.spec.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "82f11aca8506ab25fbd3f3308766feac46bd05071e236fee96f81016758c646c",
-      "expectedSha256": "1d538c5711cac55c989dddb7fcb1551539d99a75304bd4487cd8c9fc9653e3b4",
-      "reason": "Adiciona os providers de roteamento, HTTP simulado e toastr necessários para instanciar o componente que depende de ActivatedRoute e dos services migrados. Cobre permitidoCriarManutencao (RF014) para os status APROVADA, REDIRECIONADA e ABERTA. Preenche a solicitação com request.set(), porque o componente passou a usar signals.",
+      "expectedSha256": "22fb52570235697394f0d56cc93cf8a5b4500c89a3547a31cab6bc9b17748785",
+      "reason": "Adiciona os providers de roteamento, HTTP simulado e toastr necessários para instanciar o componente que depende de ActivatedRoute e dos services migrados. Cobre permitidoCriarManutencao (RF014) para os status APROVADA, REDIRECIONADA e ABERTA. Preenche a solicitação com request.set(), porque o componente passou a usar signals. Cobre o bloqueio de manutenção em ORÇADA, o reconhecimento do responsável pelo id e a exclusão do próprio funcionário e de inativos no redirecionamento.",
       "decisionDate": "2026-11-04"
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "20d81b067718cc656f8ae5d8444304987e9488d153857a208e6ffda4cfefc47b",
-      "expectedSha256": "a37333d8cc8b0caf377e9830dcb38aeb0ef104eff8ceefd28ebd16fc31fafae3",
-      "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10. Corrige também permitidoCriarManutencao(), que comparava o status com 'APROVADO' enquanto o StatusEnum do back-end (e o mock) usa 'APROVADA'. Simplificação didática (RF012, RF014-RF016): dependências com inject(), um helper só para abrir e fechar diálogos e remoção de estado e da busca de status não usados. Depois de orçar ou registrar manutenção, a tela é preenchida só pelo recarregamento do back; o caminho antigo lia budgets[0] desatualizado e deixava o diálogo de orçamento aberto. O estado da tela fica em signal e computed, atualizado com .set(), seguindo a regra da disciplina para dado assíncrono exibido na tela.",
+      "expectedSha256": "283d193e1faf125866d1970b6e566fbdb888779f0b281018efff616389209c81",
+      "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10. Corrige também permitidoCriarManutencao(), que comparava o status com 'APROVADO' enquanto o StatusEnum do back-end (e o mock) usa 'APROVADA'. Simplificação didática (RF012, RF014-RF016): dependências com inject(), um helper só para abrir e fechar diálogos e remoção de estado e da busca de status não usados. Depois de orçar ou registrar manutenção, a tela é preenchida só pelo recarregamento do back; o caminho antigo lia budgets[0] desatualizado e deixava o diálogo de orçamento aberto. O estado da tela fica em signal e computed, atualizado com .set(), seguindo a regra da disciplina para dado assíncrono exibido na tela. Compara o responsável pelo id (assignedEmployeeId) com o funcionário logado, libera manutenção só em APROVADA/REDIRECIONADA (RF014), remove a data de atribuição calculada no navegador e o preenchimento de edição, e filtra o próprio funcionário e inativos do redirecionamento (RF015).",
       "decisionDate": "2026-11-04",
       "requirement": "RF012"
     },
@@ -1050,23 +1050,24 @@
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "00a89283840b19f2c2040929a93f10c0a52fce6fc15da3430b52bfb5c2b56afa",
-      "expectedSha256": "6bdd8d1d89af0b68e69a7dfa5a85b7ecd8853530b745889f2cc700a05ab55101",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
+      "expectedSha256": "f9eb636c4de1c17aadacdc4014e70e36ad694c3134c7b5fc53b7eb5ef2b34db5",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Remove os cards de atrasadas, sem responsável e criadas hoje, que não são exigidos e mostravam 0 fixo, e lista só as solicitações ABERTA com aviso quando não houver nenhuma (RF011).",
       "decisionDate": "2026-09-17",
       "requirement": "RF011"
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.spec.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "e8ffe9512b1477b39e42e36a4ec343ae273fb7871f81b22ed8711cae9e729cb6",
-      "expectedSha256": "e8ffe9512b1477b39e42e36a4ec343ae273fb7871f81b22ed8711cae9e729cb6"
+      "expectedSha256": "4b9926cefc0737189e4697fe799ad7f51e09f1c51c9e136f2f21749a9e59ca1f",
+      "reason": "Adiciona testes do RF011: só solicitações ABERTA com o botão Efetuar Orçamento e aviso de lista vazia."
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a43cbb6884eb0c68b51f5a11c6fd4b3040b64329444092a06b4bd97210e89aad",
-      "expectedSha256": "18914280de80b01afe4ed6a1daf3b8743fe1ecb0fc958c9bf3316151a642ec7e",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem makeQuote() navegando para budget-delivery. Simplificação didática sem mudança de comportamento: remove estado, imports e a busca de status não usados. A lista fica em signal preenchida com .set() no ngOnInit. Importa o RequestCardComponent de components/request-card dentro da pasta do dashboard, único consumidor do card.",
+      "expectedSha256": "6ae0fb318480bac8818d95f055175f0eb3f4abee5411f696f10e99e27fafd712",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem makeQuote() navegando para budget-delivery. Simplificação didática sem mudança de comportamento: remove estado, imports e a busca de status não usados. A lista fica em signal preenchida com .set() no ngOnInit. Importa o RequestCardComponent de components/request-card dentro da pasta do dashboard, único consumidor do card. Troca os contadores fixos em 0 por um computed das solicitações ABERTA, usado pela contagem e pela lista (RF011).",
       "decisionDate": "2026-11-04",
       "requirement": "RF011"
     },
@@ -1159,15 +1160,15 @@
       "path": "src/app/features/employee/pages/employee-dashboard-page/components/request-card/request-card.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "4ccf2a5513dd7408a2c82003cb4b21e744e361f8d34dd517af87697cfca124a0",
-      "expectedSha256": "b580550d70412793efd28bc9cf08a70dae0ead4c67d1d09176d8ce06161087fa",
-      "reason": "Reestruturação exclusiva do CSS para a identidade Mant e padding da área de ações projetada no card (RF011), sem alteração de comportamento além da projeção de conteúdo."
+      "expectedSha256": "e7701171fc52fa013615c19a0d81db7e025bae81c10f27d5426c7041ef6e0470",
+      "reason": "Reestruturação exclusiva do CSS para a identidade Mant e padding da área de ações projetada no card (RF011), sem alteração de comportamento além da projeção de conteúdo. Esconde a área de ações quando nada é projetado."
     },
     {
       "path": "src/app/features/employee/pages/employee-dashboard-page/components/request-card/request-card.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "1e95de138f4a126636b6fcdb5c497863fba9f9f5f077a88e7305a6b62635f0da",
-      "expectedSha256": "27674f84ebd9dba5150a7ddbba4985730170ea679c4b59eb34289683b75115a5",
-      "reason": "Remove somente a imagem decorativa sem vinculo com RF013, apresenta a data como dado do card e adiciona ng-content com stopPropagation para projetar o botão Efetuar Orçamento do dashboard (RF011).",
+      "expectedSha256": "291cdb9953fa85cf545212ec7e8ff24fca187772b3dcb1c01b760f26d41969d4",
+      "reason": "Remove somente a imagem decorativa sem vinculo com RF013, apresenta a data como dado do card e adiciona ng-content com stopPropagation para projetar o botão Efetuar Orçamento do dashboard (RF011). Inclui de fato o ng-content com stopPropagation para o botão Efetuar Orçamento e limita a descrição do equipamento a 30 caracteres (RF011).",
       "decisionDate": "2026-09-16",
       "requirement": "RF011"
     },
@@ -1182,8 +1183,8 @@
       "path": "src/app/features/employee/pages/employee-dashboard-page/components/request-card/request-card.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "c0eacb6e3a594779685f99658799bd476d364a518b6bb5dd96439b38f0bb9e1c",
-      "expectedSha256": "69186677455bb36e6f8aeb5a33f91f41d4ca6af841a6ecd45c9765aa2a96880f",
-      "reason": "Simplificação didática sem mudança de comportamento: remove o mapa de categorias e a busca em /categories, que o template não usa (ele já mostra request.categoryName).",
+      "expectedSha256": "0d54fffc26046b9ab361b716ba6dd5ca0fcdea73f70c6bf66ce31af693e6a366",
+      "reason": "Simplificação didática sem mudança de comportamento: remove o mapa de categorias e a busca em /categories, que o template não usa (ele já mostra request.categoryName). Importa o TruncatePipe para limitar a descrição a 30 caracteres (RF011).",
       "decisionDate": "2026-11-04",
       "requirement": "RF011"
     },
@@ -1191,8 +1192,8 @@
       "path": "src/app/features/employee/pages/view-requests-page/view-requests-page.component.css",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "e32b7b96101c696b1ebb37a5ade94241f08aa505f1e85c67b61667b6a828a838",
-      "expectedSha256": "1023840f356f57fcbc30d20e06594b6a1df821145a765c83dda9a4907e46a2ee",
-      "reason": "Remove regras sem uso após a retirada do Kanban e dimensiona a busca e o filtro por categoria com controles Angular Material.",
+      "expectedSha256": "842bef04345028a51e4621992420dd335a38bc054c54b379f5daec4842ffbe2c",
+      "reason": "Remove regras sem uso após a retirada do Kanban e dimensiona a busca e o filtro por categoria com controles Angular Material. Estilo do botão da coluna Ações (RF013).",
       "decisionDate": "2026-09-01",
       "requirement": "RF013"
     },
@@ -1200,23 +1201,24 @@
       "path": "src/app/features/employee/pages/view-requests-page/view-requests-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "64c1f22bdc89318d17f551ee10e76d90b744d1cdbfdc0da4a03333cb8338e761",
-      "expectedSha256": "31404b1109bf529f1078e9a1b6f3c653869a33e09a0b86f09def9795670eb046",
-      "reason": "Mantém uma única listagem de RF013, preserva busca e filtro por categoria, usa Angular Material e adiciona clique na linha para navegar ao fluxo budget-delivery.",
+      "expectedSha256": "556f469fb8079893a4db2eb058840128176bddbf9ff86d656229454c3cd05831",
+      "reason": "Mantém uma única listagem de RF013, preserva busca e filtro por categoria, usa Angular Material e adiciona clique na linha para navegar ao fluxo budget-delivery. Adiciona a coluna Ações com o botão de cada estado: Efetuar Orçamento, Efetuar Manutenção ou Finalizar Solicitação (RF013).",
       "decisionDate": "2026-09-01",
       "requirement": "RF013"
     },
     {
       "path": "src/app/features/employee/pages/view-requests-page/view-requests-page.component.spec.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "92259311f119d745ed899c7ac4cb52533b6accd2e299f441211ad5e55e7f4213",
-      "expectedSha256": "92259311f119d745ed899c7ac4cb52533b6accd2e299f441211ad5e55e7f4213"
+      "expectedSha256": "c128a73696085c44d4b17fba67e023eb568ce4aef05ef15c2a7531ffb5a6588c",
+      "reason": "Adiciona testes da ação por estado da listagem (RF013)."
     },
     {
       "path": "src/app/features/employee/pages/view-requests-page/view-requests-page.component.ts",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "f274ebd55bb6b3b3ea03e0600c6dde8e2c6acb16dae35de3e924757da9d29994",
-      "expectedSha256": "850271af21c04383d3c553adbb4da97d4bb188e0c9664a619a1848c156657592",
-      "reason": "Mantém somente a listagem de RF013, preserva a busca e o filtro por categoria incorporados à main, usa controles Angular Material e navega para /employee/budget-delivery/:id ao selecionar uma solicitação. Simplificação didática sem mudança de comportamento: declara implements AfterViewInit.",
+      "expectedSha256": "4216c83952387836fea621f1a664ecea7d2e8f97f33a48bdf70c6fe0b18e024e",
+      "reason": "Mantém somente a listagem de RF013, preserva a busca e o filtro por categoria incorporados à main, usa controles Angular Material e navega para /employee/budget-delivery/:id ao selecionar uma solicitação. Simplificação didática sem mudança de comportamento: declara implements AfterViewInit. Define a ação por estado da coluna Ações e impede que o clique no botão dispare também o clique da linha (RF013).",
       "decisionDate": "2026-11-04",
       "requirement": "RF013"
     },
@@ -1424,9 +1426,10 @@
     },
     {
       "path": "src/app/shared/models/maintenance-request.models.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d",
-      "expectedSha256": "c64a1c081e873126ca5c2fd34d54b3d16088d9799ce37dced814986bcc36ef9d"
+      "expectedSha256": "5bfed0d696285ad5dda33a73a966c4f9a6df011fa9d9adda9108ac8857867967",
+      "reason": "Tipa o cliente do detalhe do funcionário com os campos do ClientDTO do back e inclui assignedEmployeeId para comparar o responsável pelo id (RF012/RF014/RF015)."
     },
     {
       "path": "src/app/shared/models/register-request.ts",
