@@ -110,6 +110,8 @@ export class BudgetDeliveryComponent implements OnInit {
   }
 
   onVoltarPaginaInicial() {
+    // Navegar pelo router não fecha diálogo aberto (ex.: o de finalização), então fecha antes.
+    this.dialog.closeAll();
     this.router.navigate(['/employee/dashboard']);
   }
 
@@ -129,6 +131,12 @@ export class BudgetDeliveryComponent implements OnInit {
 
   cancelarDialog() {
     this.fecharModal();
+  }
+
+  // O back só aceita trocar o responsável antes da manutenção (APROVADA ou REDIRECIONADA).
+  podeTrocarResponsavel(): boolean {
+    const status = this.request()?.status.nome;
+    return status === 'APROVADA' || status === 'REDIRECIONADA';
   }
 
   mesmoResponsavelSelecionado(): boolean {

@@ -93,7 +93,7 @@
             <!-- Exibe cargo se existir na model, senão omite -->
             <div *ngIf="dataAtribuicao()"><b>Atribuído em:</b> {{ dataAtribuicao() }}</div>
           </div>
-          <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
+          <button mat-stroked-button color="primary" class="atribuir-btn" *ngIf="podeTrocarResponsavel()" (click)="abrirDialog(dialogTemplate)">
             <mat-icon>sync_alt</mat-icon>
             Trocar Responsável
           </button>
