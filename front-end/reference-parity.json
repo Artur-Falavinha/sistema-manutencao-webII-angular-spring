@@ -991,18 +991,17 @@
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.css",
-      "classification": "VISUAL_ONLY",
+      "classification": "IDENTICAL",
       "referenceSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95",
-      "expectedSha256": "196063c5dc96ca12ec0e849da32d7675325ecef902cf25e7e8dd9f259c4a7f73",
-      "reason": "Ajustes visuais nos botoes Material de budget-delivery sem sobrescrever tema; mantem layout RF011-RF016."
+      "expectedSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95"
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f",
-      "expectedSha256": "e7dae05affe2bbf814d4c5bd76692ca3f8018d5d93694ee00ea9e5b19ffcf000",
-      "reason": "Mantém as validações de responsável, orçamento e manutenção da PR #38. O hash anterior do manifesto era o da main, não o da referência. Lê o estado da tela como signals (request(), temOrcamento() etc.), acompanhando o componente.",
-      "decisionDate": "2026-11-04"
+      "expectedSha256": "b510b90b2b46b3390dc78070e23d2bb00584082fdff40b7d19f85d33c7d80bf9",
+      "reason": "Mantém as validações de responsável, orçamento e manutenção da PR #38. O hash anterior do manifesto era o da main, não o da referência. Lê o estado da tela como signals (request(), temOrcamento() etc.), acompanhando o componente. Esconde o botão Trocar Responsável fora de APROVADA/REDIRECIONADA, os únicos estados em que o back aceita o redirecionamento.",
+      "decisionDate": "2026-11-06"
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.spec.ts",
@@ -1016,9 +1015,9 @@
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "20d81b067718cc656f8ae5d8444304987e9488d153857a208e6ffda4cfefc47b",
-      "expectedSha256": "a37333d8cc8b0caf377e9830dcb38aeb0ef104eff8ceefd28ebd16fc31fafae3",
-      "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10. Corrige também permitidoCriarManutencao(), que comparava o status com 'APROVADO' enquanto o StatusEnum do back-end (e o mock) usa 'APROVADA'. Simplificação didática (RF012, RF014-RF016): dependências com inject(), um helper só para abrir e fechar diálogos e remoção de estado e da busca de status não usados. Depois de orçar ou registrar manutenção, a tela é preenchida só pelo recarregamento do back; o caminho antigo lia budgets[0] desatualizado e deixava o diálogo de orçamento aberto. O estado da tela fica em signal e computed, atualizado com .set(), seguindo a regra da disciplina para dado assíncrono exibido na tela.",
-      "decisionDate": "2026-11-04",
+      "expectedSha256": "d8c5edee5c8edf5965983e6f441d87ae4f2c7e1b83e3285d9ec0c23655f9362d",
+      "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10. Corrige também permitidoCriarManutencao(), que comparava o status com 'APROVADO' enquanto o StatusEnum do back-end (e o mock) usa 'APROVADA'. Simplificação didática (RF012, RF014-RF016): dependências com inject(), um helper só para abrir e fechar diálogos e remoção de estado e da busca de status não usados. Depois de orçar ou registrar manutenção, a tela é preenchida só pelo recarregamento do back; o caminho antigo lia budgets[0] desatualizado e deixava o diálogo de orçamento aberto. O estado da tela fica em signal e computed, atualizado com .set(), seguindo a regra da disciplina para dado assíncrono exibido na tela. Esconde o botão Trocar Responsável fora de APROVADA/REDIRECIONADA, os únicos estados em que o back aceita o redirecionamento.",
+      "decisionDate": "2026-11-06",
       "requirement": "RF012"
     },
     {

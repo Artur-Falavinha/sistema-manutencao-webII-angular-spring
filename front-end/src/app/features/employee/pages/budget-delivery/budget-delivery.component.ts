@@ -131,6 +131,12 @@ export class BudgetDeliveryComponent implements OnInit {
     this.fecharModal();
   }
 
+  // O back só aceita trocar o responsável antes da manutenção (APROVADA ou REDIRECIONADA).
+  podeTrocarResponsavel(): boolean {
+    const status = this.request()?.status.nome;
+    return status === 'APROVADA' || status === 'REDIRECIONADA';
+  }
+
   mesmoResponsavelSelecionado(): boolean {
     const atual = this.responsavel();
     return !!this.selectedFuncionario && !!atual && this.selectedFuncionario.id === atual.id;
