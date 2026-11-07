@@ -991,9 +991,12 @@
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.css",
-      "classification": "IDENTICAL",
+      "classification": "VISUAL_ONLY",
       "referenceSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95",
-      "expectedSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95"
+      "expectedSha256": "b0ed02534933a9ce9dbc8bdafeebbbfc81a0763cd8adfaf526c33e80c44d9655",
+      "reason": "Parte do CSS da referência (que bate com o HTML) e tira a altura fixa e a centralização forçada dos cards de responsável e de orçamento/manutenção: os cards acompanham o conteúdo, ficam com a mesma largura e empilham em telas estreitas.",
+      "decisionDate": "2026-11-06",
+      "requirement": "RF012"
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
