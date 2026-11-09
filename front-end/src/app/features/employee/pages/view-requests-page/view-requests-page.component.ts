@@ -105,7 +105,7 @@ export class ViewRequestsPageComponent implements AfterViewInit {
     }
   }
 
-  // O datepicker entrega Date (formato pt-BR na tela); o filtro guarda AAAA-MM-DD.
+  // O datepicker devolve Date; o filtro guarda AAAA-MM-DD
   onPeriodStartChange(value: Date | null): void {
     this.periodStart.set(dateToIso(value) || null);
   }
@@ -130,7 +130,7 @@ export class ViewRequestsPageComponent implements AfterViewInit {
     this.router.navigate(['/employee/budget-delivery', request.id]);
   }
 
-  // RF013: ação disponível para cada estado; os demais estados não têm botão.
+  // RF013: texto do botão de ação por status; null = sem botão
   actionLabel(request: Request): string | null {
     switch (request.statusName) {
       case 'ABERTA':

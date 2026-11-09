@@ -19,7 +19,7 @@ export class EmployeeDashboardPageComponent implements OnInit {
   private requestService = inject(MaintenanceRequestService);
 
   requests = signal<Request[]>([]);
-  // RF011: a página inicial mostra só as solicitações ABERTA, na ordem crescente que vem do back.
+  // RF011: só as ABERTA, na ordem em que o back envia
   openRequests = computed(() => this.requests().filter(req => req.statusName === 'ABERTA'));
 
   ngOnInit(): void {

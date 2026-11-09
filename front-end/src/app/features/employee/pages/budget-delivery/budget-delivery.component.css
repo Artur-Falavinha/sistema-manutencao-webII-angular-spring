@@ -104,7 +104,7 @@ body, .main-content {
   min-height: 44px;
 }
   
-/* Voltar (link no topo à esquerda) */
+/* Link Voltar */
 .voltar-pagina-inicial {
   display: flex; align-items: center; gap: 6px; color: var(--color-primary-default); font-size: 16px; font-family: Inter, sans-serif;
   font-weight: 600; line-height: 24px; text-decoration: none; cursor: pointer;
@@ -123,13 +123,13 @@ body, .main-content {
   }
 }
   
-/* Dialog padrão */
+/* Caixa de diálogo de redirecionamento */
 .dialog-container { width: 350px; padding: 24px 24px 16px 24px; display: flex; flex-direction: column; align-items: stretch; }
 .dialog-title { font-family: Inter, sans-serif; font-size: 22px; font-weight: 600; margin-bottom: 16px; }
 .dialog-field { margin-bottom: 24px; }
 .custom-dialog .mat-dialog-container { border-radius: 16px; padding: 0; }
   
-/* Dialog Efetuar Orçamento */
+/* Caixa de diálogo Efetuar Orçamento */
 .orcamento-dialog { width: 560px; padding: 24px; background: var(--color-background-card, #FAFAFA); border-radius: 16px; display: flex; flex-direction: column; gap: 24px; }
 .orcamento-dialog-header { display: flex; align-items: center; justify-content: space-between; }
 .orcamento-dialog-title { color: #3E4C4B; font-size: 24px; font-family: Inter, sans-serif; font-weight: 500; line-height: 28px; }
@@ -149,7 +149,7 @@ body, .main-content {
 }
 .orcamento-dialog-confirm[disabled] { opacity: 0.6; }
   
-/* Dialog Efetuar Manutenção */
+/* Caixa de diálogo Efetuar Manutenção */
 .manutencao-dialog { width: 560px; padding: 24px; background: var(--color-background-card, #FAFAFA); border-radius: 16px; display: flex; flex-direction: column; gap: 24px; }
 .manutencao-dialog-header { display: flex; align-items: center; justify-content: space-between; }
 .manutencao-dialog-title { color: #3E4C4B; font-size: 24px; font-family: Inter, sans-serif; font-weight: 500; line-height: 28px; }
@@ -169,7 +169,7 @@ body, .main-content {
 }
 .manutencao-dialog-confirm[disabled] { opacity: 0.6; }
   
-/* Dialog Finalização */
+/* Caixa de diálogo Finalização */
 .finalizacao-dialog {
   width: 360px; padding: 24px; background: var(--color-background-card, #FAFAFA);
   border-radius: 16px; display: flex; flex-direction: column; align-items: center; gap: 16px;
@@ -200,8 +200,7 @@ body, .main-content {
   grid-column: span 2;
 }
 
-/* Regras das classes que o HTML usa nos cards de baixo e nos diálogos */
-/* Cards inferiores: altura acompanha o conteúdo, os dois cards ficam da mesma altura */
+/* Cards de responsável e de orçamento/manutenção */
 .cards-row { display: flex; align-items: stretch; gap: 24px; width: 100%; }
 .cards-row > * { flex: 1 1 50%; min-width: 0; box-sizing: border-box; }
 
@@ -224,7 +223,7 @@ body, .main-content {
   color: #3E4C4B; font-size: 16px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px;
 }
 
-/* Botão Atribuir/Trocar Responsável (stroked) na cor padrão, sempre no rodapé do card */
+/* Botão Redirecionar, no rodapé do card */
 .atribuir-btn {
   width: 100%; height: 48px; margin-top: auto; border-radius: 8px; border-width: 2px;
   border-color: var(--color-primary-default) !important;
@@ -254,7 +253,7 @@ body, .main-content {
   width: 100%; height: 48px;
 }
 
-/* Manutenção com cor padrão */
+/* Botão Efetuar Manutenção */
 .manutencao-btn {
   width: 100%; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600;
   background: var(--color-primary-default) !important; color: #fff !important; border: none; margin-top: 12px;
@@ -266,7 +265,7 @@ body, .main-content {
 .orcamento-servicos-label { color: #627877; font-family: Inter, sans-serif; font-size: 18px; font-weight: 600; margin-top: 12px; text-align: center; }
 .orcamento-servicos { color: #374343; font-family: Roboto, sans-serif; font-size: 18px; font-weight: 400; text-align: center; }
 
-/* Mais contraste no card de Manutenção */
+/* Manutenção registrada */
 .manutencao-descricao, .manutencao-orientacao {
   display: flex; flex-direction: column; gap: 4px;
   color: #3E4C4B !important;

@@ -42,14 +42,14 @@
 
 .category-filter-field { inline-size: 100%; }
 
-/* Período: datas uma embaixo da outra, aviso quebra linha dentro do painel */
+/* Filtro por período */
 .date-filter-toggle { display: flex; }
 .date-filter-toggle mat-button-toggle { flex: 1; }
 .period-filter-fields { display: grid; gap: 0.5rem; }
 .period-date-field { inline-size: 100%; }
 .period-error { color: var(--color-danger, #b3261e); font-size: 0.875rem; }
 
-/* Cor de fundo vem do status; texto branco para dar contraste em qualquer cor */
+/* Fundo vem da cor do status */
 .status-badge { color: #fff; white-space: nowrap; }
 
 .list-section {

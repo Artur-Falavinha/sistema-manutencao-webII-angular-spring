@@ -1011,14 +1011,14 @@
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95",
-      "expectedSha256": "dd6437e677d7e67b0e1a89645235bf1b27c3f1854652ac150396795ccdd68f68",
+      "expectedSha256": "c7d5b42eaa05fa64e65b2714db95a88f74fecb9f3aaa90e238ea626cc0573607",
       "reason": "Ajustes visuais nos botoes Material de budget-delivery sem sobrescrever tema; mantem layout RF011-RF016. Adiciona o layout em grade dos dados completos do cliente (RF012/RF014). Inclui as regras das classes que o HTML usa nos cards de responsável e de orçamento/manutenção e nos botões dos diálogos, que tinham ficado sem estilo; os dois cards ficam com a mesma largura e empilham em telas estreitas. Remove as regras de classes que o HTML não usa mais (tab-panel, panel-actions, field-label e afins). Fontes, espaçamentos e alturas mínimas menores para a tela caber sem zoom; o endereço do cliente divide a linha com e-mail, CPF e telefone."
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f",
-      "expectedSha256": "58003779c0ada4ce20bf485a91e2f5f163b649de44506bab539d4f6585d6f639",
+      "expectedSha256": "f5ecfb04fa667995f68b0451630caacae7ada6c4ea3bd4de9ce385e3935b40ff",
       "reason": "Mantém as validações de responsável, orçamento e manutenção da PR #38. O hash anterior do manifesto era o da main, não o da referência. Lê o estado da tela como signals (request(), temOrcamento() etc.), acompanhando o componente. Mostra os dados completos do cliente (RF012/RF014), troca o diálogo de atribuição pelo de Redirecionar Manutenção visível só ao responsável antes da manutenção (RF015), sem a opção Nenhum, remove o botão Editar Manutenção (fora do enunciado) e desabilita Efetuar Manutenção fora de APROVADA/REDIRECIONADA. Esconde os botões de orçar e de efetuar manutenção de quem não é o responsável e mostra quem pode fazer, em vez de deixar clicar e receber 403 do back.",
       "decisionDate": "2026-11-08"
     },
@@ -1034,7 +1034,7 @@
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "20d81b067718cc656f8ae5d8444304987e9488d153857a208e6ffda4cfefc47b",
-      "expectedSha256": "40dd698da824580ea7c36915323ebfe0d3a00975c81573d90a0d2ad67cfaec5a",
+      "expectedSha256": "08792fa1ffef7036c3107d68b2479dfa809a440242d564b3d50e47ee412469de",
       "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10. Corrige também permitidoCriarManutencao(), que comparava o status com 'APROVADO' enquanto o StatusEnum do back-end (e o mock) usa 'APROVADA'. Simplificação didática (RF012, RF014-RF016): dependências com inject(), um helper só para abrir e fechar diálogos e remoção de estado e da busca de status não usados. Depois de orçar ou registrar manutenção, a tela é preenchida só pelo recarregamento do back; o caminho antigo lia budgets[0] desatualizado e deixava o diálogo de orçamento aberto. O estado da tela fica em signal e computed, atualizado com .set(), seguindo a regra da disciplina para dado assíncrono exibido na tela. Compara o responsável pelo id (assignedEmployeeId) com o funcionário logado, libera manutenção só em APROVADA/REDIRECIONADA (RF014), remove a data de atribuição calculada no navegador e o preenchimento de edição, e filtra o próprio funcionário e inativos do redirecionamento (RF015). Voltar ao dashboard fecha antes o diálogo aberto (ex.: o de finalização), já que navegar pelo router não fecha diálogo (RF016). podeOrcar() espelha a regra do back: só orça quem é o responsável, ou qualquer um se ainda não há responsável (RF012).",
       "decisionDate": "2026-11-08",
       "requirement": "RF012"
@@ -1066,7 +1066,7 @@
       "path": "src/app/features/employee/pages/employee-dashboard-page/employee-dashboard-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a43cbb6884eb0c68b51f5a11c6fd4b3040b64329444092a06b4bd97210e89aad",
-      "expectedSha256": "6ae0fb318480bac8818d95f055175f0eb3f4abee5411f696f10e99e27fafd712",
+      "expectedSha256": "90c34397f7fd9cc42c6c4962da21c7308482ddb58e84caf6d9a7235fe0763b92",
       "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem makeQuote() navegando para budget-delivery. Simplificação didática sem mudança de comportamento: remove estado, imports e a busca de status não usados. A lista fica em signal preenchida com .set() no ngOnInit. Importa o RequestCardComponent de components/request-card dentro da pasta do dashboard, único consumidor do card. Troca os contadores fixos em 0 por um computed das solicitações ABERTA, usado pela contagem e pela lista (RF011).",
       "decisionDate": "2026-11-04",
       "requirement": "RF011"
@@ -1167,7 +1167,7 @@
       "path": "src/app/features/employee/pages/employee-dashboard-page/components/request-card/request-card.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "1e95de138f4a126636b6fcdb5c497863fba9f9f5f077a88e7305a6b62635f0da",
-      "expectedSha256": "291cdb9953fa85cf545212ec7e8ff24fca187772b3dcb1c01b760f26d41969d4",
+      "expectedSha256": "f8dd8ef5c535a225b4159db2cb1e10c899c9a61b7cc8d3763dcb98c85ce517b6",
       "reason": "Remove somente a imagem decorativa sem vinculo com RF013, apresenta a data como dado do card e adiciona ng-content com stopPropagation para projetar o botão Efetuar Orçamento do dashboard (RF011). Inclui de fato o ng-content com stopPropagation para o botão Efetuar Orçamento e limita a descrição do equipamento a 30 caracteres (RF011).",
       "decisionDate": "2026-09-16",
       "requirement": "RF011"
@@ -1192,7 +1192,7 @@
       "path": "src/app/features/employee/pages/view-requests-page/view-requests-page.component.css",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "e32b7b96101c696b1ebb37a5ade94241f08aa505f1e85c67b61667b6a828a838",
-      "expectedSha256": "9d70c069b1239abbfad3a16186066f56427fb11e00a28f325c6a9c8f63a3e572",
+      "expectedSha256": "1f173d34a19f20ecf550f0cb2d2dd08f9477af9e12f3c1af2a0495aed62f9dd0",
       "reason": "Remove regras sem uso após a retirada do Kanban e dimensiona a busca e o filtro por categoria com controles Angular Material. Estilo do botão da coluna Ações (RF013). O painel de filtros tem largura fixa com as datas do Período uma embaixo da outra, o selo de status ganha texto branco para ficar legível e a busca não estica no celular.",
       "decisionDate": "2026-11-08",
       "requirement": "RF013"
@@ -1217,7 +1217,7 @@
       "path": "src/app/features/employee/pages/view-requests-page/view-requests-page.component.ts",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "f274ebd55bb6b3b3ea03e0600c6dde8e2c6acb16dae35de3e924757da9d29994",
-      "expectedSha256": "9330a23b411cb592805dfb17f51765253439ee198e933d80306d36ccc736fd29",
+      "expectedSha256": "f6de35a807c57131801940bd30f0af8bc7c8f70070daf00ca46f02db06d92c77",
       "reason": "Mantém somente a listagem de RF013, preserva a busca e o filtro por categoria incorporados à main, usa controles Angular Material e navega para /employee/budget-delivery/:id ao selecionar uma solicitação. Simplificação didática sem mudança de comportamento: declara implements AfterViewInit. Define a ação por estado da coluna Ações e impede que o clique no botão dispare também o clique da linha (RF013). As datas do filtro por período usam o datepicker do Angular Material com o formato pt-BR do projeto, em vez do campo nativo que segue a língua do navegador.",
       "decisionDate": "2026-11-09",
       "requirement": "RF013"

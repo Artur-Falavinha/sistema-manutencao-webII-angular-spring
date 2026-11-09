@@ -60,7 +60,7 @@ export class BudgetDeliveryComponent implements OnInit {
   readonly MANUTENCAO_MIN_LENGTH = 10;
   readonly MANUTENCAO_MAX_LENGTH = 500;
 
-  // Estado da tela: dado que chega do back e aparece na tela fica em signal
+  // Dados exibidos na tela, atualizados com .set()
   request = signal<EmployeeRequestDetailDTO | null>(null);
   isLoading = signal(true);
   funcionariosDisponiveis = signal<Employee[]>([]);
@@ -68,14 +68,14 @@ export class BudgetDeliveryComponent implements OnInit {
   responsavel = signal<Pick<Employee, 'id' | 'name'> | null>(null);
   selectedTab = 0;
 
-  // Valores derivados da solicitação: recalculam sozinhos a cada request.set()
+  // Derivados de request(), recalculados a cada request.set()
   temOrcamento = computed(() => !!this.request()?.budgets?.length);
   valorOrcamento = computed(() => this.request()?.budgets?.[0]?.total ?? 0);
   servicosInclusos = computed(() => this.request()?.budgets?.[0]?.services ?? '');
   temManutencao = computed(() => !!this.request()?.maintenanceRecord);
   descricaoManutencao = computed(() => this.request()?.maintenanceRecord?.maintenanceDescription ?? '');
   orientacaoCliente = computed(() => this.request()?.maintenanceRecord?.clientGuidelines ?? 'N/A');
-  // RF015: o funcionário logado nunca aparece como destino do redirecionamento.
+  // RF015: destinos do redirecionamento, sem o funcionário logado e sem inativos
   funcionariosParaRedirecionar = computed(() =>
     this.funcionariosDisponiveis().filter(f => f.active !== false && f.id !== this.idUsuarioLogado())
   );
@@ -98,7 +98,7 @@ export class BudgetDeliveryComponent implements OnInit {
     }
   }
 
-  // Carrega a solicitação do back; os cards de orçamento e manutenção se atualizam pelos computed
+  // Busca a solicitação e preenche request e responsavel
   loadRequestDetails(id: number): void {
     this.requestService.getRequestByIdForEmployee(id).subscribe({
       next: (data) => {
@@ -144,12 +144,12 @@ export class BudgetDeliveryComponent implements OnInit {
     this.dialogRef?.close();
   }
 
-  // RF015 · Redirecionar manutenção (só o responsável atual, antes da manutenção)
-  // O back só aceita orçamento de quem é o responsável, ou de qualquer um se ainda não há responsável.
+  // Mesma regra do back: orça o responsável, ou qualquer um se ainda não há responsável
   podeOrcar(): boolean {
     return !this.responsavel() || this.souResponsavel();
   }
 
+  // RF015 · Redirecionar: só o responsável, antes da manutenção
   podeRedirecionar(): boolean {
     return this.permitidoCriarManutencao() && this.souResponsavel();
   }
@@ -249,7 +249,7 @@ export class BudgetDeliveryComponent implements OnInit {
     return len >= this.MANUTENCAO_MIN_LENGTH && len <= this.MANUTENCAO_MAX_LENGTH;
   }
 
-  // Campo vazio não mostra erro: o aviso só aparece depois que o funcionário começa a digitar.
+  // Campo vazio não conta como erro de tamanho
   private tamanhoInvalido(texto: string): boolean {
     return texto.trim().length > 0 && !this.tamanhoValido(texto);
   }

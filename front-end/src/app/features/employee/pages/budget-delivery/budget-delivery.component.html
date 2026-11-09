@@ -1,11 +1,11 @@
-<!-- Loading State (Opcional, simples) -->
+<!-- Carregando -->
 <div *ngIf="isLoading()" style="display: flex; justify-content: center; padding: 20px;">
   <span>Carregando solicitação...</span>
 </div>
 
-<!-- Conteúdo Principal (Só exibe quando carregar) -->
+<!-- Solicitação carregada -->
 <div *ngIf="!isLoading() && request() as request">
-  <!-- Ações superiores -->
+  <!-- Voltar e Finalizar -->
   <div class="top-actions">
     <a class="voltar-pagina-inicial" (click)="onVoltarPaginaInicial()">
       <mat-icon class="voltar-icon">arrow_back</mat-icon>
@@ -35,7 +35,7 @@
         </div>
         <span class="detalhes-date">{{ request.requestDate | date:'dd/MM/yyyy \'às\' HH:mm:ss' }}</span>
         
-        <!-- Badge de Status usando a cor vinda do backend -->
+        <!-- Cor do status vem do back -->
         <div class="detalhes-status">
           <span class="detalhes-status-label">Status</span>
           <span class="detalhes-status-badge" 
@@ -71,7 +71,7 @@
         </span>
       </div>
 
-      <!-- RF012/RF014: dados completos do cliente -->
+      <!-- Dados do cliente -->
       <div class="detalhes-cliente">
         <span class="detalhes-defeito-label">Dados do Cliente</span>
         <div class="detalhes-cliente-grid">
@@ -115,7 +115,7 @@
           <div class="tecnico-content">
             <div><b>Nome:</b> {{ responsavel()!.name }}</div>
           </div>
-          <!-- RF015: só o responsável atual redireciona, antes da manutenção -->
+          <!-- RF015: só o responsável, antes da manutenção -->
           <button *ngIf="podeRedirecionar()" mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
             <mat-icon>sync_alt</mat-icon>
             Redirecionar Manutenção
@@ -197,7 +197,7 @@
   </div>
 </div>
 
-<!-- Dialog: Atribuir Responsável -->
+<!-- Caixa de diálogo: Redirecionar Manutenção -->
 <ng-template #dialogTemplate>
   <div class="dialog-container">
     <h2 class="dialog-title">Redirecionar Manutenção</h2>
@@ -224,7 +224,7 @@
   </div>
 </ng-template>
 
-<!-- Dialog: Efetuar Orçamento -->
+<!-- Caixa de diálogo: Efetuar Orçamento -->
 <ng-template #orcamentoDialogTemplate>
   <div class="orcamento-dialog">
     <div class="orcamento-dialog-header">
@@ -237,7 +237,7 @@
     <div class="orcamento-dialog-body">
       <mat-form-field appearance="outline" class="orcamento-dialog-field full">
         <mat-label>*Serviços Inclusos na Manutenção</mat-label>
-        <!-- INTEGRAÇÃO: Iterando sobre serviços da API e usando propriedades corretas (name/value) -->
+        <!-- Serviços vindos de GET /services -->
         <mat-select
           [(ngModel)]="servicosSelecionados"
           multiple
@@ -286,7 +286,7 @@
   </div>
 </ng-template>
 
-<!-- Dialog: Efetuar Manutenção -->
+<!-- Caixa de diálogo: Efetuar Manutenção -->
 <ng-template #manutencaoDialogTemplate>
   <div class="manutencao-dialog">
     <div class="manutencao-dialog-header">
@@ -349,7 +349,7 @@
   </div>
 </ng-template>
 
-<!-- Dialog: Finalização da Solicitação -->
+<!-- Caixa de diálogo: Finalização -->
 <ng-template #finalizacaoDialogTemplate>
   <div class="finalizacao-dialog">
     <div class="finalizacao-icon">
