@@ -144,7 +144,9 @@
 
               <ng-template #orcamentoVazio>
                 <div class="orcamento-empty">Nenhum Orçamento Efetuado</div>
+                <div *ngIf="!podeOrcar()" class="orcamento-empty">Só {{ responsavel()?.name }}, responsável pela solicitação, pode orçar.</div>
                 <button
+                  *ngIf="podeOrcar()"
                   class="button-primary label_large orcamento-btn"
                   (click)="abrirDialogOrcamento(orcamentoDialogTemplate)"
                 >
@@ -174,7 +176,9 @@
 
               <ng-template #manutencaoVazio>
                 <div class="orcamento-empty">Nenhuma Manutenção Efetuada</div>
+                <div *ngIf="permitidoCriarManutencao() && !souResponsavel()" class="orcamento-empty">Só {{ responsavel()?.name }}, responsável pela solicitação, pode efetuar a manutenção.</div>
                 <button
+                  *ngIf="souResponsavel()"
                   color="primary"
                   [style.cursor]="permitidoCriarManutencao() ? 'pointer' : 'not-allowed'"
                   class="button-primary label_large manutencao-btn"

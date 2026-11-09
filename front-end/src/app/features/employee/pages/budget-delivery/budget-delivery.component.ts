@@ -145,6 +145,11 @@ export class BudgetDeliveryComponent implements OnInit {
   }
 
   // RF015 · Redirecionar manutenção (só o responsável atual, antes da manutenção)
+  // O back só aceita orçamento de quem é o responsável, ou de qualquer um se ainda não há responsável.
+  podeOrcar(): boolean {
+    return !this.responsavel() || this.souResponsavel();
+  }
+
   podeRedirecionar(): boolean {
     return this.permitidoCriarManutencao() && this.souResponsavel();
   }
