@@ -1201,9 +1201,9 @@
       "path": "src/app/features/employee/pages/view-requests-page/view-requests-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "64c1f22bdc89318d17f551ee10e76d90b744d1cdbfdc0da4a03333cb8338e761",
-      "expectedSha256": "556f469fb8079893a4db2eb058840128176bddbf9ff86d656229454c3cd05831",
-      "reason": "Mantém uma única listagem de RF013, preserva busca e filtro por categoria, usa Angular Material e adiciona clique na linha para navegar ao fluxo budget-delivery. Adiciona a coluna Ações com o botão de cada estado: Efetuar Orçamento, Efetuar Manutenção ou Finalizar Solicitação (RF013).",
-      "decisionDate": "2026-09-01",
+      "expectedSha256": "44a3f463e173141753b610c9080926e1dcc6e589423bc05d3b089af2bb66db71",
+      "reason": "Mantém uma única listagem de RF013, preserva busca e filtro por categoria, usa Angular Material e adiciona clique na linha para navegar ao fluxo budget-delivery. Adiciona a coluna Ações com o botão de cada estado: Efetuar Orçamento, Efetuar Manutenção ou Finalizar Solicitação (RF013). As datas do filtro por período usam o datepicker do Angular Material com o formato pt-BR do projeto, em vez do campo nativo que segue a língua do navegador.",
+      "decisionDate": "2026-11-09",
       "requirement": "RF013"
     },
     {
@@ -1217,9 +1217,9 @@
       "path": "src/app/features/employee/pages/view-requests-page/view-requests-page.component.ts",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "f274ebd55bb6b3b3ea03e0600c6dde8e2c6acb16dae35de3e924757da9d29994",
-      "expectedSha256": "4216c83952387836fea621f1a664ecea7d2e8f97f33a48bdf70c6fe0b18e024e",
-      "reason": "Mantém somente a listagem de RF013, preserva a busca e o filtro por categoria incorporados à main, usa controles Angular Material e navega para /employee/budget-delivery/:id ao selecionar uma solicitação. Simplificação didática sem mudança de comportamento: declara implements AfterViewInit. Define a ação por estado da coluna Ações e impede que o clique no botão dispare também o clique da linha (RF013).",
-      "decisionDate": "2026-11-04",
+      "expectedSha256": "9330a23b411cb592805dfb17f51765253439ee198e933d80306d36ccc736fd29",
+      "reason": "Mantém somente a listagem de RF013, preserva a busca e o filtro por categoria incorporados à main, usa controles Angular Material e navega para /employee/budget-delivery/:id ao selecionar uma solicitação. Simplificação didática sem mudança de comportamento: declara implements AfterViewInit. Define a ação por estado da coluna Ações e impede que o clique no botão dispare também o clique da linha (RF013). As datas do filtro por período usam o datepicker do Angular Material com o formato pt-BR do projeto, em vez do campo nativo que segue a língua do navegador.",
+      "decisionDate": "2026-11-09",
       "requirement": "RF013"
     },
     {
