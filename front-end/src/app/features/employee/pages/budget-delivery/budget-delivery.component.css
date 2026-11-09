@@ -239,7 +239,6 @@ body, .main-content {
 }
 
 /* Abas */
-.orcamento-tabs { width: 100%; }
 .orcamento-content, .manutencao-content {
   padding: 24px; display: flex; flex-direction: column; align-items: center;
   gap: 8px; width: 100%; min-height: 160px; justify-content: center; box-sizing: border-box;

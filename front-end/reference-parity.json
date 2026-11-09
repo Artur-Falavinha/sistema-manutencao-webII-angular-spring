@@ -1011,14 +1011,14 @@
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95",
-      "expectedSha256": "e8d556801b50117adb0ca4a8a73fa883120499d6eefb8d775d5fca0d7b1d66c9",
+      "expectedSha256": "dd6437e677d7e67b0e1a89645235bf1b27c3f1854652ac150396795ccdd68f68",
       "reason": "Ajustes visuais nos botoes Material de budget-delivery sem sobrescrever tema; mantem layout RF011-RF016. Adiciona o layout em grade dos dados completos do cliente (RF012/RF014). Inclui as regras das classes que o HTML usa nos cards de responsável e de orçamento/manutenção e nos botões dos diálogos, que tinham ficado sem estilo; os dois cards ficam com a mesma largura e empilham em telas estreitas. Remove as regras de classes que o HTML não usa mais (tab-panel, panel-actions, field-label e afins). Fontes, espaçamentos e alturas mínimas menores para a tela caber sem zoom; o endereço do cliente divide a linha com e-mail, CPF e telefone."
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "3142628ead35c8d22c3b6fcda3799d9ed69a32062e508a80d3e98eb812cef51f",
-      "expectedSha256": "3aeac5ba76d609effd70fc6c116322d3320b584c1f0246763a65f427b3267a54",
+      "expectedSha256": "58003779c0ada4ce20bf485a91e2f5f163b649de44506bab539d4f6585d6f639",
       "reason": "Mantém as validações de responsável, orçamento e manutenção da PR #38. O hash anterior do manifesto era o da main, não o da referência. Lê o estado da tela como signals (request(), temOrcamento() etc.), acompanhando o componente. Mostra os dados completos do cliente (RF012/RF014), troca o diálogo de atribuição pelo de Redirecionar Manutenção visível só ao responsável antes da manutenção (RF015), sem a opção Nenhum, remove o botão Editar Manutenção (fora do enunciado) e desabilita Efetuar Manutenção fora de APROVADA/REDIRECIONADA. Esconde os botões de orçar e de efetuar manutenção de quem não é o responsável e mostra quem pode fazer, em vez de deixar clicar e receber 403 do back.",
       "decisionDate": "2026-11-08"
     },

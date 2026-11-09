@@ -176,7 +176,7 @@
 
               <ng-template #manutencaoVazio>
                 <div class="orcamento-empty">Nenhuma Manutenção Efetuada</div>
-                <div *ngIf="permitidoCriarManutencao() && !souResponsavel()" class="orcamento-empty">Só {{ responsavel()?.name }}, responsável pela solicitação, pode efetuar a manutenção.</div>
+                <div *ngIf="permitidoCriarManutencao() && responsavel() && !souResponsavel()" class="orcamento-empty">Só {{ responsavel()?.name }}, responsável pela solicitação, pode efetuar a manutenção.</div>
                 <button
                   *ngIf="souResponsavel()"
                   color="primary"
