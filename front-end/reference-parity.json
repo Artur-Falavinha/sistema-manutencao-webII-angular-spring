@@ -1011,8 +1011,8 @@
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95",
-      "expectedSha256": "7a2c87c80ddc9ed86008c443e75f74b834715f68db141313faed8dbb6a481a36",
-      "reason": "Ajustes visuais nos botoes Material de budget-delivery sem sobrescrever tema; mantem layout RF011-RF016. Adiciona o layout em grade dos dados completos do cliente (RF012/RF014)."
+      "expectedSha256": "b18d9d927a8fb09e5c560f5512534082e0a83d0db1d701af0667be80372ba83c",
+      "reason": "Ajustes visuais nos botoes Material de budget-delivery sem sobrescrever tema; mantem layout RF011-RF016. Adiciona o layout em grade dos dados completos do cliente (RF012/RF014). Inclui as regras das classes que o HTML usa nos cards de responsável e de orçamento/manutenção e nos botões dos diálogos, que tinham ficado sem estilo; os dois cards ficam com a mesma largura e empilham em telas estreitas. Remove as regras de classes que o HTML não usa mais (tab-panel, panel-actions, field-label e afins)."
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
@@ -1034,9 +1034,9 @@
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "20d81b067718cc656f8ae5d8444304987e9488d153857a208e6ffda4cfefc47b",
-      "expectedSha256": "283d193e1faf125866d1970b6e566fbdb888779f0b281018efff616389209c81",
-      "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10. Corrige também permitidoCriarManutencao(), que comparava o status com 'APROVADO' enquanto o StatusEnum do back-end (e o mock) usa 'APROVADA'. Simplificação didática (RF012, RF014-RF016): dependências com inject(), um helper só para abrir e fechar diálogos e remoção de estado e da busca de status não usados. Depois de orçar ou registrar manutenção, a tela é preenchida só pelo recarregamento do back; o caminho antigo lia budgets[0] desatualizado e deixava o diálogo de orçamento aberto. O estado da tela fica em signal e computed, atualizado com .set(), seguindo a regra da disciplina para dado assíncrono exibido na tela. Compara o responsável pelo id (assignedEmployeeId) com o funcionário logado, libera manutenção só em APROVADA/REDIRECIONADA (RF014), remove a data de atribuição calculada no navegador e o preenchimento de edição, e filtra o próprio funcionário e inativos do redirecionamento (RF015).",
-      "decisionDate": "2026-11-04",
+      "expectedSha256": "f990a6f220636ff27379787dd07ae2a25159f1da449263267c7c5a6a1e0ccc1d",
+      "reason": "Corrige o payload de orçamento para usar o campo `total` (nome esperado por BudgetDTO no back-end) em vez de `totalValue`, presente no projeto de referência. A referência tem esse mesmo desalinhamento entre front-end e back-end; corrigido aqui para não quebrar a integração real no marco 08/10. Corrige também permitidoCriarManutencao(), que comparava o status com 'APROVADO' enquanto o StatusEnum do back-end (e o mock) usa 'APROVADA'. Simplificação didática (RF012, RF014-RF016): dependências com inject(), um helper só para abrir e fechar diálogos e remoção de estado e da busca de status não usados. Depois de orçar ou registrar manutenção, a tela é preenchida só pelo recarregamento do back; o caminho antigo lia budgets[0] desatualizado e deixava o diálogo de orçamento aberto. O estado da tela fica em signal e computed, atualizado com .set(), seguindo a regra da disciplina para dado assíncrono exibido na tela. Compara o responsável pelo id (assignedEmployeeId) com o funcionário logado, libera manutenção só em APROVADA/REDIRECIONADA (RF014), remove a data de atribuição calculada no navegador e o preenchimento de edição, e filtra o próprio funcionário e inativos do redirecionamento (RF015). Voltar ao dashboard fecha antes o diálogo aberto (ex.: o de finalização), já que navegar pelo router não fecha diálogo (RF016).",
+      "decisionDate": "2026-11-08",
       "requirement": "RF012"
     },
     {
@@ -1192,9 +1192,9 @@
       "path": "src/app/features/employee/pages/view-requests-page/view-requests-page.component.css",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "e32b7b96101c696b1ebb37a5ade94241f08aa505f1e85c67b61667b6a828a838",
-      "expectedSha256": "842bef04345028a51e4621992420dd335a38bc054c54b379f5daec4842ffbe2c",
-      "reason": "Remove regras sem uso após a retirada do Kanban e dimensiona a busca e o filtro por categoria com controles Angular Material. Estilo do botão da coluna Ações (RF013).",
-      "decisionDate": "2026-09-01",
+      "expectedSha256": "648831c5ef134e7310fef1e043fdc6500ec0fdb84c82f404ec007f9dcb9ed52e",
+      "reason": "Remove regras sem uso após a retirada do Kanban e dimensiona a busca e o filtro por categoria com controles Angular Material. Estilo do botão da coluna Ações (RF013). O painel de filtros acompanha a largura do conteúdo, o selo de status ganha texto branco para ficar legível e a busca não estica no celular.",
+      "decisionDate": "2026-11-08",
       "requirement": "RF013"
     },
     {

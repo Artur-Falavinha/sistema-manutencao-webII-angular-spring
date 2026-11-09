@@ -117,6 +117,8 @@ export class BudgetDeliveryComponent implements OnInit {
   }
 
   onVoltarPaginaInicial() {
+    // Navegar pelo router não fecha diálogo aberto (ex.: o de finalização), então fecha antes.
+    this.dialog.closeAll();
     this.router.navigate(['/employee/dashboard']);
   }
 

@@ -60,21 +60,6 @@ body, .main-content {
 .detalhes-defeito-label { color: #627877; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; line-height: 24px; }
 .detalhes-defeito-value { color: #374343; font-size: 20px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 28px; }
   
-/* Cards inferiores */
-.cards-row {
-  display: flex;
-  width: 100%;
-}
-
-.orcamento-manutencao-card {
-  width: 100%;
-  background: var(--color-background-card, #FAFAFA);
-  border-radius: 16px;
-  box-shadow: none;
-  padding: 0;
-  overflow: hidden;
-}
-
 .orcamento-tabs {
   width: 100%;
 }
@@ -92,129 +77,10 @@ body, .main-content {
   overflow: visible;
 }
 
-.tab-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
 .tab-icon {
   font-size: 20px;
   width: 20px;
   height: 20px;
-}
-
-.tab-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 28px 32px 32px;
-  box-sizing: border-box;
-}
-
-.tab-panel--empty {
-  align-items: center;
-  justify-content: center;
-  min-height: 220px;
-  text-align: center;
-}
-
-.tab-panel--filled {
-  align-items: stretch;
-  min-height: 220px;
-}
-
-.panel-empty-message {
-  margin: 0;
-  color: #7c9493;
-  font-family: Inter, sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-.panel-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: auto;
-}
-
-.panel-actions--stacked {
-  flex-direction: column;
-  width: min(100%, 420px);
-}
-
-.panel-action-btn {
-  min-height: 48px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.panel-actions--stacked .panel-action-btn,
-.tab-panel--empty .panel-action-btn {
-  width: 100%;
-}
-
-.field-label {
-  display: block;
-  color: #627877;
-  font-family: Inter, sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 1.4;
-  margin-bottom: 8px;
-}
-
-.field-value {
-  margin: 0;
-  color: #374343;
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.orcamento-summary {
-  text-align: center;
-}
-
-.orcamento-total {
-  display: block;
-  color: #3b598e;
-  font-family: Inter, sans-serif;
-  font-size: clamp(2rem, 4vw, 2.5rem);
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.orcamento-services {
-  padding-top: 8px;
-  border-top: 1px solid #e5e9e9;
-}
-
-.orcamento-servicos {
-  margin: 0;
-  color: #374343;
-  font-family: Roboto, sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  text-align: center;
-}
-
-.manutencao-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.manutencao-field {
-  display: flex;
-  flex-direction: column;
 }
 
 .finalizar-solicitacao-btn {
@@ -222,17 +88,6 @@ body, .main-content {
   align-items: center;
   gap: 8px;
   min-height: 40px;
-}
-
-.dialog-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.dialog-btn-cancel,
-.dialog-btn-confirm {
-  flex: 1;
-  min-height: 48px;
 }
 
 .orcamento-dialog-confirm,
@@ -258,14 +113,6 @@ body, .main-content {
 .voltar-icon { font-size: 22px; color: var(--color-primary-default); }
 
 @media (max-width: 768px) {
-  .tab-panel {
-    padding: 20px 16px 24px;
-  }
-
-  .panel-actions--stacked {
-    width: 100%;
-  }
-
   .detalhes-header {
     flex-direction: column;
     align-items: flex-start;
@@ -353,3 +200,94 @@ body, .main-content {
 .detalhes-cliente-endereco {
   grid-column: 1 / -1;
 }
+
+/* Regras das classes que o HTML usa nos cards de baixo e nos diálogos */
+/* Cards inferiores: altura acompanha o conteúdo, os dois cards ficam da mesma altura */
+.cards-row { display: flex; align-items: stretch; gap: 24px; width: 100%; }
+.cards-row > * { flex: 1 1 50%; min-width: 0; box-sizing: border-box; }
+
+.tecnico-card, .side-card {
+  width: 100%;
+  min-height: 320px;
+  padding: 32px;
+  background: var(--color-background-card, #FAFAFA);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-shadow: none;
+}
+
+.tecnico-header { display: flex; align-items: center; gap: 8px; width: 100%; }
+.tecnico-title { color: #546666; font-size: 20px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px; }
+
+.tecnico-content {
+  display: flex; flex-direction: column; gap: 8px;
+  color: #3E4C4B; font-size: 18px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px;
+}
+
+/* Botão Atribuir/Trocar Responsável (stroked) na cor padrão, sempre no rodapé do card */
+.atribuir-btn {
+  width: 100%; height: 48px; margin-top: auto; border-radius: 8px; border-width: 2px;
+  border-color: var(--color-primary-default) !important;
+  color: var(--color-primary-default) !important;
+  font-size: 18px; font-family: 'Inter', sans-serif; font-weight: 600; line-height: 24px;
+  background: transparent; transition: background 0.2s; outline: none; box-shadow: none;
+}
+
+.orcamento-manutencao-card {
+  width: 100%; min-height: 320px; background: var(--color-background-card, #FAFAFA);
+  border-radius: 16px; display: flex; flex-direction: column; box-shadow: none; padding: 0; overflow: hidden;
+}
+
+/* Abas */
+.orcamento-tabs { width: 100%; }
+.orcamento-content, .manutencao-content {
+  padding: 32px; display: flex; flex-direction: column; align-items: center;
+  gap: 12px; width: 100%; min-height: 260px; justify-content: center; box-sizing: border-box;
+}
+.manutencao-content.tem-manutencao { align-items: stretch; justify-content: flex-start; }
+
+.orcamento-empty {
+  color: #7C9493; font-family: Inter, sans-serif; font-size: 20px; font-weight: 500;
+  text-align: center; margin-bottom: 12px;
+}
+
+.orcamento-btn {
+  width: 100%; height: 48px;
+}
+
+/* Manutenção com cor padrão */
+.manutencao-btn {
+  width: 100%; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600;
+  background: var(--color-primary-default) !important; color: #fff !important; border: none; margin-top: 12px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+
+.orcamento-total-label { color: #627877; font-family: Inter, sans-serif; font-size: 18px; font-weight: 600; text-align: center; }
+.orcamento-total { color: #3B598E; font-family: Inter, sans-serif; font-size: 40px; font-weight: 700; text-align: center; line-height: 1.2; }
+.orcamento-servicos-label { color: #627877; font-family: Inter, sans-serif; font-size: 18px; font-weight: 600; margin-top: 12px; text-align: center; }
+.orcamento-servicos { color: #374343; font-family: Roboto, sans-serif; font-size: 18px; font-weight: 400; text-align: center; }
+
+/* Mais contraste no card de Manutenção */
+.manutencao-descricao, .manutencao-orientacao {
+  display: flex; flex-direction: column; gap: 4px;
+  color: #3E4C4B !important;
+  font-family: Roboto, sans-serif; font-size: 18px; font-weight: 400;
+  text-align: left; width: 100%; word-break: break-word;
+}
+.manutencao-descricao b, .manutencao-orientacao b {
+  color: #3E4C4B !important;
+  font-family: Inter, sans-serif; font-size: 18px; font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .cards-row { flex-direction: column; }
+  .detalhes-header, .detalhes-info-row { flex-wrap: wrap; }
+  .detalhes-card, .tecnico-card { padding: 20px; }
+  .orcamento-dialog, .manutencao-dialog { width: auto; max-width: 100%; }
+  .orcamento-dialog-actions, .manutencao-dialog-actions { flex-direction: column; align-items: stretch; gap: 12px; }
+}
+.dialog-btn { width: 100%; height: 48px; border-radius: 8px; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; background: var(--color-primary-default) !important; color: #fff !important; }
+.dialog-btn.mat-mdc-outlined-button { background: transparent !important; color: var(--color-primary-default) !important; border: 2px solid var(--color-primary-default); }
+.orcamento-dialog-confirm, .manutencao-dialog-confirm { white-space: nowrap; }
