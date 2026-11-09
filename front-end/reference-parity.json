@@ -1192,8 +1192,8 @@
       "path": "src/app/features/employee/pages/view-requests-page/view-requests-page.component.css",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "e32b7b96101c696b1ebb37a5ade94241f08aa505f1e85c67b61667b6a828a838",
-      "expectedSha256": "648831c5ef134e7310fef1e043fdc6500ec0fdb84c82f404ec007f9dcb9ed52e",
-      "reason": "Remove regras sem uso após a retirada do Kanban e dimensiona a busca e o filtro por categoria com controles Angular Material. Estilo do botão da coluna Ações (RF013). O painel de filtros acompanha a largura do conteúdo, o selo de status ganha texto branco para ficar legível e a busca não estica no celular.",
+      "expectedSha256": "9d70c069b1239abbfad3a16186066f56427fb11e00a28f325c6a9c8f63a3e572",
+      "reason": "Remove regras sem uso após a retirada do Kanban e dimensiona a busca e o filtro por categoria com controles Angular Material. Estilo do botão da coluna Ações (RF013). O painel de filtros tem largura fixa com as datas do Período uma embaixo da outra, o selo de status ganha texto branco para ficar legível e a busca não estica no celular.",
       "decisionDate": "2026-11-08",
       "requirement": "RF013"
     },

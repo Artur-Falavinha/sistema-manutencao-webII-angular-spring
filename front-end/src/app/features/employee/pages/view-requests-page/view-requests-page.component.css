@@ -28,8 +28,9 @@
   inset-inline-end: 0;
   z-index: 10;
   display: grid;
-  inline-size: max-content;
-  min-inline-size: 24ch;
+  inline-size: 20rem;
+  max-inline-size: calc(100vw - 2rem);
+  box-sizing: border-box;
   gap: 0.75rem;
   margin-block-start: 0.5rem;
   padding: 1rem;
@@ -40,6 +41,13 @@
 }
 
 .category-filter-field { inline-size: 100%; }
+
+/* Período: datas uma embaixo da outra, aviso quebra linha dentro do painel */
+.date-filter-toggle { display: flex; }
+.date-filter-toggle mat-button-toggle { flex: 1; }
+.period-filter-fields { display: grid; gap: 0.5rem; }
+.period-date-field { inline-size: 100%; }
+.period-error { color: var(--color-danger, #b3261e); font-size: 0.875rem; }
 
 /* Cor de fundo vem do status; texto branco para dar contraste em qualquer cor */
 .status-badge { color: #fff; white-space: nowrap; }
