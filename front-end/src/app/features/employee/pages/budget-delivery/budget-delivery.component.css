@@ -22,7 +22,7 @@ body, .main-content {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 24px;
+  gap: 16px;
   padding: 0 16px;
   box-sizing: border-box;
 }
@@ -30,35 +30,35 @@ body, .main-content {
 /* Detalhes */
 .detalhes-card {
   width: 100%;
-  padding: 32px;
+  padding: 24px;
   background: var(--color-background-card, #FAFAFA);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 16px;
   box-shadow: none;
 }
   
 .detalhes-header { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 24px; }
 .detalhes-header-left { display: flex; align-items: center; gap: 12px; }
 .detalhes-icon { color: #3B598E; font-size: 24px; }
-.detalhes-title { color: #546666; font-size: 20px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px; }
+.detalhes-title { color: #546666; font-size: 18px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px; }
 .detalhes-id { color: #627877; font-size: 16px; font-family: Inter, sans-serif; font-weight: 600; line-height: 20px; }
-.detalhes-date { color: #627877; font-size: 18px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 24px; }
+.detalhes-date { color: #627877; font-size: 15px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 24px; }
 .detalhes-status { display: flex; align-items: center; gap: 4px; }
-.detalhes-status-label { color: #475756; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; line-height: 24px; }
-.detalhes-status-badge { padding: 4px 20px; background: #627877; border-radius: 1000px; color: #fff; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; line-height: 24px; }
+.detalhes-status-label { color: #475756; font-size: 15px; font-family: Inter, sans-serif; font-weight: 600; line-height: 24px; }
+.detalhes-status-badge { padding: 2px 14px; background: #627877; border-radius: 1000px; color: #fff; font-size: 15px; font-family: Inter, sans-serif; font-weight: 600; line-height: 24px; }
   
 .detalhes-info-row { display: flex; gap: 24px; width: 100%; }
-.detalhes-info { flex: 1 1 0; display: flex; flex-direction: column; gap: 8px; }
-.detalhes-info-label { color: #627877; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; line-height: 24px; }
-.detalhes-info-value { color: #374343; font-size: 20px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 28px; }
+.detalhes-info { flex: 1 1 0; display: flex; flex-direction: column; gap: 4px; }
+.detalhes-info-label { color: #627877; font-size: 14px; font-family: Inter, sans-serif; font-weight: 600; line-height: 20px; }
+.detalhes-info-value { color: #374343; font-size: 16px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 24px; }
 .detalhes-info-autor { display: flex; align-items: center; gap: 16px; }
 .detalhes-autor-icon { color: var(--color-primary-default); font-size: 28px; }
   
-.detalhes-defeito { display: flex; flex-direction: column; gap: 8px; }
-.detalhes-defeito-label { color: #627877; font-size: 18px; font-family: Inter, sans-serif; font-weight: 600; line-height: 24px; }
-.detalhes-defeito-value { color: #374343; font-size: 20px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 28px; }
+.detalhes-defeito { display: flex; flex-direction: column; gap: 4px; }
+.detalhes-defeito-label { color: #627877; font-size: 14px; font-family: Inter, sans-serif; font-weight: 600; line-height: 20px; }
+.detalhes-defeito-value { color: #374343; font-size: 16px; font-family: Roboto, sans-serif; font-weight: 400; line-height: 24px; }
   
 .orcamento-tabs {
   width: 100%;
@@ -187,8 +187,7 @@ body, .main-content {
 
 .detalhes-cliente {
   display: grid;
-  gap: 0.5rem;
-  margin-top: 1rem;
+  gap: 0.25rem;
 }
 
 .detalhes-cliente-grid {
@@ -198,7 +197,7 @@ body, .main-content {
 }
 
 .detalhes-cliente-endereco {
-  grid-column: 1 / -1;
+  grid-column: span 2;
 }
 
 /* Regras das classes que o HTML usa nos cards de baixo e nos diálogos */
@@ -208,22 +207,21 @@ body, .main-content {
 
 .tecnico-card, .side-card {
   width: 100%;
-  min-height: 320px;
-  padding: 32px;
+  padding: 24px;
   background: var(--color-background-card, #FAFAFA);
   border-radius: 16px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
   box-shadow: none;
 }
 
 .tecnico-header { display: flex; align-items: center; gap: 8px; width: 100%; }
-.tecnico-title { color: #546666; font-size: 20px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px; }
+.tecnico-title { color: #546666; font-size: 18px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px; }
 
 .tecnico-content {
   display: flex; flex-direction: column; gap: 8px;
-  color: #3E4C4B; font-size: 18px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px;
+  color: #3E4C4B; font-size: 16px; font-family: Inter, sans-serif; font-weight: 500; line-height: 24px;
 }
 
 /* Botão Atribuir/Trocar Responsável (stroked) na cor padrão, sempre no rodapé do card */
@@ -236,20 +234,20 @@ body, .main-content {
 }
 
 .orcamento-manutencao-card {
-  width: 100%; min-height: 320px; background: var(--color-background-card, #FAFAFA);
+  width: 100%; background: var(--color-background-card, #FAFAFA);
   border-radius: 16px; display: flex; flex-direction: column; box-shadow: none; padding: 0; overflow: hidden;
 }
 
 /* Abas */
 .orcamento-tabs { width: 100%; }
 .orcamento-content, .manutencao-content {
-  padding: 32px; display: flex; flex-direction: column; align-items: center;
-  gap: 12px; width: 100%; min-height: 260px; justify-content: center; box-sizing: border-box;
+  padding: 24px; display: flex; flex-direction: column; align-items: center;
+  gap: 8px; width: 100%; min-height: 160px; justify-content: center; box-sizing: border-box;
 }
 .manutencao-content.tem-manutencao { align-items: stretch; justify-content: flex-start; }
 
 .orcamento-empty {
-  color: #7C9493; font-family: Inter, sans-serif; font-size: 20px; font-weight: 500;
+  color: #7C9493; font-family: Inter, sans-serif; font-size: 16px; font-weight: 500;
   text-align: center; margin-bottom: 12px;
 }
 
@@ -265,7 +263,7 @@ body, .main-content {
 }
 
 .orcamento-total-label { color: #627877; font-family: Inter, sans-serif; font-size: 18px; font-weight: 600; text-align: center; }
-.orcamento-total { color: #3B598E; font-family: Inter, sans-serif; font-size: 40px; font-weight: 700; text-align: center; line-height: 1.2; }
+.orcamento-total { color: #3B598E; font-family: Inter, sans-serif; font-size: 32px; font-weight: 700; text-align: center; line-height: 1.2; }
 .orcamento-servicos-label { color: #627877; font-family: Inter, sans-serif; font-size: 18px; font-weight: 600; margin-top: 12px; text-align: center; }
 .orcamento-servicos { color: #374343; font-family: Roboto, sans-serif; font-size: 18px; font-weight: 400; text-align: center; }
 
@@ -273,16 +271,17 @@ body, .main-content {
 .manutencao-descricao, .manutencao-orientacao {
   display: flex; flex-direction: column; gap: 4px;
   color: #3E4C4B !important;
-  font-family: Roboto, sans-serif; font-size: 18px; font-weight: 400;
+  font-family: Roboto, sans-serif; font-size: 16px; font-weight: 400;
   text-align: left; width: 100%; word-break: break-word;
 }
 .manutencao-descricao b, .manutencao-orientacao b {
   color: #3E4C4B !important;
-  font-family: Inter, sans-serif; font-size: 18px; font-weight: 600;
+  font-family: Inter, sans-serif; font-size: 16px; font-weight: 600;
 }
 
 @media (max-width: 900px) {
   .cards-row { flex-direction: column; }
+  .detalhes-cliente-endereco { grid-column: auto; }
   .detalhes-header, .detalhes-info-row { flex-wrap: wrap; }
   .detalhes-card, .tecnico-card { padding: 20px; }
   .orcamento-dialog, .manutencao-dialog { width: auto; max-width: 100%; }

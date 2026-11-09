@@ -1011,8 +1011,8 @@
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.css",
       "classification": "VISUAL_ONLY",
       "referenceSha256": "a155de11fe8b4ffb6a674089aae83bbd9dc1158986811ad9594fde004733bd95",
-      "expectedSha256": "b18d9d927a8fb09e5c560f5512534082e0a83d0db1d701af0667be80372ba83c",
-      "reason": "Ajustes visuais nos botoes Material de budget-delivery sem sobrescrever tema; mantem layout RF011-RF016. Adiciona o layout em grade dos dados completos do cliente (RF012/RF014). Inclui as regras das classes que o HTML usa nos cards de responsável e de orçamento/manutenção e nos botões dos diálogos, que tinham ficado sem estilo; os dois cards ficam com a mesma largura e empilham em telas estreitas. Remove as regras de classes que o HTML não usa mais (tab-panel, panel-actions, field-label e afins)."
+      "expectedSha256": "e8d556801b50117adb0ca4a8a73fa883120499d6eefb8d775d5fca0d7b1d66c9",
+      "reason": "Ajustes visuais nos botoes Material de budget-delivery sem sobrescrever tema; mantem layout RF011-RF016. Adiciona o layout em grade dos dados completos do cliente (RF012/RF014). Inclui as regras das classes que o HTML usa nos cards de responsável e de orçamento/manutenção e nos botões dos diálogos, que tinham ficado sem estilo; os dois cards ficam com a mesma largura e empilham em telas estreitas. Remove as regras de classes que o HTML não usa mais (tab-panel, panel-actions, field-label e afins). Fontes, espaçamentos e alturas mínimas menores para a tela caber sem zoom; o endereço do cliente divide a linha com e-mail, CPF e telefone."
     },
     {
       "path": "src/app/features/employee/pages/budget-delivery/budget-delivery.component.html",
