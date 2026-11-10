@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,10 +16,8 @@ export interface BudgetApproveConfirmDialogData {
   styleUrl: './budget-approve-confirm-dialog.component.css',
 })
 export class BudgetApproveConfirmDialogComponent {
-  constructor(
-    private readonly dialogRef: MatDialogRef<BudgetApproveConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) readonly data: BudgetApproveConfirmDialogData
-  ) {}
+  private readonly dialogRef = inject<MatDialogRef<BudgetApproveConfirmDialogComponent>>(MatDialogRef);
+  readonly data = inject<BudgetApproveConfirmDialogData>(MAT_DIALOG_DATA);
 
   onCancel(): void {
     this.dialogRef.close(false);

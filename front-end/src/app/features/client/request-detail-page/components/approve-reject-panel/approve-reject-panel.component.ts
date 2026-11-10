@@ -1,5 +1,6 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ComponentType } from '@angular/cdk/portal';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
@@ -11,6 +12,15 @@ import { BudgetApproveConfirmDialogComponent } from './budget-approve-confirm-di
 import { BudgetRejectDialogComponent } from './budget-reject-dialog.component';
 import { BudgetRescueConfirmDialogComponent } from './budget-rescue-confirm-dialog.component';
 
+/**
+ * Orçamento da solicitação e as ações do cliente sobre ele.
+ *
+ * - RF005: mostra o valor quando o status é ORÇADA;
+ * - RF006: aprovar → "Serviço Aprovado no Valor R$ ..." e volta para a home;
+ * - RF007: recusar com motivo obrigatório → "Serviço Rejeitado";
+ * - RF009: resgatar uma REJEITADA.
+ * Quem decide se a ação vale é o backend: fora do status certo ele responde 409.
+ */
 @Component({
   selector: 'app-approve-reject-panel',
   templateUrl: './approve-reject-panel.component.html',
@@ -18,94 +28,57 @@ import { BudgetRescueConfirmDialogComponent } from './budget-rescue-confirm-dial
   imports: [CommonModule, MatButtonModule],
 })
 export class ApproveRejectPanelComponent {
-  @Input() request!: ClientRequestDetailDTO;
-  @Output() statusChanged = new EventEmitter<number>();
+  private requestService = inject(MaintenanceRequestService);
+  private toast = inject(ToastService);
+  private dialog = inject(MatDialog);
+  private router = inject(Router);
 
-  constructor(
-    private requestService: MaintenanceRequestService,
-    private toast: ToastService,
-    private dialog: MatDialog,
-    private router: Router
-  ) {}
+  @Input() request!: ClientRequestDetailDTO;
+
+  /** Avisa a página de detalhe para recarregar depois de recusar ou resgatar. */
+  statusChanged = output<number>();
 
   openApproveConfirmDialog(): void {
-    const budget = this.request.budgets[0];
-    if (!budget) {
-      return;
-    }
-
-    const dialogRef = this.dialog.open(BudgetApproveConfirmDialogComponent, {
-      width: '32rem',
-      maxWidth: '95vw',
-      data: {
-        equipmentName: this.request.equipmentName,
-        total: budget.total,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((confirmed) => {
-      if (confirmed) {
-        this.processApprove();
-      }
-    });
+    this.openDialog(BudgetApproveConfirmDialogComponent, () => this.approve());
   }
 
   openRejectDialog(): void {
-    const budget = this.request.budgets[0];
-    if (!budget) {
-      return;
-    }
-
-    const dialogRef = this.dialog.open(BudgetRejectDialogComponent, {
-      width: '32rem',
-      maxWidth: '95vw',
-      data: {
-        equipmentName: this.request.equipmentName,
-        total: budget.total,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((rejectionReason) => {
-      if (rejectionReason) {
-        this.processRejection(rejectionReason);
-      }
-    });
+    this.openDialog(BudgetRejectDialogComponent, (reason: string) => this.reject(reason));
   }
 
   openRescueConfirmDialog(): void {
-    if (this.request.status.nome !== 'REJEITADA') {
-      this.toast.warn('Atenção', 'Esta solicitação não está disponível para resgate.');
-      return;
-    }
-
-    const budget = this.request.budgets[0];
-
-    const dialogRef = this.dialog.open(BudgetRescueConfirmDialogComponent, {
-      width: '32rem',
-      maxWidth: '95vw',
-      data: {
-        equipmentName: this.request.equipmentName,
-        total: budget?.total,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((confirmed) => {
-      if (confirmed) {
-        this.processRescue();
-      }
-    });
+    this.openDialog(BudgetRescueConfirmDialogComponent, () => this.rescue());
   }
 
-  private processApprove(): void {
-    const budget = this.request.budgets[0];
+  /**
+   * Abre um dos diálogos de confirmação com o equipamento e o valor do orçamento.
+   * Se o usuário confirmar, chama onConfirm com o que o diálogo devolveu
+   * (true nos diálogos de confirmação, o motivo no de recusa).
+   */
+  private openDialog<T>(dialog: ComponentType<unknown>, onConfirm: (result: T) => void): void {
+    this.dialog
+      .open(dialog, {
+        width: '32rem',
+        maxWidth: '95vw',
+        data: {
+          equipmentName: this.request.equipmentName,
+          total: this.request.budgets[0]?.total,
+        },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          onConfirm(result);
+        }
+      });
+  }
+
+  private approve(): void {
+    const total = this.request.budgets[0]?.total ?? 0;
 
     this.requestService.approveBudget(this.request.id).subscribe({
       next: () => {
-        const valor = budget.total.toLocaleString('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-        });
-
+        const valor = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         this.toast.success('Sucesso', `Serviço Aprovado no Valor ${valor}`);
         this.router.navigate(['/client/dashboard']);
       },
@@ -116,7 +89,7 @@ export class ApproveRejectPanelComponent {
     });
   }
 
-  private processRejection(rejectionReason: string): void {
+  private reject(rejectionReason: string): void {
     this.requestService.rejectBudget(this.request.id, rejectionReason).subscribe({
       next: () => {
         this.toast.success('Recusado', 'Serviço Rejeitado');
@@ -129,7 +102,7 @@ export class ApproveRejectPanelComponent {
     });
   }
 
-  private processRescue(): void {
+  private rescue(): void {
     this.requestService.rescueRequest(this.request.id).subscribe({
       next: () => {
         this.toast.success('Resgatado', 'Serviço resgatado com sucesso.');

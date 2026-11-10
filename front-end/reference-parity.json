@@ -687,11 +687,12 @@
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.html",
-      "classification": "TEMPORARY_SCAFFOLD",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": "e39ba6059abb94770bb3de39103e83eea00534c574ecc5c22e1b498a59496a0e",
-      "expectedSha256": "0d3f6c2e960ac7699dc1fcb38962505950af18fe7a2961179ec2104ac8bac526",
-      "reason": "Campo de pesquisa Material outline com icone search, alinhado ao padrao employee-list. Aplica o pipe truncate (30 caracteres) na coluna de equipamento, exigido pelo RF003.",
-      "removalBy": "2026-11-11"
+      "expectedSha256": "d7e6e9a8ba6551527738f401330796692dfc8426cd4cdb77df99bf113dd32d6f",
+      "reason": "Campo de pesquisa Material outline com icone search, alinhado ao padrao employee-list. Aplica o pipe truncate (30 caracteres) na coluna de equipamento, exigido pelo RF003. Simplificação didática (11/11): a tabela lê visibleRequests() (signal), a pesquisa grava searchText, a ordem inicial por data crescente vem de matSortActive/matSortDirection e o botão por status vira um @switch. Deixa de ser scaffold: é a versão final da home do cliente.",
+      "decisionDate": "2026-11-10",
+      "requirement": "RF003"
     },
     {
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.spec.ts",
@@ -704,24 +705,26 @@
       "path": "src/app/features/client/client-dashboard-page/client-dashboard-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "57ee945c9524bc1f3b7955fc6281c20e046155f842c4f8253b329da3a54d4f88",
-      "expectedSha256": "ffb4e40d87d25c34513f1d57d6b6b5735f140d7031344381f674ab7ad4c0b4b7",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem coluna acoes, toast de erro e contrato simulado. Importa TruncatePipe para o limite de 30 caracteres do RF003. Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage."
+      "expectedSha256": "59651c4f1b1a8e414aa70bce59eaa750c6267449b4e51fbca0d76b0622b19825",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule e mantem coluna acoes, toast de erro e contrato simulado. Importa TruncatePipe para o limite de 30 caracteres do RF003. Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage. Simplificação didática (RF003, 11/11): dependências com inject(); a lista do backend fica em signal preenchida com .set() e visibleRequests é computed da pesquisa e da ordem por data, no lugar de MatTableDataSource e do setTimeout do ngAfterViewInit. A pesquisa considera os textos exibidos na tabela (equipamento, categoria, status e defeito).",
+      "decisionDate": "2026-11-10"
     },
     {
       "path": "src/app/features/client/client-http-error.ts",
       "classification": "SCOPE_DECISION",
-      "expectedSha256": "382d7593e6ba5d1841e5699fe0caf6b09d590dd1a250b6c979376e77fb38860e",
-      "reason": "Converte HttpErrorResponse da API REST do cliente (RF003-RF010) em mensagens pt-BR: usa a mensagem do backend quando presente e traduz 0/400/401/403/404/409 enquanto nao ha tratamento global de erros.",
-      "decisionDate": "2026-10-15",
+      "expectedSha256": "7360445c2a1916cdb439b8abfaa0a7a3e1761c1f1484f77044e7b07407f0cde8",
+      "reason": "Converte HttpErrorResponse da API REST do cliente (RF003-RF010) em mensagens pt-BR: usa a mensagem que o GlobalExceptionHandler devolve (403/409 do service) e traduz 0/400/401/403/404/409 quando ela não vem.",
+      "decisionDate": "2026-11-10",
       "requirement": "RF003-RF010"
     },
     {
       "path": "src/app/features/client/client.routes.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
+      "classification": "SCOPE_DECISION",
       "referenceSha256": null,
       "expectedSha256": "6802307305ab22e5565666f026b72ee70394b67845e0b174b408345ef26b28e5",
-      "reason": "Migra as rotas dashboard, request-detail/:id e request-detail/:id/payment do client.routes.ts da referência; a rota approve-reject-panel é órfã na própria referência (sempre usada como subcomponente) e não é recriada.",
-      "removalBy": "2026-11-11"
+      "reason": "Migra as rotas dashboard, request-detail/:id e request-detail/:id/payment do client.routes.ts da referência; a rota approve-reject-panel é órfã na própria referência (sempre usada como subcomponente) e não é recriada. Deixa de ser scaffold (11/11): são as rotas finais da jornada do cliente.",
+      "decisionDate": "2026-11-10",
+      "requirement": "RF003-RF010"
     },
     {
       "path": "src/app/features/client/new-request-page/new-request-page.component.css",
@@ -734,9 +737,9 @@
       "path": "src/app/features/client/new-request-page/new-request-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "aa75b2dfc77845291dd2c2795dcc7a7cc897177fd61329683c17d1b6dd549bc5",
-      "expectedSha256": "070cb2c55424c1d13b6b0ef3166bab117aafb44bf8767bd27b5b7224045b4bb7",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes.",
-      "decisionDate": "2026-09-17",
+      "expectedSha256": "deb89bc6f3c78799580dde57c4c64d50eed12517648d70604479b22206690b4c",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Lê as categorias como signal (categories()).",
+      "decisionDate": "2026-11-10",
       "requirement": "N/A"
     },
     {
@@ -750,8 +753,9 @@
       "path": "src/app/features/client/new-request-page/new-request-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "3603f9ac164da29a793b30cb4e576a9cbc99a261a79129c9d4db166eea293e8c",
-      "expectedSha256": "8cf6098f4ff0681f5fccad183e4c242c87b7064fb7926feee370225d100416e6",
-      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar create() nem validacao do formulario. Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage."
+      "expectedSha256": "bd02e55b5ebe57fe20bd0e10d0adb87a961c89cdca4615c982351f4dd60a9556",
+      "reason": "Padroniza botoes primarios, secundarios e destrutivos com Angular Material (mat-flat-button, mat-stroked-button, mat-icon-button e mat-button), preservando eventos, bindings, validacoes e fluxos existentes. Importa MatButtonModule sem alterar create() nem validacao do formulario. Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage. Simplificação didática (RF004, 11/11): inject(), categorias em signal preenchido com .set() e remoção de import e parâmetro não usados.",
+      "decisionDate": "2026-11-10"
     },
     {
       "path": "src/app/features/client/payment-panel/payment-panel.component.css",
@@ -764,9 +768,9 @@
       "path": "src/app/features/client/payment-panel/payment-panel.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "1786a02cd8b05f63893c40b9c6ff583cce4a9531d0eb32072384c0eb925e3571",
-      "expectedSha256": "c81345403d1e28862843cb6fc4c3d1f9185244d16efe83c2161b6c9741f9c9c3",
-      "reason": "Reorganiza pagamento em mat-card com resumo e checkout, mat-button-toggle para Cartao/Pix e dialogo de confirmacao. Troca R$ + number:'1.2-2' por currency:'BRL' (consistencia com approve-reject-panel) e desabilita 'Pagar agora' sem forma de pagamento selecionada (cronograma 24/09).",
-      "decisionDate": "2026-09-24",
+      "expectedSha256": "c79d0d6512a2e78439215d0df5e5ef4988d9e9fea96781ddf2186186c952cbdf",
+      "reason": "Reorganiza pagamento em mat-card com resumo e checkout, mat-button-toggle para Cartao/Pix e dialogo de confirmacao. Troca R$ + number:'1.2-2' por currency:'BRL' (consistencia com approve-reject-panel) e desabilita 'Pagar agora' sem forma de pagamento selecionada (cronograma 24/09). Lê request(), isLoading(), canPay() e isProcessingPayment() como signals.",
+      "decisionDate": "2026-11-10",
       "requirement": "RF008/RF010"
     },
     {
@@ -780,8 +784,9 @@
       "path": "src/app/features/client/payment-panel/payment-panel.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "bb9eaa41cef3a9ad2751bb5899b9194d91a5cc3da08f28a95b536c1067d6f7bb",
-      "expectedSha256": "ced80dcf0fa39b721bdcb71c4680b7fabd10a25a7bbe53ab444f27ee12565b4d",
-      "reason": "Substitui app-success-modal por MatDialog de confirmacao, valida status ARRUMADA/PAGA e bloqueia pagamento sem metodo selecionado com toast. Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage."
+      "expectedSha256": "d6e68c0f46c044f2fa628cdc49e57f0303fce29598855e609f1d522f6d79e17a",
+      "reason": "Substitui app-success-modal por MatDialog de confirmacao, valida status ARRUMADA/PAGA e bloqueia pagamento sem metodo selecionado com toast. Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage. Simplificação didática (RF010, 11/11): inject(); solicitação, carregamento e processamento em signals atualizados com .set() e canPay como computed; o id vem da própria solicitação, sem campo currentRequestId.",
+      "decisionDate": "2026-11-10"
     },
     {
       "path": "src/app/features/client/payment-panel/payment-confirm-dialog.component.css",
@@ -802,9 +807,9 @@
     {
       "path": "src/app/features/client/payment-panel/payment-confirm-dialog.component.ts",
       "classification": "SCOPE_DECISION",
-      "expectedSha256": "0679ff4e55f4c8e5b42f97af54c9bb469424d054f7da61899a7e73617433d07f",
-      "reason": "Encapsula o contrato MatDialog de confirmacao de pagamento do cliente.",
-      "decisionDate": "2026-09-24",
+      "expectedSha256": "001ced27c2472c0c0a1d3acd4239f9155a4dc7c5ac71a833c64bde7ed7199240",
+      "reason": "Encapsula o contrato MatDialog de confirmacao de pagamento do cliente. Dependências com inject() em vez do construtor, como no restante da jornada do cliente (código didático para a defesa de 11/11).",
+      "decisionDate": "2026-11-10",
       "requirement": "N/A"
     },
     {
@@ -834,8 +839,9 @@
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/approve-reject-panel.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "7dc8cc31f469aae59f8953c415043833ac873818a24b7d12fbbbf281c55322c6",
-      "expectedSha256": "7998a1e34feafcf53926a1f350b5ba4170f15bbeb870ac7864ba6b2f42ca4a72",
-      "reason": "Centraliza aprovacao, rejeicao e resgate de orcamento em dialogos MatDialog com DialogShell. Ajusta a mensagem de aprovacao para o literal do RF006 (\"Servico Aprovado no Valor R$ xxxx\") com redirecionamento para o dashboard (RF003), e a de rejeicao para o literal do RF007 (\"Servico Rejeitado\"). Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage."
+      "expectedSha256": "8e40cc76a460aa62a7e676b828ae11a93e59a0ba03c042b8b45eb7694fa3287e",
+      "reason": "Centraliza aprovacao, rejeicao e resgate de orcamento em dialogos MatDialog com DialogShell. Ajusta a mensagem de aprovacao para o literal do RF006 (\"Servico Aprovado no Valor R$ xxxx\") com redirecionamento para o dashboard (RF003), e a de rejeicao para o literal do RF007 (\"Servico Rejeitado\"). Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage. Simplificação didática (RF005-RF007, RF009, 11/11): inject(), output() no lugar de EventEmitter e um helper openDialog para os três diálogos; a validação de status fica com o backend (409).",
+      "decisionDate": "2026-11-10"
     },
     {
       "path": "src/app/features/client/request-detail-page/components/request-description/request-description.component.css",
@@ -846,9 +852,11 @@
     },
     {
       "path": "src/app/features/client/request-detail-page/components/request-description/request-description.component.html",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "c4e0f28692e27fcf2174e9948859c8f3be17f7ae555cbffc1eae5abc0fb77677",
-      "expectedSha256": "c4e0f28692e27fcf2174e9948859c8f3be17f7ae555cbffc1eae5abc0fb77677"
+      "expectedSha256": "bf7255b47048c27ba45209ce7edc69cb3b34ea348e74bc584fe71fba35b81edd",
+      "reason": "Simplificação didática (RF008, 11/11): mostra request.categoryName direto e formata a data com o pipe date (\"dd/MM/yyyy 'às' HH:mm\"), no lugar do campo categoryName e do método formatDate.",
+      "decisionDate": "2026-11-10"
     },
     {
       "path": "src/app/features/client/request-detail-page/components/request-description/request-description.component.spec.ts",
@@ -858,9 +866,11 @@
     },
     {
       "path": "src/app/features/client/request-detail-page/components/request-description/request-description.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "f6f24ee9fc8328368213787ac040229f13f6a6b598528b82f34adab57ad19e1f",
-      "expectedSha256": "f6f24ee9fc8328368213787ac040229f13f6a6b598528b82f34adab57ad19e1f"
+      "expectedSha256": "e34f1e66e5f08cd08e2d3701a226e41c8eebf6fb6ea744b365c0bfbfec74ede5",
+      "reason": "Simplificação didática (RF008, 11/11): remove a busca de todas as categorias que só copiava request.categoryName, o formatDate manual (o template usa o pipe date) e os imports e services não usados (StatusService, rxjs/internal).",
+      "decisionDate": "2026-11-10"
     },
     {
       "path": "src/app/features/client/request-detail-page/components/request-history/request-history.component.css",
@@ -871,9 +881,11 @@
     },
     {
       "path": "src/app/features/client/request-detail-page/components/request-history/request-history.component.html",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "3448860c3a58e879a6b9bc46e1d159fde2fa27bd58fac17c5f1db8ee01b840fd",
-      "expectedSha256": "3448860c3a58e879a6b9bc46e1d159fde2fa27bd58fac17c5f1db8ee01b840fd"
+      "expectedSha256": "202114f56e4439620d2f748a2ae13aaae09f1d480cd6a682785256d18a35bc48",
+      "reason": "Simplificação didática (RF008, 11/11): itera sortedHistory() (computed) e mostra getDescription() sem pipe async.",
+      "decisionDate": "2026-11-10"
     },
     {
       "path": "src/app/features/client/request-detail-page/components/request-history/request-history.component.spec.ts",
@@ -883,9 +895,11 @@
     },
     {
       "path": "src/app/features/client/request-detail-page/components/request-history/request-history.component.ts",
-      "classification": "IDENTICAL",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "2a581f4e5300a6970ee99707a65e337825b2b3cddc7e8e4ff21114363f085e04",
-      "expectedSha256": "2a581f4e5300a6970ee99707a65e337825b2b3cddc7e8e4ff21114363f085e04"
+      "expectedSha256": "5f5d36b2b92727de8ea9ca73c2019c2a7207df2977c4a548db33c12d3db02b10",
+      "reason": "Simplificação didática (RF008, 11/11): input() com sortedHistory computed no lugar do setter, e getDescription devolve string em vez de Observable com of().",
+      "decisionDate": "2026-11-10"
     },
     {
       "path": "src/app/features/client/request-detail-page/request-detail-page.component.css",
@@ -898,9 +912,9 @@
       "path": "src/app/features/client/request-detail-page/request-detail-page.component.html",
       "classification": "SCOPE_DECISION",
       "referenceSha256": "ce84c6fc063de0e0c5b985ab4e1f8be9562762fc6fceb724209327a7882f76a5",
-      "expectedSha256": "913a63ff1857372503fecec037a9253760c76cdd3dea3f4e4f99b57e01ba1227",
-      "reason": "Remove app-header local; header passa a ser renderizado pelo shell global do app-root nas rotas de cliente.",
-      "decisionDate": "2026-09-17",
+      "expectedSha256": "673f937bc35b569890a6467750696e9c58f4d6cd54a5fb106cb4c0d92ea3e938",
+      "reason": "Remove app-header local; header passa a ser renderizado pelo shell global do app-root nas rotas de cliente. Lê isLoading() e request() como signals e passa a solicitação carregada aos subcomponentes.",
+      "decisionDate": "2026-11-10",
       "requirement": "N/A"
     },
     {
@@ -914,8 +928,9 @@
       "path": "src/app/features/client/request-detail-page/request-detail-page.component.ts",
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "a263329f269fd6b28c9a2d214da29c02dcadc37c648f585d5e071f5a3e6053da",
-      "expectedSha256": "6b9b4d49778faf1cc692785df992edfac6043bc8c9681228cd588cee8c5b9877",
-      "reason": "Remove import de HeaderComponent apos centralizar header no app-root para rotas de cliente. Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage."
+      "expectedSha256": "34f9bff3d45e893a578b2a3a0fa1ed81e25d0344acd08f03c3743e97f86b8904",
+      "reason": "Remove import de HeaderComponent apos centralizar header no app-root para rotas de cliente. Traduz falhas da API REST em mensagens pt-BR com clientHttpErrorMessage. Simplificação didática (RF008, 11/11): inject(); solicitação e carregamento em signals atualizados com .set(); remove currentRequestId e backToDashboard, que o template não usava.",
+      "decisionDate": "2026-11-10"
     },
     {
       "path": "src/app/features/employee/components/employee-form/employee-form.component.css",
@@ -1761,9 +1776,9 @@
     {
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-approve-confirm-dialog.component.ts",
       "classification": "SCOPE_DECISION",
-      "expectedSha256": "5831db1f9b10bb91fd327342aaaf1ea08187a641b333ae9d08c7f7bd39909a1b",
-      "reason": "Encapsula o contrato MatDialog de aprovacao de orcamento.",
-      "decisionDate": "2026-09-24",
+      "expectedSha256": "361f47d9f6e830acdeb2dd2e34ef455b36712bcd912d845fe902e76eb9fff7d6",
+      "reason": "Encapsula o contrato MatDialog de aprovacao de orcamento. Dependências com inject() em vez do construtor, como no restante da jornada do cliente (código didático para a defesa de 11/11).",
+      "decisionDate": "2026-11-10",
       "requirement": "N/A"
     },
     {
@@ -1785,9 +1800,9 @@
     {
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-reject-dialog.component.ts",
       "classification": "SCOPE_DECISION",
-      "expectedSha256": "958d7359a0926079b749d4efae14ad8dafae2cebf57598b83b755ef1ae631864",
-      "reason": "Valida motivo e fecha o dialogo com o payload de rejeicao.",
-      "decisionDate": "2026-09-24",
+      "expectedSha256": "b1014a20cf4525b53ede4c34411f4662b9b7b63cb92fb3e6467debe64f3539d0",
+      "reason": "Valida motivo e fecha o dialogo com o payload de rejeicao. Dependências com inject() em vez do construtor, como no restante da jornada do cliente (código didático para a defesa de 11/11).",
+      "decisionDate": "2026-11-10",
       "requirement": "N/A"
     },
     {
@@ -1809,9 +1824,9 @@
     {
       "path": "src/app/features/client/request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component.ts",
       "classification": "SCOPE_DECISION",
-      "expectedSha256": "2af787cf130fa057bed5a80209b6c11f067804bb94b7b901d7be63bff96f84b0",
-      "reason": "Encapsula o contrato MatDialog de resgate de orcamento.",
-      "decisionDate": "2026-09-24",
+      "expectedSha256": "01d26afa5e4b89f6bb0023c6b91586da78c59284564f416c754fb3c6b00db003",
+      "reason": "Encapsula o contrato MatDialog de resgate de orcamento. Dependências com inject() em vez do construtor, como no restante da jornada do cliente (código didático para a defesa de 11/11).",
+      "decisionDate": "2026-11-10",
       "requirement": "N/A"
     },
     {
