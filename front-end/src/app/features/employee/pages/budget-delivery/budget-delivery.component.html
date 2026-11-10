@@ -1,11 +1,11 @@
-<!-- Loading State (Opcional, simples) -->
+<!-- Carregando -->
 <div *ngIf="isLoading()" style="display: flex; justify-content: center; padding: 20px;">
   <span>Carregando solicitação...</span>
 </div>
 
-<!-- Conteúdo Principal (Só exibe quando carregar) -->
+<!-- Solicitação carregada -->
 <div *ngIf="!isLoading() && request() as request">
-  <!-- Ações superiores -->
+  <!-- Voltar e Finalizar -->
   <div class="top-actions">
     <a class="voltar-pagina-inicial" (click)="onVoltarPaginaInicial()">
       <mat-icon class="voltar-icon">arrow_back</mat-icon>
@@ -35,7 +35,7 @@
         </div>
         <span class="detalhes-date">{{ request.requestDate | date:'dd/MM/yyyy \'às\' HH:mm:ss' }}</span>
         
-        <!-- Badge de Status usando a cor vinda do backend -->
+        <!-- Cor do status vem do back -->
         <div class="detalhes-status">
           <span class="detalhes-status-label">Status</span>
           <span class="detalhes-status-badge" 
@@ -70,6 +70,33 @@
           {{ request.defectDescription }}
         </span>
       </div>
+
+      <!-- Dados do cliente -->
+      <div class="detalhes-cliente">
+        <span class="detalhes-defeito-label">Dados do Cliente</span>
+        <div class="detalhes-cliente-grid">
+          <div class="detalhes-info">
+            <span class="detalhes-info-label">E-mail</span>
+            <span class="detalhes-info-value">{{ request.client.email }}</span>
+          </div>
+          <div class="detalhes-info">
+            <span class="detalhes-info-label">CPF</span>
+            <span class="detalhes-info-value">{{ request.client.cpf | cpfPipes }}</span>
+          </div>
+          <div class="detalhes-info">
+            <span class="detalhes-info-label">Telefone</span>
+            <span class="detalhes-info-value">{{ request.client.phoneNumber | phonePipes }}</span>
+          </div>
+          <div class="detalhes-info detalhes-cliente-endereco">
+            <span class="detalhes-info-label">Endereço</span>
+            <span class="detalhes-info-value">
+              {{ request.client.street }}, {{ request.client.number }}<ng-container *ngIf="request.client.complement"> - {{ request.client.complement }}</ng-container>
+              · {{ request.client.neighborhood }} · {{ request.client.city }}/{{ request.client.state }}
+              · CEP {{ formatarCep(request.client.zipCode) }}
+            </span>
+          </div>
+        </div>
+      </div>
     </mat-card>
 
     <div class="cards-row">
@@ -82,20 +109,16 @@
 
         <ng-container *ngIf="!responsavel(); else responsavelPreenchido">
           <div class="tecnico-content">Nenhum Técnico Atribuído</div>
-          <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
-            Atribuir Responsável
-          </button>
         </ng-container>
 
         <ng-template #responsavelPreenchido>
           <div class="tecnico-content">
             <div><b>Nome:</b> {{ responsavel()!.name }}</div>
-            <!-- Exibe cargo se existir na model, senão omite -->
-            <div *ngIf="dataAtribuicao()"><b>Atribuído em:</b> {{ dataAtribuicao() }}</div>
           </div>
-          <button mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
+          <!-- RF015: só o responsável, antes da manutenção -->
+          <button *ngIf="podeRedirecionar()" mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
             <mat-icon>sync_alt</mat-icon>
-            Trocar Responsável
+            Redirecionar Manutenção
           </button>
         </ng-template>
       </mat-card>
@@ -121,7 +144,9 @@
 
               <ng-template #orcamentoVazio>
                 <div class="orcamento-empty">Nenhum Orçamento Efetuado</div>
+                <div *ngIf="!podeOrcar()" class="orcamento-empty">Só {{ responsavel()?.name }}, responsável pela solicitação, pode orçar.</div>
                 <button
+                  *ngIf="podeOrcar()"
                   class="button-primary label_large orcamento-btn"
                   (click)="abrirDialogOrcamento(orcamentoDialogTemplate)"
                 >
@@ -147,24 +172,17 @@
                   <b>Orientações para o Cliente:</b>
                   <span>{{ orientacaoCliente() }}</span>
                 </div>
-
-                <button
-                  color="primary"
-                  class="button-primary label_large manutencao-btn"
-                  (click)="abrirDialogManutencao(manutencaoDialogTemplate)"
-                >
-                  <mat-icon>edit</mat-icon>
-                  Editar Manutenção
-                </button>
               </ng-container>
 
               <ng-template #manutencaoVazio>
                 <div class="orcamento-empty">Nenhuma Manutenção Efetuada</div>
+                <div *ngIf="permitidoCriarManutencao() && responsavel() && !souResponsavel()" class="orcamento-empty">Só {{ responsavel()?.name }}, responsável pela solicitação, pode efetuar a manutenção.</div>
                 <button
+                  *ngIf="souResponsavel()"
                   color="primary"
                   [style.cursor]="permitidoCriarManutencao() ? 'pointer' : 'not-allowed'"
                   class="button-primary label_large manutencao-btn"
-                  [disabled]="false"
+                  [disabled]="!permitidoCriarManutencao()"
                   (click)="abrirDialogManutencao(manutencaoDialogTemplate)"
                 >
                   <mat-icon>build</mat-icon>
@@ -179,23 +197,18 @@
   </div>
 </div>
 
-<!-- Dialog: Atribuir Responsável -->
+<!-- Caixa de diálogo: Redirecionar Manutenção -->
 <ng-template #dialogTemplate>
   <div class="dialog-container">
-    <h2 class="dialog-title">Atribuição de Responsável</h2>
+    <h2 class="dialog-title">Redirecionar Manutenção</h2>
 
     <mat-form-field appearance="outline" class="dialog-field">
-      <mat-label>Atribuir Solicitação Para:</mat-label>
-      <!-- INTEGRAÇÃO: Iterando sobre a lista de funcionários da API -->
-      <mat-select [(ngModel)]="selectedFuncionario" placeholder="Pesquise/Selecione um Funcionário">
-        <mat-option [value]="null">Nenhum</mat-option>
-        <mat-option *ngFor="let func of funcionariosDisponiveis()" [value]="func">
+      <mat-label>Redirecionar Para:</mat-label>
+      <mat-select [(ngModel)]="selectedFuncionario" placeholder="Selecione um Funcionário">
+        <mat-option *ngFor="let func of funcionariosParaRedirecionar()" [value]="func">
           {{ func.name }}
         </mat-option>
       </mat-select>
-      <mat-error *ngIf="mesmoResponsavelSelecionado()">
-        Esse já é o responsável atual.
-      </mat-error>
     </mat-form-field>
 
     <div style="display: flex; gap: 8px;">
@@ -203,15 +216,15 @@
         Cancelar
       </button>
       <button mat-flat-button color="primary" class="dialog-btn"
-              [disabled]="selectedFuncionario === undefined || mesmoResponsavelSelecionado()"
-              (click)="atribuirResponsavel()">
-        Atribuir
+              [disabled]="!selectedFuncionario"
+              (click)="redirecionarManutencao()">
+        Redirecionar
       </button>
     </div>
   </div>
 </ng-template>
 
-<!-- Dialog: Efetuar Orçamento -->
+<!-- Caixa de diálogo: Efetuar Orçamento -->
 <ng-template #orcamentoDialogTemplate>
   <div class="orcamento-dialog">
     <div class="orcamento-dialog-header">
@@ -224,7 +237,7 @@
     <div class="orcamento-dialog-body">
       <mat-form-field appearance="outline" class="orcamento-dialog-field full">
         <mat-label>*Serviços Inclusos na Manutenção</mat-label>
-        <!-- INTEGRAÇÃO: Iterando sobre serviços da API e usando propriedades corretas (name/value) -->
+        <!-- Serviços vindos de GET /services -->
         <mat-select
           [(ngModel)]="servicosSelecionados"
           multiple
@@ -273,7 +286,7 @@
   </div>
 </ng-template>
 
-<!-- Dialog: Efetuar Manutenção -->
+<!-- Caixa de diálogo: Efetuar Manutenção -->
 <ng-template #manutencaoDialogTemplate>
   <div class="manutencao-dialog">
     <div class="manutencao-dialog-header">
@@ -336,7 +349,7 @@
   </div>
 </ng-template>
 
-<!-- Dialog: Finalização da Solicitação -->
+<!-- Caixa de diálogo: Finalização -->
 <ng-template #finalizacaoDialogTemplate>
   <div class="finalizacao-dialog">
     <div class="finalizacao-icon">
