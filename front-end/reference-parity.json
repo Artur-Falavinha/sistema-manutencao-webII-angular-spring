@@ -406,7 +406,7 @@
       "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "40e41f7bee78a0e49a94e8ae4d2021e5b7fd366638a6869536506e10003b272c",
       "expectedSha256": "0ec41bf0d281a502df6cf31a5ada398ecfa976ec8d857884afc5956e14c24a8a",
-      "reason": "Importa MatButtonModule para o botao Entrar com mat-flat-button, preservando loginForm, AuthService e ToastService."
+      "reason": "Remove loginError e seus usos, o import nao usado de Toast e o parametro err do callback de erro, consolidando o feedback de erro em toast conforme a decisao de 2026-09-16; preserva loginForm, AuthService e ToastService da referencia."
     },
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.css",
@@ -433,11 +433,10 @@
     },
     {
       "path": "src/app/core/auth/pages/signup-page/signup-page.component.ts",
-      "classification": "TEMPORARY_SCAFFOLD",
+      "classification": "TECHNICAL_EXCEPTION",
       "referenceSha256": "f13e23f8f3c052af910cc4b9e7bd1a696d8e62fefd47837c9486864e06b1999e",
       "expectedSha256": "8c3dc20e37e57bd4ddadcea71c0cf2bda1ed391e9940fcb4d6f12dfa301510bf",
-      "reason": "Scaffold temporario do autocadastro com MatButtonModule, toast e redirecionamento para /login, sem backend ou ViaCEP nesta janela.",
-      "removalBy": "2026-11-11"
+      "reason": "Difere da referencia em tres pontos: (1) toast e redirecionamento para /login no lugar do modal successful-signup, conforme a decisao de escopo de 2026-09-16; (2) busca automatica de CEP com 8 digitos, aviso de CEP inexistente e tratamento de falha na consulta, exigidos pelo RF001 (ViaCEP); (3) mensagem de erro do servidor no toast, inclusive o corpo vazio de duplicidade. Definitivo: nao e scaffold."
     },
     {
       "path": "src/app/core/auth/services/auth.service.spec.ts",
