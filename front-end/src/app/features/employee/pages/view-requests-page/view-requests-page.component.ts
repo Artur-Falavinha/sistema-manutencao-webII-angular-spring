@@ -7,6 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { dateToIso } from '../../../../shared/utils/birth-date-format';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MaintenanceRequestResponseDTO as Request } from '../../../../shared/models/maintenance-request.models';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -25,6 +27,7 @@ type DateFilterMode = 'todos' | 'hoje' | 'periodo';
     MatIcon,
     MatInputModule,
     MatSelectModule,
+    MatDatepickerModule,
     MatSortModule,
     MatTableModule,
   ],
@@ -64,6 +67,7 @@ export class ViewRequestsPageComponent implements AfterViewInit {
     'clientName',
     'requestDate',
     'status',
+    'actions',
   ];
 
   constructor() {
@@ -101,12 +105,13 @@ export class ViewRequestsPageComponent implements AfterViewInit {
     }
   }
 
-  onPeriodStartChange(value: string): void {
-    this.periodStart.set(value || null);
+  // O datepicker devolve Date; o filtro guarda AAAA-MM-DD
+  onPeriodStartChange(value: Date | null): void {
+    this.periodStart.set(dateToIso(value) || null);
   }
 
-  onPeriodEndChange(value: string): void {
-    this.periodEnd.set(value || null);
+  onPeriodEndChange(value: Date | null): void {
+    this.periodEnd.set(dateToIso(value) || null);
   }
 
   periodoValido(): boolean {
@@ -123,6 +128,26 @@ export class ViewRequestsPageComponent implements AfterViewInit {
 
   openRequest(request: Request): void {
     this.router.navigate(['/employee/budget-delivery', request.id]);
+  }
+
+  // RF013: texto do botão de ação por status; null = sem botão
+  actionLabel(request: Request): string | null {
+    switch (request.statusName) {
+      case 'ABERTA':
+        return 'Efetuar Orçamento';
+      case 'APROVADA':
+      case 'REDIRECIONADA':
+        return 'Efetuar Manutenção';
+      case 'PAGA':
+        return 'Finalizar Solicitação';
+      default:
+        return null;
+    }
+  }
+
+  onAction(event: Event, request: Request): void {
+    event.stopPropagation();
+    this.openRequest(request);
   }
 
   ngAfterViewInit(): void {

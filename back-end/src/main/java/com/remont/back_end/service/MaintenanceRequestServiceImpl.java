@@ -91,7 +91,11 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
     @Override
     @Transactional(readOnly = true)
     public List<MaintenanceRequestResponseDTO> getRequestsForEmployee(String employeeEmail) {
+        // RF013: solicitação REDIRECIONADA só aparece para o funcionário de destino.
         return maintenanceRequestRepository.findAllByOrderByRequestDateAsc().stream()
+                .filter(request -> request.getStatus() != StatusEnum.REDIRECIONADA
+                        || (request.getAssignedEmployee() != null
+                            && request.getAssignedEmployee().getEmail().equalsIgnoreCase(employeeEmail)))
                 .map(this::convertToResponseDTO)
                 .collect(Collectors.toList());
     }
@@ -296,7 +300,8 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
             }
             
             request.setStatus(StatusEnum.REDIRECIONADA);
-            historyService.addHistory(request, redirectorEmployee, StatusEnum.REDIRECIONADA, "Solicitação redirecionada");
+            historyService.addHistory(request, redirectorEmployee, StatusEnum.REDIRECIONADA,
+                    redirectTitle(currentEmployee, targetEmployee));
         } 
 
         request.setAssignedEmployee(targetEmployee);
@@ -353,6 +358,12 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
     private Employee findEmployeeById(Long id, String notFoundMessage) {
         return employeeRepository.findById(Objects.requireNonNull(id))
                 .orElseThrow(() -> new ResourceNotFoundException(notFoundMessage));
+    }
+
+    // RF015: o histórico guarda origem e destino no título (a coluna tem 64 caracteres).
+    private String redirectTitle(Employee origin, Employee target) {
+        String title = "Redirecionada de " + origin.getName() + " para " + target.getName();
+        return title.length() > 64 ? title.substring(0, 64) : title;
     }
 
     /**

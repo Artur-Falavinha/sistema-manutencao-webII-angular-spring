@@ -28,7 +28,9 @@
   inset-inline-end: 0;
   z-index: 10;
   display: grid;
-  inline-size: min(100%, 24ch);
+  inline-size: 20rem;
+  max-inline-size: calc(100vw - 2rem);
+  box-sizing: border-box;
   gap: 0.75rem;
   margin-block-start: 0.5rem;
   padding: 1rem;
@@ -39,6 +41,16 @@
 }
 
 .category-filter-field { inline-size: 100%; }
+
+/* Filtro por período */
+.date-filter-toggle { display: flex; }
+.date-filter-toggle mat-button-toggle { flex: 1; }
+.period-filter-fields { display: grid; gap: 0.5rem; }
+.period-date-field { inline-size: 100%; }
+.period-error { color: var(--color-danger, #b3261e); font-size: 0.875rem; }
+
+/* Fundo vem da cor do status */
+.status-badge { color: #fff; white-space: nowrap; }
 
 .list-section {
   width: min(100%, 90rem);
@@ -54,6 +66,10 @@
   .search-field,
   .filter-button,
   .filter-panel { inline-size: 100%; }
-  .search-field { max-inline-size: 100%; }
+  .search-field { flex: none; max-inline-size: 100%; }
   .filter-panel { position: static; }
+}
+
+.action-button {
+  white-space: nowrap;
 }
