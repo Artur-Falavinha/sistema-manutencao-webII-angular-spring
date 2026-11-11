@@ -27,6 +27,7 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
+    // Retorna os dados filtrados para o gráfico de datas
     @GetMapping("/date")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<List<RevenueByDateDTO>> getRevenueByDateData(
@@ -34,13 +35,14 @@ public class ReportController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
         return ResponseEntity.ok(reportService.getRevenueByDateData(start, end));
     }
-
+    // Traz o faturamento total agrupado por categoria
     @GetMapping("/category")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<List<RevenueByCategoryDTO>> getRevenueByCategoryData() {
         return ResponseEntity.ok(reportService.getRevenueByCategoryData());
     }
 
+    // Gera PDF (Receitas por Data)
     @GetMapping("/date/pdf")
     @PreAuthorize("hasRole('EMPLOYEE')") 
     public void generateRevenueByDateReport(
@@ -58,6 +60,7 @@ public class ReportController {
         reportService.exportRevenueByDatePdf(response, start, end);
     }
 
+    // Gera PDF (Receitas por Categoria)
     @GetMapping("/category/pdf")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public void generateRevenueByCategoryReport(HttpServletResponse response) throws IOException {
