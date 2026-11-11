@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -28,10 +28,8 @@ export interface BudgetRejectDialogData {
 export class BudgetRejectDialogComponent {
   rejectionReason = '';
 
-  constructor(
-    private readonly dialogRef: MatDialogRef<BudgetRejectDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) readonly data: BudgetRejectDialogData
-  ) {}
+  private readonly dialogRef = inject<MatDialogRef<BudgetRejectDialogComponent>>(MatDialogRef);
+  readonly data = inject<BudgetRejectDialogData>(MAT_DIALOG_DATA);
 
   onCancel(): void {
     this.dialogRef.close(null);

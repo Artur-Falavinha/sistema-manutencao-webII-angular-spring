@@ -3,10 +3,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 /**
  * Mensagens em pt-BR para as falhas da API REST na jornada do cliente (RF003-RF010).
  *
- * Com o mock-api.interceptor fora das rotas do cliente, os erros chegam direto do
- * MaintenanceRequestController. Enquanto o backend não tiver tratamento global de
- * erros, o corpo padrão do Spring não traz mensagem legível; por isso a mensagem do
- * backend só é usada quando vem preenchida, e o restante é traduzido pelo status.
+ * As rotas do cliente não passam pelo mock-api.interceptor: os erros chegam direto do
+ * MaintenanceRequestController. O service do backend lança ResponseStatusException
+ * (403 dono errado, 409 status errado) e o GlobalExceptionHandler devolve
+ * {message, error, status} com a frase em pt-BR, que é mostrada como veio.
+ * Quando a mensagem não vem (servidor fora do ar, 401, corpo padrão do Spring),
+ * a tradução é feita pelo status HTTP na tabela abaixo.
  */
 const CLIENT_HTTP_STATUS_MESSAGES: Record<number, string> = {
   0: 'Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.',

@@ -12,8 +12,8 @@
     </div> 
     <div class="card-details">
         <p class="equipament"><span class="value">{{ request.equipmentName }}</span></p>
-        <p class="category"><span class="value">{{ categoryName }}</span></p>
-        <p class="request-date"><span class="value">{{ formatDate(request.requestDate) }}</span></p>
+        <p class="category"><span class="value">{{ request.categoryName }}</span></p>
+        <p class="request-date"><span class="value">{{ request.requestDate | date:"dd/MM/yyyy 'às' HH:mm" }}</span></p>
         <div>
             <p class="card-description"><span class="value">{{ request.defectDescription }}</span></p>
         </div>

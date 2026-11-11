@@ -1,16 +1,16 @@
-import { Component, OnInit, AfterViewInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
-import { NewRequestPageComponent } from '../new-request-page/new-request-page.component';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSortModule, Sort } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+import { NewRequestPageComponent } from '../new-request-page/new-request-page.component';
 import { MaintenanceRequestService as RequestService } from '../../../core/services/maintenance-request.service';
 import { MaintenanceRequestResponseDTO as Request } from '../../../shared/models/maintenance-request.models';
-import { CommonModule } from '@angular/common';
-import { MatSort, MatSortModule } from '@angular/material/sort';
-import { MatButtonModule } from '@angular/material/button';
 import { ToastService } from '../../../core/services/toast.service';
 import { clientHttpErrorMessage } from '../client-http-error';
 import {
@@ -18,10 +18,15 @@ import {
 } from '../request-detail-page/components/approve-reject-panel/budget-rescue-confirm-dialog.component';
 import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
 
-
+/**
+ * Página inicial do cliente (RF003).
+ *
+ * Lista as solicitações do cliente logado (GET /requests/client) da mais antiga
+ * para a mais recente. Cada linha mostra o botão que corresponde ao status:
+ * ORÇADA → aprovar/recusar, REJEITADA → resgatar, ARRUMADA → pagar e os demais → ver.
+ */
 @Component({
   selector: 'app-client-dashboard-page',
-
   imports: [
     MatDialogModule,
     MatFormFieldModule,
@@ -36,7 +41,12 @@ import { TruncatePipe } from '../../../shared/pipes/truncate.pipe';
   templateUrl: './client-dashboard-page.component.html',
   styleUrl: './client-dashboard-page.component.css',
 })
-export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
+export class ClientDashboardPageComponent implements OnInit {
+  private dialog = inject(MatDialog);
+  private requestService = inject(RequestService);
+  private router = inject(Router);
+  private toast = inject(ToastService);
+
   displayedColumns: string[] = [
     'equipmentName',
     'categoryId',
@@ -45,29 +55,33 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
     'description',
     'acoes',
   ];
-  dataSource = new MatTableDataSource<Request>();
-  private toast = inject(ToastService);
 
-  @ViewChild(MatSort) sort!: MatSort;
+  /** Solicitações como vieram do backend. */
+  requests = signal<Request[]>([]);
 
-  constructor(
-    private dialog: MatDialog,
-    private requestService: RequestService,
-    private router: Router,
-  ) {}
+  /** Texto digitado no campo de pesquisa. */
+  searchText = signal('');
+
+  /** Ordem da coluna "Data de Criação". Começa crescente, como pede o RF003. */
+  dateOrder = signal<'asc' | 'desc'>('asc');
+
+  /** Linhas exibidas na tabela: filtradas pela pesquisa e ordenadas pela data. */
+  visibleRequests = computed(() => {
+    const text = this.searchText().trim().toLowerCase();
+    const direction = this.dateOrder() === 'asc' ? 1 : -1;
+
+    return this.requests()
+      .filter((request) => matchesSearch(request, text))
+      .sort((a, b) => direction * (toTime(a.requestDate) - toTime(b.requestDate)));
+  });
 
   ngOnInit(): void {
     this.loadRequests();
   }
 
-  loadRequests() {
+  loadRequests(): void {
     this.requestService.getAllClientRequests().subscribe({
-      next: (data) => {
-        this.dataSource.data = data;
-        if (this.sort) {
-          this.dataSource.sort = this.sort;
-        }
-      },
+      next: (data) => this.requests.set(data),
       error: (err) => {
         console.error('Erro ao buscar solicitações', err);
         this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao carregar solicitações.'));
@@ -75,67 +89,69 @@ export class ClientDashboardPageComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-
-    setTimeout(() => {
-      this.sort.active = 'requestDate';
-      this.sort.direction = 'asc';
-      this.sort.sortChange.emit();
-    });
+  /** Clique no cabeçalho "Data de Criação": alterna entre crescente e decrescente. */
+  orderByDate(sort: Sort): void {
+    this.dateOrder.set(sort.direction === 'desc' ? 'desc' : 'asc');
   }
 
-  openNewRequest() {
-    const dialogRef = this.dialog.open(NewRequestPageComponent, {
-      width: '565px',
-      disableClose: true,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadRequests();
-      }
-    });
+  /** RF004: abre o diálogo de nova solicitação e recarrega a lista se ela foi criada. */
+  openNewRequest(): void {
+    this.dialog
+      .open(NewRequestPageComponent, { width: '565px', disableClose: true })
+      .afterClosed()
+      .subscribe((created) => {
+        if (created) {
+          this.loadRequests();
+        }
+      });
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement)?.value || '';
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
-  verServico(id: number) {
+  /** RF005, RF008 e RF010 começam pelo detalhe da solicitação. */
+  openDetail(id: number): void {
     this.router.navigate(['/client/request-detail', id]);
   }
 
+  /** RF009: resgata uma solicitação REJEITADA direto da home. */
   openRescueConfirmDialog(request: Request): void {
-    if (request.statusName !== 'REJEITADA') {
-      this.toast.warn('Atenção', 'Esta solicitação não está disponível para resgate.');
-      return;
-    }
+    this.dialog
+      .open(BudgetRescueConfirmDialogComponent, {
+        width: '32rem',
+        maxWidth: '95vw',
+        data: { equipmentName: request.equipmentName },
+      })
+      .afterClosed()
+      .subscribe((confirmed) => {
+        if (!confirmed) {
+          return;
+        }
 
-    const dialogRef = this.dialog.open(BudgetRescueConfirmDialogComponent, {
-      width: '32rem',
-      maxWidth: '95vw',
-      data: {
-        equipmentName: request.equipmentName,
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((confirmed) => {
-      if (!confirmed) {
-        return;
-      }
-
-      this.requestService.rescueRequest(request.id).subscribe({
-        next: () => {
-          this.toast.success('Resgatado', 'Serviço resgatado com sucesso.');
-          this.loadRequests();
-        },
-        error: (err) => {
-          console.error(err);
-          this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao resgatar serviço.'));
-        },
+        // Se o status já tiver mudado, o backend responde 409 e o toast explica.
+        this.requestService.rescueRequest(request.id).subscribe({
+          next: () => {
+            this.toast.success('Resgatado', 'Serviço resgatado com sucesso.');
+            this.loadRequests();
+          },
+          error: (err) => {
+            console.error(err);
+            this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao resgatar serviço.'));
+          },
+        });
       });
-    });
   }
+}
+
+/** A pesquisa procura nos textos que aparecem na tabela. */
+function matchesSearch(request: Request, text: string): boolean {
+  if (!text) {
+    return true;
+  }
+
+  return [request.equipmentName, request.categoryName, request.statusName, request.defectDescription]
+    .join(' ')
+    .toLowerCase()
+    .includes(text);
+}
+
+function toTime(date: string): number {
+  return new Date(date).getTime();
 }

@@ -1,9 +1,10 @@
-@if (isLoading) {
+@if (isLoading()) {
   <div class="loading-state">Carregando pagamento...</div>
-} @else if (requests) {
+}
+@if (request(); as detail) {
   <main>
     <div class="header-wrapper">
-      <a [routerLink]="['/client/request-detail', currentRequestId]" class="label_large back-link">
+      <a [routerLink]="['/client/request-detail', detail.id]" class="label_large back-link">
         <mat-icon>arrow_back</mat-icon>Voltar para Detalhes da Solicitação
       </a>
       <div></div>
@@ -19,20 +20,20 @@
           <div class="info-grid">
             <div class="info-field">
               <span class="field-label">Item</span>
-              <span class="field-value">{{ requests.equipmentName }}</span>
+              <span class="field-value">{{ detail.equipmentName }}</span>
             </div>
             <div class="info-field">
               <span class="field-label">Categoria</span>
-              <span class="field-value">{{ requests.categoryName }}</span>
+              <span class="field-value">{{ detail.categoryName }}</span>
             </div>
           </div>
 
           <div class="info-field">
             <span class="field-label">Descrição do defeito</span>
-            <p class="field-value field-value--multiline">{{ requests.defectDescription }}</p>
+            <p class="field-value field-value--multiline">{{ detail.defectDescription }}</p>
           </div>
 
-          @for (budget of requests.budgets; track budget.id) {
+          @for (budget of detail.budgets; track budget.id) {
             <div class="budget-block">
               <span class="field-label">Serviços inclusos</span>
               <p class="field-value field-value--multiline">{{ budget.services }}</p>
@@ -52,7 +53,7 @@
         </mat-card-header>
 
         <mat-card-content class="checkout-content">
-          @if (canPay) {
+          @if (canPay()) {
             <mat-button-toggle-group
               class="payment-toggle-group"
               [(ngModel)]="selectedMethod"
@@ -67,7 +68,7 @@
               color="primary"
               type="button"
               class="pay-now-btn"
-              [disabled]="isProcessingPayment || !selectedMethod"
+              [disabled]="isProcessingPayment() || !selectedMethod"
               (click)="openPaymentConfirmDialog()"
             >
               Pagar agora
@@ -81,7 +82,7 @@
               color="primary"
               type="button"
               class="pay-now-btn"
-              [routerLink]="['/client/request-detail', currentRequestId]"
+              [routerLink]="['/client/request-detail', detail.id]"
             >
               Voltar para detalhes
             </button>

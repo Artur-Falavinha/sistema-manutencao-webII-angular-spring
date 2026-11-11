@@ -1,12 +1,14 @@
-
-@if (isLoading === false) {
+@if (isLoading()) {
+  <div class="loading-state">Carregando detalhes...</div>
+}
+@if (request(); as detail) {
 <main>
   <div class="header-wrapper">
     <a routerLink="/client/dashboard" class="label_large back-link">
       <mat-icon>arrow_back</mat-icon>Voltar para Página Inicial
     </a>
-    @if (request!.status.nome === 'ARRUMADA') {
-    <button mat-flat-button color="primary" type="button" class="label_large" (click)="goToPaymentPage()">
+    @if (detail.status.nome === 'ARRUMADA') {
+    <button mat-flat-button color="primary" type="button" class="label_large" (click)="goToPaymentPage(detail.id)">
       Pagar Solicitação <mat-icon>payment</mat-icon>
     </button>
     } @else {
@@ -15,12 +17,10 @@
   </div>
   <div class="content-wrapper">
     <div class="details-section">
-      <app-request-description [request]="request!"></app-request-description>
-      <app-approve-reject-panel [request]="request!" (statusChanged)="loadRequestDetails($event)"></app-approve-reject-panel>
+      <app-request-description [request]="detail"></app-request-description>
+      <app-approve-reject-panel [request]="detail" (statusChanged)="loadRequestDetails($event)"></app-approve-reject-panel>
     </div>
-    <app-request-history style="height: 100%;" [history]="request!.history"></app-request-history>
+    <app-request-history style="height: 100%;" [history]="detail.history"></app-request-history>
   </div>
 </main>
-} @else {
-    <div class="loading-state">Carregando detalhes...</div>
 }

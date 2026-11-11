@@ -6,7 +6,7 @@
       <mat-form-field appearance="outline" class="search-field">
         <mat-icon matPrefix>search</mat-icon>
         <mat-label>Pesquisar solicitação</mat-label>
-        <input matInput type="search" (input)="applyFilter($event)" #input />
+        <input matInput type="search" (input)="searchText.set(input.value)" #input />
       </mat-form-field>
 
       <button mat-flat-button color="primary" type="button" class="label_large" (click)="openNewRequest()">
@@ -15,7 +15,16 @@
     </div>
   </div>
 
-  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  <table
+    mat-table
+    [dataSource]="visibleRequests()"
+    matSort
+    matSortActive="requestDate"
+    matSortDirection="asc"
+    matSortDisableClear
+    (matSortChange)="orderByDate($event)"
+    class="mat-elevation-z8"
+  >
 
     <ng-container matColumnDef="equipmentName">
       <th mat-header-cell *matHeaderCellDef> Nome do Equipamento </th>
@@ -30,49 +39,48 @@
       <td mat-cell *matCellDef="let element"> {{ element.requestDate | date:'dd/MM/yyyy HH:mm' }} </td>
     </ng-container>
     <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef> Status </th>
-    <td mat-cell *matCellDef="let element">
-      <span class="status-badge label_large" [style.backgroundColor]="element.statusColor">
-        {{ element.statusName }}
-      </span>
-    </td>
-  </ng-container>
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element">
+        <span class="status-badge label_large" [style.backgroundColor]="element.statusColor">
+          {{ element.statusName }}
+        </span>
+      </td>
+    </ng-container>
 
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef> Descrição do Defeito </th>
       <td mat-cell *matCellDef="let element"> {{ element.defectDescription }} </td>
     </ng-container>
 
+    <!-- RF003: um botão por status -->
     <ng-container matColumnDef="acoes">
-    <th mat-header-cell *matHeaderCellDef> Ações </th>
-    <td mat-cell *matCellDef="let element">
-
-        <ng-container *ngIf="element.statusName === 'ABERTA' || element.statusName === 'PAGA' || element.statusName === 'FINALIZADA' || element.statusName === 'REDIRECIONADA'">
-            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="verServico(element.id)">Ver Solicitação</button>
-        </ng-container>
-
-        <ng-container *ngIf="element.statusName === 'ORÇADA'">
-            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="verServico(element.id)">Aprovar ou Recusar</button>
-        </ng-container>
-
-        <ng-container *ngIf="element.statusName === 'REJEITADA'">
+      <th mat-header-cell *matHeaderCellDef> Ações </th>
+      <td mat-cell *matCellDef="let element">
+        @switch (element.statusName) {
+          @case ('ORÇADA') {
+            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="openDetail(element.id)">Aprovar ou Recusar</button>
+          }
+          @case ('REJEITADA') {
             <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="openRescueConfirmDialog(element)">Resgatar Serviço</button>
-        </ng-container>
+          }
+          @case ('APROVADA') {
+            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="openDetail(element.id)">Ver Detalhes</button>
+          }
+          @case ('ARRUMADA') {
+            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="openDetail(element.id)">Pagar Solicitação</button>
+          }
+          @default {
+            <!-- ABERTA, REDIRECIONADA, PAGA e FINALIZADA -->
+            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="openDetail(element.id)">Ver Solicitação</button>
+          }
+        }
+      </td>
+    </ng-container>
 
-        <ng-container *ngIf="element.statusName === 'APROVADA'">
-            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="verServico(element.id)">Ver Detalhes</button>
-        </ng-container>
-
-        <ng-container *ngIf="element.statusName === 'ARRUMADA'">
-            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="verServico(element.id)">Pagar Solicitação</button>
-        </ng-container>
-
-        </td>
-</ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="7">Sem resultados</td>
+      <td class="mat-cell" colspan="6">Sem resultados</td>
     </tr>
   </table>
 </main>
