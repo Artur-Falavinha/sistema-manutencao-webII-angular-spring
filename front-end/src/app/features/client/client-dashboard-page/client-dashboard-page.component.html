@@ -6,7 +6,7 @@
       <mat-form-field appearance="outline" class="search-field">
         <mat-icon matPrefix>search</mat-icon>
         <mat-label>Pesquisar solicitação</mat-label>
-        <input matInput type="search" (input)="searchText.set(input.value)" #input />
+        <input matInput type="search" (input)="applyFilter($event)" #input />
       </mat-form-field>
 
       <button mat-flat-button color="primary" type="button" class="label_large" (click)="openNewRequest()">
@@ -17,12 +17,11 @@
 
   <table
     mat-table
-    [dataSource]="visibleRequests()"
+    [dataSource]="dataSource"
     matSort
     matSortActive="requestDate"
     matSortDirection="asc"
     matSortDisableClear
-    (matSortChange)="orderByDate($event)"
     class="mat-elevation-z8"
   >
 
@@ -58,20 +57,20 @@
       <td mat-cell *matCellDef="let element">
         @switch (element.statusName) {
           @case ('ORÇADA') {
-            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="openDetail(element.id)">Aprovar ou Recusar</button>
+            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="verServico(element.id)">Aprovar ou Recusar</button>
           }
           @case ('REJEITADA') {
-            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="openRescueConfirmDialog(element)">Resgatar Serviço</button>
+            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="verServico(element.id)">Resgatar Serviço</button>
           }
           @case ('APROVADA') {
-            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="openDetail(element.id)">Ver Detalhes</button>
+            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="verServico(element.id)">Ver Detalhes</button>
           }
           @case ('ARRUMADA') {
-            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="openDetail(element.id)">Pagar Solicitação</button>
+            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="verServico(element.id)">Pagar Solicitação</button>
           }
           @default {
             <!-- ABERTA, REDIRECIONADA, PAGA e FINALIZADA -->
-            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="openDetail(element.id)">Ver Solicitação</button>
+            <button mat-stroked-button color="primary" type="button" class="label_large table-action-btn" (click)="verServico(element.id)">Ver Solicitação</button>
           }
         }
       </td>

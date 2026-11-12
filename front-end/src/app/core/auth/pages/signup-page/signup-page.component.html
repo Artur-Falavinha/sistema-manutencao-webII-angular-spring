@@ -137,6 +137,7 @@
               type="button"
               class="label_large"
               matStepperNext
+              [disabled]="isSubmitting"
               (click)="onSubmit()"
             >
               Registrar
@@ -152,3 +153,5 @@
     </div>
   </section>
 </main>
+
+<app-success-modal [(mostrar)]="showModal" titulo="Cadastro concluído" subtitulo="Conta criada com sucesso. A senha foi enviada ao seu e-mail." textoBotao="Fazer login" rotaDestino="/login"></app-success-modal>

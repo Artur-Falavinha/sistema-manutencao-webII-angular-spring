@@ -1,14 +1,14 @@
-@if (isLoading()) {
+@if (isLoading) {
   <div class="loading-state">Carregando detalhes...</div>
 }
-@if (request(); as detail) {
+@if (request; as detail) {
 <main>
   <div class="header-wrapper">
     <a routerLink="/client/dashboard" class="label_large back-link">
       <mat-icon>arrow_back</mat-icon>Voltar para Página Inicial
     </a>
     @if (detail.status.nome === 'ARRUMADA') {
-    <button mat-flat-button color="primary" type="button" class="label_large" (click)="goToPaymentPage(detail.id)">
+    <button mat-flat-button color="primary" type="button" class="label_large" (click)="goToPaymentPage()">
       Pagar Solicitação <mat-icon>payment</mat-icon>
     </button>
     } @else {

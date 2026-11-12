@@ -93,11 +93,14 @@ export class EmployeeListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.employeeService.deleteEmployee(employee.id!).subscribe(() => {
-          this.loadEmployees();
-          this.snackBar.open('Funcionário excluído com sucesso!', 'Fechar', {
-            duration: 3000,
-          });
+        this.employeeService.deleteEmployee(employee.id!).subscribe({
+          next: () => {
+            this.loadEmployees();
+            this.snackBar.open('Funcionário excluído com sucesso!', 'Fechar', {
+              duration: 3000,
+            });
+          },
+          error: () => this.snackBar.open('Não foi possível excluir o funcionário.', 'Fechar', { duration: 5000 }),
         });
       }
     });

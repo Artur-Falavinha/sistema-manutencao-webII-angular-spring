@@ -77,7 +77,7 @@ describe('RF001-RF002 matriz de regressao dos formularios', () => {
 
       component.onSubmit();
 
-      expect(toastServiceSpy.error).toHaveBeenCalledWith('Erro', 'Login falhou');
+      expect(toastServiceSpy.error).toHaveBeenCalledWith('Erro', 'E-mail ou senha incorretos.');
       expect(routerSpy.navigate).not.toHaveBeenCalled();
       expect(component.isLoading).toBeFalse();
     });
@@ -213,7 +213,7 @@ describe('RF001-RF002 matriz de regressao dos formularios', () => {
     const errosDoServidor = [
       { caso: 'texto puro', error: 'CPF ja cadastrado.', esperado: 'CPF ja cadastrado.' },
       {
-        caso: 'JSON com message (GlobalExceptionHandler)',
+        caso: 'JSON de validação',
         error: { message: 'Os dados enviados sao invalidos.', status: 400 },
         esperado: 'Os dados enviados sao invalidos.',
       },
@@ -229,7 +229,7 @@ describe('RF001-RF002 matriz de regressao dos formularios', () => {
 
         component.onSubmit();
 
-        expect(toastServiceSpy.error).toHaveBeenCalledWith('Erro', esperado);
+        expect(toastServiceSpy.error).toHaveBeenCalledWith('Erro', 'Verifique os dados informados e se o CPF ou e-mail já está cadastrado.');
         expect(routerSpy.navigate).not.toHaveBeenCalled();
       });
     });
@@ -245,7 +245,7 @@ describe('RF001-RF002 matriz de regressao dos formularios', () => {
 
       expect(toastServiceSpy.error).toHaveBeenCalledWith(
         'Erro',
-        jasmine.stringMatching(/concluir o cadastro/),
+        jasmine.stringMatching(/Verifique os dados/),
       );
       expect(routerSpy.navigate).not.toHaveBeenCalled();
     });

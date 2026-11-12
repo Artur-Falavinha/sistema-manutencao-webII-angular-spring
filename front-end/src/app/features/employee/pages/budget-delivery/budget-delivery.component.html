@@ -1,10 +1,10 @@
 <!-- Carregando -->
-<div *ngIf="isLoading()" style="display: flex; justify-content: center; padding: 20px;">
+<div *ngIf="isLoading" style="display: flex; justify-content: center; padding: 20px;">
   <span>Carregando solicitação...</span>
 </div>
 
 <!-- Solicitação carregada -->
-<div *ngIf="!isLoading() && request() as request">
+<div *ngIf="!isLoading && request as request">
   <!-- Voltar e Finalizar -->
   <div class="top-actions">
     <a class="voltar-pagina-inicial" (click)="onVoltarPaginaInicial()">
@@ -16,6 +16,7 @@
       mat-flat-button
       color="primary"
       class="finalizar-solicitacao-btn"
+      #finalizarSolicitacaoButton
       *ngIf="canFinalizarSolicitacao()"
       (click)="finalizarSolicitacao(finalizacaoDialogTemplate)"
     >
@@ -92,7 +93,7 @@
             <span class="detalhes-info-value">
               {{ request.client.street }}, {{ request.client.number }}<ng-container *ngIf="request.client.complement"> - {{ request.client.complement }}</ng-container>
               · {{ request.client.neighborhood }} · {{ request.client.city }}/{{ request.client.state }}
-              · CEP {{ formatarCep(request.client.zipCode) }}
+              · CEP {{ request.client.zipCode?.slice(0, 5) + '-' + request.client.zipCode?.slice(5) }}
             </span>
           </div>
         </div>
@@ -107,16 +108,16 @@
           <span class="tecnico-title">Técnico Responsável</span>
         </div>
 
-        <ng-container *ngIf="!responsavel(); else responsavelPreenchido">
+        <ng-container *ngIf="!responsavel; else responsavelPreenchido">
           <div class="tecnico-content">Nenhum Técnico Atribuído</div>
         </ng-container>
 
         <ng-template #responsavelPreenchido>
           <div class="tecnico-content">
-            <div><b>Nome:</b> {{ responsavel()!.name }}</div>
+            <div><b>Nome:</b> {{ responsavel!.name }}</div>
           </div>
           <!-- RF015: só o responsável, antes da manutenção -->
-          <button *ngIf="podeRedirecionar()" mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
+          <button *ngIf="permitidoCriarManutencao()" mat-stroked-button color="primary" class="atribuir-btn" (click)="abrirDialog(dialogTemplate)">
             <mat-icon>sync_alt</mat-icon>
             Redirecionar Manutenção
           </button>
@@ -133,20 +134,20 @@
             </ng-template>
 
             <div class="orcamento-content">
-              <ng-container *ngIf="temOrcamento(); else orcamentoVazio">
+              <ng-container *ngIf="temOrcamento; else orcamentoVazio">
                 <div class="orcamento-total-label">Valor Total do Orçamento</div>
-                <div class="orcamento-total">R$ {{ valorOrcamento() | number:'1.2-2' }}</div>
+                <div class="orcamento-total">R$ {{ valorOrcamento | number:'1.2-2' }}</div>
                 <div class="orcamento-servicos-label">Serviços Inclusos</div>
                 <div class="orcamento-servicos">
-                  {{ servicosInclusos() }}
+                  {{ servicosInclusos }}
                 </div>
               </ng-container>
 
               <ng-template #orcamentoVazio>
                 <div class="orcamento-empty">Nenhum Orçamento Efetuado</div>
-                <div *ngIf="!podeOrcar()" class="orcamento-empty">Só {{ responsavel()?.name }}, responsável pela solicitação, pode orçar.</div>
+                <div *ngIf="request.status.nome !== 'ABERTA'" class="orcamento-empty">Só {{ responsavel?.name }}, responsável pela solicitação, pode orçar.</div>
                 <button
-                  *ngIf="podeOrcar()"
+                  *ngIf="request.status.nome === 'ABERTA'"
                   class="button-primary label_large orcamento-btn"
                   (click)="abrirDialogOrcamento(orcamentoDialogTemplate)"
                 >
@@ -162,23 +163,22 @@
               Manutenção
             </ng-template>
 
-            <div class="manutencao-content" [class.tem-manutencao]="temManutencao()" >
-              <ng-container *ngIf="temManutencao(); else manutencaoVazio">
+            <div class="manutencao-content" [class.tem-manutencao]="temManutencao" >
+              <ng-container *ngIf="temManutencao; else manutencaoVazio">
                 <div class="manutencao-descricao">
                   <b>Descrição da Manutenção:</b>
-                  <span>{{ descricaoManutencao() }}</span>
+                  <span>{{ descricaoManutencao }}</span>
                 </div>
                 <div class="manutencao-orientacao">
                   <b>Orientações para o Cliente:</b>
-                  <span>{{ orientacaoCliente() }}</span>
+                  <span>{{ orientacaoCliente }}</span>
                 </div>
               </ng-container>
 
               <ng-template #manutencaoVazio>
                 <div class="orcamento-empty">Nenhuma Manutenção Efetuada</div>
-                <div *ngIf="permitidoCriarManutencao() && responsavel() && !souResponsavel()" class="orcamento-empty">Só {{ responsavel()?.name }}, responsável pela solicitação, pode efetuar a manutenção.</div>
                 <button
-                  *ngIf="souResponsavel()"
+                  *ngIf="permitidoCriarManutencao()"
                   color="primary"
                   [style.cursor]="permitidoCriarManutencao() ? 'pointer' : 'not-allowed'"
                   class="button-primary label_large manutencao-btn"
@@ -205,7 +205,7 @@
     <mat-form-field appearance="outline" class="dialog-field">
       <mat-label>Redirecionar Para:</mat-label>
       <mat-select [(ngModel)]="selectedFuncionario" placeholder="Selecione um Funcionário">
-        <mat-option *ngFor="let func of funcionariosParaRedirecionar()" [value]="func">
+        <mat-option *ngFor="let func of funcionariosDisponiveis" [value]="func">
           {{ func.name }}
         </mat-option>
       </mat-select>
@@ -217,7 +217,7 @@
       </button>
       <button mat-flat-button color="primary" class="dialog-btn"
               [disabled]="!selectedFuncionario"
-              (click)="redirecionarManutencao()">
+              (click)="atribuirResponsavel()">
         Redirecionar
       </button>
     </div>
@@ -244,15 +244,12 @@
           placeholder="Selecione os serviços"
           (selectionChange)="atualizarTotal()"
         >
-          <mat-option *ngFor="let s of servicosDisponiveis()" [value]="s">
+          <mat-option *ngFor="let s of servicosDisponiveis" [value]="s">
             {{ s.nome }} — R$ {{ s.valorServico | number:'1.2-2' }}
           </mat-option>
         </mat-select>
         <mat-error *ngIf="servicosSelecionados.length === 0">
           Selecione ao menos um serviço.
-        </mat-error>
-        <mat-error *ngIf="servicosSelecionados.length > 0 && valorTotal() <= 0">
-          O valor total deve ser maior que zero.
         </mat-error>
       </mat-form-field>
 
@@ -260,7 +257,7 @@
         <mat-label>Valor Total</mat-label>
         <input
           matInput
-          [value]="servicosSelecionados.length ? (valorTotal() | currency:'BRL':'symbol-narrow':'1.2-2') : ''"
+          [value]="servicosSelecionados.length ? (valorTotal | currency:'BRL':'symbol-narrow':'1.2-2') : ''"
           placeholder="Total calculado"
           readonly
         />
@@ -276,7 +273,7 @@
         mat-flat-button
         color="primary"
         class="orcamento-dialog-confirm"
-        [disabled]="!orcamentoValido()"
+        [disabled]="servicosSelecionados.length === 0"
         (click)="confirmarOrcamento()"
       >
         Efetuar Orçamento
@@ -302,15 +299,13 @@
         <textarea
           matInput
           rows="5"
-          maxlength="500"
+          
           [(ngModel)]="manutencaoDescricaoInput"
           placeholder="Descreva a manutenção"
         ></textarea>
-        <mat-error *ngIf="descricaoManutencaoInvalida()">
-          A descrição deve ter entre {{ MANUTENCAO_MIN_LENGTH }} e {{ MANUTENCAO_MAX_LENGTH }} caracteres.
+        <mat-error *ngIf="!manutencaoDescricaoInput.trim()">
+          Informe a descrição da manutenção.
         </mat-error>
-        <mat-hint align="start">Mínimo de 10 caracteres</mat-hint>
-        <mat-hint align="end">{{ manutencaoDescricaoInput.length }}/500</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="manutencao-dialog-field full">
@@ -318,15 +313,13 @@
         <textarea
           matInput
           rows="4"
-          maxlength="500"
+          
           [(ngModel)]="manutencaoOrientacaoInput"
           placeholder="Descreva as orientações"
         ></textarea>
-        <mat-error *ngIf="orientacaoManutencaoInvalida()">
-          As orientações devem ter entre {{ MANUTENCAO_MIN_LENGTH }} e {{ MANUTENCAO_MAX_LENGTH }} caracteres.
+        <mat-error *ngIf="!manutencaoOrientacaoInput.trim()">
+          Informe as orientações ao cliente.
         </mat-error>
-        <mat-hint align="start">Mínimo de 10 caracteres</mat-hint>
-        <mat-hint align="end">{{ manutencaoOrientacaoInput.length }}/500</mat-hint>
       </mat-form-field>
     </div>
 

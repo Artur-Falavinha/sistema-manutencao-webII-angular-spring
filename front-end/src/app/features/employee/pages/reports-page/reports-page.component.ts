@@ -1,81 +1,53 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-} from "@angular/forms";
-import { MatButtonModule } from "@angular/material/button";
-import { MatButtonToggleModule } from "@angular/material/button-toggle";
-import { MatCardModule } from "@angular/material/card";
-import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIcon } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import {
-  MatPaginator,
-  MatPaginatorModule,
-} from "@angular/material/paginator";
-import { MatTableDataSource, MatTableModule } from "@angular/material/table";
-import { ReportService } from "../../../../core/services/report.service";
-import { ToastService } from "../../../../core/services/toast.service";
-import {
-  RevenueByCategory,
-  RevenueByDate,
-} from "../../../../shared/models/reports.model";
-import { dateToIso } from "../../../../shared/utils/birth-date-format";
-
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatIcon } from '@angular/material/icon';
+import { ReportService } from '../../../../core/services/report.service';
+import { ToastService } from '../../../../core/services/toast.service';
+import { RevenueByCategory, RevenueByDate } from '../../../../shared/models/reports.model';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule, FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { CommonModule } from '@angular/common';
+import { MatPaginator } from '@angular/material/paginator';
 @Component({
-  selector: "app-reports-page",
+  selector: 'app-reports-page',
   imports: [
-    CommonModule,
     MatIcon,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatDatepickerModule,
     MatFormFieldModule,
-    MatInputModule,
+    MatDatepickerModule,
+    MatInputModule,          
     ReactiveFormsModule,
     MatTableModule,
-    MatPaginatorModule,
+    CommonModule,
+    MatPaginator,
+    MatCardModule,
+    MatButtonModule,
+    MatButtonToggleModule
   ],
-  templateUrl: "./reports-page.component.html",
-  styleUrl: "./reports-page.component.css",
+  templateUrl: './reports-page.component.html',
+  styleUrl: './reports-page.component.css'
 })
 export class ReportsPageComponent implements OnInit {
-  isReportsTotalView = true;
 
+  isReportsTotalView: boolean = true;
   revenueByDate: RevenueByDate[] = [];
   revenueByCategory: RevenueByCategory[] = [];
-
-  datasource = new MatTableDataSource<RevenueByDate>(this.revenueByDate);
-  categoryDataSource = new MatTableDataSource<RevenueByCategory>(
-    this.revenueByCategory,
-  );
-
-  range: FormGroup<{
-    start: FormControl<Date | null>;
-    end: FormControl<Date | null>;
-  }>;
-  receitaTotal = 0;
-
-  displayedColumns: string[] = ["date", "totalRevenue"];
-  categoryDisplayedColumns: string[] = ["categoryName", "totalRevenue"];
-
-  @ViewChild(MatPaginator)
-  set paginator(paginator: MatPaginator | undefined) {
-    if (paginator) {
-      this.datasource.paginator = paginator;
-    }
+  datasource: MatTableDataSource<RevenueByDate> = new MatTableDataSource<RevenueByDate>(this.revenueByDate);
+  range: FormGroup;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  get receitaTotal(): number {
+    const rows = this.isReportsTotalView ? this.datasource.data : this.revenueByCategory;
+    return rows.reduce((total, row) => total + row.totalRevenue, 0);
   }
 
-  constructor(
-    private reportService: ReportService,
-    private toast: ToastService,
-    private fb: FormBuilder,
-  ) {
+  displayedColumns: string[] = ['date', 'totalRevenue'];
+
+  constructor(private reportService: ReportService, private toast: ToastService, private fb: FormBuilder,) { 
     this.range = this.fb.group({
       start: new FormControl<Date | null>(null),
       end: new FormControl<Date | null>(null),
@@ -84,168 +56,114 @@ export class ReportsPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadRevenueByCategoryData();
-    this.loadRevenueByDateData("", "");
+    this.loadRevenueByDateData('', '');
+  }
+
+  loadRevenueByDateData(startDate: string, endDate: string) {
+    this.reportService.getRevenueByDateData(startDate, endDate).subscribe({
+      next: (data) => {
+        this.datasource = new MatTableDataSource<RevenueByDate>(data as RevenueByDate[]);
+        this.datasource.paginator = this.paginator;
+      },
+      error: (error) => {
+        this.toast.error('Erro', 'Erro ao carregar dados de receita por data: ' + error);
+        console.error('Erro ao carregar dados de receita por data:', error);
+      }
+    });
   }
 
   get start() {
-    return this.range.controls.start;
+    return this.range.get('start')!;
   }
 
   get end() {
-    return this.range.controls.end;
+    return this.range.get('end')!;
   }
 
-  onViewChange(view: "date" | "category"): void {
-    this.isReportsTotalView = view === "date";
-
-    if (this.isReportsTotalView) {
-      this.applyDateFilter();
-      return;
-    }
-
-    this.loadRevenueByCategoryData();
-  }
-
-  applyDateFilter(): void {
-    const range = this.readDateRange();
-
-    if (range.error) {
-      this.toast.warn("Atenção", range.error);
-      return;
-    }
-
-    this.loadRevenueByDateData(range.startIso, range.endIso);
-  }
-
-  loadRevenueByDateData(startDate: string, endDate: string): void {
-    this.reportService.getRevenueByDateData(startDate, endDate).subscribe({
-      next: (data) => {
-        this.revenueByDate = data;
-        this.datasource.data = data;
-        this.receitaTotal = data.reduce(
-          (total, item) => total + item.totalRevenue,
-          0,
-        );
-      },
-      error: (error: unknown) => {
-        console.error("Erro ao carregar dados de receita por data:", error);
-        this.toast.error("Erro", "Não foi possível carregar receitas por data.");
-      },
-    });
-  }
-
-  loadRevenueByCategoryData(): void {
+  loadRevenueByCategoryData() {
     this.reportService.getRevenueByCategoryData().subscribe({
       next: (data) => {
-        this.revenueByCategory = data;
-        this.categoryDataSource.data = data;
-        this.receitaTotal = data.reduce(
-          (total, item) => total + item.totalRevenue,
-          0,
-        );
+        this.revenueByCategory = data as RevenueByCategory[];
       },
-      error: (error: unknown) => {
-        console.error(
-          "Erro ao carregar dados de receita por categoria:",
-          error,
-        );
-        this.toast.error(
-          "Erro",
-          "Não foi possível carregar receitas por categoria.",
-        );
-      },
+      error: (error) => {
+        this.toast.error('Erro', 'Erro ao carregar dados de receita por categoria: ' + error);
+        console.error('Erro ao carregar dados de receita por categoria:', error);
+      }
     });
   }
 
-  generateRevenueByDateReport(): void {
-    const range = this.readDateRange();
+  applyDateFilter() {
+    const start: Date | null = this.start.value;
+    const end: Date | null = this.end.value;
+    if (this.range.invalid || (start && end && start > end)) {
+      this.toast.warn('Atenção', 'Informe datas válidas, com início antes do fim.');
+      return;
+    }
+    this.loadRevenueByDateData(start ? this.formatDate(start) : '', end ? this.formatDate(end) : '');
+  }
 
-    if (range.error) {
-      this.toast.warn("Atenção", range.error);
+  generateRevenueByDateReport() {
+    const start: Date | null = this.range.controls['start'].value;
+    const end: Date | null = this.range.controls['end'].value;
+
+    if (this.range.invalid || (start && end && start > end)) {
+      this.toast.warn('Atenção', 'Informe datas válidas, com início antes do fim.');
       return;
     }
 
-    this.sendReportRequest(range.startIso, range.endIso);
+    if (!start && !end) {
+      this.sendReportRequest('', '');
+      return;
+    }
+
+    const startFormatted = start ? this.formatDate(start) : '';
+    const endFormatted = end ? this.formatDate(end) : '';
+
+    this.sendReportRequest(startFormatted, endFormatted);
   }
 
-  private sendReportRequest(startDate: string, endDate: string): void {
-    this.reportService
-      .generateRevenueByDateReport(startDate, endDate)
-      .subscribe({
-        next: (blob) => {
-          this.downloadBlob(blob, "relatorio_receitas_data.pdf");
-          this.toast.success("Sucesso", "Relatório por data exportado.");
-        },
-        error: (error: unknown) => {
-          console.error("Erro ao gerar relatório:", error);
-          this.toast.error(
-            "Erro",
-            "Não foi possível gerar o relatório por data.",
-          );
-        },
-      });
-  }
-
-  generateCategoriesReport(): void {
-    this.reportService.generateCategoriesReport().subscribe({
+  private sendReportRequest(startDate: string, endDate: string) {
+    this.reportService.generateRevenueByDateReport(startDate, endDate).subscribe({
       next: (blob) => {
-        this.downloadBlob(blob, "relatorio_receitas_categorias.pdf");
-        this.toast.success("Sucesso", "Relatório por categoria exportado.");
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'relatorio_receitas_data.pdf';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
       },
-      error: (error: unknown) => {
-        console.error("Erro ao gerar relatório:", error);
-        this.toast.error(
-          "Erro",
-          "Não foi possível gerar o relatório por categoria.",
-        );
-      },
+      error: (error) => {
+        console.error('Erro ao gerar relatório:', error);
+        this.toast.error('Erro', 'Erro ao gerar relatório de receitas por data: ' + error);
+      }
     });
   }
 
-  private readDateRange(): {
-    startIso: string;
-    endIso: string;
-    error: string | null;
-  } {
-    const start = this.start.value;
-    const end = this.end.value;
-
-    if ((start && !end) || (!start && end)) {
-      return {
-        startIso: "",
-        endIso: "",
-        error: "Selecione as duas datas do intervalo.",
-      };
-    }
-
-    if (!start || !end) {
-      return { startIso: "", endIso: "", error: null };
-    }
-
-    if (start > end) {
-      return {
-        startIso: "",
-        endIso: "",
-        error: "A data inicial não pode ser posterior à data final.",
-      };
-    }
-
-    return {
-      startIso: dateToIso(start),
-      endIso: dateToIso(end),
-      error: null,
-    };
+  private formatDate(date: Date): string {
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
   }
 
-  private downloadBlob(blob: Blob, filename: string): void {
-    const url = window.URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
 
-    anchor.href = url;
-    anchor.download = filename;
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
-    window.URL.revokeObjectURL(url);
+  generateCategoriesReport() {
+    this.reportService.generateCategoriesReport().subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'relatorio_receitas_categorias.pdf';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        console.error('Erro ao gerar relatório:', error);
+        this.toast.error('Erro', 'Erro ao gerar relatório de receitas por categoria: ' + error);
+      }
+    });
+  }
+
+  toggleView() {
+    this.isReportsTotalView = !this.isReportsTotalView;
   }
 }

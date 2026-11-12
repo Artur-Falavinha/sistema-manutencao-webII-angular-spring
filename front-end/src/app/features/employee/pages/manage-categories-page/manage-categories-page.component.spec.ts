@@ -4,7 +4,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 
 import { ManageCategoriesPageComponent } from './manage-categories-page.component';
-import { mockApiInterceptor } from '../../../../core/interceptors/mock-api.interceptor';
+import { mockApiInterceptor } from '../../../../../testing/core/interceptors/mock-api.interceptor';
 
 describe('ManageCategoriesPageComponent', () => {
   let component: ManageCategoriesPageComponent;

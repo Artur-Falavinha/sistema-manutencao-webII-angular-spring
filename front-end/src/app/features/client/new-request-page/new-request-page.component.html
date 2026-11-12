@@ -30,7 +30,7 @@
                     #categoria="ngModel" 
                     required> 
                     <option [ngValue]="null" disabled selected>Selecione a categoria</option>
-                    <option *ngFor="let category of categories()" [ngValue]="category.id">
+                    <option *ngFor="let category of categories" [ngValue]="category.id">
                         {{ category.name }}
                     </option>
                 </select>

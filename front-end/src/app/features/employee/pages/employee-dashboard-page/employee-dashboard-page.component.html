@@ -9,7 +9,7 @@
         </div>
         <div class="text-area">
           <span class="body_medium">Solicitações Abertas</span>
-          <span class="heading_3">{{ openRequests().length }}</span>
+          <span class="heading_3">{{ getOpenRequestCount() }}</span>
         </div>
       </div>
     </div>
@@ -17,11 +17,14 @@
 </div>
 
 <div class="request-list">
-  @for (req of openRequests(); track req.id) {
+  @for (req of requests(); track req.id) {
+    @if (req.statusName === 'ABERTA') {
     <app-request-card class="request-card" [request]="req">
       <button (click)="makeQuote(req)" mat-flat-button color="primary" type="button">Efetuar Orçamento</button>
     </app-request-card>
-  } @empty {
+    }
+  }
+  @if (getOpenRequestCount() === 0) {
     <p class="empty-state">Nenhuma solicitação aberta no momento.</p>
   }
 </div>

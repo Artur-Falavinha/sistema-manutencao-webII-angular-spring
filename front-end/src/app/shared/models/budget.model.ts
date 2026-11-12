@@ -11,5 +11,5 @@ export interface Budget {
 
 export interface BudgetCreateDTO {
   serviceIds: number[]; 
-  total?: number;
+  totalValue?: number; 
 }

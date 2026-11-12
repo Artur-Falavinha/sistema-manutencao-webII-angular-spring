@@ -1,3 +1,5 @@
+import { By } from '@angular/platform-browser';
+import { AppSuccessModalComponent } from '../../../../shared/components/modal-mensagem/app-success-modal';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
@@ -65,7 +67,7 @@ describe('SignupPageComponent', () => {
     expect(component.secondFormGroup.touched).toBeTrue();
   });
 
-  it('calls authService.signup and navigates to /login on valid data', () => {
+  it('mostra o modal após o cadastro e navega somente pelo botão', () => {
     authServiceSpy.signup.and.returnValue(of(undefined));
     component.firstFormGroup.patchValue(validFirstStep);
     component.secondFormGroup.patchValue(validSecondStep);
@@ -73,7 +75,10 @@ describe('SignupPageComponent', () => {
     component.onSubmit();
 
     expect(authServiceSpy.signup).toHaveBeenCalled();
-    expect(toastServiceSpy.success).toHaveBeenCalled();
+    expect(component.showModal).toBeTrue();
+    expect(routerSpy.navigate).not.toHaveBeenCalled();
+    fixture.detectChanges();
+    fixture.debugElement.query(By.directive(AppSuccessModalComponent)).componentInstance.fecharModal();
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
   });
 
@@ -99,12 +104,13 @@ describe('SignupPageComponent', () => {
       uf: 'PR',
     };
 
-    it('fills the address fields when a valid CEP is typed', () => {
+    it('preenche o endereço após pesquisar um CEP válido', () => {
       viaCepServiceSpy.buscarCep.and.returnValue(of(cepValido as any));
 
       component.secondFormGroup.get('cep')?.setValue('80010-000');
+      component.searchCep();
 
-      expect(viaCepServiceSpy.buscarCep).toHaveBeenCalledWith('80010000');
+      expect(viaCepServiceSpy.buscarCep).toHaveBeenCalledWith('80010-000');
       expect(component.secondFormGroup.getRawValue()).toEqual(
         jasmine.objectContaining({
           address: 'Rua XV de Novembro',
@@ -121,11 +127,13 @@ describe('SignupPageComponent', () => {
       expect(viaCepServiceSpy.buscarCep).not.toHaveBeenCalled();
     });
 
-    it('does not query ViaCEP twice for the same CEP', () => {
+    it('digitar o CEP não consulta a API antes da ação Pesquisar', () => {
       const cep = component.secondFormGroup.get('cep');
 
       cep?.setValue('80010-000');
       cep?.setValue('80010000');
+      expect(viaCepServiceSpy.buscarCep).not.toHaveBeenCalled();
+      component.searchCep();
 
       expect(viaCepServiceSpy.buscarCep).toHaveBeenCalledTimes(1);
     });
@@ -134,6 +142,7 @@ describe('SignupPageComponent', () => {
       viaCepServiceSpy.buscarCep.and.returnValue(of({ erro: true } as any));
 
       component.secondFormGroup.get('cep')?.setValue('99999-999');
+      component.searchCep();
 
       expect(toastServiceSpy.warn).toHaveBeenCalledWith(
         'CEP não encontrado',
@@ -148,6 +157,7 @@ describe('SignupPageComponent', () => {
       );
 
       component.secondFormGroup.get('cep')?.setValue('80010-000');
+      component.searchCep();
       component.secondFormGroup.get('address')?.setValue('Rua Manual');
 
       expect(toastServiceSpy.error).toHaveBeenCalledWith(
@@ -164,20 +174,14 @@ describe('SignupPageComponent', () => {
 
       component.secondFormGroup.get('cep')?.setValue('80010-000');
 
+      component.searchCep();
       expect(component.secondFormGroup.get('complement')?.value).toBe('Apto 5');
     });
 
-    it('searchCep warns and skips the lookup when the CEP has fewer than 8 digits', () => {
+    it('desabilita a pesquisa quando o CEP tem menos de oito dígitos', () => {
       component.secondFormGroup.get('cep')?.setValue('800');
-
-      component.searchCep();
-
-      expect(toastServiceSpy.warn).toHaveBeenCalledWith(
-        'CEP inválido',
-        'Informe um CEP com 8 dígitos.',
-      );
+      expect(component.isCepValid).toBeFalse();
       expect(viaCepServiceSpy.buscarCep).not.toHaveBeenCalled();
-      expect(component.secondFormGroup.get('cep')?.touched).toBeTrue();
     });
 
     it('searchCep does nothing when the CEP is empty', () => {

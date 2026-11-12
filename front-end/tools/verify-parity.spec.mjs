@@ -32,10 +32,10 @@ async function createFixture({
   const entry = {
     path: filePath,
     classification,
-    referenceSha256: canonicalHash(content),
+    referenceSha256: hash(content),
     expectedSha256: classification === 'IDENTICAL'
-      ? canonicalHash(content)
-      : canonicalHash(destinationContent)
+      ? hash(content)
+      : hash(destinationContent)
   };
 
   if (reason) entry.reason = reason;
@@ -46,7 +46,8 @@ async function createFixture({
   if (referenceNormalizedSha256) entry.referenceNormalizedSha256 = referenceNormalizedSha256;
 
   const manifest = {
-    version: 1,
+    version: 2,
+    hashRepresentation: 'physical-bytes',
     reference: {
       repository: 'https://example.test/reference',
       commit: 'c6bf109951c06265cb6708c16676c297d0070161'
@@ -70,12 +71,17 @@ test('accepts a file identical to the reference hash', async () => {
   assert.deepEqual(report.errors, []);
 });
 
-test('accepts CRLF checkout bytes when the canonical Git content uses LF', async () => {
+test('rejects a change limited to CRLF versus LF physical bytes', async () => {
   const fixture = await createFixture({
     content: 'export const value = 1;\n',
     destinationContent: 'export const value = 1;\r\n'
   });
 
+  await assert.rejects(() => verifyParity(fixture), /hash.*src\/example\.ts/i);
+});
+
+test('accepts identical CRLF physical bytes', async () => {
+  const fixture = await createFixture({content: 'export const value = 1;\r\n'});
   const report = await verifyParity(fixture);
   assert.equal(report.counts.IDENTICAL, 1);
 });

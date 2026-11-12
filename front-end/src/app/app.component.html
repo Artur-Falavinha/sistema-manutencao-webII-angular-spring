@@ -1,4 +1,4 @@
-@if (showEmployeeShell$ | async) {
+@if ((isEmployee$ | async) && router.url.startsWith('/employee/')) {
 <div class="main-layout">
   <app-side-bar></app-side-bar>
 
@@ -12,7 +12,7 @@
     </main>
   </div>
 </div>
-} @else if (showClientShell$ | async) {
+} @else if ((isLoggedIn$ | async) && !(isEmployee$ | async) && router.url.startsWith('/client/')) {
 <div class="main-layout">
   <div class="main-section">
     <app-header></app-header>

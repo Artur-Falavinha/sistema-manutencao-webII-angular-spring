@@ -120,14 +120,13 @@ describe('MaintenanceRequestService (contrato HTTP do funcionário)', () => {
   });
 
   it('RF012: envia o orçamento via POST /requests/employee/{id}/budget com serviceIds e total', () => {
-    const payload: BudgetCreateDTO = { serviceIds: [1, 3], total: 480 };
+    const payload: BudgetCreateDTO = { serviceIds: [1, 3], totalValue: 480 };
 
     service.createBudget(7, payload).subscribe();
 
     const req = httpMock.expectOne(`${apiUrl}/requests/employee/7/budget`);
     expect(req.request.method).toBe('POST');
-    // O BudgetDTO do back-end lê o valor do campo "total"
-    expect(req.request.body).toEqual({ serviceIds: [1, 3], total: 480 });
+    expect(req.request.body).toEqual({ serviceIds: [1, 3], totalValue: 480 });
     req.flush({ ...responseDTO, statusName: 'ORÇADA' });
   });
 
