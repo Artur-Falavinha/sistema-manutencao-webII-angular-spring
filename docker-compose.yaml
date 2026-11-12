@@ -1,10 +1,12 @@
+name: manutencao-defesa
+
 services:
   frontend:
     build:
       context: ./front-end
       dockerfile: front.dockerfile
     ports:
-      - "4200:4200"
+      - "127.0.0.1:${MANUTENCAO_PORT:-4302}:4200"
     volumes:
       - ./front-end:/app
       - /app/node_modules
@@ -18,15 +20,14 @@ services:
     build:
       context: ./back-end
       dockerfile: back.dockerfile
-      target: dev
-    ports:
-      - "8080:8080"
+      target: prod
     depends_on:
       mysql:
         condition: service_healthy
+      mailpit:
+        condition: service_started
     volumes:
-      - ./back-end:/app
-      - maven-repo:/root/.m2
+      - ./back-end/config:/app/config:ro
     environment:
       - TZ=America/Sao_Paulo
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/remont_db?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
@@ -34,18 +35,19 @@ services:
       - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_SQL_INIT_MODE=never
-      - APP_JWT_SECRET=${APP_JWT_SECRET:?Defina APP_JWT_SECRET no ambiente}
-      - SPRING_MAIL_HOST=${SPRING_MAIL_HOST:?Defina SPRING_MAIL_HOST no ambiente}
-      - SPRING_MAIL_PORT=${SPRING_MAIL_PORT:-587}
-      - SPRING_MAIL_USERNAME=${SPRING_MAIL_USERNAME:?Defina SPRING_MAIL_USERNAME no ambiente}
-      - SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD:?Defina SPRING_MAIL_PASSWORD no ambiente}
-      - SPRING_MAIL_FROM=${SPRING_MAIL_FROM:-${SPRING_MAIL_USERNAME}}
+      - APP_DEFENSE_SEED=true
+      - APP_JWT_SECRET
+      - SPRING_MAIL_HOST=${SPRING_MAIL_HOST:-mailpit}
+      - SPRING_MAIL_PORT=${SPRING_MAIL_PORT:-1025}
+      - SPRING_MAIL_USERNAME=${SPRING_MAIL_USERNAME:-manutencao-local}
+      - SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD:-}
+      - SPRING_MAIL_FROM=${SPRING_MAIL_FROM:-manutencao@example.test}
+      - SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH=${SPRING_MAIL_SMTP_AUTH:-false}
+      - SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE=${SPRING_MAIL_SMTP_STARTTLS:-false}
     restart: unless-stopped
 
   mysql:
     image: mysql:latest
-    ports:
-      - "3308:3306"
     environment:
       - TZ=America/Sao_Paulo
       - MYSQL_USER=springuser
@@ -57,13 +59,18 @@ services:
       - mysql-data:/var/lib/mysql
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
       timeout: 20s
       retries: 10
       interval: 10s 
       
     restart: unless-stopped
 
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "127.0.0.1:${MANUTENCAO_MAIL_PORT:-18027}:8025"
+    restart: unless-stopped
+
 volumes:
   mysql-data:
-  maven-repo:
