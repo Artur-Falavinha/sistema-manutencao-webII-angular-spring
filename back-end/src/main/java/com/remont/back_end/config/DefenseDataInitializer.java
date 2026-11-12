@@ -8,36 +8,37 @@ import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
 @Component
 @ConditionalOnProperty(name = "app.defense.seed", havingValue = "true")
 public class DefenseDataInitializer implements ApplicationRunner {
     private final JdbcTemplate jdbc;
+    private final TransactionTemplate transaction;
 
-    public DefenseDataInitializer(JdbcTemplate jdbc) {
+    public DefenseDataInitializer(JdbcTemplate jdbc, TransactionTemplate transaction) {
         this.jdbc = jdbc;
+        this.transaction = transaction;
     }
 
     @Override
-    @Transactional
     public void run(ApplicationArguments args) {
-        Integer markerTable = jdbc.queryForObject("""
-                SELECT COUNT(*) FROM information_schema.tables
-                WHERE table_schema = DATABASE() AND table_name = 'defense_initialization'
-                """, Integer.class);
-        if (markerTable == 0 || jdbc.queryForList(
-                "SELECT id FROM defense_initialization WHERE id = 1 FOR UPDATE", Integer.class).isEmpty()) {
-            return;
-        }
+        transaction.executeWithoutResult(status -> {
+            boolean empty = Boolean.TRUE.equals(jdbc.queryForObject("""
+                    SELECT NOT EXISTS (SELECT 1 FROM users)
+                       AND NOT EXISTS (SELECT 1 FROM category)
+                       AND NOT EXISTS (SELECT 1 FROM services)
+                    """, Boolean.class));
+            if (empty) {
+                jdbc.execute((ConnectionCallback<Void>) connection -> {
+                    ScriptUtils.executeSqlScript(connection, new ClassPathResource("data-defesa.sql"));
+                    ScriptUtils.executeSqlScript(connection, new ClassPathResource("data-demo.sql"));
+                    return null;
+                });
+            }
+        });
 
-        if (jdbc.queryForObject("SELECT COUNT(*) FROM users", Integer.class) == 0) {
-            jdbc.execute((ConnectionCallback<Void>) connection -> {
-                ScriptUtils.executeSqlScript(connection, new ClassPathResource("data-defesa.sql"));
-                ScriptUtils.executeSqlScript(connection, new ClassPathResource("data-demo.sql"));
-                return null;
-            });
-        }
-        jdbc.update("DELETE FROM defense_initialization WHERE id = 1");
+        // MySQL commits implicitly on DROP TABLE, so clean up only after the seed transaction.
+        jdbc.execute("DROP TABLE IF EXISTS defense_initialization");
     }
 }
