@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -38,7 +39,7 @@ public class ReportService {
      */
     public List<RevenueByDateDTO> getRevenueByDateData(LocalDate start, LocalDate end) {
         LocalDateTime startDateTime = (start != null) ? start.atStartOfDay() : LocalDateTime.of(2024, 1, 1, 0, 0);
-        LocalDateTime endDateTime = (end != null) ? end.atTime(LocalTime.MAX) : LocalDateTime.now();
+        LocalDateTime endDateTime = (end != null) ? end.atTime(LocalTime.MAX.truncatedTo(ChronoUnit.MICROS)) : LocalDateTime.now();
 
         return requestRepository.getRevenueByDate(startDateTime, endDateTime, REVENUE_STATUSES);
     }
@@ -52,7 +53,7 @@ public class ReportService {
 
     public void exportRevenueByDatePdf(HttpServletResponse response, LocalDate start, LocalDate end) throws IOException {
         LocalDateTime startDateTime = (start != null) ? start.atStartOfDay() : LocalDateTime.of(2024, 1, 1, 0, 0);
-        LocalDateTime endDateTime = (end != null) ? end.atTime(LocalTime.MAX) : LocalDateTime.now();
+        LocalDateTime endDateTime = (end != null) ? end.atTime(LocalTime.MAX.truncatedTo(ChronoUnit.MICROS)) : LocalDateTime.now();
 
         List<RevenueByDateDTO> data = requestRepository.getRevenueByDate(startDateTime, endDateTime, REVENUE_STATUSES);
 
