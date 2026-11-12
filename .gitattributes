@@ -20,7 +20,6 @@ back-end/src/main/java/** text eol=crlf
 /front-end/front.dockerfile text eol=crlf
 /front-end/package-lock.json text eol=crlf
 /front-end/package.json text eol=crlf
-/front-end/reference-parity.json text eol=crlf
 /front-end/src/app/app.component.ts text eol=crlf
 /front-end/src/app/app.config.ts text eol=crlf
 /front-end/src/app/app.routes.ts text eol=crlf

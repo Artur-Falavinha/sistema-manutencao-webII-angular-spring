@@ -1,4 +1,4 @@
--- === SOLICITAÇÕES DE TESTE: 24 solicitações em todos os estados, com orçamento, manutenção e histórico ===
+-- === SOLICITAÇÕES DE TESTE: 20 solicitações em todos os estados, com orçamento, manutenção e histórico ===
 
 INSERT IGNORE INTO maintenance_requests (id, equipment_name, defect_description, request_date, status, rejection_reason, client_id, category_id, employee_id) VALUES
 (1, 'Notebook Dell XPS', 'Tela quebrada e não liga', '2026-08-20 10:00:00', 'FINALIZADA', NULL, 4, 1, 2),
@@ -20,11 +20,7 @@ INSERT IGNORE INTO maintenance_requests (id, equipment_name, defect_description,
 (17, 'Impressora Canon G3110', 'Erro de cabeça de impressão', '2026-11-02 09:00:00', 'ABERTA', NULL, 4, 3, NULL),
 (18, 'Notebook Dell Inspiron 15 3000 com tela de 15,6 polegadas', 'Não carrega quando ligado na tomada', '2026-11-03 14:25:00', 'ABERTA', NULL, 5, 1, NULL),
 (19, 'Desktop Lenovo ThinkCentre', 'Lento e travando ao iniciar', '2026-11-04 11:45:00', 'ABERTA', NULL, 6, 2, NULL),
-(20, 'Mouse Microsoft Bluetooth', 'Não pareia com o computador', '2026-11-05 16:30:00', 'ABERTA', NULL, 7, 4, NULL),
-(21, 'Teclado mecânico HyperX Alloy', 'Iluminação RGB apagada', '2026-11-06 10:05:00', 'ABERTA', NULL, 4, 5, NULL),
-(22, 'Notebook HP 250 G8', 'Superaquecendo e desligando', '2026-11-07 08:30:00', 'ABERTA', NULL, 5, 1, NULL),
-(23, 'Impressora Samsung M2020', 'Folhas saem amassadas', '2026-10-30 13:35:00', 'PAGA', NULL, 6, 3, 3),
-(24, 'Desktop Gamer Ryzen 5', 'Sem vídeo na saída HDMI', '2026-10-14 15:50:00', 'FINALIZADA', NULL, 7, 2, 2);
+(20, 'Mouse Microsoft Bluetooth', 'Não pareia com o computador', '2026-11-05 16:30:00', 'ABERTA', NULL, 7, 4, NULL);
 
 INSERT IGNORE INTO budgets (id, request_id, employee_id, total, services_description, created_at, updated_at) VALUES
 (1, 1, 2, 400.00, 'Reparo de placa lógica, Diagnóstico', '2026-08-20 11:00:00', '2026-08-20 11:00:00'),
@@ -42,9 +38,7 @@ INSERT IGNORE INTO budgets (id, request_id, employee_id, total, services_descrip
 (13, 13, 3, 150.00, 'Troca de componentes, Teste de funcionamento completo', '2026-10-16 18:00:00', '2026-10-16 18:00:00'),
 (14, 14, 2, 90.00, 'Substituição de conectores', '2026-10-20 10:00:00', '2026-10-20 10:00:00'),
 (15, 15, 3, 150.00, 'Troca de componentes, Teste de funcionamento completo', '2026-10-24 14:00:00', '2026-10-24 14:00:00'),
-(16, 16, 2, 320.00, 'Conserto geral, Troca de componentes', '2026-10-28 11:30:00', '2026-10-28 11:30:00'),
-(17, 23, 3, 130.00, 'Limpeza interna, Diagnóstico', '2026-10-30 15:00:00', '2026-10-30 15:00:00'),
-(18, 24, 2, 380.00, 'Reparo de placa lógica, Teste de funcionamento completo', '2026-10-14 17:00:00', '2026-10-14 17:00:00');
+(16, 16, 2, 320.00, 'Conserto geral, Troca de componentes', '2026-10-28 11:30:00', '2026-10-28 11:30:00');
 
 INSERT IGNORE INTO servicos_orcamento (id, servico_id, orcamento_id) VALUES
 (1, 7, 1),
@@ -78,11 +72,7 @@ INSERT IGNORE INTO servicos_orcamento (id, servico_id, orcamento_id) VALUES
 (29, 4, 15),
 (30, 9, 15),
 (31, 5, 16),
-(32, 4, 16),
-(33, 2, 17),
-(34, 1, 17),
-(35, 7, 18),
-(36, 9, 18);
+(32, 4, 16);
 
 INSERT IGNORE INTO maintenance_records (id, maintenance_description, client_guidelines, finished_at, employee_id, request_id) VALUES
 (1, 'Substituída a tela e reparada a placa de vídeo.', 'Evite transportar o notebook aberto.', '2026-08-23 15:00:00', 2, 1),
@@ -91,9 +81,7 @@ INSERT IGNORE INTO maintenance_records (id, maintenance_description, client_guid
 (4, 'Substituição da bateria e teste de autonomia.', 'Faça ciclos completos de carga na primeira semana.', '2026-08-28 16:20:00', 3, 4),
 (5, 'Troca do micro switch do botão esquerdo.', 'Evite quedas e limpe o mouse com pano seco.', '2026-09-04 10:30:00', 2, 5),
 (6, 'Ressoldados os switches das teclas W e S.', 'Não derrame líquidos sobre o teclado.', '2026-09-13 14:00:00', 3, 6),
-(7, 'Limpeza do cabeçote e alinhamento da impressão.', 'Imprima ao menos uma página por semana.', '2026-09-18 11:00:00', 2, 7),
-(8, 'Troca do rolo fusor e limpeza interna.', 'Guarde o papel em local seco.', '2026-11-03 10:00:00', 3, 23),
-(9, 'Reparo do conector HDMI na placa de vídeo.', 'Não force o cabo ao conectar.', '2026-10-17 16:30:00', 3, 24);
+(7, 'Limpeza do cabeçote e alinhamento da impressão.', 'Imprima ao menos uma página por semana.', '2026-09-18 11:00:00', 2, 7);
 
 INSERT IGNORE INTO request_history (id, title, occurrence_date, request_id, user_id, status) VALUES
 (1, 'Solicitação Aberta', '2026-08-20 10:00:00', 1, 4, 'ABERTA'),
@@ -164,18 +152,4 @@ INSERT IGNORE INTO request_history (id, title, occurrence_date, request_id, user
 (66, 'Solicitação Aberta', '2026-11-02 09:00:00', 17, 4, 'ABERTA'),
 (67, 'Solicitação Aberta', '2026-11-03 14:25:00', 18, 5, 'ABERTA'),
 (68, 'Solicitação Aberta', '2026-11-04 11:45:00', 19, 6, 'ABERTA'),
-(69, 'Solicitação Aberta', '2026-11-05 16:30:00', 20, 7, 'ABERTA'),
-(70, 'Solicitação Aberta', '2026-11-06 10:05:00', 21, 4, 'ABERTA'),
-(71, 'Solicitação Aberta', '2026-11-07 08:30:00', 22, 5, 'ABERTA'),
-(72, 'Solicitação Aberta', '2026-10-30 13:35:00', 23, 6, 'ABERTA'),
-(73, 'Orçamento efetuado', '2026-10-30 15:00:00', 23, 3, 'ORCADA'),
-(74, 'Orçamento Aprovado', '2026-10-30 19:00:00', 23, 6, 'APROVADA'),
-(75, 'Manutenção efetuada', '2026-11-03 10:00:00', 23, 3, 'ARRUMADA'),
-(76, 'Serviço pago', '2026-11-04 12:00:00', 23, 6, 'PAGA'),
-(77, 'Solicitação Aberta', '2026-10-14 15:50:00', 24, 7, 'ABERTA'),
-(78, 'Orçamento efetuado', '2026-10-14 17:00:00', 24, 2, 'ORCADA'),
-(79, 'Orçamento Aprovado', '2026-10-15 08:00:00', 24, 7, 'APROVADA'),
-(80, 'Redirecionada de Maria para Mário', '2026-10-15 10:00:00', 24, 2, 'REDIRECIONADA'),
-(81, 'Manutenção efetuada', '2026-10-17 16:30:00', 24, 3, 'ARRUMADA'),
-(82, 'Serviço pago', '2026-10-18 09:00:00', 24, 7, 'PAGA'),
-(83, 'Solicitação Finalizada', '2026-10-18 14:00:00', 24, 2, 'FINALIZADA');
+(69, 'Solicitação Aberta', '2026-11-05 16:30:00', 20, 7, 'ABERTA');
