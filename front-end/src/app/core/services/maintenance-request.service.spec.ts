@@ -88,6 +88,7 @@ describe('MaintenanceRequestService (contrato HTTP do funcionário)', () => {
         state: 'PR',
       },
       assignedEmployeeName: 'Mário',
+      assignedEmployeeId: 3,
       budgets: [
         {
           id: 1,
@@ -109,6 +110,7 @@ describe('MaintenanceRequestService (contrato HTTP do funcionário)', () => {
     const req = httpMock.expectOne(`${apiUrl}/requests/employee/7`);
     expect(req.request.method).toBe('GET');
     req.flush(backendBody);
+    expect(result?.assignedEmployeeId).toBe(3);
 
     // Campos que a tela budget-delivery lê do detalhe
     expect(result?.status.nome).toBe('APROVADA');

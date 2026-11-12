@@ -53,6 +53,7 @@ export interface EmployeeRequestDetailDTO {
     city: string;
     state: string;
   };
+  assignedEmployeeId: number | null;
   assignedEmployeeName?: string;
 
   budgets: Budget[];

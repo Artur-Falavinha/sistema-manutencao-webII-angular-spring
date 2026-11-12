@@ -51,20 +51,27 @@ export class AuthService {
     if (userJson) {
       try {
         const user = JSON.parse(userJson);
-        if (!user?.token || !/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(user.token)) {
+        const payload = this.readTokenPayload(user?.token);
+        if (typeof payload?.exp !== 'number' || payload.exp * 1000 <= Date.now()) {
           this.logout();
           return;
         }
-        const payload = JSON.parse(atob(user.token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
-        if (typeof payload.exp !== 'number' || payload.exp * 1000 <= Date.now()) {
-          this.logout();
-          return;
-        }
-        this.currentUserSubject.next(user);
+        this.currentUserSubject.next({ ...user, id: payload.id });
       } catch (e) {
         console.error('Erro ao carregar usuário', e);
         this.logout();
       }
+    }
+  }
+
+  private readTokenPayload(token?: string): { id?: number; exp?: number } | null {
+    if (!token || !/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(token)) {
+      return null;
+    }
+    try {
+      return JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+    } catch {
+      return null;
     }
   }
 
@@ -77,6 +84,7 @@ export class AuthService {
         const accessType = this.mapRoleToUserAccess(response.userRole);
 
         const user: UserState = {
+          id: this.readTokenPayload(response.token)?.id,
           name: response.userName,
           userAccess: accessType, 
           token: response.token,

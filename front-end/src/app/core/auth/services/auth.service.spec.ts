@@ -64,6 +64,17 @@ describe('AuthService (contrato HTTP)', () => {
     httpMock.expectOne(`${apiUrl}/auth/login`).flush(body);
   }
 
+  it('recupera o ID do JWT no login e em uma sessão salva sem ID', () => {
+    const payload = btoa(JSON.stringify({ id: 2, exp: Math.floor(Date.now() / 1000) + 3600 })).replace(/=+$/, '');
+    const token = `e30.${payload}.assinatura`;
+    loginAs({ token, userName: 'Maria', userRole: 'ROLE_EMPLOYEE' });
+    expect(service.currentUserValue?.id).toBe(2);
+
+    localStorage.setItem('currentUser', JSON.stringify({ name: 'Maria', userAccess: 'employee', token }));
+    const restored = TestBed.runInInjectionContext(() => new AuthService());
+    expect(restored.currentUserValue?.id).toBe(2);
+  });
+
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
