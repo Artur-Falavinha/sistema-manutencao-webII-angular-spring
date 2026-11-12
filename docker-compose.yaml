@@ -28,10 +28,18 @@ services:
       - ./back-end:/app
       - maven-repo:/root/.m2
     environment:
+      - TZ=America/Sao_Paulo
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/remont_db?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8
       - SPRING_DATASOURCE_USERNAME=springuser
       - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_SQL_INIT_MODE=never
+      - APP_JWT_SECRET=${APP_JWT_SECRET:?Defina APP_JWT_SECRET no ambiente}
+      - SPRING_MAIL_HOST=${SPRING_MAIL_HOST:?Defina SPRING_MAIL_HOST no ambiente}
+      - SPRING_MAIL_PORT=${SPRING_MAIL_PORT:-587}
+      - SPRING_MAIL_USERNAME=${SPRING_MAIL_USERNAME:?Defina SPRING_MAIL_USERNAME no ambiente}
+      - SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD:?Defina SPRING_MAIL_PASSWORD no ambiente}
+      - SPRING_MAIL_FROM=${SPRING_MAIL_FROM:-${SPRING_MAIL_USERNAME}}
     restart: unless-stopped
 
   mysql:
@@ -39,6 +47,7 @@ services:
     ports:
       - "3308:3306"
     environment:
+      - TZ=America/Sao_Paulo
       - MYSQL_USER=springuser
       - MYSQL_PASSWORD=password
       - MYSQL_DATABASE=remont_db

@@ -1,0 +1,131 @@
+<section class="title-section">
+  <h1 class="heading_1">Visão Geral de Solicitação</h1>
+
+  <div class="action-row">
+    <div class="filter-container">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          #searchInput
+          name="search"
+          placeholder="Pesquise por equipamento, categoria, etc."
+          (input)="searchText.set(searchInput.value)"
+        >
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" type="button" class="filter-button" (click)="isFiltersOpen.set(!isFiltersOpen())">
+        <mat-icon fontIcon="filter_list" aria-hidden="true"></mat-icon>
+        Filtros
+      </button>
+
+      @if (isFiltersOpen()) {
+        <div class="filter-panel">
+          <mat-form-field appearance="outline" class="category-filter-field">
+            <mat-label>Categoria</mat-label>
+            <mat-select [value]="selectedCategory() ?? ''" (valueChange)="selectedCategory.set($event)">
+              <mat-option value="">Todas</mat-option>
+              @for (category of categories(); track category) {
+                <mat-option [value]="category">{{ category }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          @if (selectedCategory()) {
+            <button mat-button type="button" (click)="selectedCategory.set('')">Limpar filtro</button>
+          }
+
+          <mat-button-toggle-group
+            class="date-filter-toggle"
+            [value]="dateFilterMode()"
+            (change)="dateFilterMode.set($event.value)"
+          >
+            <mat-button-toggle value="todos">Todos</mat-button-toggle>
+            <mat-button-toggle value="hoje">Hoje</mat-button-toggle>
+            <mat-button-toggle value="periodo">Período</mat-button-toggle>
+          </mat-button-toggle-group>
+
+          @if (dateFilterMode() === 'periodo') {
+            <div class="period-filter-fields">
+              <mat-form-field appearance="outline" class="period-date-field">
+                <mat-label>De</mat-label>
+                <input matInput [matDatepicker]="startPicker" placeholder="dd/mm/aaaa" (dateChange)="periodStart.set($event.value)">
+                <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="period-date-field">
+                <mat-label>Até</mat-label>
+                <input matInput [matDatepicker]="endPicker" placeholder="dd/mm/aaaa" (dateChange)="periodEnd.set($event.value)">
+                <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+              </mat-form-field>
+
+              @if (!periodoValido()) {
+                <span class="period-error">Informe as duas datas, com início antes do fim.</span>
+              }
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="list-section">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort matSortActive="requestDate" matSortDirection="asc" matSortDisableClear>
+    <ng-container matColumnDef="equipmentName">
+      <th mat-header-cell *matHeaderCellDef>Nome do Equipamento</th>
+      <td mat-cell *matCellDef="let element">{{ element.equipmentName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="categoryName">
+      <th mat-header-cell *matHeaderCellDef>Categoria</th>
+      <td mat-cell *matCellDef="let element">{{ element.categoryName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="clientName">
+      <th mat-header-cell *matHeaderCellDef>Cliente</th>
+      <td mat-cell *matCellDef="let element">{{ element.clientName }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="requestDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+      <td mat-cell *matCellDef="let element">{{ element.requestDate | date:'dd/MM/yyyy HH:mm' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="status-badge label_large" [style.backgroundColor]="element.statusColor">{{ element.statusName }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Ações</th>
+      <td mat-cell *matCellDef="let element">
+        @switch (element.statusName) {
+          @case ('ABERTA') {
+            <button mat-stroked-button color="primary" type="button" class="action-button" [routerLink]="['/employee/budget-delivery', element.id]" [queryParams]="{acao: 'orcamento'}" (click)="$event.stopPropagation()">Efetuar Orçamento</button>
+          }
+          @case ('APROVADA') {
+            <button mat-stroked-button color="primary" type="button" class="action-button" [routerLink]="['/employee/budget-delivery', element.id]" [queryParams]="{acao: 'manutencao'}" (click)="$event.stopPropagation()">Efetuar Manutenção</button>
+          }
+          @case ('REDIRECIONADA') {
+            <button mat-stroked-button color="primary" type="button" class="action-button" [routerLink]="['/employee/budget-delivery', element.id]" [queryParams]="{acao: 'manutencao'}" (click)="$event.stopPropagation()">Efetuar Manutenção</button>
+          }
+          @case ('PAGA') {
+            <button mat-stroked-button color="primary" type="button" class="action-button" [routerLink]="['/employee/budget-delivery', element.id]" [queryParams]="{acao: 'finalizacao'}" (click)="$event.stopPropagation()">Finalizar Solicitação</button>
+          }
+        }
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns;"
+      class="request-row"
+      (click)="router.navigate(['/employee/budget-delivery', row.id])"
+    ></tr>
+  </table>
+</section>

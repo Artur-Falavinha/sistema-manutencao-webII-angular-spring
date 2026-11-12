@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import jakarta.persistence.EntityManager;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -52,6 +53,9 @@ class EmployeeRedirectRulesTest {
     @Autowired
     private CategoryEquipmentRepository categoryRepository;
 
+    @Autowired
+    private EntityManager entityManager;
+
     @Test
     void redirectedRequestIsListedOnlyForTargetEmployee() {
         Long id = approvedRequestAssignedTo(MARIA_ID);
@@ -81,6 +85,28 @@ class EmployeeRedirectRulesTest {
         assertThatThrownBy(() -> maintenanceRequestService.redirectMaintenance(id, MARIA_ID, MARIA_ID))
                 .isInstanceOfSatisfying(ResponseStatusException.class,
                         ex -> assertThat(ex.getStatusCode()).isEqualTo(HttpStatus.CONFLICT));
+    }
+
+    @Test
+    void successiveRedirectsPreserveFullNamesAfterEmployeeEdition() {
+        String origin = "A".repeat(255);
+        String target = "B".repeat(255);
+        employeeRepository.findById(MARIA_ID).orElseThrow().setName(origin);
+        employeeRepository.findById(MARIO_ID).orElseThrow().setName(target);
+        Long id = approvedRequestAssignedTo(MARIA_ID);
+
+        maintenanceRequestService.redirectMaintenance(id, MARIO_ID, MARIA_ID);
+        maintenanceRequestService.redirectMaintenance(id, MARIA_ID, MARIO_ID);
+        employeeRepository.findById(MARIA_ID).orElseThrow().setName("Nome atualizado");
+        entityManager.flush();
+        entityManager.clear();
+
+        List<RequestHistory> history = historyRepository.findByMaintenanceRequest_IdOrderByOccurrenceDateAsc(id);
+        assertThat(history).extracting(RequestHistory::getTitle).containsExactly(
+                "Redirecionada de " + origin + " para " + target,
+                "Redirecionada de " + target + " para " + origin);
+        assertThat(listedIds(MARIA_EMAIL)).contains(id);
+        assertThat(listedIds(MARIO_EMAIL)).doesNotContain(id);
     }
 
     private List<Long> listedIds(String employeeEmail) {

@@ -10,6 +10,11 @@ import com.remont.back_end.repository.MaintenanceRequestRepository;
 import com.remont.back_end.repository.RequestHistoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import com.remont.back_end.security.UserPrincipal;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -35,8 +40,18 @@ public class RequestHistoryServiceImpl implements RequestHistoryService {
     @Override
     @Transactional(readOnly = true)
     public List<RequestHistoryDTO> getHistoryByRequestId(Long requestId) {
-        if (!requestRepository.existsById(Objects.requireNonNull(requestId))) {
-            throw new ResourceNotFoundException("Solicitação não encontrada id=" + requestId);
+        MaintenanceRequest request = requestRepository.findById(Objects.requireNonNull(requestId))
+                .orElseThrow(() -> new ResourceNotFoundException("Solicitação não encontrada id=" + requestId));
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !(authentication.getPrincipal() instanceof UserPrincipal principal)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso negado ao histórico.");
+        }
+        boolean client = principal.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_CLIENT"));
+        boolean employee = principal.getAuthorities().stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_EMPLOYEE"));
+        if (!(client && request.getClient().getId().equals(principal.getId()))
+                && !(employee && (request.getStatus() != StatusEnum.REDIRECIONADA
+                || (request.getAssignedEmployee() != null && request.getAssignedEmployee().getId().equals(principal.getId()))))) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso negado ao histórico.");
         }
 
         return historyRepository.findByMaintenanceRequest_IdOrderByOccurrenceDateAsc(requestId)

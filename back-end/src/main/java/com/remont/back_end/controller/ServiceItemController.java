@@ -9,9 +9,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.stream.Collectors;
 
 @RestController
+@PreAuthorize("hasRole('EMPLOYEE')")
 @RequestMapping("/api/services")
 public class ServiceItemController {
 
@@ -37,6 +39,7 @@ public class ServiceItemController {
     }
 
     @PostMapping
+    @PreAuthorize("denyAll()")
     public ResponseEntity<ServiceItemDTO> create(@RequestBody ServiceItemDTO dto,
                                                  UriComponentsBuilder uriBuilder) {
         ServiceItem saved = service.create(dto);
@@ -46,6 +49,7 @@ public class ServiceItemController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("denyAll()")
     public ResponseEntity<ServiceItemDTO> update(@PathVariable Long id,
                                                  @RequestBody ServiceItemDTO dto) {
         ServiceItem updated = service.update(id, dto);
@@ -53,6 +57,7 @@ public class ServiceItemController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("denyAll()")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();

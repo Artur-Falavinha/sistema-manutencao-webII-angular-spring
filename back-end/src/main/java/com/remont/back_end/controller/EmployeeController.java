@@ -1,6 +1,8 @@
 package com.remont.back_end.controller;
 
 import java.util.List;
+import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import com.remont.back_end.dto.EmployeeDTO;
 import com.remont.back_end.service.EmployeeService;
 
 @RestController
+@PreAuthorize("hasRole('EMPLOYEE')")
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
@@ -28,7 +31,7 @@ public class EmployeeController {
      * CREATE - Cria um novo funcionário
      */
     @PostMapping
-    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<EmployeeDTO> createEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
         EmployeeDTO createdEmployee = employeeService.createEmployee(employeeDTO);
         return new ResponseEntity<>(createdEmployee, HttpStatus.CREATED);
     }
@@ -55,7 +58,7 @@ public class EmployeeController {
      * UPDATE - Atualiza um funcionário existente
      */
     @PutMapping("/{id}")
-    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDTO employeeDTO) {
         EmployeeDTO updatedEmployee = employeeService.updateEmployee(id, employeeDTO);
         return ResponseEntity.ok(updatedEmployee);
     }

@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnInit,
   signal,
@@ -16,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { InputPrimaryComponent } from '../../../../shared/components/input-primary/input-primary.component';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { Toast } from 'ngx-toastr';
 import { ToastService } from '../../../services/toast.service';
 
 @Component({
@@ -32,14 +34,16 @@ import { ToastService } from '../../../services/toast.service';
 })
 export class LoginPageComponent implements OnInit {
   loginForm!: FormGroup;
-  isLoading = false;
+  isLoading = false; 
+  loginError: string | null = null;
   hide = signal(true);
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private toast: ToastService
+    private toast: ToastService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +59,8 @@ export class LoginPageComponent implements OnInit {
   }
 
   onSubmit() {
+    if (this.isLoading) return;
+    this.loginError = null;
     this.isLoading = true;
 
     if (this.loginForm.invalid) {
@@ -68,6 +74,7 @@ export class LoginPageComponent implements OnInit {
     this.authService.login(email, password).subscribe({
       next: (user) => {
         this.isLoading = false; 
+        this.cdr.markForCheck();
 
         if (user) {
           if (user.userAccess === 'employee') {
@@ -77,11 +84,15 @@ export class LoginPageComponent implements OnInit {
           }
         } else {
           this.toast.error('Erro', 'Login falhou. E-mail ou senha incorretos.');
+          this.loginError = 'O e-mail ou a senha informados estão incorretos.';
         }
       },
-      error: () => {
-        this.isLoading = false;
-        this.toast.error('Erro', 'Login falhou');
+      error: (err) => {
+        this.isLoading = false; 
+        this.cdr.markForCheck();
+        this.toast.error('Erro', err.status === 401 ? 'E-mail ou senha incorretos.' : 'Login falhou');
+        this.loginError =
+          'Ocorreu um erro inesperado. Tente novamente mais tarde.';
       },
     });
     

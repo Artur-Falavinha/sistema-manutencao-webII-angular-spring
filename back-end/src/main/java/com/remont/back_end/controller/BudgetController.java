@@ -10,9 +10,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.stream.Collectors;
 
 @RestController
+@PreAuthorize("denyAll()")
 @RequestMapping("/api/budgets")
 public class BudgetController {
 

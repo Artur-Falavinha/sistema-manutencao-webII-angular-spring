@@ -25,18 +25,6 @@ const IGNORED_DIRECTORIES = new Set([
   'tmp'
 ]);
 
-const BINARY_EXTENSIONS = new Set([
-  '.gif',
-  '.ico',
-  '.jpeg',
-  '.jpg',
-  '.pdf',
-  '.png',
-  '.webp',
-  '.woff',
-  '.woff2'
-]);
-
 const VISUAL_EXTENSIONS = new Set([
   '.css',
   '.gif',
@@ -52,13 +40,8 @@ const BRAND_RENAME_TRANSFORM = 'BRAND_RENAME';
 
 const normalizePath = (filePath) => filePath.split(path.sep).join('/');
 
-function sha256(content, filePath) {
-  const extension = path.extname(filePath).toLowerCase();
-  const canonicalContent = BINARY_EXTENSIONS.has(extension)
-    ? content
-    : Buffer.from(content.toString('utf8').replace(/\r\n/g, '\n'), 'utf8');
-
-  return createHash('sha256').update(canonicalContent).digest('hex');
+function sha256(content) {
+  return createHash('sha256').update(content).digest('hex');
 }
 
 function brandNormalizedSha256(content) {
@@ -186,6 +169,9 @@ export async function verifyParity({
 } = {}) {
   const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
   const errors = [];
+  if (manifest.hashRepresentation !== 'physical-bytes') {
+    errors.push('O manifesto deve declarar hashRepresentation physical-bytes.');
+  }
   const counts = Object.fromEntries(CLASSIFICATIONS.map((classification) => [classification, 0]));
   const declaredPaths = new Set();
 
@@ -214,7 +200,7 @@ export async function verifyParity({
 
     try {
       const content = await readFile(absolutePath);
-      const actualHash = sha256(content, normalizedEntryPath);
+      const actualHash = sha256(content);
 
       if (actualHash !== entry.expectedSha256) {
         errors.push(`Hash divergente em ${normalizedEntryPath}: esperado ${entry.expectedSha256}, obtido ${actualHash}.`);

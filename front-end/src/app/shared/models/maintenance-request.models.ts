@@ -1,4 +1,5 @@
 import { Budget } from "./budget.model";
+import { Client } from "./client";
 import { MaintenanceRecordDTO } from "./maintenance-record.model";
 import { RequestHistory } from "./request-history";
 import { Status } from "./status";
@@ -34,22 +35,6 @@ export interface ClientRequestDetailDTO {
 }
 
 
-// Dados completos do cliente enviados pelo back (ClientDTO) no detalhe do funcionário (RF012/RF014).
-export interface EmployeeRequestClientDTO {
-  id: number;
-  name: string;
-  email: string;
-  cpf: string;
-  phoneNumber: string;
-  zipCode: string;
-  street: string;
-  number: string;
-  complement?: string | null;
-  neighborhood: string;
-  city: string;
-  state: string;
-}
-
 export interface EmployeeRequestDetailDTO {
   id: number;
   equipmentName: string;
@@ -58,8 +43,16 @@ export interface EmployeeRequestDetailDTO {
   status: Status;
   categoryName: string;
 
-  client: EmployeeRequestClientDTO;
-  assignedEmployeeId?: number;
+  client: Client & {
+    phoneNumber: string;
+    zipCode: string;
+    street: string;
+    number: string;
+    complement?: string;
+    neighborhood: string;
+    city: string;
+    state: string;
+  };
   assignedEmployeeName?: string;
 
   budgets: Budget[];

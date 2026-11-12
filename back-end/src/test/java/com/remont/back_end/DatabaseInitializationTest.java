@@ -35,7 +35,7 @@ class DatabaseInitializationTest {
 
     @Test
     void databaseShouldInitializeWithRelevantData() {
-        // Critério de aceitação: Banco inicia com dados relevantes do data.sql
+        // A inicialização de teste executa data.sql e a carga de demonstração separada.
         
         // Verifica cadastros base
         assertThat(userRepository.count()).isGreaterThanOrEqualTo(7);
@@ -46,7 +46,7 @@ class DatabaseInitializationTest {
     }
 
     @Test
-    void seedHasTheTestRequestsRequiredByTheAssignment() {
+    void separateDemoSeedHasTheTestRequestsRequiredByTheAssignment() {
         // Enunciado: pelo menos 20 solicitações, com estados, datas, clientes e funcionários diferentes e histórico.
         assertThat(seedCount("SELECT COUNT(*) FROM maintenance_requests WHERE id <= 24")).isEqualTo(24);
         assertThat(seedCount("SELECT COUNT(DISTINCT status) FROM maintenance_requests WHERE id <= 24")).isEqualTo(8);

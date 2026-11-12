@@ -1,143 +1,103 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AppSuccessModalComponent } from '../../../shared/components/modal-mensagem/app-success-modal';
 import { MaintenanceRequestService } from '../../../core/services/maintenance-request.service';
 import { ToastService } from '../../../core/services/toast.service';
-import { clientHttpErrorMessage } from '../client-http-error';
 import { ClientRequestDetailDTO } from '../../../shared/models/maintenance-request.models';
-import { PaymentConfirmDialogComponent } from './payment-confirm-dialog.component';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { MatIcon } from '@angular/material/icon';
 
-/**
- * Pagamento da solicitação (RF010).
- *
- * Só permite pagar quando o status é ARRUMADA. Depois da confirmação chama
- * POST /requests/client/{id}/pay; o backend muda o status para PAGA e grava
- * a data/hora do pagamento no histórico.
- */
+interface Pagamento {
+  titulo: string;
+  preco: number;
+}
+
 @Component({
   selector: 'app-payment-panel',
   templateUrl: './payment-panel.component.html',
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    MatIcon,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatDialogModule,
-  ],
+  imports: [CommonModule, AppSuccessModalComponent, MatIcon, RouterModule, FormsModule, MatCardModule, MatButtonModule, MatButtonToggleModule],
   styleUrls: ['./payment-panel.component.css'],
 })
 export class PaymentPanelComponent implements OnInit {
-  private requestService = inject(MaintenanceRequestService);
-  private toast = inject(ToastService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private dialog = inject(MatDialog);
+  requests: ClientRequestDetailDTO | undefined;
+  currentRequestId!: number;
 
-  /** Detalhe vindo do backend; fica null enquanto carrega ou se a busca falhar. */
-  request = signal<ClientRequestDetailDTO | null>(null);
-  isLoading = signal(true);
-  isProcessingPayment = signal(false);
-
-  /** Forma escolhida no toggle (ligada por ngModel). */
+  isLoading = true;
   selectedMethod: 'cartao' | 'pix' | null = null;
+  mostrarModal = false;
+  isProcessingPayment = false;
 
-  canPay = computed(() => this.request()?.status.nome === 'ARRUMADA');
+  data = new Date();
+  modalTitulo = 'Pagamento realizado com sucesso!';
+  modalSubtitulo = '';
+  modalDadosAdicionais = '';
+  modalTextoBotao = 'Voltar para Página Inicial';
+  modalRotaDestino = '/client/dashboard/';
+
+  constructor(private requestService: MaintenanceRequestService, private toast: ToastService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.loadRequestDetails(Number(id));
+      this.currentRequestId = Number(id);
+      this.loadRequestDetails(this.currentRequestId);
     }
   }
 
   loadRequestDetails(id: number): void {
     this.requestService.getRequestByIdForClient(id).subscribe({
       next: (data) => {
-        // Solicitação já paga não tem o que pagar: volta para o detalhe.
-        if (data.status.nome === 'PAGA') {
-          this.goToDetail(id);
-          return;
-        }
-
-        this.request.set(data);
-        this.isLoading.set(false);
+        this.requests = data;
+        this.isLoading = false;
       },
       error: (err) => {
         console.error('Error loading request details:', err);
-        this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao carregar detalhes da solicitação!'));
-        this.isLoading.set(false);
+        this.toast.error('Erro', 'Falha ao carregar detalhes da solicitação!');
+        this.isLoading = false;
       },
     });
   }
 
-  openPaymentConfirmDialog(): void {
-    const request = this.request();
-
-    if (!request || !this.canPay()) {
-      this.toast.warn('Atenção', 'Esta solicitação não está disponível para pagamento.');
-      return;
-    }
-
-    if (!this.selectedMethod) {
-      this.toast.warn('Atenção', 'Selecione uma forma de pagamento antes de continuar.');
-      return;
-    }
-
-    const budget = request.budgets[0];
-    if (!budget) {
-      this.toast.error('Erro', 'Não há orçamento disponível para pagamento.');
-      return;
-    }
-
-    this.dialog
-      .open(PaymentConfirmDialogComponent, {
-        width: '32rem',
-        maxWidth: '95vw',
-        data: {
-          paymentMethodLabel: this.selectedMethod === 'cartao' ? 'Cartão' : 'Pix',
-          total: budget.total,
-          equipmentName: request.equipmentName,
-        },
-      })
-      .afterClosed()
-      .subscribe((confirmed) => {
-        if (confirmed) {
-          this.pay(request.id);
-        }
-      });
+  selectMethod(method: 'cartao' | 'pix') {
+    this.selectedMethod = method;
   }
 
-  private pay(id: number): void {
-    if (this.isProcessingPayment()) {
+  payRequest(): void {
+    if (this.isProcessingPayment || this.mostrarModal) return;
+    if (!this.selectedMethod) {
+      alert('Selecione uma forma de pagamento antes de continuar.');
       return;
     }
-
-    this.isProcessingPayment.set(true);
-
-    this.requestService.payRequest(id).subscribe({
+    this.isProcessingPayment = true;
+    this.requestService.payRequest(this.currentRequestId).subscribe({
       next: () => {
+        this.isProcessingPayment = false;
+        this.atualizarDataConfirmacao();
         this.toast.success('Sucesso', 'Solicitação paga com sucesso!');
-        this.goToDetail(id);
+        this.loadRequestDetails(this.currentRequestId);
+        this.mostrarModal = true;
       },
       error: (err) => {
+        this.isProcessingPayment = false;
         console.error('Error paying request:', err);
-        this.toast.error('Erro', clientHttpErrorMessage(err, 'Falha ao processar o pagamento da solicitação!'));
-        this.isProcessingPayment.set(false);
+        this.toast.error('Erro', 'Falha ao processar o pagamento da solicitação!');
       },
     });
+    
   }
 
-  private goToDetail(id: number): void {
-    this.router.navigate(['/client/request-detail', id]);
+ 
+
+ 
+
+  private atualizarDataConfirmacao(): void {
+    const now = new Date();
+    this.modalDadosAdicionais = `Data: ${now.toLocaleDateString(
+      'pt-BR'
+    )} às ${now.toLocaleTimeString('pt-BR')}`;
   }
 }

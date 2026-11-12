@@ -27,22 +27,31 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    // Retorna os dados filtrados para o gráfico de datas
+    /**
+     * Lista de Receita por Período (JSON)
+     */
     @GetMapping("/date")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<List<RevenueByDateDTO>> getRevenueByDateData(
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+        
         return ResponseEntity.ok(reportService.getRevenueByDateData(start, end));
     }
-    // Traz o faturamento total agrupado por categoria
+
+    /**
+     * Lista de Receita por Categoria 
+     */
     @GetMapping("/category")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<List<RevenueByCategoryDTO>> getRevenueByCategoryData() {
+        
         return ResponseEntity.ok(reportService.getRevenueByCategoryData());
     }
 
-    // Gera PDF (Receitas por Data)
+    /**
+     *  Gera o PDF de Receitas por Período
+     */
     @GetMapping("/date/pdf")
     @PreAuthorize("hasRole('EMPLOYEE')") 
     public void generateRevenueByDateReport(
@@ -51,27 +60,34 @@ public class ReportController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) throws IOException {
 
         response.setContentType("application/pdf");
+        
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=receitas_data_" + currentDateTime + ".pdf";
         
         response.setHeader(headerKey, headerValue);
+
         reportService.exportRevenueByDatePdf(response, start, end);
     }
 
-    // Gera PDF (Receitas por Categoria)
+    /**
+     *  Gera o PDF de Receitas por Categoria
+     */
     @GetMapping("/category/pdf")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public void generateRevenueByCategoryReport(HttpServletResponse response) throws IOException {
 
         response.setContentType("application/pdf");
+        
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=receitas_categoria_" + currentDateTime + ".pdf";
         
         response.setHeader(headerKey, headerValue);
+
         reportService.exportRevenueByCategoryPdf(response);
     }
+
 }

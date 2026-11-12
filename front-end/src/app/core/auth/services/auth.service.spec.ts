@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
 import { AuthService, UserState } from './auth.service';
 import { API_URL } from '../../configs/api.token';
 import { RegisterRequest } from '../../../shared/models/register-request';
-import { resetMockApiState } from '../../interceptors/mock-api.interceptor';
+import { resetMockApiState } from '../../../../testing/core/interceptors/mock-api.interceptor';
 import {
   loadRegisteredClients,
   MOCK_AUTH_SESSION_KEY,
-} from '../../interceptors/mock-api.persistence';
+} from '../../../../testing/core/interceptors/mock-api.persistence';
 
 const registerData: RegisterRequest = {
   name: 'Novo Usuário',
@@ -142,7 +142,7 @@ describe('AuthService (contrato HTTP)', () => {
   it('restaura a sessão salva em localStorage ao iniciar', () => {
     localStorage.setItem(
       'currentUser',
-      JSON.stringify({ name: 'Ana', userAccess: 'client', token: 'jwt' }),
+      JSON.stringify({ name: 'Ana', userAccess: 'client', token: 'e30.' + btoa(JSON.stringify({ exp: Math.floor(Date.now() / 1000) + 3600 })) + '.assinatura' }),
     );
 
     const restored = TestBed.runInInjectionContext(() => new AuthService());
@@ -187,63 +187,15 @@ describe('AuthService (contrato HTTP)', () => {
     expect(employee).toEqual([false, true]);
   });
 
-  it('(scaffold) guarda id e e-mail do mock e espelha a sessão para a API simulada', () => {
-    loginAs({
-      token: 'mock-employee-1',
-      userName: 'João',
-      userRole: 'ROLE_EMPLOYEE',
-      userId: 1,
-      userEmail: 'func1@mant.com',
+  for (const token of ['mock-client-1', 'invalido', 'e30.' + btoa(JSON.stringify({ exp: 1 })) + '.assinatura']) {
+    it(`descarta sessão incompatível ou expirada: ${token}`, () => {
+      localStorage.setItem('currentUser', JSON.stringify({ name: 'Ana', userAccess: 'client', token }));
+      localStorage.setItem('token', token);
+      const restored = TestBed.runInInjectionContext(() => new AuthService());
+      expect(restored.currentUserValue).toBeNull();
+      expect(localStorage.getItem('token')).toBeNull();
     });
-
-    expect(service.currentUserValue?.id).toBe(1);
-    expect(service.currentUserValue?.email).toBe('func1@mant.com');
-
-    const mirrored = JSON.parse(sessionStorage.getItem(MOCK_AUTH_SESSION_KEY) ?? 'null');
-    expect(mirrored.id).toBe(1);
-    expect(mirrored.userAccess).toBe('employee');
-  });
-
-  it('(scaffold) updateCurrentUser atualiza nome e e-mail e persiste', () => {
-    loginAs({ token: 'jwt', userName: 'Ana', userRole: 'ROLE_CLIENT' });
-
-    service.updateCurrentUser({ name: 'Ana Maria', email: 'ana.maria@example.com' });
-
-    expect(service.currentUserValue?.name).toBe('Ana Maria');
-    expect(JSON.parse(localStorage.getItem('currentUser') ?? 'null').email).toBe(
-      'ana.maria@example.com',
-    );
-  });
-
-  it('(scaffold) updateCurrentUser não faz nada sem sessão', () => {
-    service.updateCurrentUser({ name: 'Ninguém' });
-
-    expect(service.currentUserValue).toBeNull();
-  });
-
-  it('(scaffold) syncEmployeeSessionFromMock atualiza nome e e-mail pelo mock', () => {
-    loginAs({
-      token: 'mock-employee-1',
-      userName: 'Nome Desatualizado',
-      userRole: 'ROLE_EMPLOYEE',
-      userId: 1,
-      userEmail: 'antigo@example.com',
-    });
-
-    service.syncEmployeeSessionFromMock();
-
-    expect(service.currentUserValue?.name).toBe('João Pedro Alves');
-    expect(service.currentUserValue?.email).toBe('func1@mant.com');
-  });
-
-  it('(scaffold) syncEmployeeSessionFromMock restaura o espelho da sessão', () => {
-    loginAs({ token: 'jwt', userName: 'Ana', userRole: 'ROLE_CLIENT', userId: 1 });
-    sessionStorage.removeItem(MOCK_AUTH_SESSION_KEY);
-
-    service.syncEmployeeSessionFromMock();
-
-    expect(sessionStorage.getItem(MOCK_AUTH_SESSION_KEY)).not.toBeNull();
-  });
+  }
 });
 
 describe('AuthService (com a API simulada)', () => {
@@ -264,7 +216,6 @@ describe('AuthService (com a API simulada)', () => {
       expect(service.currentUserValue?.userAccess).toBe('client');
       expect(service.currentUserValue?.token).toBe('mock-client-1');
       expect(service.currentUserValue?.name).toBe('Ana Beatriz Souza');
-      expect(service.currentUserValue?.id).toBe(1);
       done();
     });
   });
@@ -273,7 +224,7 @@ describe('AuthService (com a API simulada)', () => {
     service.login('  FUNC1@MANT.COM  ', 'tads').subscribe(() => {
       expect(service.currentUserValue?.userAccess).toBe('employee');
       expect(service.currentUserValue?.token).toBe('mock-employee-1');
-      expect(service.currentUserValue?.email).toBe('func1@mant.com');
+      expect(service.currentUserValue?.name).toBe('João Pedro Alves');
       done();
     });
   });
@@ -326,7 +277,7 @@ describe('AuthService (com a API simulada)', () => {
 
       service.login('novo@example.com', created!.password).subscribe(() => {
         expect(service.currentUserValue?.userAccess).toBe('client');
-        expect(service.currentUserValue?.email).toBe('novo@example.com');
+        expect(service.currentUserValue?.name).toBe(registerData.name);
         done();
       });
     });

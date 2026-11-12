@@ -1,7 +1,7 @@
-@if (isLoading()) {
+@if (isLoading) {
   <div class="loading-state">Carregando pagamento...</div>
 }
-@if (request(); as detail) {
+@if (requests; as detail) {
   <main>
     <div class="header-wrapper">
       <a [routerLink]="['/client/request-detail', detail.id]" class="label_large back-link">
@@ -53,7 +53,7 @@
         </mat-card-header>
 
         <mat-card-content class="checkout-content">
-          @if (canPay()) {
+          @if (detail.status.nome === 'ARRUMADA') {
             <mat-button-toggle-group
               class="payment-toggle-group"
               [(ngModel)]="selectedMethod"
@@ -68,8 +68,8 @@
               color="primary"
               type="button"
               class="pay-now-btn"
-              [disabled]="isProcessingPayment() || !selectedMethod"
-              (click)="openPaymentConfirmDialog()"
+              [disabled]="isProcessingPayment || !selectedMethod"
+              (click)="payRequest()"
             >
               Pagar agora
             </button>
@@ -92,3 +92,5 @@
     </div>
   </main>
 }
+
+<app-success-modal [(mostrar)]="mostrarModal" [titulo]="modalTitulo" [subtitulo]="modalSubtitulo" [dadosAdicionais]="modalDadosAdicionais" [textoBotao]="modalTextoBotao" [rotaDestino]="modalRotaDestino"></app-success-modal>

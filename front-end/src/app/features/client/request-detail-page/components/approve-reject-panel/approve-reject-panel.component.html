@@ -8,7 +8,7 @@
         color="primary"
         type="button"
         class="label_large"
-        (click)="openRescueConfirmDialog()"
+        [disabled]="isSubmitting" (click)="resgatarServico()"
       >
         Resgatar Serviço
       </button>
@@ -40,8 +40,8 @@
     </div>
 
     <div class="action-buttons" *ngIf="request.status.nome === 'ORÇADA'">
-      <button mat-stroked-button color="warn" type="button" class="label_large" (click)="openRejectDialog()">Recusar</button>
-      <button mat-flat-button color="primary" type="button" class="label_large" (click)="openApproveConfirmDialog()">Aprovar Orçamento</button>
+      <button mat-stroked-button color="warn" type="button" class="label_large" [disabled]="isSubmitting" (click)="openRejectModal()">Recusar</button>
+      <button mat-flat-button color="primary" type="button" class="label_large" [disabled]="isSubmitting" (click)="onApprove()">Aprovar Orçamento</button>
     </div>
   </section>
 }

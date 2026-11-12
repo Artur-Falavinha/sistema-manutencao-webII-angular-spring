@@ -1,4 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { ToastService } from '../../../services/toast.service';
+import { Component, inject } from '@angular/core';
 import { InputPrimaryComponent } from '../../../../shared/components/input-primary/input-primary.component';
 import {
   FormBuilder,
@@ -8,13 +10,11 @@ import {
 } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ViaCepService, Endereco } from '../../../services/viacep.service';
 import { AuthService } from '../../services/auth.service';
-import { ToastService } from '../../../services/toast.service';
-import { ViaCepService } from '../../../services/viacep.service';
+import { AppSuccessModalComponent } from '../../../../shared/components/modal-mensagem/app-success-modal';
 import { RegisterRequest } from '../../../../shared/models/register-request';
 import { CustomValidators } from '../../../../shared/utils/cpf-validator';
 
@@ -25,22 +25,27 @@ import { CustomValidators } from '../../../../shared/utils/cpf-validator';
     ReactiveFormsModule,
     MatStepperModule,
     MatIconModule,
+    MatDialogModule,
     MatButtonModule,
+    AppSuccessModalComponent,
   ],
   templateUrl: './signup-page.component.html',
   styleUrls: ['./signup-page.component.css'],
 })
-export class SignupPageComponent implements OnInit, OnDestroy {
+export class SignupPageComponent {
   firstFormGroup!: FormGroup;
   secondFormGroup!: FormGroup;
-  private cepLookupSub?: Subscription;
+  endereco?: Endereco;
+  showModal = false;
+  isSubmitting = false;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private toast: ToastService,
+    private dialog: MatDialog,
     private viaCepService: ViaCepService,
+    private toast: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -59,31 +64,12 @@ export class SignupPageComponent implements OnInit, OnDestroy {
       city: ['', [Validators.required]],
       state: ['', [Validators.required]],
     });
-
-    this.setupCepAutoLookup();
   }
 
-  ngOnDestroy(): void {
-    this.cepLookupSub?.unsubscribe();
-  }
-
-  private setupCepAutoLookup(): void {
-    const cepControl = this.secondFormGroup.get('cep');
-    if (!cepControl) {
-      return;
-    }
-
-    this.cepLookupSub = cepControl.valueChanges
-      .pipe(
-        map((value) => (value ?? '').replace(/\D/g, '')),
-        distinctUntilChanged(),
-        filter((digits) => digits.length === 8),
-      )
-      .subscribe((digits) => this.fetchAddressByCep(digits));
-  }
 
   onSubmit(): void {
-    if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
+  if (this.isSubmitting || this.showModal) return;
+  if (this.firstFormGroup.valid && this.secondFormGroup.valid) {
       const personalData = this.firstFormGroup.value;
       const addressData = this.secondFormGroup.value;
 
@@ -94,31 +80,26 @@ export class SignupPageComponent implements OnInit, OnDestroy {
         cpf: removeNonDigits(personalData.cpfUser),
         email: personalData.email,
         phoneNumber: removeNonDigits(personalData.phoneUser),
-        zipCode: removeNonDigits(addressData.cep),
-        street: addressData.address,
+        zipCode: removeNonDigits(addressData.cep),     
+        street: addressData.address,    
         number: addressData.number,
         complement: addressData.complement,
         neighborhood: addressData.neighborhood,
         city: addressData.city,
-        state: addressData.state,
+        state: addressData.state
       };
 
+      this.isSubmitting = true;
       this.authService.signup(requestData).subscribe({
         next: () => {
-          this.toast.success(
-            'Cadastro concluído',
-            'Conta criada com sucesso. Faça login com a senha enviada ao seu e-mail.',
-          );
-          this.router.navigate(['/login']);
+          this.isSubmitting = false;
+          this.showModal = true;
         },
         error: (err) => {
           console.error('Erro no cadastro:', err);
-          const message =
-            typeof err?.error === 'string'
-              ? err.error
-              : err?.error?.message ?? 'Não foi possível concluir o cadastro. Verifique os dados informados.';
-          this.toast.error('Erro', message);
-        },
+          this.isSubmitting = false;
+          this.toast.error('Erro', err.status === 400 ? 'Verifique os dados informados e se o CPF ou e-mail já está cadastrado.' : 'Não foi possível concluir o cadastro. Tente novamente.');
+        }
       });
     } else {
       this.firstFormGroup.markAllAsTouched();
@@ -130,47 +111,25 @@ export class SignupPageComponent implements OnInit, OnDestroy {
     this.router.navigate(['/login']);
   }
 
-  searchCep(): void {
+  searchCep() {
     const cep = this.secondFormGroup.get('cep')?.value as string | null;
-    this.secondFormGroup.get('cep')?.markAsTouched();
+    if (!cep) return;
 
-    if (!cep) {
-      return;
-    }
-
-    const digits = cep.replace(/\D/g, '');
-    if (digits.length !== 8) {
-      this.toast.warn('CEP inválido', 'Informe um CEP com 8 dígitos.');
-      return;
-    }
-
-    this.fetchAddressByCep(digits);
-  }
-
-  private fetchAddressByCep(digits: string): void {
-    this.viaCepService.buscarCep(digits).subscribe({
+    this.viaCepService.buscarCep(cep).subscribe({
       next: (res) => {
-        if ((res as { erro?: boolean | string }).erro) {
+        if ((res as { erro?: boolean }).erro) {
           this.toast.warn('CEP não encontrado', 'Verifique o CEP informado.');
           return;
         }
-
-        const patch: Record<string, string> = {
+        this.endereco = res;
+        this.secondFormGroup.patchValue({
           address: res.logradouro || '',
           neighborhood: res.bairro || '',
           city: res.localidade || '',
           state: res.uf || '',
-        };
-
-        if (res.complemento) {
-          patch['complement'] = res.complemento;
-        }
-
-        this.secondFormGroup.patchValue(patch);
+        });
       },
-      error: () => {
-        this.toast.error('Erro', 'Não foi possível consultar o CEP. Tente novamente.');
-      },
+      error: (err) => this.toast.error('Erro', 'Não foi possível consultar o CEP. Tente novamente.'),
     });
   }
 
