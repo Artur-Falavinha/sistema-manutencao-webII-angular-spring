@@ -32,12 +32,20 @@ public class ReportService {
     private final List<StatusEnum> REVENUE_STATUSES = Arrays.asList(StatusEnum.PAGA, StatusEnum.FINALIZADA);
     private final Locale BR_LOCALE = Locale.of("pt", "BR");
 
+
+    /**
+     * Retorna os dados de receita por data .
+     */
     public List<RevenueByDateDTO> getRevenueByDateData(LocalDate start, LocalDate end) {
         LocalDateTime startDateTime = (start != null) ? start.atStartOfDay() : LocalDateTime.of(2024, 1, 1, 0, 0);
         LocalDateTime endDateTime = (end != null) ? end.atTime(LocalTime.MAX) : LocalDateTime.now();
+
         return requestRepository.getRevenueByDate(startDateTime, endDateTime, REVENUE_STATUSES);
     }
 
+    /**
+     * Retorna os dados de receita por categoria.
+     */
     public List<RevenueByCategoryDTO> getRevenueByCategoryData() {
         return requestRepository.getRevenueByCategory(REVENUE_STATUSES);
     }

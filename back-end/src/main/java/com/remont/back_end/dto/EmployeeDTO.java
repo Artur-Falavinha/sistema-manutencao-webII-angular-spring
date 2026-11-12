@@ -2,15 +2,26 @@ package com.remont.back_end.dto;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.DecimalMin;
+import org.hibernate.validator.constraints.br.CPF;
 
 public class EmployeeDTO {
 
     private Long id;
+    @NotBlank
     private String name;
+    @NotBlank @Email
     private String email;
+    @NotBlank @CPF
     private String cpf;
+    @NotBlank
     private String phone;
+    @NotNull
     private LocalDate birthDate;
+    @NotNull @DecimalMin("0.01")
     private Double wage;
     private boolean active;
     private String role;

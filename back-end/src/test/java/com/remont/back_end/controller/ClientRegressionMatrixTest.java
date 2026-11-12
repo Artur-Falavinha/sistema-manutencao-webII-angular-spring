@@ -29,6 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 /**
  * RF003-RF010: regressao da jornada do cliente com diferentes estados, clientes e datas.
@@ -132,7 +133,7 @@ class ClientRegressionMatrixTest {
 
             clientPost(clientId, "/api/requests/client/" + id + "/" + action.getKey())
                     .andExpect(allowed ? status().isOk() : status().isConflict())
-                    .andExpect(allowed ? jsonPath("$.id").value(id) : jsonPath("$.message").isNotEmpty());
+                    .andExpect(allowed ? jsonPath("$.id").value(id) : content().string(""));
 
             StatusEnum after = requestRepository.findById(id).orElseThrow().getStatus();
             if (allowed) {

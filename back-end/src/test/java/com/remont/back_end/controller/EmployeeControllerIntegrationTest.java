@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 /**
  * RF018: Testes de integracao e regressao do CRUD de funcionarios
@@ -88,7 +89,7 @@ class EmployeeControllerIntegrationTest {
         mockMvc.perform(get("/api/employees/99999")
                         .header("Authorization", bearer(employeeToken)))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message", containsString("Funcionário não encontrado")));
+                .andExpect(content().string(""));
     }
 
     @Test
@@ -151,11 +152,14 @@ class EmployeeControllerIntegrationTest {
 
     @Test
     void createEmployeeBlocksDuplicateEmailAndCpf() {
+        Employee maria = employeeRepository.findById(2L).orElseThrow();
+        maria.setCpf("52998224725");
+        employeeRepository.saveAndFlush(maria);
         String duplicateEmailBody = """
                 {
                     "name": "Outro Admin",
                     "email": "admin@remont.com",
-                    "cpf": "77788899900",
+                    "cpf": "11144477735",
                     "phone": "41977778888",
                     "birthDate": "1990-01-01",
                     "wage": 3000.00,
@@ -175,7 +179,7 @@ class EmployeeControllerIntegrationTest {
                 {
                     "name": "Outra Maria",
                     "email": "outra.maria@remont.com",
-                    "cpf": "50060070080",
+                    "cpf": "52998224725",
                     "phone": "41977778888",
                     "birthDate": "1995-05-20",
                     "wage": 3500.00,

@@ -73,7 +73,7 @@ class ProfileAuthorizationTest {
         mockMvc.perform(post("/api/categories")
                         .header("Authorization", bearer(clientToken))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{}"))
+                        .content("{\"name\":\"Categoria\",\"icon\":\"build\"}"))
                 .andExpect(status().isForbidden());
     }
 

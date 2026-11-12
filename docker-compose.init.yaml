@@ -1,0 +1,5 @@
+services:
+  backend:
+    environment:
+      SPRING_SQL_INIT_MODE: always
+      SPRING_SQL_INIT_DATA_LOCATIONS: classpath:data.sql,classpath:data-demo.sql

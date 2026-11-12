@@ -7,8 +7,10 @@ import com.remont.back_end.service.MaintenanceRecordService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
+@PreAuthorize("denyAll()")
 @RequestMapping("/api/maintenance-records")
 public class MaintenanceRecordController {
 

@@ -3,6 +3,7 @@ package com.remont.back_end.dto;
 import com.remont.back_end.model.CategoryEquipment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import jakarta.validation.constraints.NotBlank;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -10,7 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CategoryEquipmentDTO {
     private Integer id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String icon;
     private boolean active;
 

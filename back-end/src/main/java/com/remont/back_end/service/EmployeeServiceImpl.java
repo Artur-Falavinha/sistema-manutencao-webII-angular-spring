@@ -6,6 +6,9 @@ import com.remont.back_end.model.User;
 import com.remont.back_end.repository.EmployeeRepository;
 import com.remont.back_end.repository.UserRepository;
 import com.remont.back_end.exception.ResourceNotFoundException;
+import com.remont.back_end.security.UserPrincipal;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,6 +41,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public EmployeeDTO createEmployee(EmployeeDTO employeeDTO) {
         
+        if (employeeDTO.getPassword() == null || employeeDTO.getPassword().isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Senha é obrigatória.");
+        }
         Employee employee = mapToEntity(employeeDTO);
         if(userRepository.existsByEmail(employee.getEmail())) {
             throw new RuntimeException("Erro: Este e-mail já está em uso!");
@@ -105,7 +111,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setPhone(employeeDTO.getPhone());
         employee.setBirthDate(employeeDTO.getBirthDate());
         employee.setWage(employeeDTO.getWage());
-        employee.setActive(employeeDTO.isActive());
 
         if (employeeDTO.getPassword() != null && !employeeDTO.getPassword().isBlank()) {
             employee.setPassword(passwordEncoder.encode(employeeDTO.getPassword()));
@@ -125,19 +130,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public void deleteEmployee(Long id) {
+        List<Employee> activeEmployees = employeeRepository.findActiveForUpdate();
         Employee employeeToDelete = employeeRepository.findById(Objects.requireNonNull(id))
                 .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com id: " + id));
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            String currentUserEmail = authentication.getName();
-            
-            if (employeeToDelete.getEmail().equals(currentUserEmail)) {
-                throw new IllegalStateException("Ação negada: O funcionário não pode remover a si mesmo.");
-            }
+        if (authentication == null || !(authentication.getPrincipal() instanceof UserPrincipal principal)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Autenticação necessária.");
+        }
+        if (employeeToDelete.getId().equals(principal.getId())) {
+            throw new IllegalStateException("Ação negada: O funcionário não pode remover a si mesmo.");
         }
 
-        long activeCount = employeeRepository.countByActiveTrue();
+        long activeCount = activeEmployees.size();
         
         if (activeCount <= 1) {
             throw new IllegalStateException("Ação negada: Existe apenas um funcionário ativo no sistema. Cadastre outro antes de remover este.");

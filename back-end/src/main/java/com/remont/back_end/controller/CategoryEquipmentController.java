@@ -9,6 +9,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -35,7 +36,7 @@ public class CategoryEquipmentController {
     @PostMapping
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<CategoryEquipmentDTO> createCategory(
-            @RequestBody CategoryEquipmentDTO categoryDTO, 
+            @Valid @RequestBody CategoryEquipmentDTO categoryDTO, 
             UriComponentsBuilder uriBuilder) {
 
         CategoryEquipmentDTO savedCategory = categoryEquipmentService.createCategory(categoryDTO);
@@ -50,7 +51,7 @@ public class CategoryEquipmentController {
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<CategoryEquipmentDTO> updateCategory(
             @PathVariable Integer id, 
-            @RequestBody CategoryEquipmentDTO categoryDTO) {
+            @Valid @RequestBody CategoryEquipmentDTO categoryDTO) {
 
         return ResponseEntity.ok(categoryEquipmentService.updateCategory(id, categoryDTO));
     }

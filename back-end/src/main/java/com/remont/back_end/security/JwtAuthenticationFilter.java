@@ -8,14 +8,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+import com.remont.back_end.repository.UserRepository;
+import org.springframework.security.authentication.BadCredentialsException;
 
 /**
  * Filtro de autenticação JWT que intercepta as requisições HTTP para validar o token JWT.
@@ -25,6 +24,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     protected void doFilterInternal(
@@ -45,18 +47,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         try {
             DecodedJWT jwt = tokenService.validateToken(token);
 
-            String email = jwt.getSubject();
             Long id = jwt.getClaim("id").asLong();
-            String role = jwt.getClaim("role").asString();
-
-            List<SimpleGrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
-
-            UserPrincipal principal = new UserPrincipal(id, email, role);
+            UserPrincipal principal = userRepository.findById(id).map(UserPrincipal::new)
+                    .orElseThrow(() -> new BadCredentialsException("Usuário não encontrado."));
+            if (!principal.isEnabled()) {
+                throw new BadCredentialsException("Usuário desativado.");
+            }
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                     principal,
                     null,
-                    authorities
+                    principal.getAuthorities()
             );
 
             SecurityContextHolder.getContext().setAuthentication(authToken);

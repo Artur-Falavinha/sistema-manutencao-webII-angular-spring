@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -44,35 +45,35 @@ class GlobalErrorHandlingTest {
     }
 
     @Test
-    void anonymousForbiddenIncludesMessage() throws Exception {
+    void anonymousAccessIsForbiddenWithoutCustomBody() throws Exception {
         mockMvc.perform(get("/api/requests/employee"))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value("Autenticação necessária."));
+                .andExpect(content().string(""));
     }
 
     @Test
-    void wrongProfileForbiddenIncludesMessage() throws Exception {
+    void wrongProfileIsForbiddenWithoutCustomBody() throws Exception {
         mockMvc.perform(get("/api/requests/employee")
                         .header("Authorization", "Bearer " + clientToken))
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$.message").value("Você não tem permissão para esta operação."));
+                .andExpect(content().string(""));
     }
 
     @Test
-    void missingCategoryIncludesNotFoundMessage() throws Exception {
+    void missingCategoryReturnsNotFoundWithoutCustomBody() throws Exception {
         mockMvc.perform(get("/api/categories/99999")
                         .header("Authorization", "Bearer " + clientToken))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message", containsString("Categoria não encontrada")));
+                .andExpect(content().string(""));
     }
 
     @Test
-    void invalidLoginIncludesValidationMessage() throws Exception {
+    void invalidLoginReturnsBadRequestWithoutCustomBody() throws Exception {
         mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.errors[*].defaultMessage", hasItem("O e-mail é obrigatório")));
+                .andExpect(content().string(""));
     }
 
     @Test

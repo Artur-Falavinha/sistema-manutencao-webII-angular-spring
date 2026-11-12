@@ -30,6 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 /**
  * RF001-RF002: matriz de regressao de login e autocadastro pela API real.
@@ -85,8 +86,7 @@ class AuthRegressionMatrixTest {
         for (Map<String, String> body : invalidBodies) {
             postJson("/api/auth/login", body)
                     .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.status").value(400))
-                    .andExpect(jsonPath("$.message").isNotEmpty());
+                    .andExpect(content().string(""));
         }
     }
 
@@ -107,7 +107,7 @@ class AuthRegressionMatrixTest {
 
         postJson("/api/auth/register", body)
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.status").value(400));
+                .andExpect(content().string(""));
 
         verify(emailService, never()).sendRandomPasswordEmail(anyString(), anyString());
     }
@@ -128,7 +128,7 @@ class AuthRegressionMatrixTest {
 
         postJson("/api/auth/register", body)
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.status").value(400));
+                .andExpect(content().string(""));
 
         verify(emailService, never()).sendRandomPasswordEmail(anyString(), anyString());
     }

@@ -18,7 +18,6 @@ public class EmployeeRequestDetailDTO {
     private String categoryName;
 
     private ClientDTO client; 
-    private Long assignedEmployeeId;
     private String assignedEmployeeName; 
 
     private List<BudgetDTO> budgets; 
@@ -38,7 +37,6 @@ public class EmployeeRequestDetailDTO {
         }
 
         if (r.getAssignedEmployee() != null) {
-            dto.setAssignedEmployeeId(r.getAssignedEmployee().getId());
             dto.setAssignedEmployeeName(r.getAssignedEmployee().getName());
         }
 

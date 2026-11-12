@@ -19,7 +19,7 @@ public interface MaintenanceRequestService {
 
     ClientRequestDetailDTO getRequestDetailForClient(Long requestId, Long clientId);
 
-    EmployeeRequestDetailDTO getRequestDetailForEmployee(Long requestId);
+    EmployeeRequestDetailDTO getRequestDetailForEmployee(Long requestId, Long employeeId);
 
     MaintenanceRequestResponseDTO createBudget(Long requestId, BudgetDTO dto, Long employeeId);
 

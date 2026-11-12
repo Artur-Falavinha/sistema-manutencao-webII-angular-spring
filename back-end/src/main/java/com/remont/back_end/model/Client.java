@@ -10,6 +10,17 @@ import org.hibernate.validator.constraints.br.CPF;
 @PrimaryKeyJoinColumn(name = "user_id") 
 public class Client extends User {
 
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    private boolean active = true;
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     @NotBlank(message = "CPF é obrigatório")
     @CPF(message = "CPF inválido")
     @Column(nullable = false, unique = true, length = 11) 

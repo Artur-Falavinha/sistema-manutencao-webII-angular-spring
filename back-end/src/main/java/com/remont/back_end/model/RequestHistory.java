@@ -16,7 +16,7 @@ public class RequestHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false, length = 64)
+    @Column(nullable = false, length = 533)
     private String title;
     
     @Column(name = "occurrence_date", nullable = false)

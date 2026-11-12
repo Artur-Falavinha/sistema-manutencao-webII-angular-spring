@@ -24,7 +24,9 @@ back-end/.idea/
 back-end/*.iml
 
 # IDE and operating system
-.vscode/
+.vscode/*
+!.vscode/launch.json
+!.vscode/settings.json
 .idea/
 .DS_Store
 Thumbs.db

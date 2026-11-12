@@ -4,6 +4,7 @@ import com.remont.back_end.model.Client;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class ClientDTO {
     private String email;
 
     @NotBlank(message = "CPF é obrigatório")
+    @CPF(message = "CPF inválido")
     private String cpf;
 
     @NotBlank(message = "Telefone é obrigatório")

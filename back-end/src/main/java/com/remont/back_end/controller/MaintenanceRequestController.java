@@ -83,10 +83,10 @@ public class MaintenanceRequestController {
     @GetMapping("/employee/{id}")
     @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<EmployeeRequestDetailDTO> getRequestForEmployee(
-            @PathVariable Long id) {
+            @PathVariable Long id, Authentication authentication) {
         
         return ResponseEntity.ok(
-            maintenanceRequestService.getRequestDetailForEmployee(id)
+            maintenanceRequestService.getRequestDetailForEmployee(id, ((UserPrincipal) authentication.getPrincipal()).getId())
         );
     }
 
