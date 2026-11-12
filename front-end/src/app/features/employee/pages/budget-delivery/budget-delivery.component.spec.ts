@@ -82,8 +82,11 @@ describe('BudgetDeliveryComponent', () => {
     expect(component.permitidoCriarManutencao()).toBeFalse();
   });
   it('não registra sucesso quando a API recusa o funcionário', () => {
-    component.request = { id: 1, status: { nome: 'APROVADA' } } as EmployeeRequestDetailDTO;
-    component.nomeDeUsuario = 'Maria'; component.responsavel = { name: 'Maria' } as Employee;
+    component.request = { id: 1, status: { nome: 'APROVADA' }, assignedEmployeeId: 2 } as EmployeeRequestDetailDTO;
+    component.responsavel = { id: 2, name: 'Maria Silva' } as Employee;
+    spyOnProperty(TestBed.inject(AuthService), 'currentUserValue').and.returnValue({
+      id: 2, name: 'Maria', userAccess: 'employee', token: 'token',
+    });
     component.manutencaoDescricaoInput = 'Reparo'; component.manutencaoOrientacaoInput = 'OK';
     const service = TestBed.inject(MaintenanceRequestService);
     spyOn(service, 'executeMaintenance').and.returnValue(throwError(() => new HttpErrorResponse({status: 403})));
@@ -92,6 +95,20 @@ describe('BudgetDeliveryComponent', () => {
     expect(service.executeMaintenance).toHaveBeenCalled();
     expect(success).not.toHaveBeenCalled();
     expect(component.temManutencao).toBeFalse();
+  });
+  it('impede o envio quando o nome coincide e o ID é diferente', () => {
+    component.request = { id: 1, status: { nome: 'APROVADA' }, assignedEmployeeId: 2 } as EmployeeRequestDetailDTO;
+    component.responsavel = { id: 2, name: 'Maria' } as Employee;
+    component.manutencaoDescricaoInput = 'Reparo';
+    component.manutencaoOrientacaoInput = 'OK';
+    spyOnProperty(TestBed.inject(AuthService), 'currentUserValue').and.returnValue({
+      id: 3, name: 'Maria', userAccess: 'employee', token: 'token',
+    });
+    const executeMaintenance = spyOn(TestBed.inject(MaintenanceRequestService), 'executeMaintenance');
+
+    component.confirmarManutencao();
+
+    expect(executeMaintenance).not.toHaveBeenCalled();
   });
   it('preserva o responsável quando o servidor recusa um destinatário inativo', () => {
     component.request = { id: 1 } as EmployeeRequestDetailDTO;

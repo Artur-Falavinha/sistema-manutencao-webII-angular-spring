@@ -53,8 +53,6 @@ import { AuthService } from '../../../../core/auth/services/auth.service';
   ]
 })
 export class BudgetDeliveryComponent implements OnInit {
-  nomeDeUsuario: string = '';
-
   constructor(
     private router: Router, 
     private dialog: MatDialog, 
@@ -66,14 +64,7 @@ export class BudgetDeliveryComponent implements OnInit {
     private route: ActivatedRoute, 
     private toast: ToastService,
     private authService: AuthService
-  ) { 
-    this.authService.currentUser$.subscribe(user => {
-      if (user) {
-        this.nomeDeUsuario = user.name;
-      }
-    });
-
-  }
+  ) {}
 
   statuses: Status[] = [];
   request!: EmployeeRequestDetailDTO;
@@ -296,7 +287,8 @@ export class BudgetDeliveryComponent implements OnInit {
   confirmarManutencao() {
     if (!this.request || !this.permitidoCriarManutencao() || !this.isManutencaoFormValid()) return;
 
-    if (this.responsavel?.name !==  this.nomeDeUsuario) {
+    const employeeId = this.authService.currentUserValue?.id;
+    if (employeeId == null || this.request.assignedEmployeeId !== employeeId) {
       this.toast.error('Erro ao Efetuar Manutenção', 'Você não é o funcionário designado para essa soliciação');
       return;
     }
